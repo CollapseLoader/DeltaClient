@@ -12,7 +12,7 @@ public class DeathCoords extends Module {
     @EventTarget
     public void a(TickEvent event) {
         if (aM_.player.deathTime == 1) {
-            ChatUtil.a(String.format("Вы погибли на координатах: &c[%d, %d, %d]", Integer.valueOf(aM_.player.getBlockPos().getX()), Integer.valueOf(aM_.player.getBlockPos().getY()), Integer.valueOf(aM_.player.getBlockPos().getZ())));
+            ChatUtil.sendMessage(String.format("Вы погибли на координатах: &c[%d, %d, %d]", Integer.valueOf(aM_.player.getBlockPos().getX()), Integer.valueOf(aM_.player.getBlockPos().getY()), Integer.valueOf(aM_.player.getBlockPos().getZ())));
         }
     }
 }

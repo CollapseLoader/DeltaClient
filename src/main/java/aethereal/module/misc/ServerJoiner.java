@@ -77,7 +77,7 @@ public class ServerJoiner extends Module implements Interface {
                     return;
                 }
                 if (!ServerUtil.a().isEmpty() && !ServerUtil.a().contains("Режим: Хаб # ")) {
-                    ChatUtil.a("Вы находитесь не в хабе SpookyTime, а значит модуль выключается!");
+                    ChatUtil.sendMessage("Вы находитесь не в хабе SpookyTime, а значит модуль выключается!");
                     a();
                     return;
                 }
@@ -114,7 +114,7 @@ public class ServerJoiner extends Module implements Interface {
                     }
                     return;
                 }
-                ChatUtil.a("Вы находитесь не в лобби ReallyWorld, а значит модуль выключается!");
+                ChatUtil.sendMessage("Вы находитесь не в лобби ReallyWorld, а значит модуль выключается!");
                 a();
             }
         }

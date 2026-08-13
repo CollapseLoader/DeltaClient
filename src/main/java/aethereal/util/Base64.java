@@ -14,9 +14,6 @@ public class Base64 {
     public static final int e = 16;
     public static final int f = 32;
     static final boolean g;
-    private static final int h = 76;
-    private static final byte i = 61;
-    private static final byte j = 10;
     private static final String k = "US-ASCII";
     private static final byte l = -5;
     private static final byte[] m;

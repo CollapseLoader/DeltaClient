@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Stream;
 
-@Command(a = "blockesp")
+@Command(name = "blockesp")
 public class BlockESPCommand extends BaseCommand {
     private final List<a> c = new CopyOnWriteArrayList();
 
@@ -29,7 +29,7 @@ public class BlockESPCommand extends BaseCommand {
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(a("add").executes(context -> {
-            ChatUtil.a("Использование: .blockesp add <блок> [цвет]");
+            ChatUtil.sendMessage("Использование: .blockesp add <блок> [цвет]");
             return 1;
         }).then(d("блок").suggests((context2, suggestions) -> {
             Stream streamLimit = Registries.BLOCK.stream().filter(block -> {
@@ -56,7 +56,7 @@ public class BlockESPCommand extends BaseCommand {
         }).executes(context5 -> {
             return a(a(context5, "блок"), a(context5, "цвет"));
         })))).then(a("remove").executes(context6 -> {
-            ChatUtil.a("Использование: .blockesp remove <блок>");
+            ChatUtil.sendMessage("Использование: .blockesp remove <блок>");
             return 1;
         }).then(d("блок").suggests(a(() -> {
             return this.c;
@@ -67,27 +67,27 @@ public class BlockESPCommand extends BaseCommand {
             if (this.c.removeIf(info2 -> {
                 return info2.a == Registries.BLOCK.get(Identifier.of(name));
             })) {
-                ChatUtil.a("Блок &c" + name + " &7успешно удалён");
+                ChatUtil.sendMessage("Блок &c" + name + " &7успешно удалён");
                 return 1;
             }
-            ChatUtil.a("Блок с именем &c" + name + " &7отсутствует");
+            ChatUtil.sendMessage("Блок с именем &c" + name + " &7отсутствует");
             return 1;
         }))).then(a("list").executes(context8 -> {
             if (this.c.isEmpty()) {
-                ChatUtil.a("Список блоков не содержит элементов");
+                ChatUtil.sendMessage("Список блоков не содержит элементов");
                 return 1;
             }
-            ChatUtil.a("Список всех блоков (" + this.c.size() + "):");
+            ChatUtil.sendMessage("Список всех блоков (" + this.c.size() + "):");
             for (a info2 : this.c) {
-                ChatUtil.a("— &c" + Registries.BLOCK.getId(info2.a).getPath() + (info2.b != -1 ? " &7(" + a(info2.b) + ")" : ""));
+                ChatUtil.sendMessage("— &c" + Registries.BLOCK.getId(info2.a).getPath() + (info2.b != -1 ? " &7(" + a(info2.b) + ")" : ""));
             }
             return 1;
         })).then(a("clear").executes(context9 -> {
-            ChatUtil.a("Количество удалённых блоков: " + this.c.size());
+            ChatUtil.sendMessage("Количество удалённых блоков: " + this.c.size());
             this.c.clear();
             return 1;
         })).executes(context10 -> {
-            ChatUtil.a("Использование: .blockesp <add|remove|list|clear>");
+            ChatUtil.sendMessage("Использование: .blockesp <add|remove|list|clear>");
             return 1;
         });
     }
@@ -99,10 +99,10 @@ public class BlockESPCommand extends BaseCommand {
                 return info.a == block;
             });
             this.c.add(new a(block, colorName != null ? EspColor.a(colorName) : -1));
-            ChatUtil.a("Блок &c" + name + " &7успешно добавлен" + (colorName != null ? " (&c" + colorName + "&7)" : ""));
+            ChatUtil.sendMessage("Блок &c" + name + " &7успешно добавлен" + (colorName != null ? " (&c" + colorName + "&7)" : ""));
             return 1;
         }
-        ChatUtil.a("Блок с именем &c" + name + " &7не найден");
+        ChatUtil.sendMessage("Блок с именем &c" + name + " &7не найден");
         return 1;
     }
 

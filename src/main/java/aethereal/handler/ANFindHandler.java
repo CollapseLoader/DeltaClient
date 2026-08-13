@@ -157,7 +157,7 @@ public class ANFindHandler extends BaseHandler implements Interface {
                 }).forEach(mode4 -> {
                     hover.append(Text.literal("§7• §f" + mode4.a.replace("Команды ", "") + ": " + mode4.b.trim() + " — " + mode4.c + " игроков\n"));
                 });
-                ChatUtil.a(Text.literal("§a✔ §7Успешно подключился к анархии §a#" + anarchy + "§7, с онлайном §a" + best.c + "§7 — ").append(ChatUtil.a((Object) "§c[Подробнее]", hover)));
+                ChatUtil.sendMessage(Text.literal("§a✔ §7Успешно подключился к анархии §a#" + anarchy + "§7, с онлайном §a" + best.c + "§7 — ").append(ChatUtil.sendMessage((Object) "§c[Подробнее]", hover)));
                 aM_.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(aM_.player.currentScreenHandler.syncId));
                 aM_.player.networkHandler.sendChatCommand("an" + anarchy);
             }

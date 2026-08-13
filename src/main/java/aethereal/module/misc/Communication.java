@@ -118,7 +118,7 @@ public class Communication extends Module implements Interface {
                 line.append(Text.literal(prefix.a()).setStyle(Style.EMPTY.withFont(Identifier.of("delta", "prefixes")))).append(Text.literal(StringUtils.a));
             }
             line.append(ChatUtil.b("[" + user + "] → " + message));
-            ChatUtil.a((Object) "[IRC]", line);
+            ChatUtil.sendMessage((Object) "[IRC]", line);
         }
         if ("friend".equals(packet.getId()) && "mark".equals(type)) {
             JsonObject pos = security.extractElement(payload, "pos").getAsJsonObject();

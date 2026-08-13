@@ -47,7 +47,7 @@ public class Nuker extends Module {
         this.f = null;
         ItemStack tool = aM_.player.getMainHandStack();
         if (tool.isDamageable() && tool.getMaxDamage() - tool.getDamage() < 50) {
-            ChatUtil.a("Работа прекращена во избежание поломки кирки.");
+            ChatUtil.sendMessage("Работа прекращена во избежание поломки кирки.");
             a();
             return;
         }

@@ -29,7 +29,7 @@ public class ClanUpgrader extends Module {
         int torch = InventoryUtil.a(Items.TORCH, true);
         int target = redstone != -1 ? redstone : torch;
         if (redstone == -1 && torch == -1) {
-            ChatUtil.a("Вам необходимо иметь факел или редстоун в хотбаре");
+            ChatUtil.sendMessage("Вам необходимо иметь факел или редстоун в хотбаре");
             a();
             return;
         }

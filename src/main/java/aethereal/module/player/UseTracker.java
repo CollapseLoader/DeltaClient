@@ -66,7 +66,7 @@ public class UseTracker extends Module {
                                     return info.getEntityId() == class_746Var2.getId();
                                 });
                             }
-                            ChatUtil.a("[" + j() + "]", class_746Var2.getName().getString() + " использовал \"" + color + active.getItem().getName().getString() + "&7\"");
+                            ChatUtil.sendMessage("[" + j() + "]", class_746Var2.getName().getString() + " использовал \"" + color + active.getItem().getName().getString() + "&7\"");
                             Delta.h().d().m().a(new Notification(active.copy(), class_746Var2.getName().getString() + " использовал " + active.getItem().getName().getString(), 1500));
                         }
                     }
@@ -93,8 +93,8 @@ public class UseTracker extends Module {
                             if (factor > 0.0d) {
                                 List<StatusEffectInstance> effects = new ArrayList<>();
                                 if (class_746Var != aM_.player) {
-                                    ChatUtil.a((Object) ("[" + j() + "]"), ChatUtil.b(class_746Var.getName().getString() + " получил эффекты от \"").append(type.a()).append(ChatUtil.b("\"")));
-                                    ChatUtil.a("[" + j() + "]", "- Успешность: &a" + ((int) (factor * 100.0d)) + "%");
+                                    ChatUtil.sendMessage((Object) ("[" + j() + "]"), ChatUtil.b(class_746Var.getName().getString() + " получил эффекты от \"").append(type.a()).append(ChatUtil.b("\"")));
+                                    ChatUtil.sendMessage("[" + j() + "]", "- Успешность: &a" + ((int) (factor * 100.0d)) + "%");
                                 }
                                 if (class_746Var == aM_.player) {
                                     class_5250VarMethod_10852 = Text.literal("Вы получили эффекты от ").styled(style -> {
@@ -110,7 +110,7 @@ public class UseTracker extends Module {
                                     if (duration > 20) {
                                         int sec = duration / 20;
                                         if (class_746Var != aM_.player) {
-                                            ChatUtil.a("[" + j() + "]", "- &c" + entry.getKey().value().getName().getString() + " " + MathUtil.a(amplifier) + " &7(" + (sec / 60) + ":" + String.format("%02d", Integer.valueOf(sec % 60)) + ")");
+                                            ChatUtil.sendMessage("[" + j() + "]", "- &c" + entry.getKey().value().getName().getString() + " " + MathUtil.a(amplifier) + " &7(" + (sec / 60) + ":" + String.format("%02d", Integer.valueOf(sec % 60)) + ")");
                                         }
                                         if (entry.getKey().equals(StatusEffects.BLINDNESS) || entry.getKey().equals(StatusEffects.STRENGTH) || entry.getKey().equals(StatusEffects.SLOWNESS) || entry.getKey().equals(StatusEffects.WITHER) || entry.getKey().equals(StatusEffects.POISON) || entry.getKey().equals(StatusEffects.WEAKNESS) || entry.getKey().equals(StatusEffects.REGENERATION) || entry.getKey().equals(StatusEffects.HEALTH_BOOST) || entry.getKey().equals(StatusEffects.RESISTANCE)) {
                                             effects.add(new StatusEffectInstance(entry.getKey(), duration, amplifier));
@@ -161,7 +161,7 @@ public class UseTracker extends Module {
                             ItemStack totem = class_746Var.getMainHandStack().getItem() == Items.TOTEM_OF_UNDYING ? class_746Var.getMainHandStack() : class_746Var.getOffHandStack().getItem() == Items.TOTEM_OF_UNDYING ? class_746Var.getOffHandStack() : null;
                             if (totem != null) {
                                 String name = ServerUtil.a.a() ? ServerUtil.a.b(totem) : totem.getName().getString();
-                                ChatUtil.a("[" + j() + "]", (class_746Var == aM_.player ? "Вы потеряли " : class_746Var.getName().getString() + " потерял ") + name + ", зачарован: " + ((name.startsWith("Талисман") || totem.hasGlint()) ? "&a●&7" : "&c●&7"));
+                                ChatUtil.sendMessage("[" + j() + "]", (class_746Var == aM_.player ? "Вы потеряли " : class_746Var.getName().getString() + " потерял ") + name + ", зачарован: " + ((name.startsWith("Талисман") || totem.hasGlint()) ? "&a●&7" : "&c●&7"));
                             }
                         }
                     }

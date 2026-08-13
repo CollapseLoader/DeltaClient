@@ -159,12 +159,12 @@ public class AutoBuySection extends Section implements Interface {
     public boolean a(double mouseX, double mouseY, int button) {
         if (button == 0 && MathUtil.a(mouseX, mouseY, this.e.x, this.e.y, this.e.z, this.e.w)) {
             Delta.h().d().q().unSetup();
-            ChatUtil.a("Конфигурация авто-закупки успешно сохранена");
+            ChatUtil.sendMessage("Конфигурация авто-закупки успешно сохранена");
             return true;
         }
         if (button == 0 && MathUtil.a(mouseX, mouseY, this.f.x, this.f.y, this.f.z, this.f.w)) {
             Delta.h().d().q().setup();
-            ChatUtil.a("Конфигурация авто-закупки успешно загружена");
+            ChatUtil.sendMessage("Конфигурация авто-закупки успешно загружена");
             a(this.h);
             return true;
         }

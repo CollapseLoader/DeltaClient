@@ -29,7 +29,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Command(a = "way")
+@Command(name = "way")
 public class WayCommand extends BaseCommand {
     private final List<b> c = new ArrayList();
     private final List<String> d = new ArrayList();
@@ -48,13 +48,13 @@ public class WayCommand extends BaseCommand {
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(a("add").executes(context -> {
-            ChatUtil.a("Использование: .way add <название> <x> <z> или .way add <название> <x> <y> <z>\"");
+            ChatUtil.sendMessage("Использование: .way add <название> <x> <z> или .way add <название> <x> <y> <z>\"");
             return 1;
         }).then(d("название").executes(context2 -> {
-            ChatUtil.a("Использование: .way add <название> <x> <z> или .way add <название> <x> <y> <z>\"");
+            ChatUtil.sendMessage("Использование: .way add <название> <x> <z> или .way add <название> <x> <y> <z>\"");
             return 1;
         }).then(e("x").executes(context3 -> {
-            ChatUtil.a("Использование: .way add <название> <x> <z> или .way add <название> <x> <y> <z>\"");
+            ChatUtil.sendMessage("Использование: .way add <название> <x> <z> или .way add <название> <x> <y> <z>\"");
             return 1;
         }).then(e("y или z").executes(context4 -> {
             a(a(context4, "название"), new Vec3d(b(context4, "x"), aM_.player.getY(), b(context4, "y или z")));
@@ -66,7 +66,7 @@ public class WayCommand extends BaseCommand {
             a("me", aM_.player.getPos());
             return 1;
         })).then(a("remove").executes(context7 -> {
-            ChatUtil.a("Использование: .way remove <название>");
+            ChatUtil.sendMessage("Использование: .way remove <название>");
             return 1;
         }).then(d("название").suggests(a(() -> {
             return this.c;
@@ -75,22 +75,22 @@ public class WayCommand extends BaseCommand {
         })).executes(context8 -> {
             String name = a(context8, "название");
             if (!g(name)) {
-                ChatUtil.a("Метка с именем &c" + name + " &7отсутствует");
+                ChatUtil.sendMessage("Метка с именем &c" + name + " &7отсутствует");
                 return 1;
             }
             this.c.removeIf(way -> {
                 return way.a().equalsIgnoreCase(name);
             });
-            ChatUtil.a("Метка с именем &c" + name + " &7успешно удалена");
+            ChatUtil.sendMessage("Метка с именем &c" + name + " &7успешно удалена");
             return 1;
         }))).then(a("list").executes(context9 -> {
             if (this.c.isEmpty()) {
-                ChatUtil.a("Список меток не содержит элементов");
+                ChatUtil.sendMessage("Список меток не содержит элементов");
                 return 1;
             }
-            ChatUtil.a("Список всех меток (" + this.c.size() + "):");
+            ChatUtil.sendMessage("Список всех меток (" + this.c.size() + "):");
             for (b way : this.c) {
-                ChatUtil.a("— &c" + way.a() + " &7[&f" + a(way.b()) + "&7]&f");
+                ChatUtil.sendMessage("— &c" + way.a() + " &7[&f" + a(way.b()) + "&7]&f");
             }
             return 1;
         })).then(a("event").executes(context10 -> {
@@ -98,11 +98,11 @@ public class WayCommand extends BaseCommand {
             aM_.player.networkHandler.sendCommand("event delay");
             return 1;
         })).then(a("clear").executes(context11 -> {
-            ChatUtil.a("Количество удалённых меток: " + this.c.size());
+            ChatUtil.sendMessage("Количество удалённых меток: " + this.c.size());
             this.c.clear();
             return 1;
         })).executes(context12 -> {
-            ChatUtil.a("Использование: .way <add|me|remove|list|clear|event>");
+            ChatUtil.sendMessage("Использование: .way <add|me|remove|list|clear|event>");
             return 1;
         });
     }
@@ -151,7 +151,7 @@ public class WayCommand extends BaseCommand {
                 }
             }
             if (!found) {
-                ChatUtil.a("Нет активного события с координатами.");
+                ChatUtil.sendMessage("Нет активного события с координатами.");
             }
             this.d.clear();
             this.e = a.NONE;
@@ -177,7 +177,7 @@ public class WayCommand extends BaseCommand {
             return way.a().equalsIgnoreCase(trimmed) || way.b().distanceTo(pos) <= 5.0d;
         });
         this.c.add(new b(trimmed, pos));
-        ChatUtil.a("Метка &c" + trimmed + (replaced ? " &7успешно переставлена: " : " &7успешно добавлена: ") + a(pos));
+        ChatUtil.sendMessage("Метка &c" + trimmed + (replaced ? " &7успешно переставлена: " : " &7успешно добавлена: ") + a(pos));
     }
 
     private boolean g(String name) {

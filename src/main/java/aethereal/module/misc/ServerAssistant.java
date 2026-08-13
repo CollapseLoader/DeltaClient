@@ -258,11 +258,11 @@ public class ServerAssistant extends Module implements Interface {
                 Locale locale = Locale.US;
                 Object[] objArr = new Object[1];
                 objArr[0] = Float.valueOf(entry != null ? Math.max(((platform.inject.accessors.ItemCooldownEntryAccessor) entry).getEndTick() - accessor.getTick(), 0) / 20.0f : 0.0f);
-                ChatUtil.a("&c" + name + "&7 - имеет задержку &c" + String.format(locale, "%.1fс", objArr));
+                ChatUtil.sendMessage("&c" + name + "&7 - имеет задержку &c" + String.format(locale, "%.1fс", objArr));
                 return;
             }
             if (InventoryUtil.b(item) == -1) {
-                ChatUtil.a("&c" + name + "&7 - нет в инвентаре");
+                ChatUtil.sendMessage("&c" + name + "&7 - нет в инвентаре");
             } else {
                 Delta.h().d().v().b().a(item.getDefaultStack());
             }

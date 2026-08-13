@@ -75,7 +75,7 @@ public class AncientFarmer extends Module {
         boolean work = missing == AncientFarmer.a.TNT && this.e != Phase.SEARCH;
         ServerUtil.a.d();
         if (missing != null && !work) {
-            ChatUtil.a("Для работы модуля " + missing.c() + "!");
+            ChatUtil.sendMessage("Для работы модуля " + missing.c() + "!");
             a();
             return;
         }
@@ -114,12 +114,12 @@ public class AncientFarmer extends Module {
         switch (this.e) {
             case SEARCH:
                 if (!xray.s().isEmpty()) {
-                    ChatUtil.a("Вскапываем обломки найденные по пути");
+                    ChatUtil.sendMessage("Вскапываем обломки найденные по пути");
                     this.e = Phase.MINE;
                 } else if (this.g == null) {
                     this.c.execute(() -> {
                         if (this.g == null && aM_.player.age > 20) {
-                            ChatUtil.a("Переходим к поиску новой территории.");
+                            ChatUtil.sendMessage("Переходим к поиску новой территории.");
                             this.g = q();
                         }
                     });
@@ -240,7 +240,7 @@ public class AncientFarmer extends Module {
                     return true;
                 });
                 if (burning.isEmpty()) {
-                    ChatUtil.a("Ожидаем обломки, и начинаем вскапывать");
+                    ChatUtil.sendMessage("Ожидаем обломки, и начинаем вскапывать");
                     baritone.getPathingBehavior().cancelEverything();
                     this.g = null;
                     this.e = Phase.MINE;
@@ -327,7 +327,7 @@ public class AncientFarmer extends Module {
         if (best != null) {
             long jRound = Math.round(bestFill * 100.0d);
             Math.round(Math.sqrt(feet.getSquaredDistance(best.getCenter())));
-            ChatUtil.a("Успешность: &c" + jRound + "%&7, до неё &c" + jRound + "&7 блоков");
+            ChatUtil.sendMessage("Успешность: &c" + jRound + "%&7, до неё &c" + jRound + "&7 блоков");
         }
         return best;
     }

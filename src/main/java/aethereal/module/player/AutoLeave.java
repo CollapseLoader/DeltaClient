@@ -38,9 +38,9 @@ public class AutoLeave extends Module {
         if (((this.b.a("Малое ХП").c().booleanValue() && aM_.player.getHealth() <= this.c.c().floatValue()) || (this.b.a("Игроки рядом").c().booleanValue() && near != null)) && !ServerUtil.e()) {
             aM_.player.networkHandler.sendChatCommand("hub");
             if (near != null) {
-                ChatUtil.a("Покинул анархию: рядом игрок &c" + near.getName().getString() + "&7 в &c" + Math.round(Math.sqrt(aM_.player.squaredDistanceTo(near))) + "&7 блоках.");
+                ChatUtil.sendMessage("Покинул анархию: рядом игрок &c" + near.getName().getString() + "&7 в &c" + Math.round(Math.sqrt(aM_.player.squaredDistanceTo(near))) + "&7 блоках.");
             } else {
-                ChatUtil.a("Покинул &cанархию: критически мало здоровья&7.");
+                ChatUtil.sendMessage("Покинул &cанархию: критически мало здоровья&7.");
             }
             a();
         }

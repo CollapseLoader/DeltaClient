@@ -8,7 +8,7 @@ import lombok.Generated;
 import net.minecraft.command.CommandSource;
 import net.minecraft.util.math.Vec3d;
 
-@Command(a = "gps")
+@Command(name = "gps")
 public class GPSCommand extends BaseCommand {
     private Vec3d c;
 
@@ -21,14 +21,14 @@ public class GPSCommand extends BaseCommand {
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(a(BooleanUtils.c).executes(context -> {
             if (this.c == null) {
-                ChatUtil.a("GPS-метка сейчас отсутствует");
+                ChatUtil.sendMessage("GPS-метка сейчас отсутствует");
                 return 1;
             }
             this.c = null;
-            ChatUtil.a("GPS-метка больше не отображается");
+            ChatUtil.sendMessage("GPS-метка больше не отображается");
             return 1;
         })).then(e("x").executes(context2 -> {
-            ChatUtil.a("Использование: .gps <x> <z>, .gps <x> <y> <z> или .gps off");
+            ChatUtil.sendMessage("Использование: .gps <x> <z>, .gps <x> <y> <z> или .gps off");
             return 1;
         }).then(e("y или z").executes(context3 -> {
             a(new Vec3d(b(context3, "x"), aM_.player.getY(), b(context3, "y или z")));
@@ -41,13 +41,13 @@ public class GPSCommand extends BaseCommand {
             aM_.player.networkHandler.sendCommand("event delay");
             return 1;
         })).executes(context6 -> {
-            ChatUtil.a("Использование: .gps <x> <z>, .gps <x> <y> <z> или .gps off");
+            ChatUtil.sendMessage("Использование: .gps <x> <z>, .gps <x> <y> <z> или .gps off");
             return 1;
         });
     }
 
     public void a(Vec3d pos) {
         this.c = pos;
-        ChatUtil.a("GPS-метка установлена: " + ((int) pos.getX()) + ", " + ((int) pos.getY()) + ", " + ((int) pos.getZ()));
+        ChatUtil.sendMessage("GPS-метка установлена: " + ((int) pos.getX()) + ", " + ((int) pos.getY()) + ", " + ((int) pos.getZ()));
     }
 }

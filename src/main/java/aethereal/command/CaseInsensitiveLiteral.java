@@ -25,7 +25,7 @@ public class CaseInsensitiveLiteral extends LiteralCommandNode<CommandSource> {
         node.getChildren().forEach(this::addChild);
     }
 
-    static Collection<? extends CommandNode<CommandSource>> a(CommandNode<CommandSource> parent, StringReader input) {
+    static Collection<? extends CommandNode<CommandSource>> getRelevantNodes(CommandNode<CommandSource> parent, StringReader input) {
         int start = input.getCursor();
         while (input.canRead() && input.peek() != ' ') {
             input.skip();
@@ -42,13 +42,15 @@ public class CaseInsensitiveLiteral extends LiteralCommandNode<CommandSource> {
 
     public static LiteralArgumentBuilder<CommandSource> a(String name) {
         return new LiteralArgumentBuilder<CommandSource>(name) {
-            public LiteralCommandNode<CommandSource> b() {
+            @Override
+            public LiteralCommandNode<CommandSource> build() {
                 return new CaseInsensitiveLiteral(super.build());
             }
         };
     }
 
-    public void a(StringReader reader, CommandContextBuilder<CommandSource> ctx) throws CommandSyntaxException {
+    @Override
+    public void parse(StringReader reader, CommandContextBuilder<CommandSource> ctx) throws CommandSyntaxException {
         int start = reader.getCursor();
         String literal = getLiteral();
         while (reader.canRead() && reader.peek() != ' ') {
@@ -64,7 +66,8 @@ public class CaseInsensitiveLiteral extends LiteralCommandNode<CommandSource> {
         ctx.withNode(this, StringRange.between(start, reader.getCursor()));
     }
 
-    public CompletableFuture<Suggestions> a(CommandContext<CommandSource> context, SuggestionsBuilder builder) {
+    @Override
+    public CompletableFuture<Suggestions> listSuggestions(CommandContext<CommandSource> context, SuggestionsBuilder builder) {
         String literal = getLiteral();
         String typed = builder.getRemaining();
         if (literal.toLowerCase(Locale.ROOT).startsWith(typed.toLowerCase(Locale.ROOT))) {
@@ -74,13 +77,15 @@ public class CaseInsensitiveLiteral extends LiteralCommandNode<CommandSource> {
         return Suggestions.empty();
     }
 
-    public Collection<? extends CommandNode<CommandSource>> a(StringReader input) {
-        return a(this, input);
+    @Override
+    public Collection<? extends CommandNode<CommandSource>> getRelevantNodes(StringReader input) {
+        return getRelevantNodes(this, input);
     }
 
     public static final class a extends RootCommandNode<CommandSource> {
-        public Collection<? extends CommandNode<CommandSource>> a(StringReader input) {
-            return CaseInsensitiveLiteral.a(this, input);
+        @Override
+        public Collection<? extends CommandNode<CommandSource>> getRelevantNodes(StringReader input) {
+            return CaseInsensitiveLiteral.getRelevantNodes(this, input);
         }
     }
 }

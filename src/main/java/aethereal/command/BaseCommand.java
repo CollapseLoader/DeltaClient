@@ -20,7 +20,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public abstract class BaseCommand implements Interface {
-    protected final String b = getClass().getAnnotation(Command.class).a();
+    protected final String b = getClass().getAnnotation(Command.class).name();
 
     public abstract void a(LiteralArgumentBuilder<CommandSource> literalArgumentBuilder);
 

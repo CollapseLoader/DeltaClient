@@ -22,7 +22,7 @@ public class LockSlot extends Module {
     @EventTarget
     public void a(DropItemEvent event) {
         if ((!this.c.c().booleanValue() || ServerUtil.e()) && this.b.a(event.b()).c().booleanValue()) {
-            ChatUtil.a("Попытка выброса из слота \"&c" + (event.b() + 1) + "&7\" была заблокирована");
+            ChatUtil.sendMessage("Попытка выброса из слота \"&c" + (event.b() + 1) + "&7\" была заблокирована");
             event.a(true);
         }
     }

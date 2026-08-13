@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@Command(a = "layout")
+@Command(name = "layout")
 public class LayoutCommand extends BaseCommand {
     private final List<a> c = new ArrayList();
     private final List<a> d = new ArrayList();
@@ -42,7 +42,7 @@ public class LayoutCommand extends BaseCommand {
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(a("save").executes(context -> {
-            ChatUtil.a("Использование: .layout save <название>");
+            ChatUtil.sendMessage("Использование: .layout save <название>");
             return 1;
         }).then(d("название").executes(context2 -> {
             String name = a(context2, "название");
@@ -56,10 +56,10 @@ public class LayoutCommand extends BaseCommand {
                 }
             }
             d();
-            ChatUtil.a("Раскладка &c" + name + " &7сохранена.");
+            ChatUtil.sendMessage("Раскладка &c" + name + " &7сохранена.");
             return 1;
         }))).then(a("load").executes(context3 -> {
-            ChatUtil.a("Использование: .layout load <название>");
+            ChatUtil.sendMessage("Использование: .layout load <название>");
             return 1;
         }).then(d("название").suggests(a(this::c, (v0) -> {
             return v0.a();
@@ -69,13 +69,13 @@ public class LayoutCommand extends BaseCommand {
                 return layout.a().equalsIgnoreCase(name);
             }).toList();
             if (target.isEmpty()) {
-                ChatUtil.a("Раскладка &c" + name + " &7не найдена");
+                ChatUtil.sendMessage("Раскладка &c" + name + " &7не найдена");
                 return 1;
             }
             a(target);
             return 1;
         }))).then(a("remove").executes(context5 -> {
-            ChatUtil.a("Использование: .layout remove <название>");
+            ChatUtil.sendMessage("Использование: .layout remove <название>");
             return 1;
         }).then(d("название").suggests(a(this::c, (v0) -> {
             return v0.a();
@@ -85,35 +85,35 @@ public class LayoutCommand extends BaseCommand {
             if (layouts.stream().noneMatch(layout -> {
                 return layout.a().equalsIgnoreCase(name);
             })) {
-                ChatUtil.a("Раскладка &c" + name + " &7не найдена");
+                ChatUtil.sendMessage("Раскладка &c" + name + " &7не найдена");
                 return 1;
             }
             layouts.removeIf(layout2 -> {
                 return layout2.a().equalsIgnoreCase(name);
             });
             d();
-            ChatUtil.a("Раскладка &c" + name + " &7удалена");
+            ChatUtil.sendMessage("Раскладка &c" + name + " &7удалена");
             return 1;
         }))).then(a("list").executes(context7 -> {
             List<a> layouts = this.c;
             if (layouts.isEmpty()) {
-                ChatUtil.a("Список раскладок пуст.");
+                ChatUtil.sendMessage("Список раскладок пуст.");
                 return 1;
             }
-            ChatUtil.a("Сохраненные раскладки:");
+            ChatUtil.sendMessage("Сохраненные раскладки:");
             layouts.stream().map((v0) -> {
                 return v0.a();
             }).distinct().forEach(name -> {
-                ChatUtil.a("— &c" + name);
+                ChatUtil.sendMessage("— &c" + name);
             });
             return 1;
         })).then(a("clear").executes(context8 -> {
             this.c.clear();
             d();
-            ChatUtil.a("Раскладки очищены.");
+            ChatUtil.sendMessage("Раскладки очищены.");
             return 1;
         })).executes(context9 -> {
-            ChatUtil.a("Использование: .layout <save|load|remove|list|clear> <название>");
+            ChatUtil.sendMessage("Использование: .layout <save|load|remove|list|clear> <название>");
             return 1;
         });
     }
@@ -161,12 +161,12 @@ public class LayoutCommand extends BaseCommand {
                 }
             }
             if (missing.isEmpty()) {
-                ChatUtil.a("Раскладка разложена.");
+                ChatUtil.sendMessage("Раскладка разложена.");
             } else {
-                ChatUtil.a("Раскладка разложена, не хватило:");
+                ChatUtil.sendMessage("Раскладка разложена, не хватило:");
                 Iterator<String> it = missing.iterator();
                 while (it.hasNext()) {
-                    ChatUtil.a("- &c" + it.next());
+                    ChatUtil.sendMessage("- &c" + it.next());
                 }
             }
             this.d.clear();

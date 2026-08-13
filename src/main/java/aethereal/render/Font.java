@@ -111,7 +111,7 @@ public class Font {
 
     public void a(MatrixStack matrixStack, String text, float x, float y, float size, float thickness, int color, int colorSecond, float offset, float smoothness, float spacing, int outlineColor, float outlineThickness) {
         if (Objects.equals(text, "11111")) {
-            ChatUtil.a(Integer.valueOf(color));
+            ChatUtil.sendMessage(Integer.valueOf(color));
         }
         if (text == null || text.isEmpty()) {
             return;

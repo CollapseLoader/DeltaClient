@@ -9,7 +9,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.client.network.PlayerListEntry;
 import net.minecraft.command.CommandSource;
 
-@Command(a = "ccc")
+@Command(name = "ccc")
 public class CCCommand extends BaseCommand {
     private int c;
 

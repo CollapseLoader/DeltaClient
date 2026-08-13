@@ -61,7 +61,7 @@ public class AntiBot extends Module {
                 if (player.getUuid().equals(uuid)) {
                     boolean armor = !player.getEquippedStack(EquipmentSlot.HEAD).isEmpty() && !player.getEquippedStack(EquipmentSlot.CHEST).isEmpty() && !player.getEquippedStack(EquipmentSlot.LEGS).isEmpty() && !player.getEquippedStack(EquipmentSlot.FEET).isEmpty();
                     if (armor) {
-                        ChatUtil.a("Фальшивый игрок был обнаружен, и удален из мира.");
+                        ChatUtil.sendMessage("Фальшивый игрок был обнаружен, и удален из мира.");
                         aM_.world.removeEntity(player.getId(), Entity.RemovalReason.DISCARDED);
                     }
                     checked.add(uuid);

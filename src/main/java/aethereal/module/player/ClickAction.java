@@ -26,11 +26,11 @@ public class ClickAction extends Module implements Interface {
                     if (Delta.h().d().e().d(name)) {
                         Delta.h().d().e().c(name);
                         Delta.h().d().e().unSetup();
-                        ChatUtil.a("Товарищ " + name + " был успешно удален из списка друзей.");
+                        ChatUtil.sendMessage("Товарищ " + name + " был успешно удален из списка друзей.");
                     } else {
                         Delta.h().d().e().b(name);
                         Delta.h().d().e().unSetup();
-                        ChatUtil.a("Товарищ " + name + " был успешно добавлен в список друзей.");
+                        ChatUtil.sendMessage("Товарищ " + name + " был успешно добавлен в список друзей.");
                     }
                 }
             }

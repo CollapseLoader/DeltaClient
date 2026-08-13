@@ -161,7 +161,7 @@ public class AutoBuy extends Module implements Interface {
                     if (s2CPacket.getContents().size() == 90 && this.f >= 7) {
                         int anarchy = (int) (MathUtil.a(0.0f, 100.0f) <= 50.0f ? MathUtil.a(205.0f, 231.0f) : MathUtil.a(305.0f, 325.0f));
                         aM_.player.networkHandler.sendChatCommand("an" + anarchy);
-                        ChatUtil.a("Обнаружили замедление аукциона, переходим на " + anarchy + " анархию");
+                        ChatUtil.sendMessage("Обнаружили замедление аукциона, переходим на " + anarchy + " анархию");
                         this.f = 0;
                         this.k = true;
                     }
@@ -180,7 +180,7 @@ public class AutoBuy extends Module implements Interface {
                             objArr2[2] = String.format(Locale.US, "%,d", Long.valueOf(ServerUtil.a.e()));
                             objArr[1] = "🛒 AutoBuy — Успешная покупка!\n\n📦 Предмет: %s\n💰 Цена: %s $\n💳 Баланс: %s $\n".formatted(objArr2);
                             clientF.a(false, "telegram", objArr);
-                            ChatUtil.a("Успешно куплен предмет &c" + this.i.getName().getString() + " &7за &c" + ServerUtil.a.a(this.i));
+                            ChatUtil.sendMessage("Успешно куплен предмет &c" + this.i.getName().getString() + " &7за &c" + ServerUtil.a.a(this.i));
                             this.d.addFirst(this.i);
                         }
                         this.i = null;

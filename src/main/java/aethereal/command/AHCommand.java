@@ -21,7 +21,7 @@ import net.minecraft.network.packet.s2c.play.InventoryS2CPacket;
 import java.util.ArrayList;
 import java.util.List;
 
-@Command(a = "ah")
+@Command(name = "ah")
 public class AHCommand extends BaseCommand implements Interface {
     private final List<a> c = new ArrayList();
     private TranslationStorage d;
@@ -96,7 +96,7 @@ public class AHCommand extends BaseCommand implements Interface {
             return info.a(stack);
         }).findFirst().orElse(null);
         if (item == null) {
-            ChatUtil.a("Авто-продажа недоступна для обычных предметов — только для донатных");
+            ChatUtil.sendMessage("Авто-продажа недоступна для обычных предметов — только для донатных");
             return;
         }
         b request = new b(item, stack.getCount(), percent);
@@ -114,7 +114,7 @@ public class AHCommand extends BaseCommand implements Interface {
     private void a(b sell, int cheapest) {
         long price = Math.max(1L, Math.round(((double) cheapest) * (1.0d - (((double) sell.c()) / 100.0d)) * ((double) Math.max(1, sell.b()))));
         String strB = sell.a().b();
-        ChatUtil.a("Выставляю &c" + strB + " &7за &c" + price + " &7(-" + strB + "% от " + ((int) sell.c()) + ")");
+        ChatUtil.sendMessage("Выставляю &c" + strB + " &7за &c" + price + " &7(-" + strB + "% от " + ((int) sell.c()) + ")");
         this.e = "ah sell " + price;
     }
 

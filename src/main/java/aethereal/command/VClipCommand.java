@@ -8,7 +8,7 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 
-@Command(a = "vclip")
+@Command(name = "vclip")
 public class VClipCommand extends BaseCommand {
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
@@ -16,7 +16,7 @@ public class VClipCommand extends BaseCommand {
             float offset = a(true);
             if (offset != 0.0f) {
                 a(offset);
-                ChatUtil.a("Вы были успешно подняты по Y");
+                ChatUtil.sendMessage("Вы были успешно подняты по Y");
                 return 1;
             }
             return 1;
@@ -24,17 +24,17 @@ public class VClipCommand extends BaseCommand {
             float offset = a(false);
             if (offset != 0.0f) {
                 a(offset);
-                ChatUtil.a("Вы были успешно опущены по Y");
+                ChatUtil.sendMessage("Вы были успешно опущены по Y");
                 return 1;
             }
             return 1;
         })).then(f("число").executes(context3 -> {
             float offset = c(context3, "число");
             a(offset);
-            ChatUtil.a("Вы были успешно перемещены на " + offset + " по Y");
+            ChatUtil.sendMessage("Вы были успешно перемещены на " + offset + " по Y");
             return 1;
         })).executes(context4 -> {
-            ChatUtil.a("Использование: .vclip <число|up|down>");
+            ChatUtil.sendMessage("Использование: .vclip <число|up|down>");
             return 1;
         });
     }
@@ -64,7 +64,7 @@ public class VClipCommand extends BaseCommand {
                 if (up || !aM_.world.getBlockState(targetPos).isOf(Blocks.BEDROCK)) {
                     i = offset + step;
                 } else {
-                    ChatUtil.a(Formatting.GRAY + "Телепортация в данное место невозможно");
+                    ChatUtil.sendMessage(Formatting.GRAY + "Телепортация в данное место невозможно");
                     return 0.0f;
                 }
             } else {

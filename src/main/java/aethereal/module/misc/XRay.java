@@ -88,7 +88,7 @@ public class XRay extends Module implements Interface {
     public void a(TickEvent e) {
         this.c.a();
         if (this.d && this.c.b(5L)) {
-            ChatUtil.a("Обнаружено &c" + this.b.size() + "&7 древних обломков ");
+            ChatUtil.sendMessage("Обнаружено &c" + this.b.size() + "&7 древних обломков ");
             this.d = false;
         }
     }

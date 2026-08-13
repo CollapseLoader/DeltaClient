@@ -7,7 +7,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import lombok.Generated;
 import net.minecraft.command.CommandSource;
 
-@Command(a = "rct")
+@Command(name = "rct")
 public class RCTCommand extends BaseCommand {
     private int c = -1;
 

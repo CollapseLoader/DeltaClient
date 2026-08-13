@@ -1,9 +1,7 @@
 package aethereal.module.misc;
 
 import aethereal.util.StringUtils;
-import aethereal.core.Interface;
 
-import static aethereal.core.Interface.aM_;
 import aethereal.core.Delta;
 import aethereal.core.InterfaceC0020Opcode;
 import aethereal.core.Module;
@@ -73,7 +71,6 @@ import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.entity.mob.WardenEntity;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.item.SmithingTemplateItem;
 import net.minecraft.component.type.NbtComponent;
@@ -127,7 +124,7 @@ public class AutoWarden extends Module {
         if (!Delta.h().d().t().i().m()) {
             Delta.h().d().t().i().a();
         }
-        ChatUtil.a((Object) "Shift + Пробел — быстрое выключение функции");
+        ChatUtil.sendMessage((Object) "Shift + Пробел — быстрое выключение функции");
         BaritoneAPI.getSettings().avoidance.value = true;
         BaritoneAPI.getSettings().maxFallHeightNoWater.value = 256;
         BaritoneAPI.getSettings().blockFreeLook.value = true;
@@ -252,7 +249,7 @@ public class AutoWarden extends Module {
                     for (StatusEffectInstance effect : aM_.player.getStatusEffects()) {
                         effects.append(((StatusEffect) effect.getEffectType().value()).getName().getString()).append(StringUtils.a);
                     }
-                    ChatUtil.a((Object) ("Эффекты при смерти: " + (effects.isEmpty() ? "нет" : effects.toString().trim())));
+                    ChatUtil.sendMessage((Object) ("Эффекты при смерти: " + (effects.isEmpty() ? "нет" : effects.toString().trim())));
                     if (!aM_.player.hasStatusEffect(StatusEffects.GLOWING) && !isNearChest(2.0d)) {
                         this.killerName = text.split("Вас убил ")[1].split(",")[0].trim();
                     }
@@ -378,7 +375,7 @@ public class AutoWarden extends Module {
         }
         if (this.anarchyList.size() <= 1) {
             if (aM_.player.age % 20 == 0) {
-                ChatUtil.a((Object) "ОШИБКА -> .warden list пустой");
+                ChatUtil.sendMessage((Object) "ОШИБКА -> .warden list пустой");
                 return;
             }
             return;
@@ -540,11 +537,11 @@ public class AutoWarden extends Module {
 
     private void debugOutput() {
         baritone.api.IBaritone.PathingBehavior pathing = BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior();
-        ChatUtil.a((Object) ("&7[AW] состояние &f" + this.state + " &7| анархия &f" + ServerUtil.a.d() + "&7, нужна &f" + currentAnarchy() + " &7(список: &f" + this.anarchyList.size() + "&7) | в зоне фермы &f" + isInFarmArea() + " &7| сундуков у ESP &f" + Delta.h().d().t().i().q().size() + " &7| варден &f" + isWardenAggro() + " &7| пвп &f" + ServerUtil.e() + " &7| baritone: &f" + (pathing.hasPath() ? "идёт" : "стоит")));
-        ChatUtil.a((Object) ("&7[AW] застрял(r) &c" + isStuck() + " &7| двигаюсь(L) &f" + isMoving() + " &7| в блоке(s) &f" + isInsideBlock() + " &7| свечи &f" + (aM_.world.getBlockState(aM_.player.getBlockPos()).isIn(BlockTags.CANDLES) || aM_.world.getBlockState(aM_.player.getBlockPos().down()).isIn(BlockTags.CANDLES))));
+        ChatUtil.sendMessage((Object) ("&7[AW] состояние &f" + this.state + " &7| анархия &f" + ServerUtil.a.d() + "&7, нужна &f" + currentAnarchy() + " &7(список: &f" + this.anarchyList.size() + "&7) | в зоне фермы &f" + isInFarmArea() + " &7| сундуков у ESP &f" + Delta.h().d().t().i().q().size() + " &7| варден &f" + isWardenAggro() + " &7| пвп &f" + ServerUtil.e() + " &7| baritone: &f" + (pathing.hasPath() ? "идёт" : "стоит")));
+        ChatUtil.sendMessage((Object) ("&7[AW] застрял(r) &c" + isStuck() + " &7| двигаюсь(L) &f" + isMoving() + " &7| в блоке(s) &f" + isInsideBlock() + " &7| свечи &f" + (aM_.world.getBlockState(aM_.player.getBlockPos()).isIn(BlockTags.CANDLES) || aM_.world.getBlockState(aM_.player.getBlockPos().down()).isIn(BlockTags.CANDLES))));
         BlockPos reach = findChestInHand(true);
         BlockPos far = findNearestReceiver();
-        ChatUtil.a((Object) ("&7[AW] лут в инвентаре(R) &f" + hasLoot() + " &7| приёмник в руке &f" + (reach == null ? "нет" : String.valueOf(reach)) + " &7| ближайший приёмник &f" + (far == null ? "не найден в радиусе 16" : far + " (" + ((int) Math.sqrt(aM_.player.squaredDistanceTo(Vec3d.ofCenter(far)))) + " бл.)") + " &7| экран &f" + (aM_.currentScreen == null ? "нет" : aM_.currentScreen.getClass().getSimpleName())));
+        ChatUtil.sendMessage((Object) ("&7[AW] лут в инвентаре(R) &f" + hasLoot() + " &7| приёмник в руке &f" + (reach == null ? "нет" : String.valueOf(reach)) + " &7| ближайший приёмник &f" + (far == null ? "не найден в радиусе 16" : far + " (" + ((int) Math.sqrt(aM_.player.squaredDistanceTo(Vec3d.ofCenter(far)))) + " бл.)") + " &7| экран &f" + (aM_.currentScreen == null ? "нет" : aM_.currentScreen.getClass().getSimpleName())));
     }
 
     private BlockPos findNearestReceiver() {

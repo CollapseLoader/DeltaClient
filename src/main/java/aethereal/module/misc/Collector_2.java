@@ -66,7 +66,7 @@ public class Collector_2 extends Module {
     @Override
     public void b() {
         super.b();
-        ChatUtil.a("Модуль ищет самые дешевые лоты среди тех которые есть, имейте это ввиду, и будьте осторожны!");
+        ChatUtil.sendMessage("Модуль ищет самые дешевые лоты среди тех которые есть, имейте это ввиду, и будьте осторожны!");
     }
 
     private void r() {
@@ -82,9 +82,9 @@ public class Collector_2 extends Module {
             return a(slot) < a(slot, false);
         }).findFirst().orElse(null);
         if (this.h != null) {
-            ChatUtil.a("Переходим к сбору предмета: " + this.h.j());
+            ChatUtil.sendMessage("Переходим к сбору предмета: " + this.h.j());
         } else {
-            ChatUtil.a("Все предметы собраны, работа завершена");
+            ChatUtil.sendMessage("Все предметы собраны, работа завершена");
         }
     }
 
@@ -98,7 +98,7 @@ public class Collector_2 extends Module {
     public void a(TickEvent event) {
         if (this.h != null) {
             if (aM_.player.getInventory().getEmptySlot() == -1) {
-                ChatUtil.a("Автоматическое отключение: нет свободных слотов в инвентаре, освободите место");
+                ChatUtil.sendMessage("Автоматическое отключение: нет свободных слотов в инвентаре, освободите место");
                 s();
                 a();
                 return;
@@ -118,7 +118,7 @@ public class Collector_2 extends Module {
             String title = event.b().getTitle().getString().replaceAll("§.", "").toLowerCase().trim();
             if (title.contains(this.h.j().toLowerCase())) {
                 if (this.f.a(300L, 80L) && a(this.h) >= a(this.h, false)) {
-                    ChatUtil.a("Предмет " + this.h.j() + " приобретен, перехожу к следующему");
+                    ChatUtil.sendMessage("Предмет " + this.h.j() + " приобретен, перехожу к следующему");
                     r();
                     s();
                     return;
@@ -165,7 +165,7 @@ public class Collector_2 extends Module {
                                         aM_.interactionManager.clickSlot(event.c().syncId, offer2.id, 0, SlotActionType.QUICK_MOVE, aM_.player);
                                         this.f.b();
                                     } else {
-                                        ChatUtil.a("Оффер пропал, пересканирую");
+                                        ChatUtil.sendMessage("Оффер пропал, пересканирую");
                                         this.i = null;
                                         this.e.clear();
                                         s();
@@ -205,7 +205,7 @@ public class Collector_2 extends Module {
                                     int currentPage2 = Integer.parseInt(matcher2.group(1));
                                     int totalPages = Integer.parseInt(matcher2.group(2));
                                     if (totalPages == 1) {
-                                        ChatUtil.a("Пропускаем предмет " + this.h.j() + ", ибо нету подходящего");
+                                        ChatUtil.sendMessage("Пропускаем предмет " + this.h.j() + ", ибо нету подходящего");
                                         r();
                                         s();
                                         return;
@@ -245,7 +245,7 @@ public class Collector_2 extends Module {
                     this.e.clear();
                     return;
                 } else if (message.contains("[✘] Ошибка! У Вас не хватает Монет!")) {
-                    ChatUtil.a("Автоматическое отключение из-за нехватки баланса на аккаунте");
+                    ChatUtil.sendMessage("Автоматическое отключение из-за нехватки баланса на аккаунте");
                     a();
                     return;
                 } else if (message.contains("Данная команда недоступна в режиме AFK")) {
@@ -256,7 +256,7 @@ public class Collector_2 extends Module {
                 if (this.j >= 8) {
                     int anarchy = (int) (MathUtil.a(0.0f, 100.0f) <= 50.0f ? MathUtil.a(205.0f, 231.0f) : MathUtil.a(305.0f, 325.0f));
                     aM_.player.networkHandler.sendChatMessage("/an" + anarchy);
-                    ChatUtil.a("Обнаружили замедление аукциона, переходим на " + anarchy + " анархию");
+                    ChatUtil.sendMessage("Обнаружили замедление аукциона, переходим на " + anarchy + " анархию");
                 }
                 this.g.b();
             }
@@ -278,7 +278,7 @@ public class Collector_2 extends Module {
         }
         if (event.b() == 256 && this.h != null) {
             this.h = null;
-            ChatUtil.a("Работа модуля была принудительно завершена");
+            ChatUtil.sendMessage("Работа модуля была принудительно завершена");
         }
     }
 

@@ -35,7 +35,7 @@ public class AutoFish extends Module implements Interface {
             if (aM_.player.fishHook == null) {
                 d(false);
             }
-            ChatUtil.a(j() + " активирован, удачной рыбалки!");
+            ChatUtil.sendMessage(j() + " активирован, удачной рыбалки!");
         }
     }
 
