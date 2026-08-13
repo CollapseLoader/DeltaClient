@@ -35,8 +35,8 @@ public class AimHandler extends BaseHandler implements Interface {
         float alpha = this.b.c();
         if (event.b() && this.c != null && alpha > 0.0f) {
             Vec3d real = a(this.c, event.g());
-            Vector2f screen = ProjectUtil.a(real.x, real.y, real.z);
-            if (!ProjectUtil.a(screen)) {
+            Vector2f screen = ProjectUtil.project(real.x, real.y, real.z);
+            if (!ProjectUtil.isOnScreen(screen)) {
                 return;
             }
             float distance = (float) aM_.player.getEyePos().distanceTo(real);

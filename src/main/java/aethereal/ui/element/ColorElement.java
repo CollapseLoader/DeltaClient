@@ -54,17 +54,17 @@ public class ColorElement extends Element_2<ColorSetting> {
         if (!this.m || button != 0) {
             return false;
         }
-        if (MathUtil.a(mouseX, mouseY, vector4f2.x, vector4f2.z, vector4f2.y, vector4f2.w)) {
+        if (MathUtil.a(mouseX, mouseY, vector4f2.x, vector4f2.y, vector4f2.z, vector4f2.w)) {
             this.l = DragMode.AREA;
             a(mouseX, mouseY);
             return true;
         }
-        if (MathUtil.a(mouseX, mouseY, vector4f3.x, vector4f3.z, vector4f3.y, vector4f3.w)) {
+        if (MathUtil.a(mouseX, mouseY, vector4f3.x, vector4f3.y, vector4f3.z, vector4f3.w)) {
             this.l = DragMode.HUE;
             a(mouseX, mouseY);
             return true;
         }
-        if (!MathUtil.a(mouseX, mouseY, vector4f4.x, vector4f4.z, vector4f4.y, vector4f4.w)) {
+        if (!MathUtil.a(mouseX, mouseY, vector4f4.x, vector4f4.y, vector4f4.z, vector4f4.w)) {
             return false;
         }
         this.l = DragMode.ALPHA;

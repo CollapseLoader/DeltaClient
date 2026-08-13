@@ -85,8 +85,8 @@ public class Communication extends Module implements Interface {
             return;
         }
         Vec3d position = new Vec3d(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]), Double.parseDouble(parts[2]));
-        Vector2f screen = ProjectUtil.a(position.x, position.y, position.z);
-        if (ProjectUtil.a(screen)) {
+        Vector2f screen = ProjectUtil.project(position.x, position.y, position.z);
+        if (ProjectUtil.isOnScreen(screen)) {
             ThemeProcessor theme = Delta.h().d().o();
             int primary = theme.a(ThemeInfo.PRIMARY).a();
             int background = ColorUtil.a(theme.a(ThemeInfo.BACKGROUND_HUD).a(), theme.a(ThemeInfo.BACKGROUND_HUD).b());

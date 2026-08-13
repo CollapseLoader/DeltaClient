@@ -1,80 +1,91 @@
 package aethereal.module.render;
 
-import aethereal.core.*;
+import aethereal.core.Interface;
+
+import static aethereal.core.Interface.aM_;
+import aethereal.core.Delta;
+import aethereal.core.InterfaceC0020Opcode;
 import aethereal.core.Module;
-import aethereal.event.DrawEvent;
-import aethereal.module.misc.StreamerMode;
-import aethereal.render.ColorUtil;
 import aethereal.render.Fonts;
-import aethereal.setting.BooleanSetting;
-import aethereal.setting.MultiModeSetting;
+import aethereal.render.ColorUtil;
 import aethereal.util.InventoryUtil;
 import aethereal.util.MathUtil;
 import aethereal.util.ProjectUtil;
 import aethereal.util.ServerUtil;
+
+import aethereal.core.Category;
+import aethereal.core.EventTarget;
+import aethereal.core.ModuleRegister;
+import aethereal.event.DrawEvent;
+import aethereal.module.misc.StreamerMode;
+import aethereal.setting.BooleanSetting;
+
+import aethereal.setting.MultiModeSetting;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import lombok.Generated;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ShulkerEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.text.Text;
+import net.minecraft.text.Style;
+import net.minecraft.text.MutableText;
+import net.minecraft.client.network.ClientPlayerEntity;
 import org.joml.Vector2f;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @ModuleRegister(a = "Entity ESP", b = "Отображает информацию о сущностях над их головой", c = Category.Render)
 public class EntityESP extends Module {
-    private final MultiModeSetting b = new MultiModeSetting("Отслеживаемые сущности", new BooleanSetting("Игроки", true), new BooleanSetting("Животные", false), new BooleanSetting("Мобы", false), new BooleanSetting("Предметы", false));
-    private final List<a> c = new ArrayList();
-
-    public EntityESP() {
-        a(this.b);
-    }
+    private final MultiModeSetting trackedEntities = new MultiModeSetting("Отслеживаемые сущности", new BooleanSetting("Игроки", true), new BooleanSetting("Животные", false), new BooleanSetting("Мобы", false), new BooleanSetting("Предметы", false));
+    private final List<Tracker> trackers = new ArrayList();
 
     @Generated
-    public List<a> q() {
-        return this.c;
+    public List<Tracker> getTrackers() {
+        return this.trackers;
+    }
+
+    public EntityESP() {
+        a(this.trackedEntities);
     }
 
     @EventTarget
-    public void a(DrawEvent event) {
+    public void onDraw(DrawEvent event) {
         String str;
         if (event.b()) {
-            for (Entity class_746Var : aM_.world.getEntities()) {
-                if (class_746Var != aM_.player) {
-                    if (class_746Var instanceof PlayerEntity) {
+            for (Entity entity : aM_.world.getEntities()) {
+                if (entity != aM_.player) {
+                    if (entity instanceof PlayerEntity) {
                         str = "Игроки";
-                    } else if (class_746Var instanceof HostileEntity) {
+                    } else if (entity instanceof HostileEntity) {
                         str = "Мобы";
-                    } else if ((class_746Var instanceof AnimalEntity) || (class_746Var instanceof ShulkerEntity) || (class_746Var instanceof VillagerEntity)) {
+                    } else if ((entity instanceof AnimalEntity) || (entity instanceof ShulkerEntity) || (entity instanceof VillagerEntity)) {
                         str = "Животные";
                     } else {
-                        str = ((class_746Var instanceof ItemEntity) || (class_746Var instanceof ArrowEntity)) ? "Предметы" : null;
+                        str = ((entity instanceof ItemEntity) || (entity instanceof ArrowEntity)) ? "Предметы" : null;
                     }
                     String key = str;
-                    if (key != null && this.b.a(key).c().booleanValue()) {
-                        int color = ((class_746Var instanceof PlayerEntity) && Delta.h().d().e().d(class_746Var.getName().getString())) ? ColorUtil.a(0, 100, 0, InterfaceC0020Opcode.bN) : ColorUtil.a(0, 0, 0, 80);
-                        Vec3d interpolated = MathUtil.a(class_746Var, event.g());
-                        Vec3d entityPos = interpolated.add(0.0d, class_746Var.getHeight() + 0.25f, 0.0d);
-                        Vector2f screenPos = ProjectUtil.a(entityPos.getX(), entityPos.getY(), entityPos.getZ());
-                        if (ProjectUtil.a(screenPos)) {
-                            if ((class_746Var instanceof ItemEntity) || (class_746Var instanceof ArrowEntity)) {
-                                c(class_746Var, event, screenPos, 7.5f, 2.0f, color);
+                    if (key != null && this.trackedEntities.a(key).c().booleanValue()) {
+                        int color = ((entity instanceof PlayerEntity) && Delta.h().d().e().d(entity.getName().getString())) ? ColorUtil.a(0, 100, 0, InterfaceC0020Opcode.bN) : ColorUtil.a(0, 0, 0, 80);
+                        Vec3d interpolated = MathUtil.a((Entity) entity, event.g());
+                        Vec3d entityPos = interpolated.add(0.0d, entity.getHeight() + 0.25f, 0.0d);
+                        Vector2f screenPos = ProjectUtil.project(entityPos.getX(), entityPos.getY(), entityPos.getZ());
+                        if (ProjectUtil.isOnScreen(screenPos)) {
+                            if ((entity instanceof ItemEntity) || (entity instanceof ArrowEntity)) {
+                                drawItem(entity, event, screenPos, 7.5f, 2.0f, color);
                             } else {
-                                a(class_746Var, event, screenPos, 7.5f, 2.0f, color);
-                                b(class_746Var, event, ProjectUtil.a(interpolated.x, interpolated.y - 0.25d, interpolated.z), 7.5f, 2.0f, color);
+                                drawNameTag(entity, event, screenPos, 7.5f, 2.0f, color);
+                                drawEffects(entity, event, ProjectUtil.project(interpolated.x, interpolated.y - 0.25d, interpolated.z), 7.5f, 2.0f, color);
                             }
                         }
                     }
@@ -83,7 +94,7 @@ public class EntityESP extends Module {
         }
     }
 
-    private void a(Entity entity, DrawEvent event, Vector2f screenPos, float fontSize, float padding, int color) {
+    private void drawNameTag(Entity entity, DrawEvent event, Vector2f screenPos, float fontSize, float padding, int color) {
         StreamerMode streamerMode = Delta.h().d().t().aE();
         Text name = entity.getName();
         if (streamerMode.m() && streamerMode.r().c().booleanValue()) {
@@ -102,16 +113,17 @@ public class EntityESP extends Module {
         float bgWidth = textWidth + (padding * 2.0f);
         event.d().a(event.i().getMatrices(), bgX, textY, bgWidth, textHeight, 0.0f, color);
         Fonts.e.a(event.i().getMatrices(), text, textX, textY, fontSize);
-        a(entity, event, bgWidth, bgX, textY, color, textHeight);
+        drawArmor(entity, event, bgWidth, bgX, textY, color, textHeight);
     }
 
-    private void a(Entity entity, DrawEvent event, float nameTagWidth, float nameTagX, float nameTagY, int color, float textHeight) {
-        if (entity instanceof PlayerEntity player) {
+    private void drawArmor(Entity entity, DrawEvent event, float nameTagWidth, float nameTagX, float nameTagY, int color, float textHeight) {
+        if (entity instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) entity;
             float spacing = textHeight * 0.3f;
             ItemStack[] stacks = {player.getMainHandStack(), player.getEquippedStack(EquipmentSlot.HEAD), player.getEquippedStack(EquipmentSlot.CHEST), player.getEquippedStack(EquipmentSlot.LEGS), player.getEquippedStack(EquipmentSlot.FEET), player.getOffHandStack()};
             int count = 0;
-            for (ItemStack class_1799Var : stacks) {
-                if (!class_1799Var.isEmpty()) {
+            for (ItemStack stack : stacks) {
+                if (!stack.isEmpty()) {
                     count++;
                 }
             }
@@ -129,25 +141,26 @@ public class EntityESP extends Module {
         }
     }
 
-    private void b(Entity entity, DrawEvent event, Vector2f screenPos, float fontSize, float padding, int color) {
+    private void drawEffects(Entity entity, DrawEvent event, Vector2f screenPos, float fontSize, float padding, int color) {
         List<StatusEffectInstance> effects;
-        if (entity instanceof LivingEntity living) {
-            List<a> trackers = new ArrayList<>();
-            for (int i = this.c.size() - 1; i >= 0; i--) {
-                a entry = this.c.get(i);
-                if (entry.b() == living.getId()) {
-                    if (living.age < entry.c()) {
-                        this.c.remove(i);
+        if (entity instanceof LivingEntity) {
+            LivingEntity living = (LivingEntity) entity;
+            List<Tracker> matchingTrackers = new ArrayList<>();
+            for (int i = this.trackers.size() - 1; i >= 0; i--) {
+                Tracker entry = this.trackers.get(i);
+                if (entry.getEntityId() == living.getId()) {
+                    if (living.age < entry.getAge()) {
+                        this.trackers.remove(i);
                     } else {
-                        trackers.add(entry);
+                        matchingTrackers.add(entry);
                     }
                 }
             }
-            if (!trackers.isEmpty()) {
+            if (!matchingTrackers.isEmpty()) {
                 effects = new ArrayList<>();
-                for (a tracker : trackers) {
-                    for (StatusEffectInstance effectInstance : tracker.a()) {
-                        int remaining = effectInstance.getDuration() - Math.max(0, living.age - tracker.c());
+                for (Tracker tracker : matchingTrackers) {
+                    for (StatusEffectInstance effectInstance : tracker.getEffects()) {
+                        int remaining = effectInstance.getDuration() - Math.max(0, living.age - tracker.getAge());
                         if (remaining > 0) {
                             StatusEffectInstance remainingEffect = effectInstance.getDuration() > 1000000 ? effectInstance : new StatusEffectInstance(effectInstance.getEffectType(), remaining, effectInstance.getAmplifier());
                             StatusEffectInstance existing = null;
@@ -167,16 +180,16 @@ public class EntityESP extends Module {
                     }
                 }
                 if (effects.isEmpty()) {
-                    effects = new ArrayList<>(living.getStatusEffects());
+                    effects = new ArrayList<>((Collection<? extends StatusEffectInstance>) living.getStatusEffects());
                 }
             } else {
-                effects = new ArrayList<>(living.getStatusEffects());
+                effects = new ArrayList<>((Collection<? extends StatusEffectInstance>) living.getStatusEffects());
             }
             float lineHeight = Fonts.e.d().lineHeight() * fontSize;
             float maxWidth = 0.0f;
             for (StatusEffectInstance effect : effects) {
                 int seconds = effect.getDuration() / 20;
-                maxWidth = Math.max(maxWidth, Fonts.e.a(Text.translatable(effect.getEffectType().value().getTranslationKey()).getString() + " " + MathUtil.a(effect.getAmplifier()) + (effect.getDuration() > 1000000 ? " ∞" : " - " + (seconds / 60) + ":" + String.format("%02d", Integer.valueOf(seconds % 60))), fontSize));
+                maxWidth = Math.max(maxWidth, Fonts.e.a(Text.translatable(((StatusEffect) effect.getEffectType().value()).getTranslationKey()).getString() + " " + MathUtil.a(effect.getAmplifier()) + (effect.getDuration() > 1000000 ? " ∞" : " - " + (seconds / 60) + ":" + String.format("%02d", Integer.valueOf(seconds % 60))), fontSize));
             }
             float textX = screenPos.x() - (maxWidth / 2.0f);
             float textY = screenPos.y() + padding;
@@ -184,21 +197,22 @@ public class EntityESP extends Module {
             float lineY = textY;
             for (StatusEffectInstance effect2 : effects) {
                 String duration = effect2.getDuration() > 1000000 ? " ∞" : " - " + ((effect2.getDuration() / 20) / 60) + ":" + String.format("%02d", Integer.valueOf((effect2.getDuration() / 20) % 60));
-                String line = Text.translatable(effect2.getEffectType().value().getTranslationKey()).getString() + " " + MathUtil.a(effect2.getAmplifier()) + duration;
-                Fonts.e.a(event.i().getMatrices(), line, screenPos.x() - (Fonts.e.a(line, fontSize) / 2.0f), lineY, fontSize, ColorUtil.a(effect2.getEffectType().value().getColor(), 1.0f), 0.0f);
+                String line = Text.translatable(((StatusEffect) effect2.getEffectType().value()).getTranslationKey()).getString() + " " + MathUtil.a(effect2.getAmplifier()) + duration;
+                Fonts.e.a(event.i().getMatrices(), line, screenPos.x() - (Fonts.e.a(line, fontSize) / 2.0f), lineY, fontSize, ColorUtil.a(((StatusEffect) effect2.getEffectType().value()).getColor(), 1.0f), 0.0f);
                 lineY += lineHeight;
             }
         }
     }
 
-    private void c(Entity entity, DrawEvent event, Vector2f screenPos, float fontSize, float padding, int color) {
+    private void drawItem(Entity entity, DrawEvent event, Vector2f screenPos, float fontSize, float padding, int color) {
         MutableText text = entity instanceof ItemEntity ? ((ItemEntity) entity).getStack().getName().copy() : entity.getName().copy();
-        if (entity instanceof ItemEntity item) {
+        if (entity instanceof ItemEntity) {
+            ItemEntity item = (ItemEntity) entity;
             if (item.getStack().getCount() > 1) {
                 text.append(Text.literal(" x" + item.getStack().getCount()));
             }
         }
-        float textWidth = Fonts.e.a(text, fontSize);
+        float textWidth = Fonts.e.a((Text) text, fontSize);
         float textHeight = Fonts.e.d().lineHeight() * fontSize;
         float textX = screenPos.x() - (textWidth / 2.0f);
         float textY = screenPos.y();
@@ -206,6 +220,27 @@ public class EntityESP extends Module {
         Fonts.e.a(event.i().getMatrices(), text, textX, textY, fontSize);
     }
 
-    public record a(List<StatusEffectInstance> a, int b, int c) {
+    public static final class Tracker {
+        private final List<StatusEffectInstance> effects;
+        private final int entityId;
+        private final int age;
+
+        public Tracker(List<StatusEffectInstance> effects, int id, int age) {
+            this.effects = effects;
+            this.entityId = id;
+            this.age = age;
+        }
+
+        public List<StatusEffectInstance> getEffects() {
+            return this.effects;
+        }
+
+        public int getEntityId() {
+            return this.entityId;
+        }
+
+        public int getAge() {
+            return this.age;
+        }
     }
 }

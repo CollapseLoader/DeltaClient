@@ -1,10 +1,14 @@
 package aethereal.module.render;
 
 import aethereal.config.ThemeInfo;
-import aethereal.core.*;
+import aethereal.core.Category;
+import aethereal.core.Delta;
+import aethereal.core.EventTarget;
 import aethereal.core.Module;
+import aethereal.core.ModuleRegister;
 import aethereal.event.DrawEvent;
 import aethereal.render.ColorUtil;
+import aethereal.render.Draw2DProcessor;
 import aethereal.setting.ColorSetting;
 import aethereal.setting.ModeSetting;
 import aethereal.util.MathUtil;
@@ -15,30 +19,31 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
-import org.joml.Matrix4f;
+
+import static aethereal.core.Interface.aM_;
 
 @ModuleRegister(a = "Entity Box", b = "Отображает боксы вокруг сущностей", c = Category.Render)
 public class EntityBox extends Module {
-    private final ModeSetting b = new ModeSetting("Тип визуализации", "Квадрат", "Квадрат", "Углы", "Заливка", "Отключен");
-    private final ModeSetting c = new ModeSetting("Источник цвета", "Клиентский", "Клиентский", "Статичный");
-    private final ModeSetting d = new ModeSetting("Бар здоровья", "Отключен", "Отключен", "Стандартный").a(() -> {
-        return Boolean.valueOf(this.b.l("Квадрат") || this.b.l("Углы"));
+    private final ModeSetting visualMode = new ModeSetting("Тип визуализации", "Квадрат", "Квадрат", "Углы", "Заливка", "Отключен");
+    private final ModeSetting colorSource = new ModeSetting("Источник цвета", "Клиентский", "Клиентский", "Статичный");
+    private final ModeSetting healthBarMode = (ModeSetting) new ModeSetting("Бар здоровья", "Отключен", "Отключен", "Стандартный").a(() -> {
+        return Boolean.valueOf(this.visualMode.l("Квадрат") || this.visualMode.l("Углы"));
     });
-    private final ColorSetting e = new ColorSetting("Цвет визуализации", Integer.valueOf(ColorUtil.a(255, 255, 255, 255))).a(() -> {
-        return Boolean.valueOf(this.c.l("Статичный"));
+    private final ColorSetting colorSetting = (ColorSetting) new ColorSetting("Цвет визуализации", Integer.valueOf(ColorUtil.a(255, 255, 255, 255))).a(() -> {
+        return Boolean.valueOf(this.colorSource.l("Статичный"));
     });
 
     public EntityBox() {
-        a(this.b, this.c, this.d, this.e);
+        a(this.visualMode, this.colorSource, this.healthBarMode, this.colorSetting);
     }
 
     @EventTarget
-    public void a(DrawEvent event) {
-        if (this.b.l("Заливка")) {
+    public void onDraw(DrawEvent event) {
+        if (this.visualMode.l("Заливка")) {
             if (event.c()) {
                 for (Entity entity : aM_.world.getEntities()) {
-                    if (a(entity)) {
-                        event.e().a(event.h(), entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())), this.c.l("Статичный") ? this.e.c().intValue() : Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), 0.75f);
+                    if (shouldRender(entity)) {
+                        event.e().a(event.h(), entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())), this.colorSource.l("Статичный") ? this.colorSetting.c().intValue() : Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), 0.75f);
                     }
                 }
                 return;
@@ -46,25 +51,75 @@ public class EntityBox extends Module {
             return;
         }
         if (event.b()) {
-            if (this.b.l("Квадрат") || this.b.l("Углы")) {
-                Matrix4f matrix = event.i().getMatrices().peek().getPositionMatrix();
-                for (LivingEntity class_1309Var : aM_.world.getEntitiesByClass(LivingEntity.class, aM_.player.getBoundingBox().expand(256.0), e -> true)) {
-                    Box box = a(class_1309Var) ? class_1309Var.getBoundingBox().offset(MathUtil.a(class_1309Var, event.g()).subtract(class_1309Var.getPos())) : null;
-                    float[] bounds = box == null ? null : ProjectUtil.a(box);
+            if (this.visualMode.l("Квадрат") || this.visualMode.l("Углы")) {
+                Draw2DProcessor draw = event.d();
+                for (Entity entity : aM_.world.getEntities()) {
+                    Box box = shouldRender(entity) ? entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())) : null;
+                    float[] bounds = box == null ? null : ProjectUtil.getBounds(box);
                     if (bounds != null) {
-                        boolean healthBar = !this.d.l("Отключен") && (class_1309Var instanceof LivingEntity);
-                        float percent = healthBar ? Math.min(Math.max(0.0f, ServerUtil.a.a(class_1309Var)) / Math.max(1.0f, class_1309Var.getMaxHealth()), 1.0f) : 0.0f;
+                        LivingEntity living = entity instanceof LivingEntity ? (LivingEntity) entity : null;
+                        boolean healthBar = !this.healthBarMode.l("Отключен") && living != null;
+                        float percent = healthBar ? Math.min(Math.max(0.0f, ServerUtil.a.a(living)) / Math.max(1.0f, living.getMaxHealth()), 1.0f) : 0.0f;
                         int healthColor = ColorUtil.b(ColorUtil.a(255, 0, 0, 255), ColorUtil.a(0, 255, 0, 255), percent);
-                        event.e().a(matrix, bounds[0], bounds[1], bounds[2], bounds[3], this.c.l("Статичный") ? this.e.c().intValue() : ColorUtil.a(Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), 255), this.b.l("Углы"), healthBar, percent, healthColor);
+                        int color = this.colorSource.l("Статичный") ? this.colorSetting.c().intValue() : ColorUtil.a(Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), 255);
+                        drawBox(draw, event, bounds[0], bounds[1], bounds[2], bounds[3], color, this.visualMode.l("Углы"), healthBar, percent, healthColor);
                     }
                 }
             }
         }
     }
 
-    private boolean a(Entity entity) {
+    private void drawBox(Draw2DProcessor draw, DrawEvent event, float minX, float minY, float maxX, float maxY, int color, boolean corners, boolean healthBar, float healthPercent, int healthColor) {
+        float width = maxX - minX;
+        float height = maxY - minY;
+        if (width <= 0.0f || height <= 0.0f) {
+            return;
+        }
+        float line = 0.75f;
+        float outline = 1.75f;
+        int outlineColor = ColorUtil.a(0, 0, 0, 255);
+        if (corners) {
+            float length = Math.min(width, height) * 0.25f;
+            drawLine(draw, event, minX, minY, length, 0.0f, line, outline, color, outlineColor);
+            drawLine(draw, event, minX, minY, 0.0f, length, line, outline, color, outlineColor);
+            drawLine(draw, event, maxX, minY, -length, 0.0f, line, outline, color, outlineColor);
+            drawLine(draw, event, maxX, minY, 0.0f, length, line, outline, color, outlineColor);
+            drawLine(draw, event, minX, maxY, length, 0.0f, line, outline, color, outlineColor);
+            drawLine(draw, event, minX, maxY, 0.0f, -length, line, outline, color, outlineColor);
+            drawLine(draw, event, maxX, maxY, -length, 0.0f, line, outline, color, outlineColor);
+            drawLine(draw, event, maxX, maxY, 0.0f, -length, line, outline, color, outlineColor);
+        } else {
+            drawLine(draw, event, minX, minY, width, 0.0f, line, outline, color, outlineColor);
+            drawLine(draw, event, minX, maxY, width, 0.0f, line, outline, color, outlineColor);
+            drawLine(draw, event, minX, minY, 0.0f, height, line, outline, color, outlineColor);
+            drawLine(draw, event, maxX, minY, 0.0f, height, line, outline, color, outlineColor);
+        }
+        if (healthBar) {
+            float barX = minX - 3.0f;
+            draw.a(event.h(), barX - 0.5f, minY - 0.5f, 1.75f, height + 1.0f, 0.0f, outlineColor);
+            draw.a(event.h(), barX, minY + (height * (1.0f - healthPercent)), 0.75f, height * healthPercent, 0.0f, healthColor);
+        }
+    }
+
+    private void drawLine(Draw2DProcessor draw, DrawEvent event, float x, float y, float lengthX, float lengthY, float line, float outline, int color, int outlineColor) {
+        float left = Math.min(x, x + lengthX);
+        float top = Math.min(y, y + lengthY);
+        float width = lengthX == 0.0f ? line : Math.abs(lengthX);
+        float height = lengthY == 0.0f ? line : Math.abs(lengthY);
+        if (lengthX == 0.0f) {
+            left -= line * 0.5f;
+        }
+        if (lengthY == 0.0f) {
+            top -= line * 0.5f;
+        }
+        float outlineOffset = (outline - line) * 0.5f;
+        draw.a(event.h(), left - outlineOffset, top - outlineOffset, width + (outlineOffset * 2.0f), height + (outlineOffset * 2.0f), 0.0f, outlineColor);
+        draw.a(event.h(), left, top, width, height, 0.0f, color);
+    }
+
+    private boolean shouldRender(Entity entity) {
         if ((entity instanceof PlayerEntity) || (entity instanceof ItemEntity)) {
-            return entity != aM_.player || !aM_.options.getPerspective().isFirstPerson();
+            return (entity == aM_.player && aM_.options.getPerspective().isFirstPerson()) ? false : true;
         }
         return false;
     }

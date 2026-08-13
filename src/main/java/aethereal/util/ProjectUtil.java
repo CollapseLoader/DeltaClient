@@ -4,7 +4,6 @@ import aethereal.core.Delta;
 import aethereal.core.Interface;
 import lombok.Generated;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.RotationAxis;
 import org.joml.Quaternionf;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -16,25 +15,30 @@ public class ProjectUtil implements Interface {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 
-    public static Vector2f a(double x, double y, double z) {
-        Quaternionf yawQuat = RotationAxis.POSITIVE_Y.rotationDegrees(-aM_.getEntityRenderDispatcher().camera.getYaw());
-        Quaternionf pitchQuat = RotationAxis.POSITIVE_X.rotationDegrees(aM_.getEntityRenderDispatcher().camera.getPitch());
-        Quaternionf cameraRotation = yawQuat.mul(pitchQuat, new Quaternionf());
-        Quaternionf cameraRotation2 = cameraRotation.conjugate(new Quaternionf());
-        Vector3f result3f = new Vector3f((float) (aM_.getEntityRenderDispatcher().camera.getPos().x - x), (float) (aM_.getEntityRenderDispatcher().camera.getPos().y - y), (float) (aM_.getEntityRenderDispatcher().camera.getPos().getZ() - z));
-        result3f.rotate(cameraRotation2);
-        return a(result3f, ((GameRendererInvoker) aM_.gameRenderer).invokeGetFov(aM_.getEntityRenderDispatcher().camera, aM_.getRenderTickCounter().getTickDelta(false), true));
+    public static Vector2f project(double x, double y, double z) {
+        net.minecraft.client.render.Camera camera = aM_.getEntityRenderDispatcher().camera;
+        Vector3f result3f = new Vector3f((float) (x - camera.getPos().x), (float) (y - camera.getPos().y), (float) (z - camera.getPos().z));
+        Quaternionf invCamRot = new Quaternionf(camera.getRotation()).conjugate();
+        result3f.rotate(invCamRot);
+        return project(result3f, ((GameRendererInvoker) (Object) aM_.gameRenderer).invokeGetFov(camera, aM_.getRenderTickCounter().getTickDelta(false), true));
     }
 
-    private static Vector2f a(Vector3f result3f, double fov) {
-        float realAspect = aM_.getWindow().getFramebufferWidth() / aM_.getWindow().getFramebufferHeight();
+    private static Vector2f project(Vector3f result3f, double fov) {
+        if (result3f.z >= 0.0f) {
+            return new Vector2f(Float.MAX_VALUE, Float.MAX_VALUE);
+        }
+        float realAspect = (float) aM_.getWindow().getFramebufferWidth() / (float) aM_.getWindow().getFramebufferHeight();
         float modifiedAspect = Delta.h().d().t().aB().m() ? Delta.h().d().t().aB().q() : realAspect;
-        double scaleFactorY = ((double) (aM_.getWindow().getScaledHeight() / 2.0f)) / (((double) result3f.z) * Math.tan(Math.toRadians(fov / 2.0d)));
-        double scaleFactorX = (scaleFactorY * ((double) realAspect)) / ((double) modifiedAspect);
-        return result3f.z < 0.0f ? new Vector2f((float) ((((double) (-result3f.x())) * scaleFactorX) + ((double) (aM_.getWindow().getScaledWidth() / 2.0f))), (float) (((double) (aM_.getWindow().getScaledHeight() / 2.0f)) - (((double) result3f.y()) * scaleFactorY))) : new Vector2f(Float.MAX_VALUE, Float.MAX_VALUE);
+        double halfHeightAtDepth = (-result3f.z) * Math.tan(Math.toRadians(fov / 2.0d));
+        double halfWidthAtDepth = halfHeightAtDepth * ((double) modifiedAspect);
+        double ndcX = result3f.x / halfWidthAtDepth;
+        double ndcY = result3f.y / halfHeightAtDepth;
+        float screenX = (float) (aM_.getWindow().getScaledWidth() / 2.0f + ndcX * (aM_.getWindow().getScaledWidth() / 2.0f));
+        float screenY = (float) (aM_.getWindow().getScaledHeight() / 2.0f - ndcY * (aM_.getWindow().getScaledHeight() / 2.0f));
+        return new Vector2f(screenX, screenY);
     }
 
-    public static float[] a(Box box) {
+    public static float[] getBounds(Box box) {
         float minX = Float.MAX_VALUE;
         float minY = Float.MAX_VALUE;
         float maxX = -3.4028235E38f;
@@ -43,7 +47,7 @@ public class ProjectUtil implements Interface {
             double x = (corner & 1) == 0 ? box.minX : box.maxX;
             double y = (corner & 2) == 0 ? box.minY : box.maxY;
             double z = (corner & 4) == 0 ? box.minZ : box.maxZ;
-            Vector2f screen = a(x, y, z);
+            Vector2f screen = project(x, y, z);
             if (screen.x() != Float.MAX_VALUE) {
                 minX = Math.min(minX, screen.x());
                 minY = Math.min(minY, screen.y());
@@ -57,7 +61,7 @@ public class ProjectUtil implements Interface {
         return new float[]{minX, minY, maxX, maxY};
     }
 
-    public static boolean a(Vector2f screen) {
+    public static boolean isOnScreen(Vector2f screen) {
         return screen.x() != Float.MAX_VALUE && screen.y() != Float.MAX_VALUE && screen.x() >= 0.0f && screen.y() >= 0.0f && screen.x() <= ((float) aM_.getWindow().getScaledWidth()) && screen.y() <= ((float) aM_.getWindow().getScaledHeight());
     }
 }

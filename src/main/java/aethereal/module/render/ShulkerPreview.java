@@ -51,7 +51,7 @@ public class ShulkerPreview extends Module {
                 if (class_1747VarMethod_7909 instanceof BlockItem) {
                     BlockItem blockItem = class_1747VarMethod_7909;
                     if ((blockItem.getBlock() instanceof ShulkerBoxBlock) && (stack = itemEntity.getStack()) != null && !stack.isEmpty()) {
-                        Vector2f projected = ProjectUtil.a(itemEntity.prevX + ((itemEntity.getX() - itemEntity.prevX) * ((double) aM_.getRenderTickCounter().getTickDelta(false))), itemEntity.prevY + ((itemEntity.getY() - itemEntity.prevY) * ((double) aM_.getRenderTickCounter().getTickDelta(false))) + 0.5d, itemEntity.prevZ + ((itemEntity.getZ() - itemEntity.prevZ) * ((double) aM_.getRenderTickCounter().getTickDelta(false))));
+                        Vector2f projected = ProjectUtil.project(itemEntity.prevX + ((itemEntity.getX() - itemEntity.prevX) * ((double) aM_.getRenderTickCounter().getTickDelta(false))), itemEntity.prevY + ((itemEntity.getY() - itemEntity.prevY) * ((double) aM_.getRenderTickCounter().getTickDelta(false))) + 0.5d, itemEntity.prevZ + ((itemEntity.getZ() - itemEntity.prevZ) * ((double) aM_.getRenderTickCounter().getTickDelta(false))));
                         ContainerComponent container = stack.get(DataComponentTypes.CONTAINER);
                         if (container != null && !container.stream().toList().isEmpty()) {
                             a(event.i(), stack, container.stream().toList(), projected.x() - ((this.b.x() * 0.5f) / 2.0f), projected.y() - (this.b.y() * 0.5f), 0.5f, false);

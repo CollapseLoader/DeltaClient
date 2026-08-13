@@ -62,8 +62,8 @@ public class UseTracker extends Module {
                         if (class_746Var2.getItemUseTimeLeft() == 1) {
                             String color = active.getItem() instanceof PotionItem ? "&a" : "&c";
                             if (active.isOf(Items.MILK_BUCKET)) {
-                                Delta.h().d().t().aa().q().removeIf(info -> {
-                                    return info.b() == class_746Var2.getId();
+                                Delta.h().d().t().aa().getTrackers().removeIf(info -> {
+                                    return info.getEntityId() == class_746Var2.getId();
                                 });
                             }
                             ChatUtil.a("[" + j() + "]", class_746Var2.getName().getString() + " использовал \"" + color + active.getItem().getName().getString() + "&7\"");
@@ -118,7 +118,7 @@ public class UseTracker extends Module {
                                     }
                                 }
                                 if (!effects.isEmpty()) {
-                                    Delta.h().d().t().aa().q().add(new EntityESP.a(List.copyOf(effects), class_746Var.getId(), class_746Var.age));
+                                    Delta.h().d().t().aa().getTrackers().add(new EntityESP.Tracker(List.copyOf(effects), class_746Var.getId(), class_746Var.age));
                                 }
                             }
                         }
@@ -139,8 +139,8 @@ public class UseTracker extends Module {
                     if (entry.attribute().getKey().toString().contains("minecraft:movement_speed")) {
                         for (EntityAttributeModifier modifier : entry.modifiers()) {
                             if ((aM_.world.getEntityById(packet.getEntityId()) instanceof PlayerEntity) && modifier.id().toString().equals("minecraft:effect.speed") && modifier.value() <= 0.40000001199465773d && modifier.operation() == EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
-                                Delta.h().d().t().aa().q().removeIf(info -> {
-                                    return info.b() == packet.getEntityId();
+                                Delta.h().d().t().aa().getTrackers().removeIf(info -> {
+                                    return info.getEntityId() == packet.getEntityId();
                                 });
                             }
                         }
@@ -154,8 +154,8 @@ public class UseTracker extends Module {
                 if (class_746VarMethod_11469 instanceof LivingEntity) {
                     ClientPlayerEntity class_746Var = class_746VarMethod_11469;
                     if (s2CPacket.getStatus() == 35) {
-                        Delta.h().d().t().aa().q().removeIf(info2 -> {
-                            return info2.b() == class_746Var.getId();
+                        Delta.h().d().t().aa().getTrackers().removeIf(info2 -> {
+                            return info2.getEntityId() == class_746Var.getId();
                         });
                         if (this.b.a("Тотема").c().booleanValue()) {
                             ItemStack totem = class_746Var.getMainHandStack().getItem() == Items.TOTEM_OF_UNDYING ? class_746Var.getMainHandStack() : class_746Var.getOffHandStack().getItem() == Items.TOTEM_OF_UNDYING ? class_746Var.getOffHandStack() : null;

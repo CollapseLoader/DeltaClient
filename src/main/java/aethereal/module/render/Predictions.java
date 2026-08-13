@@ -140,8 +140,8 @@ public class Predictions extends Module {
         if (alpha <= 0.0f) {
             return;
         }
-        Vector2f screen = ProjectUtil.a(info.a().x, info.a().y, info.a().z);
-        if (ProjectUtil.a(screen)) {
+        Vector2f screen = ProjectUtil.project(info.a().x, info.a().y, info.a().z);
+        if (ProjectUtil.isOnScreen(screen)) {
             float iconSize = Fonts.e.d().lineHeight() * 7.25f;
             String format = String.format(Locale.US, "%.1fs", Float.valueOf(info.b() / 20.0f));
             float width = (2.0f * 3.0f) + iconSize + Fonts.e.a(format, 7.25f);

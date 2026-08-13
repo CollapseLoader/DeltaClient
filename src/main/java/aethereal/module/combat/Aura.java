@@ -374,7 +374,6 @@ public class Aura extends Module {
         this.u[0] = pitchToTarget;
         if (this.t != null && this.b >= 2 && ((ServerUtil.a.a(this.t) > 6.0f || this.c[2] > 43.0f) && this.c[2] >= 33.0f && ((this.b == 4 || Math.random() > 0.5d) && (!this.f || !AuraUtil.a(aM_.player.getYaw(), aM_.player.getPitch(), 3.0d, this.t, false))))) {
             ((platform.inject.invokers.MinecraftClientInvoker) aM_).invokeDoAttack();
-            ChatUtil.a(Boolean.valueOf(this.f));
             if (Math.random() > 0.5d) {
                 this.f = !this.f;
             }

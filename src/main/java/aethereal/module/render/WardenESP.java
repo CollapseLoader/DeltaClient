@@ -71,8 +71,8 @@ public class WardenESP extends Module {
         for (BlockPos coord : chests) {
             a info = b(coord);
             if (info != null) {
-                Vector2f screen = ProjectUtil.a(((double) coord.getX()) + 0.5d, coord.getY() + 1, ((double) coord.getZ()) + 0.5d);
-                if (ProjectUtil.a(screen)) {
+                Vector2f screen = ProjectUtil.project(((double) coord.getX()) + 0.5d, coord.getY() + 1, ((double) coord.getZ()) + 0.5d);
+                if (ProjectUtil.isOnScreen(screen)) {
                     int totalSec = (int) (info.a() / 1000);
                     Text text = Text.literal(String.format(Locale.US, "%02d:%02d", Integer.valueOf(totalSec / 60), Integer.valueOf(totalSec % 60)));
                     float width = 16.5f + Fonts.e.a(text, 6.5f);

@@ -191,8 +191,8 @@ public class WayCommand extends BaseCommand {
     }
 
     private void a(DrawEvent event, b way, Vec3d eyes) {
-        Vector2f screen = ProjectUtil.a(way.b().x, way.b().y, way.b().z);
-        if (ProjectUtil.a(screen)) {
+        Vector2f screen = ProjectUtil.project(way.b().x, way.b().y, way.b().z);
+        if (ProjectUtil.isOnScreen(screen)) {
             int primary = Delta.h().d().o().a(ThemeInfo.PRIMARY).a();
             int background = Delta.h().d().o().a(ThemeInfo.BACKGROUND_HUD).a();
             Text text = Text.literal(way.a().toUpperCase(Locale.ROOT)).append(Text.literal("  /  ").setStyle(Style.EMPTY.withColor(primary))).append(Text.literal(String.format(Locale.US, "%.1fм", Double.valueOf(eyes.distanceTo(way.b())))));

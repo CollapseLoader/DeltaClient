@@ -86,7 +86,7 @@ public class Structures extends Module {
                 String text = String.format(Locale.US, "%.1f", Float.valueOf(Math.max(0.0f, (structure.d().d() - structure.c().c()) / 1000.0f)));
                 structure.b().a(0.0f, 1.0f, 0.35f, EasingList.i, event.g());
                 BlockPos center = structure.e().getCenter();
-                Vector2f project = ProjectUtil.a(((double) center.getX()) + 0.5d, ((double) center.getY()) + 0.5d, ((double) center.getZ()) + 0.5d);
+                Vector2f project = ProjectUtil.project(((double) center.getX()) + 0.5d, ((double) center.getY()) + 0.5d, ((double) center.getZ()) + 0.5d);
                 float textWidth = Fonts.d.a(Text.literal(text), 7.5f);
                 float textHeight = Fonts.d.d().lineHeight() * 7.5f;
                 float totalTextWidth = textWidth + 4.0f;

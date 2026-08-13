@@ -56,8 +56,8 @@ public class SoundESP extends Module {
                 if (soundInfo.a().a(5500L)) {
                     this.c.remove(soundInfo);
                 } else {
-                    Vector2f screenPos = ProjectUtil.a(soundInfo.b().getX(), soundInfo.b().getY(), soundInfo.b().getZ());
-                    if (ProjectUtil.a(screenPos)) {
+                    Vector2f screenPos = ProjectUtil.project(soundInfo.b().getX(), soundInfo.b().getY(), soundInfo.b().getZ());
+                    if (ProjectUtil.isOnScreen(screenPos)) {
                         String path = soundInfo.b().getId().getPath();
                         if (path.contains("firework_rocket")) {
                             str = "Фейерверк";
