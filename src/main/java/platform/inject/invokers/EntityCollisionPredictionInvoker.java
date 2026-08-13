@@ -14,7 +14,7 @@ import java.util.List;
 @Mixin({Entity.class})
 public interface EntityCollisionPredictionInvoker {
     @Invoker("findCollisionsForMovement")
-    static void findCollisionsForMovement(Entity entity, World world, List<VoxelShape> reusable, Box box) {
+    static List<VoxelShape> findCollisionsForMovement(Entity entity, World world, List<VoxelShape> reusable, Box box) {
         throw new AssertionError();
     }
 
