@@ -51,14 +51,14 @@ public class Delta {
     @Compile
     @Ultra
     protected void initialize() {
-        this.currentUser = new User("1", "Owner", "Owner", "Owner", "01.01.2099 00:00", "");
+        this.currentUser = new User("1", "CollapseLoader", "Owner", "Owner", "01.01.2099 00:00", "");
         instance = this;
         instanceRef = this;
 
         this.moduleProcessor = new Processor_2();
         this.networkClient = new Client(false);
 
-        ClientLifecycleEvents.CLIENT_STOPPING.register(client -> this.a(client));
+        ClientLifecycleEvents.CLIENT_STOPPING.register(client -> this.a());
 
         EventManager.a(this);
 
@@ -75,16 +75,6 @@ public class Delta {
     @Ultra
     public String getDeveloperName() {
         return null;
-    }
-
-    @Generated
-    public Processor_2 getModuleProcessor() {
-        return this.moduleProcessor;
-    }
-
-    @Generated
-    public void setModuleProcessor(Processor_2 processor) {
-        this.moduleProcessor = processor;
     }
 
     @Generated
@@ -108,28 +98,8 @@ public class Delta {
     }
 
     @Generated
-    public Client getNetworkClient() {
-        return this.networkClient;
-    }
-
-    @Generated
-    public void setNetworkClient(Client client) {
-        this.networkClient = client;
-    }
-
-    @Generated
     public Client f() {
         return this.networkClient;
-    }
-
-    @Generated
-    public User getCurrentUser() {
-        return this.currentUser;
-    }
-
-    @Generated
-    public void setCurrentUser(User user) {
-        this.currentUser = user;
     }
 
     @Generated
@@ -163,13 +133,13 @@ public class Delta {
         this.currentUser = user;
     }
 
-    public void a(MinecraftClient client) {
+    public void a() {
         shutdown();
     }
 
     @EventTarget
     public void a(KeyEvent event) {
-        if (event.d() == 1 && Interface.aM_.currentScreen == null && event.b() == 344) {
+        if (event.getAction() == 1 && Interface.aM_.currentScreen == null && event.getKey() == 344) {
             MinecraftClient mc = Interface.aM_;
             GUIScreen screen;
             if (this.currentScreen != null) {
