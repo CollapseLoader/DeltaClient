@@ -1,0 +1,212 @@
+package aethereal.handler;
+
+import aethereal.core.Delta;
+import aethereal.core.EventTarget;
+import aethereal.core.Interface;
+import aethereal.event.ClickEvent;
+import aethereal.event.ContainerEvent;
+import aethereal.event.TickEvent;
+import aethereal.ui.shader.GradientUtil;
+import aethereal.util.ChatUtil;
+import aethereal.util.MathUtil;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
+import lombok.Generated;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.sound.PositionedSoundInstance;
+import net.minecraft.item.Item;
+import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
+import net.minecraft.network.packet.c2s.play.CloseHandledScreenC2SPacket;
+import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import platform.inject.accessors.HandledScreenAccessor;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+@Handler_2
+public class ANFindHandler extends BaseHandler implements Interface {
+    private final List<a> b = List.of(new a("Команды х1"), new a("Команды х2"), new a("Команды х3"), new a("Команды х5"), new a("Команды х10"));
+    private boolean c;
+    private boolean d;
+    private Phase e;
+    private int f;
+
+    @EventTarget
+    public void a(ContainerEvent event) {
+        this.c = false;
+        if (event.h() == ContainerEvent.Phase.POST) {
+            if (event.b().getTitle().getString().contains("☬ Выберите режим:") || event.b().getTitle().getString().contains("☬ Выберите тип режима:")) {
+                HandledScreenAccessor screen = (HandledScreenAccessor) event.b();
+                float x = (screen.getX() + screen.getBackgroundWidth()) - 17;
+                float y = screen.getY() + 5;
+                this.c = MathUtil.a(event.f(), event.g(), x, y, 10.0f, 10.0f);
+                Delta.h().d().i().a(event.d().getMatrices(), Identifier.of("delta", this.c ? "pictures/minecraft/join_button_hovered.png" : "pictures/minecraft/join_button.png"), x, y, 10.0f, 10.0f, 0.0f, -1);
+                if (this.c) {
+                    event.d().drawTooltip(event.b().getTextRenderer(), List.of(Text.of("Авто-поиск анархии с наименьшим онлайном")), event.f(), event.g());
+                }
+            }
+        }
+    }
+
+    @EventTarget
+    public void a(ClickEvent event) {
+        if (event.b() && this.c) {
+            HandledScreen<?> class_465Var = (HandledScreen<?>) aM_.currentScreen;
+            if (class_465Var instanceof HandledScreen) {
+                HandledScreen<?> screen = class_465Var;
+                if (screen.getTitle().getString().contains("☬ Выберите режим:") || screen.getTitle().getString().contains("☬ Выберите тип режима:")) {
+                    this.d = !this.d;
+                    if (this.d) {
+                        this.e = Phase.SELECT_MODE;
+                        this.f = 0;
+                        this.b.forEach((v0) -> {
+                            v0.a();
+                        });
+                    }
+                    aM_.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f));
+                }
+            }
+        }
+    }
+
+    @EventTarget
+    public void a(TickEvent event) {
+        if (this.d) {
+            Screen class_437Var = aM_.currentScreen;
+            if (class_437Var instanceof GenericContainerScreen) {
+                GenericContainerScreen screen = (GenericContainerScreen) class_437Var;
+                a mode = this.b.get(this.f);
+                switch (this.e) {
+                    case SELECT_MODE:
+                        if (a(screen, "Анархия 1.21.11")) {
+                            this.e = Phase.SELECT_TYPE;
+                        }
+                        break;
+                    case SELECT_TYPE:
+                        if (a(screen, mode.a)) {
+                            this.e = Phase.COLLECT;
+                        }
+                        break;
+                    case COLLECT:
+                        a(screen, mode);
+                        break;
+                }
+            }
+            this.d = false;
+        }
+    }
+
+    private void a(GenericContainerScreen screen, a mode) {
+        boolean selected = false;
+        int bestOnline = Integer.MAX_VALUE;
+        String bestServer = null;
+        for (Slot slot : screen.getScreenHandler().slots) {
+            String name = slot.getStack().getName().getString();
+            if (slot.getStack().hasGlint() && name.contains(mode.a)) {
+                selected = true;
+            }
+            if (name.contains("Анархия-")) {
+                for (Text line : slot.getStack().getTooltip(Item.TooltipContext.DEFAULT, aM_.player, TooltipType.BASIC)) {
+                    Matcher matcher = Pattern.compile("Онлайн режима: (\\d+)").matcher(line.getString());
+                    if (matcher.find()) {
+                        int online = Integer.parseInt(matcher.group(1));
+                        if (online >= bestOnline) {
+                            break;
+                        }
+                        bestOnline = online;
+                        bestServer = name.replaceAll("§.", "");
+                        break;
+                    }
+                }
+            }
+        }
+        if (selected && bestServer != null) {
+            mode.c = bestOnline;
+            mode.b = bestServer;
+            int i = this.f + 1;
+            this.f = i;
+            if (i >= this.b.size()) {
+                a();
+            } else {
+                this.e = Phase.SELECT_TYPE;
+            }
+        }
+    }
+
+    private void a() {
+        this.d = false;
+        this.b.stream().filter(mode -> {
+            return mode.b != null;
+        }).min(Comparator.comparingInt(mode2 -> {
+            return mode2.c;
+        })).ifPresent(best -> {
+            String anarchy = best.b.replace("»", "").replace("Анархия-", "").trim();
+            if (!anarchy.isEmpty()) {
+                MutableText hover = GradientUtil.a("Минимальный онлайн по командам:\n", -7620097, -11503416, 1, 5.0f);
+                this.b.stream().filter(mode3 -> {
+                    return mode3.b != null;
+                }).forEach(mode4 -> {
+                    hover.append(Text.literal("§7• §f" + mode4.a.replace("Команды ", "") + ": " + mode4.b.trim() + " — " + mode4.c + " игроков\n"));
+                });
+                ChatUtil.a(Text.literal("§a✔ §7Успешно подключился к анархии §a#" + anarchy + "§7, с онлайном §a" + best.c + "§7 — ").append(ChatUtil.a((Object) "§c[Подробнее]", hover)));
+                aM_.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(aM_.player.currentScreenHandler.syncId));
+                aM_.player.networkHandler.sendChatCommand("an" + anarchy);
+            }
+        });
+    }
+
+    private boolean a(GenericContainerScreen screen, String contains) {
+        for (Slot slot : screen.getScreenHandler().slots) {
+            if (slot.getStack().getName().getString().contains(contains)) {
+                aM_.player.networkHandler.sendPacket(new ClickSlotC2SPacket(screen.getScreenHandler().syncId, screen.getScreenHandler().getRevision(), slot.id, 0, SlotActionType.PICKUP, screen.getScreenHandler().getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    enum Phase {
+        SELECT_MODE,
+        SELECT_TYPE,
+        COLLECT
+    }
+
+    public static class a {
+        final String a;
+        String b;
+        int c;
+
+        public a(String title) {
+            this.a = title;
+        }
+
+        @Generated
+        public String b() {
+            return this.a;
+        }
+
+        @Generated
+        public String c() {
+            return this.b;
+        }
+
+        @Generated
+        public int d() {
+            return this.c;
+        }
+
+        public void a() {
+            this.b = null;
+            this.c = -1;
+        }
+    }
+}

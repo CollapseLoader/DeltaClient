@@ -1,0 +1,36 @@
+{
+  "accessWidener": "delta.accesswidener",
+  "schemaVersion": 1,
+  "id": "delta",
+  "version": "3.0.14",
+  "name": "Delta",
+  "description": "https://deltaclient.xyz/",
+  "authors": [
+    "dezzDev",
+    "fruz"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "Minecraft EULA",
+  "icon": "assets/delta/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "platform.Initializer"
+    ]
+  },
+  "mixins": [
+    "delta.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "\u003e\u003d0.16.5",
+    "minecraft": "~1.21.4",
+    "java": "\u003e\u003d21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

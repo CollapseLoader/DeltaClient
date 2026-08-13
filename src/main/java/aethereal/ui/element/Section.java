@@ -1,0 +1,64 @@
+package aethereal.ui.element;
+
+
+import aethereal.render.AnimationUtil;
+import lombok.Generated;
+import net.minecraft.client.gui.DrawContext;
+import org.joml.Vector4f;
+
+public class Section {
+    private final AnimationUtil a = new AnimationUtil();
+    private final String b;
+    private final String c;
+
+    protected Section(String icon, String name) {
+        this.b = icon;
+        this.c = name;
+    }
+
+    @Generated
+    public AnimationUtil a() {
+        return this.a;
+    }
+
+    @Generated
+    public String b() {
+        return this.b;
+    }
+
+    @Generated
+    public String c() {
+        return this.c;
+    }
+
+    public void a(DrawContext context, Vector4f content, int mouseX, int mouseY, float scroll, float delta) {
+    }
+
+    public float a(Vector4f content) {
+        return 0.0f;
+    }
+
+    public boolean a(double mouseX, double mouseY, int button) {
+        return false;
+    }
+
+    public boolean b(double mouseX, double mouseY, int button) {
+        return false;
+    }
+
+    public boolean a(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+        return false;
+    }
+
+    public boolean a(double mouseX, double mouseY, double amount) {
+        return false;
+    }
+
+    public boolean a(int keyCode, int scanCode, int modifiers) {
+        return false;
+    }
+
+    public boolean a(char chr, int modifiers) {
+        return false;
+    }
+}

@@ -1,0 +1,81 @@
+package aethereal.notification;
+
+import aethereal.api.Compile;
+import aethereal.config.BaseProcessor;
+import aethereal.core.EventTarget;
+import aethereal.core.Interface;
+import aethereal.event.DrawEvent;
+import aethereal.event.TickEvent;
+import aethereal.render.EasingList;
+import lombok.Generated;
+import net.minecraft.client.gui.screen.ChatScreen;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class NotificationProcessor extends BaseProcessor implements Interface {
+    private final Notification b = new Notification("o", "Пример отображения уведомления", 0);
+    private final List<Notification> c = new ArrayList<>();
+
+    @Override
+    @Compile
+    public void setup() {
+    }
+
+    @Generated
+    public Notification a() {
+        return this.b;
+    }
+
+    @Generated
+    public List<Notification> b() {
+        return this.c;
+    }
+
+    @Override
+    public void unSetup() {
+    }
+
+    @EventTarget
+    public void a(DrawEvent event) {
+        if (event.b() && !b().isEmpty()) {
+            for (Notification notification : b()) {
+                notification.a().a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
+            }
+        }
+    }
+
+    @EventTarget
+    public void a(TickEvent event) {
+        List<Notification> notifications = new ArrayList<>(b());
+        notifications.remove(this.b);
+        boolean preview = (aM_.currentScreen instanceof ChatScreen) && notifications.isEmpty();
+        if (!b().contains(this.b)) {
+            b().add(this.b);
+        }
+        for (Notification notification : new ArrayList<>(b())) {
+            if (notification == this.b) {
+                notification.a().a(preview);
+                if (!preview && notification.a().c() == 0.0f) {
+                    b().remove(this.b);
+                }
+            } else {
+                boolean finished = notification.b().a(notification.f() - 100);
+                notification.a().a(!finished);
+                if (finished && notification.a().c() == 0.0f) {
+                    b().remove(notification);
+                }
+            }
+        }
+    }
+
+    public void a(Notification notification) {
+        int time = notification.f();
+        notification.a(time + (((int) b().stream().filter(current -> {
+            return current.f() >= time;
+        }).filter(current2 -> {
+            return (current2.f() - time) % 50 == 0;
+        }).count()) * 50));
+        b().add(notification);
+    }
+}

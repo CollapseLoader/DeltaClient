@@ -1,0 +1,246 @@
+package aethereal.module.combat;
+
+import aethereal.core.*;
+import aethereal.core.Module;
+import aethereal.event.ClickEvent;
+import aethereal.event.TickEvent;
+import aethereal.event.WillLandEvent;
+import aethereal.util.Look;
+import aethereal.util.Rotation;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BowItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.TridentItem;
+import net.minecraft.registry.tag.FluidTags;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.stream.StreamSupport;
+
+@ModuleRegister(a = "Projectile Helper", b = "Помогает целиться по противнику при стрельбе из лука или трезубца", c = Category.Combat)
+public class ProjectileHelper extends Module {
+    private final LivingEntity[] b = new LivingEntity[2];
+    private final Vec3d[] c = new Vec3d[5];
+    private int d;
+    private int e;
+    private boolean g;
+    private boolean h;
+    private boolean f = true;
+
+    public LivingEntity q() {
+        return this.b[0];
+    }
+
+    public boolean r() {
+        if (this.b[0] == null || aM_.player == null || !aM_.player.isUsingItem()) {
+            return false;
+        }
+        ItemStack active = aM_.player.getActiveItem();
+        return active.getItem().getMaxUseTime(active, aM_.player) - aM_.player.getItemUseTimeLeft() > 2;
+    }
+
+    @Override
+    public void c() {
+        super.c();
+        s();
+    }
+
+    @EventTarget
+    public void a(WillLandEvent event) {
+        this.g = event.b();
+    }
+
+    @EventTarget
+    public void a(TickEvent event) {
+        Rotation aim;
+        if (aM_.player == null || aM_.world == null) {
+            return;
+        }
+        ItemStack stack = aM_.player.getStackInHand(Hand.MAIN_HAND);
+        if (!(stack.getItem() instanceof BowItem) && !(stack.getItem() instanceof TridentItem)) {
+            s();
+            return;
+        }
+        if (!aM_.player.isUsingItem()) {
+            this.f = true;
+        }
+        if (!this.f) {
+            s();
+            return;
+        }
+        this.h = aM_.player.input.playerInput.jump() && (aM_.player.isOnGround() || this.g);
+        a(t());
+        if (this.b[0] != null) {
+            Vec3d[] class_243VarArr = this.c;
+            int i = this.e;
+            this.e = i + 1;
+            class_243VarArr[i % this.c.length] = new Vec3d(this.b[0].getX() - this.b[0].prevX, 0.0d, this.b[0].getZ() - this.b[0].prevZ);
+        }
+        if (r() && (aim = a(stack)) != null) {
+            Delta.h().d().k().a(aim, 180.0f, 1, 1);
+        }
+    }
+
+    @EventTarget
+    public void a(ClickEvent event) {
+        if (event.b() && event.h() == 0 && aM_.player != null && aM_.player.isUsingItem()) {
+            this.f = !this.f;
+        }
+    }
+
+    private void s() {
+        LivingEntity[] class_1309VarArr = this.b;
+        this.b[1] = null;
+        class_1309VarArr[0] = null;
+        this.d = 0;
+        Arrays.fill(this.c, null);
+    }
+
+    private LivingEntity t() {
+        Vec3d eye = aM_.player.getEyePos();
+        Vec3d look = Vec3d.fromPolar(Look.c(), Look.b());
+        return (LivingEntity) StreamSupport.stream(aM_.world.getEntities().spliterator(), false)
+                .filter(PlayerEntity.class::isInstance)
+                .map(e -> (PlayerEntity) e)
+                .filter(e -> e != aM_.player && e.isAlive() && !Delta.h().d().e().d(e.getName().getString()) && eye.squaredDistanceTo(e.getBoundingBox().getCenter()) <= 14400.0d)
+                .min(Comparator.comparingDouble(e2 -> -look.dotProduct(e2.getBoundingBox().getCenter().subtract(eye).normalize()))).orElse(null);
+    }
+
+    private void a(LivingEntity best) {
+        if (best != this.b[1]) {
+            this.b[1] = best;
+            this.d = 0;
+        } else {
+            this.d++;
+        }
+        if (this.b[0] != this.b[1]) {
+            if (this.b[0] == null || this.d >= 4) {
+                this.b[0] = this.b[1];
+                Arrays.fill(this.c, null);
+            }
+        }
+    }
+
+    private Vec3d u() {
+        Vec3d sum = Vec3d.ZERO;
+        int count = 0;
+        for (Vec3d entry : this.c) {
+            if (entry != null && entry.horizontalLengthSquared() > 1.000000229429758E-6d) {
+                sum = sum.add(entry);
+                count++;
+            }
+        }
+        return count == 0 ? Vec3d.ZERO : sum.multiply(1.0d / ((double) count));
+    }
+
+    private Rotation a(ItemStack stack) {
+        Vec3d shooter = v();
+        Vec3d origin = aM_.player.getEyePos().add(0.0d, -0.1000000074661073d, 0.0d);
+        double speed = stack.getItem() instanceof BowItem ? b(stack) : 2.5d;
+        Box box = this.b[0].getBoundingBox();
+        Vec3d motion = u();
+        Vec3d aim = box.getCenter();
+        float yaw = 0.0f;
+        float pitch = 0.0f;
+        for (int i = 0; i < 6; i++) {
+            yaw = a(origin, aim);
+            pitch = a(origin, aim, shooter, speed);
+            double[] shot = a(origin, Vec3d.fromPolar(pitch, yaw).multiply(speed).add(shooter), Math.hypot(aim.x - origin.getX(), aim.z - origin.getZ()), true);
+            if (shot == null) {
+                return null;
+            }
+            Vec3d moved = box.getCenter().add(motion.multiply(Math.min(shot[1] + 6.0d, 13.0d)));
+            if (moved.squaredDistanceTo(aim) < 9.999996044721066E-5d) {
+                break;
+            }
+            aim = moved;
+        }
+        Rotation rotation = new Rotation(MathHelper.wrapDegrees(yaw), pitch);
+        float t = aM_.player.age + aM_.getRenderTickCounter().getTickDelta(false);
+        float smoothW = ((float) ((((Math.sin(t * 0.8f) * 11.0d) + (Math.sin((((double) t) * 0.04000001688754603d) + 17.200001527756587d) * 1.5d)) + (Math.sin((((double) t) * 0.11000000003049541d) + 5.800002923050999d) * 3.0d)) + (Math.sin((((double) t) * 0.07000000374109333d) + 12.300000031704212d)))) / 4.0f;
+        float smoothH = ((float) (Math.sin(((double) t) * 0.1000000001867308d) + (Math.sin((((double) t) * 0.029999988014174556d) + 54.09998474500903d) * 0.5d))) / 2.0f;
+        boolean tridentEarly = (stack.getItem() instanceof TridentItem) && stack.getItem().getMaxUseTime(stack, aM_.player) - aM_.player.getItemUseTimeLeft() < 9;
+        if (!tridentEarly) {
+            smoothW = MathHelper.clamp(smoothW, -0.3f, 0.3f);
+            smoothH = MathHelper.clamp(smoothH, -0.3f, 0.3f);
+        }
+        rotation.a(rotation.c() + smoothW);
+        rotation.b(rotation.d() + smoothH);
+        return rotation;
+    }
+
+    private float a(Vec3d origin, Vec3d aim, Vec3d shooter, double speed) {
+        float low = -90.0f;
+        float high = 90.0f;
+        float yaw = a(origin, aim);
+        double target = Math.hypot(aim.x - origin.getX(), aim.z - origin.getZ());
+        double height = aim.y - origin.getY();
+        for (int i = 0; i < 24; i++) {
+            float middle = (low + high) / 2.0f;
+            double[] shot = a(origin, Vec3d.fromPolar(middle, yaw).multiply(speed).add(shooter), target, false);
+            if (shot == null || shot[0] >= height) {
+                low = middle;
+            } else {
+                high = middle;
+            }
+        }
+        return (low + high) / 2.0f;
+    }
+
+    private double[] a(Vec3d origin, Vec3d velocity, double target, boolean blocked) {
+        Vec3d position = origin;
+        Vec3d current = velocity;
+        double travelled = 0.0d;
+        for (int tick = 1; tick <= 100; tick++) {
+            Vec3d next = position.add(current);
+            if (blocked && aM_.world.raycast(new RaycastContext(position, next, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, aM_.player)).getType() != HitResult.Type.MISS) {
+                return null;
+            }
+            double reached = Math.hypot(next.x - origin.getX(), next.z - origin.getZ());
+            if (reached >= target) {
+                double alpha = reached == travelled ? 1.0d : (target - travelled) / (reached - travelled);
+                return new double[]{MathHelper.lerp(alpha, position.y, next.y) - origin.getY(), ((double) (tick - 1)) + alpha};
+            }
+            position = next;
+            travelled = reached;
+            current = current.multiply(a(position) ? 0.6000002908794272d : 0.9900000228356232d).add(0.0d, -0.050000001868616015d, 0.0d);
+        }
+        return null;
+    }
+
+    private boolean a(Vec3d position) {
+        return aM_.world.getBlockState(BlockPos.ofFloored(position)).getFluidState().isIn(FluidTags.WATER);
+    }
+
+    private Vec3d v() {
+        Vec3d velocity = new Vec3d(aM_.player.getX() - aM_.player.prevX, aM_.player.getY() - aM_.player.prevY, aM_.player.getZ() - aM_.player.prevZ);
+        if (!this.h) {
+            return new Vec3d(velocity.x, aM_.player.isOnGround() ? 0.0d : velocity.y, velocity.z);
+        }
+        float yaw = aM_.player.getYaw() * 0.017453292f;
+        double sprint = aM_.player.isSprinting() ? 0.19999997617511883d : 0.0d;
+        return new Vec3d(velocity.x - (((double) MathHelper.sin(yaw)) * sprint), Math.max(0.42f + aM_.player.getJumpBoostVelocityModifier(), velocity.y), velocity.z + (((double) MathHelper.cos(yaw)) * sprint));
+    }
+
+    private double b(ItemStack stack) {
+        float pull = 1.0f;
+        ItemStack active = aM_.player.getActiveItem();
+        if (aM_.player.isUsingItem() && (active.getItem() instanceof BowItem)) {
+            float f = ((active.getItem().getMaxUseTime(active, aM_.player) - aM_.player.getItemUseTimeLeft()) + 1.5f) / 20.0f;
+            pull = Math.min(((f * f) + (f * 2.0f)) / 3.0f, 1.0f);
+        }
+        return ((double) pull) * 3.0d;
+    }
+
+    private float a(Vec3d from, Vec3d to) {
+        return (float) Math.toDegrees(Math.atan2(-(to.getX() - from.getX()), to.getZ() - from.getZ()));
+    }
+}

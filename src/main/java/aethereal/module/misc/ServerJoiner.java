@@ -1,0 +1,136 @@
+package aethereal.module.misc;
+
+import aethereal.core.*;
+import aethereal.core.Module;
+import aethereal.event.PacketEvent;
+import aethereal.event.TickEvent;
+import aethereal.setting.ModeSetting;
+import aethereal.setting.SliderSetting;
+import aethereal.ui.screen.GUIScreen;
+import aethereal.util.ChatUtil;
+import aethereal.util.CounterUtil;
+import aethereal.util.InventoryUtil;
+import aethereal.util.ServerUtil;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
+import lombok.Generated;
+import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
+import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
+import net.minecraft.network.packet.c2s.play.UpdateSelectedSlotC2SPacket;
+import net.minecraft.network.packet.s2c.play.OpenScreenS2CPacket;
+import net.minecraft.screen.GenericContainerScreenHandler;
+import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.SlotActionType;
+
+@ModuleRegister(a = "Server Joiner", b = "Автоматически подключается к указанному серверу", c = Category.Misc)
+public class ServerJoiner extends Module implements Interface {
+    private final ModeSetting b = new ModeSetting("Выберите сервер", "SpookyTime", "SpookyTime", "ReallyWorld");
+    private final SliderSetting c = new SliderSetting("Укажите номер грифа (1-54)", 1.0f, 1.0f, 54.0f, 1.0f).a(() -> {
+        return Boolean.valueOf(this.b.l("ReallyWorld"));
+    });
+    private final CounterUtil d = new CounterUtil();
+    private int e = -1;
+
+    public ServerJoiner() {
+        a(this.b, this.c);
+    }
+
+    @Generated
+    public ModeSetting q() {
+        return this.b;
+    }
+
+    @Generated
+    public SliderSetting r() {
+        return this.c;
+    }
+
+    @Generated
+    public CounterUtil s() {
+        return this.d;
+    }
+
+    @Generated
+    public int t() {
+        return this.e;
+    }
+
+    @EventTarget
+    public void a(TickEvent e) {
+        if (!(aM_.currentScreen instanceof GUIScreen)) {
+            if (this.b.l("SpookyTime")) {
+                if (ServerUtil.a().contains("Хаб")) {
+                    int compassSlot = InventoryUtil.a(Items.COMPASS, true);
+                    if (compassSlot >= 0 && compassSlot <= 8 && aM_.currentScreen == null) {
+                        aM_.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(compassSlot));
+                        ((platform.inject.invokers.ClientPlayerInteractionManagerInvoker) aM_.interactionManager).invokeSendSequencedPacket(aM_.world, sequence -> {
+                            return new PlayerInteractItemC2SPacket(aM_.player.getActiveHand(), sequence, aM_.player.getYaw(), aM_.player.getPitch());
+                        });
+                    }
+                    if (this.e != -1) {
+                        aM_.player.networkHandler.sendPacket(new ClickSlotC2SPacket(this.e, 0, 13, 0, SlotActionType.PICKUP, ItemStack.EMPTY, Int2ObjectMaps.emptyMap()));
+                        this.e = -1;
+                        return;
+                    }
+                    return;
+                }
+                if (!ServerUtil.a().isEmpty() && !ServerUtil.a().contains("Режим: Хаб # ")) {
+                    ChatUtil.a("Вы находитесь не в хабе SpookyTime, а значит модуль выключается!");
+                    a();
+                    return;
+                }
+                return;
+            }
+            if (this.b.l("ReallyWorld")) {
+                if (ServerUtil.a().isEmpty()) {
+                    int compassSlot2 = InventoryUtil.a(Items.COMPASS, true);
+                    if (compassSlot2 >= 0 && compassSlot2 <= 8 && aM_.currentScreen == null) {
+                        aM_.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(compassSlot2));
+                        ((platform.inject.invokers.ClientPlayerInteractionManagerInvoker) aM_.interactionManager).invokeSendSequencedPacket(aM_.world, sequence2 -> {
+                            return new PlayerInteractItemC2SPacket(aM_.player.getActiveHand(), sequence2, aM_.player.getYaw(), aM_.player.getPitch());
+                        });
+                    }
+                    GenericContainerScreen class_476Var = (GenericContainerScreen) aM_.currentScreen;
+                    if (class_476Var instanceof GenericContainerScreen) {
+                        GenericContainerScreen screen = class_476Var;
+                        GenericContainerScreenHandler handler = screen.getScreenHandler();
+                        if (screen.getTitle().getString().contains("» Выбор сервера")) {
+                            aM_.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handler.syncId, handler.getRevision(), 21, 0, SlotActionType.PICKUP, handler.getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
+                        }
+                        for (int i = 0; i < handler.getRows() * 9; i++) {
+                            Slot slot = handler.slots.get(i);
+                            if (slot.getStack().getName().getString().contains("ГРИФ #" + this.c.c().intValue() + " (1.16.5+)") && screen.getTitle().getString().contains("Выбор мира грифа ")) {
+                                if (this.d.a(5500L)) {
+                                    aM_.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handler.syncId, handler.getRevision(), slot.id, 0, SlotActionType.PICKUP, handler.getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
+                                    this.d.b();
+                                    return;
+                                }
+                                return;
+                            }
+                        }
+                        return;
+                    }
+                    return;
+                }
+                ChatUtil.a("Вы находитесь не в лобби ReallyWorld, а значит модуль выключается!");
+                a();
+            }
+        }
+    }
+
+    @EventTarget
+    public void a(PacketEvent event) {
+        if (this.b.l("SpookyTime") && event.c()) {
+            OpenScreenS2CPacket class_3944VarD = (OpenScreenS2CPacket) event.d();
+            if (class_3944VarD instanceof OpenScreenS2CPacket) {
+                OpenScreenS2CPacket openScreenPacket = class_3944VarD;
+                if (openScreenPacket.getName().getString().contains("☫ Выберите режим:")) {
+                    this.e = openScreenPacket.getSyncId();
+                }
+                event.a(true);
+            }
+        }
+    }
+}

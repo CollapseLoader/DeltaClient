@@ -1,0 +1,298 @@
+package aethereal.handler;
+
+import aethereal.core.Delta;
+import aethereal.core.EventTarget;
+import aethereal.core.Interface;
+import aethereal.event.InputEvent;
+import aethereal.event.PacketEvent;
+import aethereal.event.TickEvent;
+import aethereal.util.*;
+import lombok.Generated;
+import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
+import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.util.Hand;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+@Handler_2
+public class PvEHandler extends BaseHandler implements Interface {
+    private final Deque<b> b = new ArrayDeque();
+
+    static double a(ItemStack stack) {
+        if (!stack.isDamageable() || stack.getMaxDamage() <= 0) {
+            return 100.0d;
+        }
+        return (1.0d - (((double) stack.getDamage()) / ((double) stack.getMaxDamage()))) * 100.0d;
+    }
+
+    @Generated
+    public Deque<b> a() {
+        return this.b;
+    }
+
+    @EventTarget
+    public void a(TickEvent event) {
+        if (!this.b.isEmpty() && this.b.peek().a()) {
+            this.b.poll();
+        }
+    }
+
+    @EventTarget(a = 4)
+    public void a(InputEvent event) {
+        if (!this.b.isEmpty()) {
+            MoveUtil.b(event);
+        }
+    }
+
+    @EventTarget
+    public void a(PacketEvent event) {
+        if (this.b.isEmpty() || !event.c()) {
+            return;
+        }
+        GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.d();
+        if (class_7439VarD instanceof GameMessageS2CPacket) {
+            GameMessageS2CPacket gameMsg = class_7439VarD;
+            if (gameMsg.content().getString().equals("Данная команда недоступна в режиме AFK")) {
+                Delta.h().d().v().g().a(7);
+            }
+        }
+    }
+
+    public boolean a(ItemStack tool, double startPct, double endPct) {
+        ItemStack class_1799VarMethod_7972;
+        for (b task : this.b) {
+            if (task instanceof c) {
+                return false;
+            }
+        }
+        if (a(tool) > startPct) {
+            return true;
+        }
+        if (!InventoryUtil.a(tool, Enchantments.MENDING, 1)) {
+            ChatUtil.a("На предмете нету починки, отмена.");
+            return true;
+        }
+        ItemStack main = aM_.player.getMainHandStack();
+        ItemStack off = aM_.player.getOffHandStack();
+        if (main.isEmpty() || ItemStack.areItemsAndComponentsEqual(main, tool)) {
+            class_1799VarMethod_7972 = (off.isEmpty() || off.getItem() == tool.getItem()) ? ItemStack.EMPTY : off.copy();
+        } else {
+            class_1799VarMethod_7972 = main.copy();
+        }
+        ItemStack restore = class_1799VarMethod_7972;
+        this.b.add(new c(tool.getItem(), endPct, aM_.player.getInventory().selectedSlot, restore));
+        return false;
+    }
+
+    interface b {
+        boolean a();
+    }
+
+    static final class c implements Interface, b {
+        private final Item b;
+        private final double c;
+        private final int d;
+        private final ItemStack e;
+        private int f;
+        private int g;
+
+        c(Item tool, double endPct, int toolBarSlot, ItemStack restore) {
+            this.b = tool;
+            this.c = endPct;
+            this.d = toolBarSlot;
+            this.e = restore;
+        }
+
+        @Override
+        public boolean a() {
+            InventoryHandler handler = Delta.h().d().v().a();
+            ItemStack offHand = aM_.player.getOffHandStack();
+            ItemStack mainHand = aM_.player.getMainHandStack();
+            switch (this.f) {
+                case 0:
+                    if (aM_.currentScreen != null) {
+                        aM_.currentScreen.close();
+                    }
+                    int i = this.g + 1;
+                    this.g = i;
+                    if (i >= 3 && handler.a().isEmpty()) {
+                        handler.a(this.d, 40, 1);
+                        this.f = 1;
+                        return false;
+                    }
+                    return false;
+                case 1:
+                    if (!handler.a().isEmpty() || offHand.getItem() != this.b) {
+                        return false;
+                    }
+                    if (PvEHandler.a(offHand) >= this.c) {
+                        this.f = 3;
+                        return false;
+                    }
+                    int onBar = InventoryUtil.a(Items.EXPERIENCE_BOTTLE, true);
+                    if (onBar != -1) {
+                        aM_.player.getInventory().selectedSlot = onBar;
+                        this.f = 2;
+                        return false;
+                    }
+                    int inStorage = InventoryUtil.b(Items.EXPERIENCE_BOTTLE);
+                    if (inStorage != -1) {
+                        handler.a(inStorage, this.d, 1);
+                        this.f = 2;
+                        return false;
+                    }
+                    Delta.h().d().v().i().a().addFirst(new a(Items.EXPERIENCE_BOTTLE, 128, 2000));
+                    return false;
+                case 2:
+                    if (!handler.a().isEmpty() || offHand.getItem() != this.b) {
+                        return false;
+                    }
+                    if (PvEHandler.a(offHand) >= this.c) {
+                        this.g = 0;
+                        this.f = 3;
+                        return false;
+                    }
+                    if (mainHand.isEmpty()) {
+                        this.f = 1;
+                        return false;
+                    }
+                    if (mainHand.getItem() != Items.EXPERIENCE_BOTTLE) {
+                        int bar = InventoryUtil.a(Items.EXPERIENCE_BOTTLE, true);
+                        aM_.player.getInventory().selectedSlot = bar != -1 ? bar : this.d;
+                        return false;
+                    }
+                    Delta.h().d().k().a(new Rotation(aM_.player.getYaw(), 90.0f), 360.0f, 1, 1);
+                    aM_.interactionManager.interactItem(aM_.player, Hand.MAIN_HAND);
+                    return false;
+                case 3:
+                    int i2 = this.g + 1;
+                    this.g = i2;
+                    if (i2 >= 3) {
+                        handler.a(this.d, 40, 1);
+                        this.g = 0;
+                        this.f = 4;
+                        return false;
+                    }
+                    return false;
+                case 4:
+                    int i3 = this.g + 1;
+                    this.g = i3;
+                    if (i3 >= 3) {
+                        if (this.e.isEmpty() || InventoryUtil.a(this.e, false) == -1) {
+                            return true;
+                        }
+                        handler.a(InventoryUtil.a(this.e, false), 40, 1);
+                        return true;
+                    }
+                    return false;
+                default:
+                    return false;
+            }
+        }
+    }
+
+    static final class a implements Interface, b {
+        final Item b;
+        final int c;
+        final int d;
+        int e;
+        int f;
+
+        a(Item targetItem, int need, int priceLimit) {
+            this.b = targetItem;
+            this.c = need;
+            this.d = priceLimit;
+        }
+
+        @Override
+        public boolean a() {
+            switch (this.e) {
+                case 0:
+                    if (aM_.currentScreen != null) {
+                        aM_.currentScreen.close();
+                    }
+                    int i = this.f + 1;
+                    this.f = i;
+                    if (i >= 3) {
+                        aM_.player.networkHandler.sendChatMessage("/ah search " + (this.b == Items.EXPERIENCE_BOTTLE ? "Опыт" : new ItemStack(this.b).getName().getString()));
+                        this.e = 1;
+                        this.f = 0;
+                        return false;
+                    }
+                    return false;
+                case 1:
+                    GenericContainerScreen class_476Var = (GenericContainerScreen) aM_.currentScreen;
+                    if (!(class_476Var instanceof GenericContainerScreen)) {
+                        int i2 = this.f + 1;
+                        this.f = i2;
+                        if (i2 > 20) {
+                            ChatUtil.a("Аукцион не открылся, повторяю.");
+                            this.f = 0;
+                            this.e = 0;
+                            return false;
+                        }
+                        return false;
+                    }
+                    GenericContainerScreen screen = class_476Var;
+                    if (screen.getTitle().getString().startsWith("☃") || screen.getTitle().getString().startsWith("0A2z")) {
+                        this.e = 2;
+                        this.f = 0;
+                        return false;
+                    }
+                    return false;
+                case 2:
+                    int i3 = this.f + 1;
+                    this.f = i3;
+                    if (i3 >= 15) {
+                        this.e = 3;
+                        this.f = 0;
+                        return false;
+                    }
+                    return false;
+                case 3:
+                    GenericContainerScreen class_476Var2 = (GenericContainerScreen) aM_.currentScreen;
+                    if (!(class_476Var2 instanceof GenericContainerScreen)) {
+                        this.f = 0;
+                        this.e = 0;
+                        return false;
+                    }
+                    GenericContainerScreen screen2 = class_476Var2;
+                    if (InventoryUtil.a(this.b) >= this.c) {
+                        int i4 = this.f + 1;
+                        this.f = i4;
+                        if (i4 >= 6) {
+                            aM_.currentScreen.close();
+                            return true;
+                        }
+                        return false;
+                    }
+                    this.f = 0;
+                    if (aM_.player.age % 7 == 0) {
+                        Slot offer = null;
+                        for (int i5 = 0; i5 < screen2.getScreenHandler().slots.size() - 36; i5++) {
+                            Slot slot = screen2.getScreenHandler().slots.get(i5);
+                            if (!slot.getStack().isEmpty() && slot.getStack().getItem() == this.b && ServerUtil.a.a(slot.getStack()) > 0 && ServerUtil.a.a(slot.getStack()) <= this.d && (offer == null || ServerUtil.a.a(slot.getStack()) < ServerUtil.a.a(offer.getStack()))) {
+                                offer = slot;
+                            }
+                        }
+                        if (offer == null) {
+                            aM_.interactionManager.clickSlot(screen2.getScreenHandler().syncId, 50, 0, SlotActionType.QUICK_MOVE, aM_.player);
+                            return false;
+                        }
+                        aM_.interactionManager.clickSlot(screen2.getScreenHandler().syncId, offer.id, 0, SlotActionType.QUICK_MOVE, aM_.player);
+                        return false;
+                    }
+                    return false;
+                default:
+                    return false;
+            }
+        }
+    }
+}

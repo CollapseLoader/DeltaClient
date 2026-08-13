@@ -1,0 +1,105 @@
+plugins {
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+	id 'maven-publish'
+}
+
+repositories {
+	mavenCentral()
+	maven { url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" }
+}
+
+loom {
+	mods {
+		"delta-client" {
+			sourceSet sourceSets.main
+		}
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:1.21.4+build.8:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+	modImplementation "software.bernie.geckolib:geckolib-fabric-1.21.4:4.8.5"
+	include "software.bernie.geckolib:geckolib-fabric-1.21.4:4.8.5"
+
+	implementation 'com.google.code.findbugs:jsr305:3.0.2'
+	implementation 'com.google.code.gson:gson:2.11.0'
+	implementation 'com.google.errorprone:error_prone_annotations:2.27.0'
+	implementation 'org.apache.commons:commons-lang3:3.18.0'
+	implementation 'org.apache.logging.log4j:log4j-api:2.24.1'
+	implementation 'org.java-websocket:Java-WebSocket:1.5.6'
+	implementation 'org.javassist:javassist:3.28.0-GA'
+	implementation 'org.json:json:20250107'
+	implementation 'org.jsoup:jsoup:1.18.3'
+	implementation 'org.reflections:reflections:0.10.2'
+	implementation 'org.slf4j:slf4j-api:2.0.6'
+	
+	compileOnly 'org.projectlombok:lombok:1.18.46'
+	annotationProcessor 'org.projectlombok:lombok:1.18.46'
+	compileOnly 'org.osgi:osgi.core:8.0.0'
+	compileOnly 'biz.aQute.bnd:biz.aQute.bnd.annotation:6.4.0'
+	compileOnly 'org.osgi:osgi.annotation:8.0.0'
+}
+
+// Resolvable configuration for non-mod implementation dependencies to bundle in JAR
+configurations {
+	bundleLibs
+}
+
+processResources {
+	def version = project.version
+	inputs.property "version", version
+
+	filesMatching("fabric.mod.json") {
+		expand "version": version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 21
+	it.options.compilerArgs << "-Xmaxerrs" << "9999999"
+}
+
+java {
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
+}
+
+jar {
+	def projectName = project.name
+	inputs.property "projectName", projectName
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+	from("LICENSE") {
+		rename { "${it}_$projectName"}
+	}
+
+	// Bundle non-mod implementation dependencies into the JAR
+	from({
+		configurations.bundleLibs.resolvedConfiguration.resolvedArtifacts.collect { zipTree(it.file) }
+	}) {
+		exclude "META-INF/MANIFEST.MF"
+	}
+}
+
+// Populate bundleLibs with only plain Java implementation dependencies (not Fabric/Minecraft mods)
+afterEvaluate {
+	configurations.implementation.dependencies.each { dep ->
+		if (dep.group != 'net.fabricmc' && dep.group != 'com.mojang' && dep.group != 'software.bernie.geckolib') {
+			configurations.bundleLibs.dependencies.add(project.dependencies.create(dep))
+		}
+	}
+}
+
+publishing {
+	publications {
+		create("mavenJava", MavenPublication) {
+			from components.java
+		}
+	}
+}

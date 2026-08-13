@@ -1,0 +1,487 @@
+package aethereal.module.misc;
+
+import aethereal.config.DescriptionProcessor;
+import aethereal.config.EnchantmentProcessor;
+import aethereal.config.PotionProcessor;
+import aethereal.core.*;
+import aethereal.core.Module;
+import aethereal.event.*;
+import aethereal.render.AnimationUtil;
+import aethereal.setting.ButtonSetting;
+import aethereal.ui.screen.StationScreen;
+import aethereal.util.ChatUtil;
+import aethereal.util.CounterUtil;
+import aethereal.util.MathUtil;
+import aethereal.util.ServerUtil;
+import lombok.Generated;
+import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.*;
+import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.network.packet.c2s.play.CloseHandledScreenC2SPacket;
+import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
+import net.minecraft.network.packet.s2c.play.OpenScreenS2CPacket;
+import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.text.Text;
+
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.IntStream;
+
+@ModuleRegister(a = "Collector", b = "Автоматически собирает нужный инвентарь на FunTime", c = Category.Misc)
+public class Collector_2 extends Module {
+    private final List<b> d = Delta.h().d().p().e();
+    private final List<a> e = new ArrayList();
+    private final CounterUtil f = new CounterUtil();
+    private final CounterUtil g = new CounterUtil();
+    private b h;
+    private a i;
+    private int j;
+
+    public Collector_2() {
+        ButtonSetting c = new ButtonSetting("Открыть редактор", () -> {
+            aM_.setScreen(new StationScreen(Text.literal(""), 0));
+        });
+        ButtonSetting b = new ButtonSetting("Запустить работу", () -> {
+            if (!m()) {
+                a();
+            }
+            r();
+        });
+        a(b, c);
+    }
+
+    @Generated
+    public List<b> q() {
+        return this.d;
+    }
+
+    @Override
+    public void b() {
+        super.b();
+        ChatUtil.a("Модуль ищет самые дешевые лоты среди тех которые есть, имейте это ввиду, и будьте осторожны!");
+    }
+
+    private void r() {
+        int start = this.h == null ? 0 : this.d.indexOf(this.h) + 1;
+        this.i = null;
+        this.e.clear();
+        IntStream intStreamRange = IntStream.range(start, this.d.size());
+        List<b> list = this.d;
+        Objects.requireNonNull(list);
+        this.h = intStreamRange.mapToObj(list::get).filter((v0) -> {
+            return v0.k();
+        }).filter(slot -> {
+            return a(slot) < a(slot, false);
+        }).findFirst().orElse(null);
+        if (this.h != null) {
+            ChatUtil.a("Переходим к сбору предмета: " + this.h.j());
+        } else {
+            ChatUtil.a("Все предметы собраны, работа завершена");
+        }
+    }
+
+    @Override
+    public void c() {
+        super.c();
+        this.h = null;
+    }
+
+    @EventTarget
+    public void a(TickEvent event) {
+        if (this.h != null) {
+            if (aM_.player.getInventory().getEmptySlot() == -1) {
+                ChatUtil.a("Автоматическое отключение: нет свободных слотов в инвентаре, освободите место");
+                s();
+                a();
+                return;
+            }
+            this.j++;
+            if (!(aM_.currentScreen instanceof GenericContainerScreen) && aM_.player.age >= 200 && this.f.a(1000L, 300L)) {
+                aM_.player.networkHandler.sendCommand("ah search " + this.h.j());
+                this.f.b();
+                this.j = 0;
+            }
+        }
+    }
+
+    @EventTarget
+    public void a(ContainerEvent event) {
+        if (this.h != null && event.h() != ContainerEvent.Phase.PRE) {
+            String title = event.b().getTitle().getString().replaceAll("§.", "").toLowerCase().trim();
+            if (title.contains(this.h.j().toLowerCase())) {
+                if (this.f.a(300L, 80L) && a(this.h) >= a(this.h, false)) {
+                    ChatUtil.a("Предмет " + this.h.j() + " приобретен, перехожу к следующему");
+                    r();
+                    s();
+                    return;
+                }
+                if (this.g.a(1000L, 150L)) {
+                    if (this.f.a(this.h.l() ? 400L : 550L, 120L)) {
+                        if (this.h.l()) {
+                            Matcher matcher = Pattern.compile("(\\d+)/(\\d+)").matcher(title);
+                            if (matcher.find()) {
+                                int currentPage = Integer.parseInt(matcher.group(1));
+                                int lastScanPage = Math.min(4, Integer.parseInt(matcher.group(2)));
+                                if (this.i == null) {
+                                    if (this.e.stream().noneMatch(offer -> {
+                                        return offer.a() == currentPage;
+                                    })) {
+                                        event.e().stream().filter(slot -> {
+                                            return a(slot.getStack());
+                                        }).forEach(slot2 -> {
+                                            this.e.add(new a(currentPage, slot2.id, ServerUtil.a.a(slot2.getStack())));
+                                        });
+                                    }
+                                    if (currentPage < lastScanPage) {
+                                        a(event, "следующая страница");
+                                    } else {
+                                        this.i = this.e.stream().min(Comparator.comparingInt((v0) -> {
+                                            return v0.c();
+                                        })).orElse(null);
+                                        if (this.i == null) {
+                                            s();
+                                        }
+                                    }
+                                } else if (currentPage == this.i.a()) {
+                                    Slot offer2 = event.e().stream().filter(slot3 -> {
+                                        return a(slot3.getStack()) && ServerUtil.a.a(slot3.getStack()) == this.i.c();
+                                    }).findFirst().orElse(null);
+                                    if (offer2 == null) {
+                                        offer2 = event.e().stream().filter(slot4 -> {
+                                            return a(slot4.getStack());
+                                        }).min(Comparator.comparingInt(slot5 -> {
+                                            return ServerUtil.a.a(slot5.getStack());
+                                        })).orElse(null);
+                                    }
+                                    if (offer2 != null) {
+                                        aM_.interactionManager.clickSlot(event.c().syncId, offer2.id, 0, SlotActionType.QUICK_MOVE, aM_.player);
+                                        this.f.b();
+                                    } else {
+                                        ChatUtil.a("Оффер пропал, пересканирую");
+                                        this.i = null;
+                                        this.e.clear();
+                                        s();
+                                    }
+                                } else {
+                                    a(event, currentPage < this.i.a() ? "следующая страница" : "предыдущая страница");
+                                }
+                            }
+                        } else {
+                            List<Slot> buyable = event.e().stream().filter(slot6 -> {
+                                return a(slot6.getStack());
+                            }).toList();
+                            int minPrice = buyable.stream().mapToInt(slot7 -> {
+                                return ServerUtil.a.a(slot7.getStack());
+                            }).min().orElse(0);
+                            List<Slot> affordable = buyable.stream().filter(slot8 -> {
+                                return ServerUtil.a.a(slot8.getStack()) <= Math.round((float) (minPrice * 2));
+                            }).filter(slot9 -> {
+                                return slot9.getStack().getCount() <= a(this.h, true) - a(this.h);
+                            }).toList();
+                            Slot cheapest = affordable.stream().filter(slot10 -> {
+                                return slot10.getStack().getCount() >= a(this.h, false) - a(this.h);
+                            }).min(Comparator.comparingInt(slot11 -> {
+                                return ServerUtil.a.a(slot11.getStack());
+                            })).orElse(null);
+                            if (cheapest == null) {
+                                cheapest = affordable.stream().min(Comparator.comparingInt(slot12 -> {
+                                    return ServerUtil.a.a(slot12.getStack());
+                                })).orElse(null);
+                            }
+                            if (cheapest != null) {
+                                aM_.interactionManager.clickSlot(event.c().syncId, cheapest.id, 0, SlotActionType.QUICK_MOVE, aM_.player);
+                                this.f.b();
+                            } else {
+                                Matcher matcher2 = Pattern.compile("(\\d+)/(\\d+)").matcher(title);
+                                if (matcher2.find()) {
+                                    int currentPage2 = Integer.parseInt(matcher2.group(1));
+                                    int totalPages = Integer.parseInt(matcher2.group(2));
+                                    if (totalPages == 1) {
+                                        ChatUtil.a("Пропускаем предмет " + this.h.j() + ", ибо нету подходящего");
+                                        r();
+                                        s();
+                                        return;
+                                    }
+                                    a(event, currentPage2 == 1 ? "следующая страница" : "предыдущая страница");
+                                }
+                            }
+                        }
+                        this.f.b();
+                        return;
+                    }
+                    return;
+                }
+                return;
+            }
+            if (title.contains("подтверждение покупки") || title.contains("подозрительная цена!") || title.contains("подозрительная цена: ")) {
+                if (this.f.a(200L, 90L)) {
+                    a(event, "[Кyпить]");
+                    this.f.b();
+                    return;
+                }
+                return;
+            }
+            s();
+        }
+    }
+
+    @EventTarget
+    public void a(PacketEvent event) {
+        if (this.h != null && event.c()) {
+            GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.d();
+            if (class_7439VarD instanceof GameMessageS2CPacket) {
+                GameMessageS2CPacket packet = class_7439VarD;
+                String message = packet.content().getString();
+                if (message.toLowerCase().contains("[✘] Ошибка! Этот товар уже Купили!")) {
+                    this.i = null;
+                    this.e.clear();
+                    return;
+                } else if (message.contains("[✘] Ошибка! У Вас не хватает Монет!")) {
+                    ChatUtil.a("Автоматическое отключение из-за нехватки баланса на аккаунте");
+                    a();
+                    return;
+                } else if (message.contains("Данная команда недоступна в режиме AFK")) {
+                    Delta.h().d().v().g().a(10);
+                }
+            }
+            if ((event.d() instanceof OpenScreenS2CPacket) && !(aM_.currentScreen instanceof GenericContainerScreen)) {
+                if (this.j >= 8) {
+                    int anarchy = (int) (MathUtil.a(0.0f, 100.0f) <= 50.0f ? MathUtil.a(205.0f, 231.0f) : MathUtil.a(305.0f, 325.0f));
+                    aM_.player.networkHandler.sendChatMessage("/an" + anarchy);
+                    ChatUtil.a("Обнаружили замедление аукциона, переходим на " + anarchy + " анархию");
+                }
+                this.g.b();
+            }
+        }
+    }
+
+    @EventTarget
+    public void a(InputEvent event) {
+        if (this.h != null && (aM_.currentScreen instanceof HandledScreen)) {
+            event.a(0.0f);
+            event.b(0.0f);
+        }
+    }
+
+    @EventTarget
+    public void a(KeyEvent event) {
+        if (this.h != null && (aM_.currentScreen instanceof HandledScreen)) {
+            event.a(true);
+        }
+        if (event.b() == 256 && this.h != null) {
+            this.h = null;
+            ChatUtil.a("Работа модуля была принудительно завершена");
+        }
+    }
+
+    private void a(ContainerEvent event, String name) {
+        event.e().stream().filter(slot -> {
+            return slot.getStack().getName().getString().toLowerCase().contains(name.toLowerCase());
+        }).findFirst().ifPresent(slot2 -> {
+            aM_.interactionManager.clickSlot(event.c().syncId, slot2.id, 0, SlotActionType.QUICK_MOVE, aM_.player);
+        });
+    }
+
+    private void s() {
+        if (aM_.currentScreen instanceof GenericContainerScreen) {
+            aM_.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(aM_.player.currentScreenHandler.syncId));
+            aM_.player.closeScreen();
+        }
+    }
+
+    private boolean a(ItemStack stack) {
+        if (stack.isEmpty() || !this.h.a(stack)) {
+            return false;
+        }
+        IntStream intStreamRange = IntStream.range(0, 40);
+        PlayerInventory class_1661VarMethod_31548 = aM_.player.getInventory();
+        Objects.requireNonNull(class_1661VarMethod_31548);
+        ItemStack inventory = intStreamRange.mapToObj(class_1661VarMethod_31548::getStack).filter(s -> {
+            return !s.isEmpty() && this.h.a(s);
+        }).findFirst().orElse(ItemStack.EMPTY);
+        if ((!inventory.isEmpty() && (((this.h.i() instanceof PotionItem) && !Objects.equals(stack.get(DataComponentTypes.POTION_CONTENTS), inventory.get(DataComponentTypes.POTION_CONTENTS))) || !stack.getName().getString().trim().equalsIgnoreCase(inventory.getName().getString().trim()))) || stack.getTooltip(Item.TooltipContext.DEFAULT, aM_.player, TooltipType.BASIC).stream().anyMatch(line -> {
+            return line.getString().contains("➥ Нажмите, чтобы забрать");
+        }) || ServerUtil.a.a(stack) <= 0) {
+            return false;
+        }
+        if (this.h.i() == Items.TOTEM_OF_UNDYING && stack.hasGlint()) {
+            return false;
+        }
+        if (this.h.i() == Items.ELYTRA && stack.get(DataComponentTypes.DAMAGE) != null) {
+            return ((float) (432 - stack.get(DataComponentTypes.DAMAGE).intValue())) / 432.0f >= 0.5f;
+        }
+        if (!(this.h.i() instanceof ArmorItem) || stack.get(DataComponentTypes.DAMAGE) == null || stack.getMaxDamage() <= 0) {
+            return true;
+        }
+        return !(this.h.f() == null || this.h.f().b().stream().noneMatch(condition -> {
+            return condition.b() && !condition.d() && condition.i().equals(Enchantments.MENDING);
+        })) || ((float) (stack.getMaxDamage() - stack.get(DataComponentTypes.DAMAGE).intValue())) / ((float) stack.getMaxDamage()) >= 0.7f;
+    }
+
+    private int a(b info, boolean upper) {
+        return Math.max(1, upper ? info.m() + Math.round(info.m() * 0.2f) : info.m());
+    }
+
+    private int a(b slot) {
+        IntStream intStreamRange = IntStream.range(0, 40);
+        PlayerInventory class_1661VarMethod_31548 = aM_.player.getInventory();
+        Objects.requireNonNull(class_1661VarMethod_31548);
+        return intStreamRange.mapToObj(class_1661VarMethod_31548::getStack).filter(stack -> {
+            return !stack.isEmpty() && slot.a(stack);
+        }).mapToInt((v0) -> {
+            return v0.getCount();
+        }).sum();
+    }
+
+    public static class b {
+        private final AnimationUtil d = new AnimationUtil();
+        private final Item e;
+        private final String f;
+        private DescriptionProcessor a;
+        private EnchantmentProcessor b;
+        private PotionProcessor c;
+        private boolean g;
+        private boolean h;
+        private int i;
+        private int j;
+
+        private b(Item item, int count, String name) {
+            this.e = item;
+            this.f = name;
+            this.i = count;
+        }
+
+        public static b a(Item item, int count, String name) {
+            return new b(item, count, name);
+        }
+
+        @Generated
+        public void b(int count) {
+            this.i = count;
+        }
+
+        @Generated
+        public DescriptionProcessor e() {
+            return this.a;
+        }
+
+        @Generated
+        public EnchantmentProcessor f() {
+            return this.b;
+        }
+
+        @Generated
+        public PotionProcessor g() {
+            return this.c;
+        }
+
+        @Generated
+        public AnimationUtil h() {
+            return this.d;
+        }
+
+        @Generated
+        public Item i() {
+            return this.e;
+        }
+
+        @Generated
+        public String j() {
+            return this.f;
+        }
+
+        @Generated
+        public boolean k() {
+            return this.g;
+        }
+
+        @Generated
+        public boolean l() {
+            return this.h;
+        }
+
+        @Generated
+        public int m() {
+            return this.i;
+        }
+
+        @Generated
+        public int n() {
+            return this.j;
+        }
+
+        public boolean a() {
+            return this.e.getMaxCount() > 1 || this.e == Items.TOTEM_OF_UNDYING || (this.e instanceof SplashPotionItem) || (this.e instanceof PotionItem);
+        }
+
+        public int b() {
+            if (this.e instanceof PotionItem) {
+                return 16;
+            }
+            if (this.e == Items.TOTEM_OF_UNDYING || (this.e instanceof SplashPotionItem)) {
+                return 6;
+            }
+            return this.e.getMaxCount();
+        }
+
+        public b a(EnchantmentProcessor processor) {
+            this.b = processor;
+            return this;
+        }
+
+        public b a(DescriptionProcessor processor) {
+            this.a = processor;
+            return this;
+        }
+
+        public b a(PotionProcessor processor) {
+            this.c = processor;
+            return this;
+        }
+
+        public b a(boolean active) {
+            this.g = active;
+            return this;
+        }
+
+        public b b(boolean scan) {
+            this.h = scan;
+            return this;
+        }
+
+        public b a(int color) {
+            this.j = color;
+            return this;
+        }
+
+        public boolean a(ItemStack stack) {
+            return stack.isOf(this.e) && (this.a == null || this.a.a(stack)) && ((this.b == null || this.b.a(stack)) && (this.c == null || this.c.a(stack)));
+        }
+
+        public ItemStack c() {
+            ItemStack stack = new ItemStack(this.e, this.i);
+            if (this.j != 0) {
+                List<StatusEffectInstance> effects = this.c == null ? List.of() : this.c.a().stream().map(c -> {
+                    return new StatusEffectInstance(c.a(), c.c(), Math.max(0, c.b() - 1));
+                }).toList();
+                stack.set(DataComponentTypes.POTION_CONTENTS, new PotionContentsComponent(Optional.empty(), Optional.of(Integer.valueOf(this.j)), effects, Optional.empty()));
+            }
+            return stack;
+        }
+
+        public b d() {
+            return a(this.e, this.i, this.f).a(this.a).a(this.b).a(this.c).a(this.g).b(this.h).a(this.j);
+        }
+    }
+
+    record a(int a, int b, int c) {
+    }
+}

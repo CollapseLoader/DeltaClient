@@ -1,0 +1,40 @@
+package aethereal.lib.jsoup;
+
+import java.net.CookieManager;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
+public final class HttpConnection {
+    private HttpConnection() {
+    }
+
+    public static class c {
+        private final URL a;
+        private final CookieManager b = new CookieManager();
+
+        public c(URL url) {
+            this.a = url;
+        }
+
+        public URL a() {
+            return a;
+        }
+
+        public CookieManager r() {
+            return b;
+        }
+    }
+
+    public static class d {
+        private final Map<String, String> cookies = new HashMap<>();
+
+        public void d(String name, String value) {
+            cookies.put(name, value);
+        }
+
+        public Map<String, String> e() {
+            return cookies;
+        }
+    }
+}
