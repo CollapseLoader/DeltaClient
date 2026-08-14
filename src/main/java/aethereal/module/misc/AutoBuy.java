@@ -146,9 +146,9 @@ public class AutoBuy extends Module {
 
     @EventTarget
     public void onPacket(PacketEvent event) {
-        if (event.c()) {
+        if (event.isReceive()) {
             if (this.screenReady) {
-                InventoryS2CPacket inventoryPacket = (InventoryS2CPacket) event.d();
+                InventoryS2CPacket inventoryPacket = (InventoryS2CPacket) event.getPacket();
                 if (inventoryPacket instanceof InventoryS2CPacket) {
                     if (inventoryPacket.getContents().size() == 90 && this.tickCounter >= 7) {
                         int anarchy = (int) (MathUtil.a(0.0f, 100.0f) <= 50.0f ? MathUtil.a(205.0f, 231.0f) : MathUtil.a(305.0f, 325.0f));
@@ -158,7 +158,7 @@ public class AutoBuy extends Module {
                         this.ahPending = true;
                     }
                 }
-                GameMessageS2CPacket messagePacket = (GameMessageS2CPacket) event.d();
+                GameMessageS2CPacket messagePacket = (GameMessageS2CPacket) event.getPacket();
                 if (messagePacket instanceof GameMessageS2CPacket) {
                     if (this.pendingItem != null && messagePacket.content().getString().contains("Вы успешно купили")) {
                         if (this.d.isEmpty() || !ItemStack.areEqual(this.d.getFirst(), this.pendingItem)) {
@@ -178,14 +178,14 @@ public class AutoBuy extends Module {
                     }
                 }
             }
-            OpenScreenS2CPacket openScreenPacket = (OpenScreenS2CPacket) event.d();
+            OpenScreenS2CPacket openScreenPacket = (OpenScreenS2CPacket) event.getPacket();
             if (openScreenPacket instanceof OpenScreenS2CPacket) {
                 if (!(mc.currentScreen instanceof GenericContainerScreen)) {
                     this.tickCounter = 0;
                 }
                 this.h = openScreenPacket.getSyncId();
             }
-            PlaySoundS2CPacket soundPacket = (PlaySoundS2CPacket) event.d();
+            PlaySoundS2CPacket soundPacket = (PlaySoundS2CPacket) event.getPacket();
             if (soundPacket instanceof PlaySoundS2CPacket) {
                 if (soundPacket.getSound().value().id().getPath().equals("block.note_block.basedrum")) {
                     this.h = mc.player.currentScreenHandler.syncId;
@@ -198,10 +198,10 @@ public class AutoBuy extends Module {
     @EventTarget
     public void onContainer(ContainerEvent event) {
         if (event.h() == ContainerEvent.Phase.POST) {
-            String title = event.b().getTitle().getString().replaceAll("§.", "").toLowerCase().trim();
+            String title = event.getScreen().getTitle().getString().replaceAll("§.", "").toLowerCase().trim();
             if (title.contains("аукцион")) {
-                HandledScreenAccessor accessor = (HandledScreenAccessor) event.b();
-                DrawContext context = event.d();
+                HandledScreenAccessor accessor = (HandledScreenAccessor) event.getScreen();
+                DrawContext context = event.getContext();
                 int count = accessor.getBackgroundHeight() / 18;
                 int x = accessor.getX() - 22;
                 int y = accessor.getY() + 3;

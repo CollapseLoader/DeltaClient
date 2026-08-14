@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class BossBarHudMixin {
     @Inject(method = {"render"}, at = {@At("HEAD")}, cancellable = true)
     private void render(CallbackInfo ci) {
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.BOSS_BAR);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.BOSS_BAR);
         EventManager.a(event);
         if (event.a()) {
             ci.cancel();

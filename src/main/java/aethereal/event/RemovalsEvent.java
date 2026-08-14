@@ -4,17 +4,17 @@ import aethereal.core.Event;
 
 
 public class RemovalsEvent extends Event {
-    private final a a;
+    private final type removalType;
 
-    public RemovalsEvent(a type) {
-        this.a = type;
+    public RemovalsEvent(type type) {
+        this.removalType = type;
     }
 
-    public a b() {
-        return this.a;
+    public type b() {
+        return this.removalType;
     }
 
-    public enum a {
+    public enum type {
         HURT_CAM,
         SCOREBOARD,
         BOSS_BAR,

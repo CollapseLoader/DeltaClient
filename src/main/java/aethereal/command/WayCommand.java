@@ -106,10 +106,10 @@ public class WayCommand extends BaseCommand {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (this.e == a.NONE || !event.c()) {
+        if (this.e == a.NONE || !event.isReceive()) {
             return;
         }
-        GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.d();
+        GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.getPacket();
         if (class_7439VarD instanceof GameMessageS2CPacket) {
             GameMessageS2CPacket s2CPacket = class_7439VarD;
             String message = s2CPacket.content().getString();
@@ -196,7 +196,7 @@ public class WayCommand extends BaseCommand {
             float width = 14.0f + Fonts.e.a(text, 6.25f);
             float x = screen.x() - (width / 2.0f);
             float y = screen.y() - 5.75f;
-            event.d().a(event.h(), x, y, width, 11.5f, 3.5f, ColorUtil.applyAlphaToColor(background, Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).b()), 1.0f, ColorUtil.applyAlphaToColor(background, Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).b()), 6.0f);
+            event.getDraw2DProcessor().a(event.h(), x, y, width, 11.5f, 3.5f, ColorUtil.applyAlphaToColor(background, Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).b()), 1.0f, ColorUtil.applyAlphaToColor(background, Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).b()), 6.0f);
             Fonts.a.a(event.h(), "F", x + 3.0f, y + 3.0f, 5.5f, primary);
             Fonts.e.a(event.h(), text, x + 3.0f + 5.5f + 2.5f, (y + ((11.5f - Fonts.e.a(6.25f)) / 2.0f)) - 0.25f, 6.25f);
         }
@@ -214,7 +214,7 @@ public class WayCommand extends BaseCommand {
         matrices.push();
         matrices.translate(cx, cy, 0.0f);
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(angle));
-        event.d().a(matrices, Identifier.of("delta", "pictures/triangle.png"), -7.0f, -7.0f, 14.0f, 14.0f, 0.0f, primary);
+        event.getDraw2DProcessor().a(matrices, Identifier.of("delta", "pictures/triangle.png"), -7.0f, -7.0f, 14.0f, 14.0f, 0.0f, primary);
         matrices.pop();
         Text text = Text.literal(String.format(Locale.US, "%.1fм", Double.valueOf(eyes.distanceTo(gps))));
         Fonts.d.a(matrices, text, cx - (Fonts.d.a(text, 7.0f) / 2.0f), cy + 7.0f + 2.0f, 7.0f);

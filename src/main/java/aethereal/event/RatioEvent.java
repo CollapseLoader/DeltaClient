@@ -10,7 +10,7 @@ public class RatioEvent extends Event {
         this.ratio = ratio;
     }
 
-    public void a(float ratio) {
+    public void setRatio(float ratio) {
         this.ratio = ratio;
     }
 

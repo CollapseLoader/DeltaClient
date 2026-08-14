@@ -76,11 +76,11 @@ public class UseTracker extends Module {
     @EventTarget
     public void a(PotionEvent event) {
         MutableText notificationText;
-        if (this.b.a("Зелья").c().booleanValue() && event.b() == PotionEvent.type.PARTICLES && mc.world != null) {
+        if (this.b.a("Зелья").c().booleanValue() && event.getType() == PotionEvent.type.PARTICLES && mc.world != null) {
             for (a type : a.values()) {
                 for (int color : type.d()) {
-                    if ((color & 16777215) == (event.c() & 16777215)) {
-                        BlockPos pos = event.d();
+                    if ((color & 16777215) == (event.getData() & 16777215)) {
+                        BlockPos pos = event.getPos();
                         Vec3d splash = pos.toCenterPos();
                         Box box = new Box(pos.getX() - 4, pos.getY() - 4, pos.getZ() - 4, pos.getX() + 5, pos.getY() + 5, pos.getZ() + 5);
                         for (PlayerEntity player : mc.world.getEntitiesByClass(PlayerEntity.class, box, (v0) -> {
@@ -129,8 +129,8 @@ public class UseTracker extends Module {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (event.c()) {
-            if (event.d() instanceof EntityAttributesS2CPacket packet) {
+        if (event.isReceive()) {
+            if (event.getPacket() instanceof EntityAttributesS2CPacket packet) {
                 for (EntityAttributesS2CPacket.Entry entry : packet.getEntries()) {
                     if (entry.attribute().getKey().toString().contains("minecraft:movement_speed")) {
                         for (EntityAttributeModifier modifier : entry.modifiers()) {
@@ -143,7 +143,7 @@ public class UseTracker extends Module {
                     }
                 }
             }
-            if (event.d() instanceof EntityStatusS2CPacket statusPacket) {
+            if (event.getPacket() instanceof EntityStatusS2CPacket statusPacket) {
                 ClientPlayerEntity entity = (ClientPlayerEntity) statusPacket.getEntity(mc.world);
                 if (entity instanceof LivingEntity) {
                     if (statusPacket.getStatus() == 35) {

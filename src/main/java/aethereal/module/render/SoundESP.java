@@ -31,17 +31,17 @@ public class SoundESP extends Module {
 
     @EventTarget
     public void a(SoundEvent e) {
-        String path = e.b().getId().getPath();
+        String path = e.getSound().getId().getPath();
         if ((path.contains("entity.firework_rocket.launch") && this.b.a("Фейерверк").c().booleanValue()) || ((path.contains("entity.generic.explode") && this.b.a("Взрывы").c().booleanValue()) || (path.contains("item.trident.return") && this.b.a("Трезубец").c().booleanValue()))) {
             boolean exists = false;
             for (a info : this.c) {
-                if (Math.abs(info.b().getX() - e.b().getX()) <= 0.5d && Math.abs(info.b().getY() - e.b().getY()) <= 0.5d && Math.abs(info.b().getZ() - e.b().getZ()) <= 0.5d) {
+                if (Math.abs(info.b().getX() - e.getSound().getX()) <= 0.5d && Math.abs(info.b().getY() - e.getSound().getY()) <= 0.5d && Math.abs(info.b().getZ() - e.getSound().getZ()) <= 0.5d) {
                     exists = true;
                     break;
                 }
             }
             if (!exists) {
-                this.c.add(new a(e.b()));
+                this.c.add(new a(e.getSound()));
             }
         }
     }
@@ -73,7 +73,7 @@ public class SoundESP extends Module {
                         float textHeight = Fonts.e.d().lineHeight() * 7.5f;
                         float textX = screenPos.x() - (textWidth / 2.0f);
                         float textY = screenPos.y();
-                        event.d().a(event.i().getMatrices(), textX - 2.0f, textY, textWidth + 4.0f, textHeight, 0.0f, color);
+                        event.getDraw2DProcessor().a(event.i().getMatrices(), textX - 2.0f, textY, textWidth + 4.0f, textHeight, 0.0f, color);
                         Fonts.e.a(event.i().getMatrices(), text, textX, textY, 7.5f);
                     }
                 }

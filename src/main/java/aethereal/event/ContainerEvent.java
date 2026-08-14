@@ -42,15 +42,15 @@ public class ContainerEvent extends Event {
         this.title = title;
     }
 
-    public HandledScreen<?> b() {
+    public HandledScreen<?> getScreen() {
         return this.screen;
     }
 
-    public ScreenHandler c() {
+    public ScreenHandler getHandler() {
         return this.handler;
     }
 
-    public DrawContext d() {
+    public DrawContext getContext() {
         return this.context;
     }
 

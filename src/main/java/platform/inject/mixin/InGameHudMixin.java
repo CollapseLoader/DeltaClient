@@ -143,7 +143,7 @@ public class InGameHudMixin {
 
     @Inject(method = {"renderScoreboardSidebar(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/scoreboard/ScoreboardObjective;)V"}, at = {@At("HEAD")}, cancellable = true)
     private void renderScoreboardSidebar(DrawContext context, ScoreboardObjective objective, CallbackInfo ci) {
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.SCOREBOARD);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.SCOREBOARD);
         EventManager.a(event);
         if (event.a()) {
             ci.cancel();
@@ -173,7 +173,7 @@ public class InGameHudMixin {
 
     @Inject(method = {"renderPortalOverlay"}, at = {@At("HEAD")}, cancellable = true)
     private void renderPortalOverlay(DrawContext context, float nauseaStrength, CallbackInfo ci) {
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.PORTAL);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.PORTAL);
         EventManager.a(event);
         if (event.a()) {
             ci.cancel();
@@ -182,7 +182,7 @@ public class InGameHudMixin {
 
     @ModifyArgs(method = {"renderMiscOverlays"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderOverlay(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/util/Identifier;F)V", ordinal = 0))
     private void onRenderPumpkinOverlay(Args args) {
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.PUMPKIN);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.PUMPKIN);
         EventManager.a(event);
         if (event.a()) {
             args.set(2, Float.valueOf(0.0f));

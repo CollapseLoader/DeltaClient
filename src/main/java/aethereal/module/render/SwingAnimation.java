@@ -48,11 +48,11 @@ public class SwingAnimation extends Module {
 
     @EventTarget
     public void a(HandAnimationEvent event) {
-        if ((!this.b.c().booleanValue() || Delta.getInstance().getModuleProcessor().t().B().getTarget() != null) && event.c() == Hand.MAIN_HAND) {
-            MatrixStack matrices = event.b();
-            float anim = (float) Math.sin(((double) event.d()) * 3.1415936112270124d);
+        if ((!this.b.c().booleanValue() || Delta.getInstance().getModuleProcessor().t().B().getTarget() != null) && event.getHand() == Hand.MAIN_HAND) {
+            MatrixStack matrices = event.getMatrixStack();
+            float anim = (float) Math.sin(((double) event.getSwingProgress()) * 3.1415936112270124d);
             float power = this.f.c().floatValue() * 10.0f;
-            int arm = event.e();
+            int arm = event.getArmX();
             matrices.translate(arm * (this.c.l("Мод 5") ? 0.5f : 0.72f), -0.5f, this.c.l("Мод 5") ? -0.72f : -1.0f);
             if (!this.c.l("Мод 5")) {
                 matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(-this.e.c().floatValue()));
@@ -83,7 +83,7 @@ public class SwingAnimation extends Module {
                 case "Мод 5":
                     float strength = power / 80.0f;
                     float swing = anim * anim;
-                    float twist = (float) Math.sin(((double) (event.d() * event.d())) * 3.1415936112270124d);
+                    float twist = (float) Math.sin(((double) (event.getSwingProgress() * event.getSwingProgress())) * 3.1415936112270124d);
                     matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(arm * (45.0f + (twist * (-20.0f) * strength))));
                     matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(arm * swing * (-22.0f) * strength));
                     matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(swing * (-85.0f) * strength));

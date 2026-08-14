@@ -41,10 +41,10 @@ public class Velocity extends Module {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (!event.c() || mc.player == null) {
+        if (!event.isReceive() || mc.player == null) {
             return;
         }
-        EntityDamageS2CPacket damage = (EntityDamageS2CPacket) event.d();
+        EntityDamageS2CPacket damage = (EntityDamageS2CPacket) event.getPacket();
         if (damage instanceof EntityDamageS2CPacket) {
             if (damage.entityId() == mc.player.getId()) {
                 DamageSource source = damage.createDamageSource(mc.world);
@@ -55,7 +55,7 @@ public class Velocity extends Module {
                 }
             }
         }
-        EntityVelocityUpdateS2CPacket packet = (EntityVelocityUpdateS2CPacket) event.d();
+        EntityVelocityUpdateS2CPacket packet = (EntityVelocityUpdateS2CPacket) event.getPacket();
         if (packet instanceof EntityVelocityUpdateS2CPacket) {
             if (packet.getEntityId() == mc.player.getId()) {
                 if (!this.b.l("Обычный")) {

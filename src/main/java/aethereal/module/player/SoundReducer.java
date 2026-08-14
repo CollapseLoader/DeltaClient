@@ -24,8 +24,8 @@ public class SoundReducer extends Module {
 
     @EventTarget
     public void a(SoundEvent event) {
-        if (a(event.b().getId().getPath())) {
-            event.a(this.b.l("Отключение") ? 0.0f : event.c() * this.c.c().floatValue());
+        if (a(event.getSound().getId().getPath())) {
+            event.setVolume(this.b.l("Отключение") ? 0.0f : event.getVolume() * this.c.c().floatValue());
         }
     }
 

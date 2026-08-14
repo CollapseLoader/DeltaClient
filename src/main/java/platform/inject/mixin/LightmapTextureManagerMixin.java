@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class LightmapTextureManagerMixin {
     @ModifyReturnValue(method = {"getDarknessFactor"}, at = {@At("RETURN")})
     private float onGetDarknessFactor(float original) {
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.DARKNESS);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.DARKNESS);
         EventManager.a(event);
         if (event.a()) {
             return 0.0f;

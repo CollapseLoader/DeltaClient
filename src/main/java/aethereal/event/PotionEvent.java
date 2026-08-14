@@ -6,25 +6,25 @@ import aethereal.core.Event;
 import net.minecraft.util.math.BlockPos;
 
 public class PotionEvent extends Event {
-    private final type a;
+    private final type type;
     private final int data;
     private final BlockPos pos;
 
     public PotionEvent(type type, int data, BlockPos pos) {
-        this.a = type;
+        this.type = type;
         this.data = data;
         this.pos = pos;
     }
 
-    public type b() {
-        return this.a;
+    public type getType() {
+        return this.type;
     }
 
-    public int c() {
+    public int getData() {
         return this.data;
     }
 
-    public BlockPos d() {
+    public BlockPos getPos() {
         return this.pos;
     }
 

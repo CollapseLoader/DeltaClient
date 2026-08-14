@@ -57,14 +57,14 @@ public class XRay extends Module {
                 return mc.world.getBlockState(blockPos).getBlock().equals(Blocks.AIR) || blockPos.getSquaredDistance(mc.player.getPos()) >= 6400.0d || !mc.world.getChunkManager().isChunkLoaded(blockPos.getX() >> 4, blockPos.getZ() >> 4);
             });
             this.b.forEach(pos -> {
-                draw.e().a(draw.h(), new Box(pos), ColorUtil.convertToARGB(255, InterfaceC0020Opcode.bo, 0, InterfaceC0020Opcode.ap), 1.0f);
+                draw.getDraw3DProcessor().a(draw.h(), new Box(pos), ColorUtil.convertToARGB(255, InterfaceC0020Opcode.bo, 0, InterfaceC0020Opcode.ap), 1.0f);
             });
         }
     }
 
     @EventTarget
     public void onPacket(PacketEvent packet) {
-        ChunkDeltaUpdateS2CPacket chunkDeltaPacket = (ChunkDeltaUpdateS2CPacket) packet.d();
+        ChunkDeltaUpdateS2CPacket chunkDeltaPacket = (ChunkDeltaUpdateS2CPacket) packet.getPacket();
         if (chunkDeltaPacket instanceof ChunkDeltaUpdateS2CPacket) {
             chunkDeltaPacket.visitUpdates((blockPos, blockState) -> {
                 if (blockState.getBlock().equals(Blocks.ANCIENT_DEBRIS)) {

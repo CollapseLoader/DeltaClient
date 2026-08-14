@@ -16,15 +16,15 @@ public class ClickEvent extends Event {
         this.type = type;
     }
 
-    public a e() {
+    public a getType() {
         return this.type;
     }
 
-    public double f() {
+    public double getMouseX() {
         return this.mouseX;
     }
 
-    public double g() {
+    public double getMouseY() {
         return this.mouseY;
     }
 

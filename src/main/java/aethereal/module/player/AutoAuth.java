@@ -34,8 +34,8 @@ public class AutoAuth extends Module {
 
     @EventTarget
     public void a(PacketEvent eventPacket) {
-        if (eventPacket.c()) {
-            if (eventPacket.d() instanceof GameMessageS2CPacket packet) {
+        if (eventPacket.isReceive()) {
+            if (eventPacket.getPacket() instanceof GameMessageS2CPacket packet) {
                 String message = packet.content().getString();
                 if ((message.contains("Зарегистрируйтесь") || message.contains("/reg") || message.contains("/register")) && !this.c.c().isEmpty()) {
                     this.password = "/reg " + this.c.c();

@@ -28,12 +28,12 @@ public class ShulkerPreview extends Module {
     @EventTarget
     public void a(ContainerEvent event) {
         Slot hovered;
-        if (event.h() == ContainerEvent.Phase.POST && (hovered = ((platform.inject.accessors.HandledScreenAccessor) event.b()).getFocusedSlot()) != null && hovered.getStack() != null && hovered.hasStack()) {
+        if (event.h() == ContainerEvent.Phase.POST && (hovered = ((platform.inject.accessors.HandledScreenAccessor) event.getScreen()).getFocusedSlot()) != null && hovered.getStack() != null && hovered.hasStack()) {
             ItemStack hoveredStack = hovered.getStack();
             if (hoveredStack.get(DataComponentTypes.CONTAINER) != null) {
                 if (hoveredStack.getItem() instanceof BlockItem blockItem) {
                     if (blockItem.getBlock() instanceof ShulkerBoxBlock) {
-                        a(event.d(), hoveredStack, hoveredStack.get(DataComponentTypes.CONTAINER).stream().toList(), event.f() + 8, (event.g() - this.b.y()) - 16.0f, 1.0f, true);
+                        a(event.getContext(), hoveredStack, hoveredStack.get(DataComponentTypes.CONTAINER).stream().toList(), event.f() + 8, (event.g() - this.b.y()) - 16.0f, 1.0f, true);
                     }
                 }
             }

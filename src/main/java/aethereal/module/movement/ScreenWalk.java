@@ -40,9 +40,9 @@ public class ScreenWalk extends Module {
     public void a(PacketEvent event) {
         boolean isShulker;
         StopHandler stopHandler = Delta.getInstance().getModuleProcessor().v().getStopHandler();
-        if (event.b()) {
+        if (event.isSend()) {
             if (mc.currentScreen instanceof InventoryScreen) {
-                ClickSlotC2SPacket click = (ClickSlotC2SPacket) event.d();
+                ClickSlotC2SPacket click = (ClickSlotC2SPacket) event.getPacket();
                 if (click instanceof ClickSlotC2SPacket) {
                     if (MoveUtil.a()) {
                         if (click.getButton() == 1) {
@@ -58,12 +58,12 @@ public class ScreenWalk extends Module {
                         if (shulker) {
                             stopHandler.a(2);
                         }
-                        this.c.add(new a(event.d(), this.b.l("Медленный") ? this.c.isEmpty() ? 1 : this.c.size() + 1 : 2, shulker));
+                        this.c.add(new a(event.getPacket(), this.b.l("Медленный") ? this.c.isEmpty() ? 1 : this.c.size() + 1 : 2, shulker));
                         event.a(true);
                     }
                 }
             }
-            if (event.d() instanceof CloseHandledScreenC2SPacket) {
+            if (event.getPacket() instanceof CloseHandledScreenC2SPacket) {
                 if (MoveUtil.a() && (mc.currentScreen instanceof InventoryScreen)) {
                     event.a(true);
                     for (a packet : this.c) {
@@ -73,11 +73,11 @@ public class ScreenWalk extends Module {
                 this.d = false;
             }
         }
-        if (event.c() && this.b.l("Медленный")) {
-            if (event.d() instanceof OpenScreenS2CPacket) {
+        if (event.isReceive() && this.b.l("Медленный")) {
+            if (event.getPacket() instanceof OpenScreenS2CPacket) {
                 this.d = true;
             }
-            if (event.d() instanceof CloseScreenS2CPacket) {
+            if (event.getPacket() instanceof CloseScreenS2CPacket) {
                 this.d = false;
             }
         }

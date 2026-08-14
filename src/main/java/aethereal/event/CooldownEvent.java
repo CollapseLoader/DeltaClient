@@ -14,7 +14,7 @@ public class CooldownEvent extends Event {
         this.cooldown = cooldown;
     }
 
-    public Item b() {
+    public Item getItem() {
         return this.item;
     }
 

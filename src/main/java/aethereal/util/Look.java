@@ -48,7 +48,7 @@ public class Look implements Interface {
     @EventTarget
     private void a(LookEvent e) {
         if (this.active) {
-            a(e.a, e.b);
+            a(e.yaw, e.pitch);
             e.a(true);
         }
     }
@@ -56,11 +56,11 @@ public class Look implements Interface {
     @EventTarget
     private void a(RotationEvent e) {
         if (this.active) {
-            e.a(freeYaw);
-            e.b(freePitch);
+            e.setYaw(freeYaw);
+            e.setPitch(freePitch);
         } else {
-            freeYaw = e.b();
-            freePitch = e.c();
+            freeYaw = e.getYaw();
+            freePitch = e.getPitch();
         }
     }
 

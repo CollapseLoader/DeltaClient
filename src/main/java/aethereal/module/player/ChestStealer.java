@@ -46,12 +46,12 @@ public class ChestStealer extends Module {
     public void a(ContainerEvent event) {
         Slot target;
         if (event.h() == ContainerEvent.Phase.POST) {
-            if (((event.b() instanceof GenericContainerScreen) || (event.b() instanceof ShulkerBoxScreen)) && (target = event.e().stream().filter(slot -> {
+            if (((event.getScreen() instanceof GenericContainerScreen) || (event.getScreen() instanceof ShulkerBoxScreen)) && (target = event.e().stream().filter(slot -> {
                 return slot.inventory != mc.player.getInventory();
             }).filter((v0) -> {
                 return v0.hasStack();
             }).findFirst().orElse(null)) != null && this.d.a(5L, 5L)) {
-                mc.interactionManager.clickSlot(event.c().syncId, target.id, 0, SlotActionType.QUICK_MOVE, mc.player);
+                mc.interactionManager.clickSlot(event.getHandler().syncId, target.id, 0, SlotActionType.QUICK_MOVE, mc.player);
                 boolean empty = event.e().stream().filter(slot2 -> {
                     return slot2.inventory != mc.player.getInventory();
                 }).noneMatch(slot3 -> {

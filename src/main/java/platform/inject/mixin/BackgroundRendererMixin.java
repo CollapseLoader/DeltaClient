@@ -23,7 +23,7 @@ public class BackgroundRendererMixin {
     private static void onGetFogModifier(Entity entity, float tickDelta, CallbackInfoReturnable<Object> info) {
         if (entity instanceof LivingEntity living) {
             if (living.hasStatusEffect(StatusEffects.BLINDNESS)) {
-                RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.BLINDNESS);
+                RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.BLINDNESS);
                 EventManager.a(event);
                 if (event.a()) {
                     info.setReturnValue(null);
@@ -31,7 +31,7 @@ public class BackgroundRendererMixin {
                 }
             }
             if (living.hasStatusEffect(StatusEffects.DARKNESS)) {
-                RemovalsEvent event2 = new RemovalsEvent(RemovalsEvent.a.DARKNESS);
+                RemovalsEvent event2 = new RemovalsEvent(RemovalsEvent.type.DARKNESS);
                 EventManager.a(event2);
                 if (event2.a()) {
                     info.setReturnValue(null);

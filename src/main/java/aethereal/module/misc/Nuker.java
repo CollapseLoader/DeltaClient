@@ -100,7 +100,7 @@ public class Nuker extends Module {
     @EventTarget
     public void onDraw(DrawEvent event) {
         if (event.c() && this.targetPos != null) {
-            event.e().a(event.h(), new Box(this.targetPos), ColorUtil.convertToARGB(255, 0, 0, InterfaceC0020Opcode.aN), 2.0f);
+            event.getDraw3DProcessor().a(event.h(), new Box(this.targetPos), ColorUtil.convertToARGB(255, 0, 0, InterfaceC0020Opcode.aN), 2.0f);
         }
     }
 

@@ -32,18 +32,18 @@ public class DistributionHandler extends BaseHandler implements Interface {
     @EventTarget
     public void a(ContainerEvent event) {
         this.b = false;
-        if (event.h() == ContainerEvent.Phase.POST && (event.c() instanceof GenericContainerScreenHandler)) {
+        if (event.h() == ContainerEvent.Phase.POST && (event.getHandler() instanceof GenericContainerScreenHandler)) {
             TranslatableTextContent class_2588VarMethod_10851 = (TranslatableTextContent) event.i().getContent();
             if (class_2588VarMethod_10851 instanceof TranslatableTextContent) {
                 TranslatableTextContent content = class_2588VarMethod_10851;
                 if (content.getKey().equals("container.chest") || content.getKey().equals("container.chestDouble")) {
-                    HandledScreenAccessor screen = (HandledScreenAccessor) event.b();
+                    HandledScreenAccessor screen = (HandledScreenAccessor) event.getScreen();
                     float x = (screen.getX() + screen.getBackgroundWidth()) - 17;
                     float y = screen.getY() + 5;
                     this.b = MathUtil.a(event.f(), event.g(), x, y, 10.0f, 10.0f);
-                    Delta.getInstance().getModuleProcessor().i().a(event.d().getMatrices(), Identifier.of("delta", this.b ? "pictures/minecraft/distribution_button_hovered.png" : "pictures/minecraft/distribution_button.png"), x, y, 10.0f, 10.0f, 0.0f, -1);
+                    Delta.getInstance().getModuleProcessor().i().a(event.getContext().getMatrices(), Identifier.of("delta", this.b ? "pictures/minecraft/distribution_button_hovered.png" : "pictures/minecraft/distribution_button.png"), x, y, 10.0f, 10.0f, 0.0f, -1);
                     if (this.b) {
-                        event.d().drawTooltip(event.b().getTextRenderer(), List.of(Text.of("Отсортировать предметы")), event.f(), event.g());
+                        event.getContext().drawTooltip(event.getScreen().getTextRenderer(), List.of(Text.of("Отсортировать предметы")), event.f(), event.g());
                     }
                 }
             }

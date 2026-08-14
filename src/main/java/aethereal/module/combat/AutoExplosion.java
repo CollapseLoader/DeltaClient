@@ -29,8 +29,8 @@ public class AutoExplosion extends Module {
 
     @EventTarget
     public void onPacket(PacketEvent event) {
-        if (event.b()) {
-            PlayerInteractBlockC2SPacket packet = (PlayerInteractBlockC2SPacket) event.d();
+        if (event.isSend()) {
+            PlayerInteractBlockC2SPacket packet = (PlayerInteractBlockC2SPacket) event.getPacket();
             if (packet instanceof PlayerInteractBlockC2SPacket) {
                 if (mc.player.getMainHandStack().getItem() == Items.OBSIDIAN) {
                     BlockHitResult hit = packet.getBlockHitResult();

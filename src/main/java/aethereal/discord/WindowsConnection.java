@@ -1,6 +1,5 @@
 package aethereal.discord;
 
-
 import aethereal.lib.javassist.Frame;
 import aethereal.lib.log4j.LogManager;
 import aethereal.lib.log4j.Logger;
@@ -11,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class WindowsConnection implements aethereal.lib.jsoup.Connection {
 
     private static final Logger a = LogManager.b(WindowsConnection.class);
-    private static final int b = 50;
+
     final RandomAccessFile d;
     private final ReentrantLock c = new ReentrantLock();
     private final InputStream e = new InputStream() {

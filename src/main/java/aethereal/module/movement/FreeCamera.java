@@ -62,7 +62,7 @@ public class FreeCamera extends Module {
             }
             Vec3d basePrev = this.eyePos != null ? this.eyePos : this.cameraPos;
             Vec3d interpolated = new Vec3d(basePrev.x + ((this.cameraPos.x - basePrev.x) * ((double) mc.getRenderTickCounter().getTickDelta(false))), basePrev.y + ((this.cameraPos.y - basePrev.y) * ((double) mc.getRenderTickCounter().getTickDelta(false))), basePrev.z + ((this.cameraPos.z - basePrev.z) * ((double) mc.getRenderTickCounter().getTickDelta(false))));
-            event.a(interpolated);
+            event.setPosition(interpolated);
             event.a(true);
         }
     }
@@ -70,7 +70,7 @@ public class FreeCamera extends Module {
     @EventTarget
     public void a(CrosshairTargetEvent event) {
         if (this.cameraPos != null && mc.player.isAlive()) {
-            event.a(mc.world.raycast(new RaycastContext(this.cameraPos, this.cameraPos.add(mc.player.getRotationVec(event.b()).multiply(mc.player.getBlockInteractionRange())), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player)));
+            event.setTarget(mc.world.raycast(new RaycastContext(this.cameraPos, this.cameraPos.add(mc.player.getRotationVec(event.b()).multiply(mc.player.getBlockInteractionRange())), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player)));
             event.a(true);
         }
     }
@@ -140,8 +140,8 @@ public class FreeCamera extends Module {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (event.b() && this.d.c().booleanValue() && this.cameraPos != null && !mc.player.isOnGround() && mc.player.isAlive()) {
-            if ((event.d() instanceof PlayerInputC2SPacket) || (event.d() instanceof ClientCommandC2SPacket)) {
+        if (event.isSend() && this.d.c().booleanValue() && this.cameraPos != null && !mc.player.isOnGround() && mc.player.isAlive()) {
+            if ((event.getPacket() instanceof PlayerInputC2SPacket) || (event.getPacket() instanceof ClientCommandC2SPacket)) {
                 event.a(true);
             }
         }

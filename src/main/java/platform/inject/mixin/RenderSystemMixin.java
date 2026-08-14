@@ -17,7 +17,7 @@ public class RenderSystemMixin {
         AmbienceEvent.a event = new AmbienceEvent.a(red, green, blue, alpha);
         EventManager.a(event);
         if (event.a()) {
-            GlStateManager._clearColor(event.b(), event.c(), event.d(), event.e());
+            GlStateManager._clearColor(event.getRed(), event.getGreen(), event.getBlue(), event.getAlpha());
             ci.cancel();
         }
     }

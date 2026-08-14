@@ -14,7 +14,7 @@ public class CrosshairEvent extends Event {
         this.partialTicks = partialTicks;
     }
 
-    public DrawContext b() {
+    public DrawContext getContext() {
         return this.context;
     }
 

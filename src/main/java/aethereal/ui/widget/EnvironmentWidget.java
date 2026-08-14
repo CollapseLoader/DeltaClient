@@ -133,7 +133,7 @@ public class EnvironmentWidget extends Widget implements Interface {
         float textY = (y + ((12.0f - Fonts.e.a(6.5f)) / 2.0f)) - 0.5f;
         String health = ((int) data.f) + "HP";
         a(event, x, y, width, 12.0f, 3.0f, animation, false);
-        event.d().a(event.h(), x + 2.0f, y + 2.0f, 8.0f, 8.0f, 1.5f, ColorUtil.applyAlphaToColor(-1, animation), 0.125f,
+        event.getDraw2DProcessor().a(event.h(), x + 2.0f, y + 2.0f, 8.0f, 8.0f, 1.5f, ColorUtil.applyAlphaToColor(-1, animation), 0.125f,
                 0.125f, 0.125f, 0.125f, mc.getTextureManager().getTexture(data.e).getGlId());
         Fonts.e.a(event.h(), health, ((x + width) - 3.0f) - Fonts.e.a(health, 6.5f), textY, 6.5f,
                 ColorUtil.applyAlphaToColor(-1, animation));
@@ -142,7 +142,7 @@ public class EnvironmentWidget extends Widget implements Interface {
             for (int i = 3; i >= 0; i--) {
                 if (!data.c[i].isEmpty()) {
                     right -= 7.0f;
-                    event.e().a(event.i(), InventoryUtil.a(data.c[i]), right - 2.0f, y + 2.0f, 0, animation, 0.5f,
+                    event.getDraw3DProcessor().a(event.i(), InventoryUtil.a(data.c[i]), right - 2.0f, y + 2.0f, 0, animation, 0.5f,
                             false);
                 }
             }
@@ -161,7 +161,7 @@ public class EnvironmentWidget extends Widget implements Interface {
             float itemY = y + 12.0f + 2.0f;
             int left = entry.a(now);
             a(event, itemX, itemY, 13.0f, 13.0f, 2.0f, animation, entry.c != 0);
-            event.e().a(event.i(), entry.a, itemX + 2.1f, itemY + 2.1f, 0, animation, 0.55f, entry.c == 0);
+            event.getDraw3DProcessor().a(event.i(), entry.a, itemX + 2.1f, itemY + 2.1f, 0, animation, 0.55f, entry.c == 0);
             if (left > 0) {
                 String text = left > 99 ? "99+" : String.valueOf(left);
                 float textWidth = Fonts.e.a(text, 6.5f);
@@ -184,7 +184,7 @@ public class EnvironmentWidget extends Widget implements Interface {
         ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
         int background = ColorUtil.lerpColor(theme.a(ThemeInfo.BACKGROUND_HUD).toIntColor(),
                 theme.a(ThemeInfo.PRIMARY).toIntColor(), theme.a(ThemeInfo.PRIMARY).b() / 6.0f);
-        event.d().b(event.h(), x, y, width, height, radius, ColorUtil.applyAlphaToColor(
+        event.getDraw2DProcessor().b(event.h(), x, y, width, height, radius, ColorUtil.applyAlphaToColor(
                 empty ? ColorUtil.lerpColor(background, ColorUtil.convertToARGB(255, 60, 60, 255), 0.35f) : background,
                 theme.a(ThemeInfo.BACKGROUND_HUD).b() * animation), animation);
     }

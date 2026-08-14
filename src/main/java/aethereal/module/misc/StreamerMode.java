@@ -37,7 +37,7 @@ public class StreamerMode extends Module {
 
     @EventTarget
     public void a(TextVisitEvent event) {
-        event.a(a(event.b()));
+        event.setText(a(event.b()));
     }
 
     @EventTarget
@@ -48,7 +48,7 @@ public class StreamerMode extends Module {
                 text.append(Text.literal(part.replaceAll("Анархия-\\d+", "Анархия-???")).setStyle(style));
                 return Optional.empty();
             }, Style.EMPTY);
-            event.a(text);
+            event.setTitle(text);
         }
     }
 

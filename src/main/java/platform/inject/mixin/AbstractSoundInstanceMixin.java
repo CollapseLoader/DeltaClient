@@ -15,6 +15,6 @@ public abstract class AbstractSoundInstanceMixin {
     private float getVolume(float original) {
         SoundEvent event = new SoundEvent((SoundInstance) this, original);
         EventManager.a(event);
-        return event.c();
+        return event.getVolume();
     }
 }

@@ -10,6 +10,6 @@ import aethereal.event.PortalEvent;
 public class PortalBypass extends Module {
     @EventTarget
     public void a(PortalEvent event) {
-        event.b(false);
+        event.setInPortal(false);
     }
 }

@@ -18,19 +18,19 @@ public class HandAnimationEvent extends Event {
         this.armX = armX;
     }
 
-    public MatrixStack b() {
+    public MatrixStack getMatrixStack() {
         return this.matrices;
     }
 
-    public Hand c() {
+    public Hand getHand() {
         return this.hand;
     }
 
-    public float d() {
+    public float getSwingProgress() {
         return this.swingProgress;
     }
 
-    public int e() {
+    public int getArmX() {
         return this.armX;
     }
 }

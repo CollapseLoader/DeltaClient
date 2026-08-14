@@ -10,7 +10,7 @@ public class PortalEvent extends Event {
         this.inPortal = inPortal;
     }
 
-    public void b(boolean inPortal) {
+    public void setInPortal(boolean inPortal) {
         this.inPortal = inPortal;
     }
 

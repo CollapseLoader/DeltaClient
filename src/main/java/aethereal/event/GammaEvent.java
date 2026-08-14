@@ -10,7 +10,7 @@ public class GammaEvent extends Event {
         this.gamma = gamma;
     }
 
-    public void a(double gamma) {
+    public void setGamma(double gamma) {
         this.gamma = gamma;
     }
 

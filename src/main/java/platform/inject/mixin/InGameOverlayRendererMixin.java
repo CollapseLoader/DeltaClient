@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class InGameOverlayRendererMixin {
     @Inject(method = {"renderFireOverlay"}, at = {@At("HEAD")}, cancellable = true)
     private static void renderFireOverlay(MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.FIRE);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.FIRE);
         EventManager.a(event);
         if (event.a()) {
             ci.cancel();
@@ -25,7 +25,7 @@ public class InGameOverlayRendererMixin {
 
     @Inject(method = {"renderInWallOverlay"}, at = {@At("HEAD")}, cancellable = true)
     private static void renderInWallOverlay(Sprite sprite, MatrixStack matrices, VertexConsumerProvider vertexConsumers, CallbackInfo ci) {
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.CLIP);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.CLIP);
         EventManager.a(event);
         if (event.a()) {
             ci.cancel();

@@ -14,15 +14,15 @@ public class SoundEvent extends Event {
         this.volume = volume;
     }
 
-    public SoundInstance b() {
+    public SoundInstance getSound() {
         return this.sound;
     }
 
-    public void a(float volume) {
+    public void setVolume(float volume) {
         this.volume = volume;
     }
 
-    public float c() {
+    public float getVolume() {
         return this.volume;
     }
 }

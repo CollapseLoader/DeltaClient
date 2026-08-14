@@ -12,7 +12,7 @@ public class ScoreboardEvent extends Event {
         this.title = title;
     }
 
-    public void a(Text title) {
+    public void setTitle(Text title) {
         this.title = title;
     }
 

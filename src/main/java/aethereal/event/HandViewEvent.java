@@ -17,7 +17,7 @@ public class HandViewEvent extends Event {
         this.hand = hand;
     }
 
-    public MatrixStack b() {
+    public MatrixStack getMatrices() {
         return this.matrices;
     }
 

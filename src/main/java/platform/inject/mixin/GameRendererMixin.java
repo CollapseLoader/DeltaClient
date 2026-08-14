@@ -39,17 +39,17 @@ public class GameRendererMixin implements Interface {
 
     @Inject(method = {"renderHand"}, at = {@At("HEAD")})
     private void preRenderHand(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
-        EventManager.a(new HandEvent(HandEvent.a.PRE));
+        EventManager.a(new HandEvent(HandEvent.eventPhase.PRE));
     }
 
     @Inject(method = {"renderHand"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameOverlayRenderer;renderOverlays(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;)V")})
     private void postRenderHand(Camera camera, float tickDelta, Matrix4f matrix4f, CallbackInfo ci) {
-        EventManager.a(new HandEvent(HandEvent.a.POST));
+        EventManager.a(new HandEvent(HandEvent.eventPhase.POST));
     }
 
     @Inject(method = {"tiltViewWhenHurt"}, at = {@At("HEAD")}, cancellable = true)
     private void tiltViewWhenHurt(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.HURT_CAM);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.HURT_CAM);
         EventManager.a(event);
         if (event.a()) {
             ci.cancel();
@@ -58,7 +58,7 @@ public class GameRendererMixin implements Interface {
 
     @Redirect(method = {"renderWorld"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/MathHelper;lerp(FFF)F"))
     private float renderWorld(float delta, float first, float second) {
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.NAUSEA);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.NAUSEA);
         EventManager.a(event);
         if (event.a()) {
             return 0.0f;

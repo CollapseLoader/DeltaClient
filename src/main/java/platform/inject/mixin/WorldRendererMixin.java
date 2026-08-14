@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class WorldRendererMixin implements Interface {
     @Inject(method = {"renderWeather"}, at = {@At("HEAD")}, cancellable = true)
     private void onRenderWeather(FrameGraphBuilder frameGraphBuilder, Vec3d pos, float tickDelta, Fog fog, CallbackInfo ci) {
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.WEATHER);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.WEATHER);
         EventManager.a(event);
         if (event.a()) {
             ci.cancel();

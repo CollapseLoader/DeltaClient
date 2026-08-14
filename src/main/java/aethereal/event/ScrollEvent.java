@@ -12,7 +12,7 @@ public class ScrollEvent extends Event {
         this.vertical = vertical;
     }
 
-    public double b() {
+    public double getHorizontal() {
         return this.horizontal;
     }
 

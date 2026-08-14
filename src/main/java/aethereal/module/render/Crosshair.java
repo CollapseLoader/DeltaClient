@@ -39,7 +39,7 @@ public class Crosshair extends Module {
     }
 
     private void a(DrawEvent drawEvent, float centerX, float centerY, float cooldown) {
-        Draw2DProcessor draw2D = drawEvent.d();
+        Draw2DProcessor draw2D = drawEvent.getDraw2DProcessor();
         DrawContext context = drawEvent.i();
         float actualGap = this.d.a("Адаптивность").c().booleanValue() ? this.b.c().floatValue() + (8.0f * cooldown) : this.b.c().floatValue();
         int color = mc.crosshairTarget instanceof EntityHitResult ? ColorUtil.a(255, 64, 64) : -1;

@@ -41,12 +41,12 @@ public abstract class CameraMixin {
         }
         RotationEvent event = new RotationEvent(focusedEntity.getYaw(tickDelta), focusedEntity.getPitch(tickDelta));
         EventManager.a(event);
-        ((CameraAccessor) this).invokeSetRotation(event.a, event.b);
+        ((CameraAccessor) this).invokeSetRotation(event.yaw, event.pitch);
     }
 
     @Inject(method = {"getSubmersionType"}, at = {@At("HEAD")}, cancellable = true)
     private void getSubmergedFluidState(CallbackInfoReturnable<CameraSubmersionType> ci) {
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.WATER);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.WATER);
         EventManager.a(event);
         if (event.a()) {
             ci.setReturnValue(CameraSubmersionType.NONE);
@@ -56,7 +56,7 @@ public abstract class CameraMixin {
     @Inject(method = {"clipToSpace"}, at = {@At("HEAD")}, cancellable = true)
     private void onClipToSpace(float desiredCameraDistance, CallbackInfoReturnable<Float> info) {
         Animations animations = Delta.getInstance().getModuleProcessor().t().Q();
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.CLIP);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.CLIP);
         EventManager.a(event);
         if (animations.m()) {
             desiredCameraDistance *= animations.u().c();

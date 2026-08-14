@@ -43,14 +43,14 @@ public class ANFindHandler extends BaseHandler implements Interface {
     public void onContainerEvent(ContainerEvent event) {
         this.isHovering = false;
         if (event.h() == ContainerEvent.Phase.POST) {
-            if (event.b().getTitle().getString().contains("☬ Выберите режим:") || event.b().getTitle().getString().contains("☬ Выберите тип режима:")) {
-                HandledScreenAccessor screen = (HandledScreenAccessor) event.b();
+            if (event.getScreen().getTitle().getString().contains("☬ Выберите режим:") || event.getScreen().getTitle().getString().contains("☬ Выберите тип режима:")) {
+                HandledScreenAccessor screen = (HandledScreenAccessor) event.getScreen();
                 float x = (screen.getX() + screen.getBackgroundWidth()) - 17;
                 float y = screen.getY() + 5;
                 this.isHovering = MathUtil.a(event.f(), event.g(), x, y, 10.0f, 10.0f);
-                Delta.getInstance().getModuleProcessor().i().a(event.d().getMatrices(), Identifier.of("delta", this.isHovering ? "pictures/minecraft/join_button_hovered.png" : "pictures/minecraft/join_button.png"), x, y, 10.0f, 10.0f, 0.0f, -1);
+                Delta.getInstance().getModuleProcessor().i().a(event.getContext().getMatrices(), Identifier.of("delta", this.isHovering ? "pictures/minecraft/join_button_hovered.png" : "pictures/minecraft/join_button.png"), x, y, 10.0f, 10.0f, 0.0f, -1);
                 if (this.isHovering) {
-                    event.d().drawTooltip(event.b().getTextRenderer(), List.of(Text.of("Авто-поиск анархии с наименьшим онлайном")), event.f(), event.g());
+                    event.getContext().drawTooltip(event.getScreen().getTextRenderer(), List.of(Text.of("Авто-поиск анархии с наименьшим онлайном")), event.f(), event.g());
                 }
             }
         }

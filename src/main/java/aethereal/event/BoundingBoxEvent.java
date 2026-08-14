@@ -7,27 +7,27 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Box;
 
 public class BoundingBoxEvent extends Event {
-    public Box a;
-    public Entity b;
+    public Box box;
+    public Entity entity;
 
     public BoundingBoxEvent(Box box, Entity entity) {
-        this.a = box;
-        this.b = entity;
+        this.box = box;
+        this.entity = entity;
     }
 
-    public void a(Box box) {
-        this.a = box;
+    public void setBox(Box box) {
+        this.box = box;
     }
 
-    public void a(Entity entity) {
-        this.b = entity;
+    public void setEntity(Entity entity) {
+        this.entity = entity;
     }
 
-    public Box b() {
-        return this.a;
+    public Box getBox() {
+        return this.box;
     }
 
-    public Entity c() {
-        return this.b;
+    public Entity getEntity() {
+        return this.entity;
     }
 }

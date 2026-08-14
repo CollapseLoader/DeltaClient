@@ -79,7 +79,7 @@ public class MineAssistant extends Module {
                         BlockPos pos = new BlockPos(x, y, z);
                         findOreInfo info = a(mc.world.getBlockState(pos).getBlock());
                         if (info != null && info.getColor() != -1 && this.b.a(info.getName()).c().booleanValue()) {
-                            event.e().a(event.h(), new Box(pos), ColorUtil.combineColorWithAlpha(info.getColor(), InterfaceC0020Opcode.ap), 1.0f);
+                            event.getDraw3DProcessor().a(event.h(), new Box(pos), ColorUtil.combineColorWithAlpha(info.getColor(), InterfaceC0020Opcode.ap), 1.0f);
                         }
                     }
                 }

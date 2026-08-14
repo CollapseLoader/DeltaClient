@@ -43,7 +43,7 @@ public class AimHandler extends BaseHandler implements Interface {
             event.h().translate(screen.x(), screen.y(), 0.0f);
             event.h().multiply(RotationAxis.POSITIVE_Z
                     .rotationDegrees(((float) Math.sin(System.currentTimeMillis() / 820.0d)) * 350.0f));
-            event.d().a(event.h(), Identifier.of("delta", "pictures/marker.png"), (-size) / 2.0f, (-size) / 2.0f, size,
+            event.getDraw2DProcessor().a(event.h(), Identifier.of("delta", "pictures/marker.png"), (-size) / 2.0f, (-size) / 2.0f, size,
                     size, 0.0f, ColorUtil.applyAlphaToColor(-1, alpha * 0.8f));
             event.h().pop();
         }

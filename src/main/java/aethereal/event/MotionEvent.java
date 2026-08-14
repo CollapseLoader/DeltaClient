@@ -2,7 +2,6 @@ package aethereal.event;
 
 import aethereal.core.Event;
 
-
 public class MotionEvent extends Event {
     private double x;
     private double y;
@@ -13,7 +12,8 @@ public class MotionEvent extends Event {
     private boolean isCrouching;
     private boolean isSprinting;
 
-    public MotionEvent(double x, double y, double z, float yaw, float pitch, boolean onGround, boolean isCrouching, boolean isSprinting) {
+    public MotionEvent(double x, double y, double z, float yaw, float pitch, boolean onGround, boolean isCrouching,
+            boolean isSprinting) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -31,96 +31,103 @@ public class MotionEvent extends Event {
         if (!(o instanceof MotionEvent other)) {
             return false;
         }
-        return other.a(this) && super.equals(o) && Double.compare(b(), other.b()) == 0 && Double.compare(c(), other.c()) == 0 && Double.compare(d(), other.d()) == 0 && Float.compare(e(), other.e()) == 0 && Float.compare(f(), other.f()) == 0 && g() == other.g() && h() == other.h() && i() == other.i();
+        return other.isMotionEvent(this) && super.equals(o) && Double.compare(getX(), other.getX()) == 0
+                && Double.compare(getY(), other.getY()) == 0 && Double.compare(getZ(), other.getZ()) == 0
+                && Float.compare(getYaw(), other.getYaw()) == 0 && Float.compare(getPitch(), other.getPitch()) == 0
+                && isOnGround() == other.isOnGround() && isCrouching() == other.isCrouching()
+                && isSprinting() == other.isSprinting();
     }
 
-    protected boolean a(Object other) {
+    protected boolean isMotionEvent(Object other) {
         return other instanceof MotionEvent;
     }
 
     public int hashCode() {
         int result = super.hashCode();
-        long $x = Double.doubleToLongBits(b());
+        long $x = Double.doubleToLongBits(getX());
         int result2 = (result * 59) + ((int) (($x >>> 32) ^ $x));
-        long $y = Double.doubleToLongBits(c());
+        long $y = Double.doubleToLongBits(getY());
         int result3 = (result2 * 59) + ((int) (($y >>> 32) ^ $y));
-        long $z = Double.doubleToLongBits(d());
-        return (((((((((((result3 * 59) + ((int) (($z >>> 32) ^ $z))) * 59) + Float.floatToIntBits(e())) * 59) + Float.floatToIntBits(f())) * 59) + (g() ? 79 : 97)) * 59) + (h() ? 79 : 97)) * 59) + (i() ? 79 : 97);
+        long $z = Double.doubleToLongBits(getZ());
+        return (((((((((((result3 * 59) + ((int) (($z >>> 32) ^ $z))) * 59) + Float.floatToIntBits(getYaw())) * 59)
+                + Float.floatToIntBits(getPitch())) * 59) + (isOnGround() ? 79 : 97)) * 59) + (isCrouching() ? 79 : 97))
+                * 59) + (isSprinting() ? 79 : 97);
     }
 
-    public void a(double x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public void b(double y) {
+    public void setY(double y) {
         this.y = y;
     }
 
-    public void c(double z) {
+    public void setZ(double z) {
         this.z = z;
     }
 
-    public void a(float yaw) {
+    public void setYaw(float yaw) {
         this.yaw = yaw;
     }
 
-    public void b(float pitch) {
+    public void setPitch(float pitch) {
         this.pitch = pitch;
     }
 
-    public void b(boolean onGround) {
+    public void setOnGround(boolean onGround) {
         this.onGround = onGround;
     }
 
-    public void c(boolean isCrouching) {
+    public void setCrouching(boolean isCrouching) {
         this.isCrouching = isCrouching;
     }
 
-    public void d(boolean isSprinting) {
+    public void setSprinting(boolean isSprinting) {
         this.isSprinting = isSprinting;
     }
 
     public String toString() {
-        double dB = b();
-        double dC = c();
-        double d = d();
-        float fE = e();
-        float f = f();
-        g();
-        h();
-        i();
-        return "MotionEvent(x=" + dB + ", y=" + dB + ", z=" + dC + ", yaw=" + dB + ", pitch=" + d + ", onGround=" + dB + ", isCrouching=" + fE + ", isSprinting=" + f + ")";
+        double dB = getX();
+        double dC = getY();
+        double d = getZ();
+        float fE = getYaw();
+        float f = getPitch();
+        isOnGround();
+        isCrouching();
+        isSprinting();
+        return "MotionEvent(x=" + dB + ", y=" + dB + ", z=" + dC + ", yaw=" + dB + ", pitch=" + d + ", onGround=" + dB
+                + ", isCrouching=" + fE + ", isSprinting=" + f + ")";
     }
 
-    public double b() {
+    public double getX() {
         return this.x;
     }
 
-    public double c() {
+    public double getY() {
         return this.y;
     }
 
-    public double d() {
+    public double getZ() {
         return this.z;
     }
 
-    public float e() {
+    public float getYaw() {
         return this.yaw;
     }
 
-    public float f() {
+    public float getPitch() {
         return this.pitch;
     }
 
-    public boolean g() {
+    public boolean isOnGround() {
         return this.onGround;
     }
 
-    public boolean h() {
+    public boolean isCrouching() {
         return this.isCrouching;
     }
 
-    public boolean i() {
+    public boolean isSprinting() {
         return this.isSprinting;
     }
 }

@@ -100,7 +100,7 @@ public class EntityESP extends Module {
         float textY = screenPos.y();
         float bgX = textX - padding;
         float bgWidth = textWidth + (padding * 2.0f);
-        event.d().a(event.i().getMatrices(), bgX, textY, bgWidth, textHeight, 0.0f, color);
+        event.getDraw2DProcessor().a(event.i().getMatrices(), bgX, textY, bgWidth, textHeight, 0.0f, color);
         Fonts.e.a(event.i().getMatrices(), text, textX, textY, fontSize);
         drawArmor(entity, event, bgWidth, bgX, textY, color, textHeight);
     }
@@ -121,8 +121,8 @@ public class EntityESP extends Module {
                 float y = (nameTagY - textHeight) - spacing;
                 for (ItemStack stack : stacks) {
                     if (!stack.isEmpty()) {
-                        event.d().a(event.i().getMatrices(), x, y, textHeight, textHeight, 0.0f, color);
-                        event.e().a(event.i(), InventoryUtil.a(stack), x, y, 0, 1.0f, textHeight / 16.0f, true);
+                        event.getDraw2DProcessor().a(event.i().getMatrices(), x, y, textHeight, textHeight, 0.0f, color);
+                        event.getDraw3DProcessor().a(event.i(), InventoryUtil.a(stack), x, y, 0, 1.0f, textHeight / 16.0f, true);
                         x += textHeight + spacing;
                     }
                 }
@@ -182,7 +182,7 @@ public class EntityESP extends Module {
             }
             float textX = screenPos.x() - (maxWidth / 2.0f);
             float textY = screenPos.y() + padding;
-            event.d().a(event.i().getMatrices(), textX - padding, textY, maxWidth + (padding * 2.0f), effects.size() * lineHeight, 0.0f, color);
+            event.getDraw2DProcessor().a(event.i().getMatrices(), textX - padding, textY, maxWidth + (padding * 2.0f), effects.size() * lineHeight, 0.0f, color);
             float lineY = textY;
             for (StatusEffectInstance effect2 : effects) {
                 String duration = effect2.getDuration() > 1000000 ? " ∞" : " - " + ((effect2.getDuration() / 20) / 60) + ":" + String.format("%02d", Integer.valueOf((effect2.getDuration() / 20) % 60));
@@ -205,7 +205,7 @@ public class EntityESP extends Module {
         float textHeight = Fonts.e.d().lineHeight() * fontSize;
         float textX = screenPos.x() - (textWidth / 2.0f);
         float textY = screenPos.y();
-        event.d().a(event.i().getMatrices(), textX - padding, textY, textWidth + (padding * 2.0f), textHeight, 0.0f, color);
+        event.getDraw2DProcessor().a(event.i().getMatrices(), textX - padding, textY, textWidth + (padding * 2.0f), textHeight, 0.0f, color);
         Fonts.e.a(event.i().getMatrices(), text, textX, textY, fontSize);
     }
 

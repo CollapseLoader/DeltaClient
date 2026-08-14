@@ -54,8 +54,8 @@ public class MainHandler extends BaseHandler implements Interface {
         String strComp_2532;
         HoverEvent hover;
         Text hoverText;
-        if (event.c()) {
-            GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.d();
+        if (event.isReceive()) {
+            GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.getPacket();
             if (class_7439VarD instanceof GameMessageS2CPacket) {
                 GameMessageS2CPacket packet = class_7439VarD;
                 for (Text component : a(packet.content())) {
@@ -85,13 +85,13 @@ public class MainHandler extends BaseHandler implements Interface {
                 }
             }
         }
-        if (event.b()) {
-            ChatMessageC2SPacket class_2797VarD = (ChatMessageC2SPacket) event.d();
+        if (event.isSend()) {
+            ChatMessageC2SPacket class_2797VarD = (ChatMessageC2SPacket) event.getPacket();
             if (class_2797VarD instanceof ChatMessageC2SPacket) {
                 ChatMessageC2SPacket chatPacket = class_2797VarD;
                 strComp_2532 = chatPacket.chatMessage();
             } else {
-                CommandExecutionC2SPacket class_7472VarD = (CommandExecutionC2SPacket) event.d();
+                CommandExecutionC2SPacket class_7472VarD = (CommandExecutionC2SPacket) event.getPacket();
                 if (class_7472VarD instanceof CommandExecutionC2SPacket) {
                     try {
                         String command = class_7472VarD.command();
@@ -100,7 +100,7 @@ public class MainHandler extends BaseHandler implements Interface {
                         throw new MatchException(th.toString(), th);
                     }
                 } else {
-                    ChatCommandSignedC2SPacket class_9449VarD = (ChatCommandSignedC2SPacket) event.d();
+                    ChatCommandSignedC2SPacket class_9449VarD = (ChatCommandSignedC2SPacket) event.getPacket();
                     if (class_9449VarD instanceof ChatCommandSignedC2SPacket) {
                         ChatCommandSignedC2SPacket signedCommandPacket = class_9449VarD;
                         strComp_2532 = signedCommandPacket.command();
@@ -162,7 +162,7 @@ public class MainHandler extends BaseHandler implements Interface {
     @EventTarget
     public void a(CooldownEvent event) {
         if (ServerUtil.a.b()) {
-            if ((event.b() == Items.WIND_CHARGE && event.c() <= 10) || (event.b() == Items.CHORUS_FRUIT && event.c() <= 20)) {
+            if ((event.getItem() == Items.WIND_CHARGE && event.c() <= 10) || (event.getItem() == Items.CHORUS_FRUIT && event.c() <= 20)) {
                 event.a(true);
             }
         }

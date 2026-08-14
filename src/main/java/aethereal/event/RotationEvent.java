@@ -4,27 +4,27 @@ import aethereal.core.Event;
 
 
 public class RotationEvent extends Event {
-    public float a;
-    public float b;
+    public float yaw;
+    public float pitch;
 
     public RotationEvent(float yaw, float pitch) {
-        this.a = yaw;
-        this.b = pitch;
+        this.yaw = yaw;
+        this.pitch = pitch;
     }
 
-    public void a(float yaw) {
-        this.a = yaw;
+    public void setYaw(float yaw) {
+        this.yaw = yaw;
     }
 
-    public void b(float pitch) {
-        this.b = pitch;
+    public void setPitch(float pitch) {
+        this.pitch = pitch;
     }
 
-    public float b() {
-        return this.a;
+    public float getYaw() {
+        return this.yaw;
     }
 
-    public float c() {
-        return this.b;
+    public float getPitch() {
+        return this.pitch;
     }
 }

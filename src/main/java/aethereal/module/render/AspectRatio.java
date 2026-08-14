@@ -21,7 +21,7 @@ public class AspectRatio extends Module {
 
     @EventTarget
     public void a(RatioEvent event) {
-        event.a(q());
+        event.setRatio(q());
     }
 
     public float q() {

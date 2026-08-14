@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ParticleManagerMixin {
     @Inject(method = {"addBlockBreakParticles"}, at = {@At("HEAD")}, cancellable = true)
     private void onAddBlockBreakParticles(BlockPos blockPos, BlockState state, CallbackInfo info) {
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.BREAK_PARTICLES);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.BREAK_PARTICLES);
         EventManager.a(event);
         if (event.a()) {
             info.cancel();
@@ -29,7 +29,7 @@ public abstract class ParticleManagerMixin {
 
     @Inject(method = {"addBlockBreakingParticles"}, at = {@At("HEAD")}, cancellable = true)
     private void onAddBlockBreakingParticles(BlockPos blockPos, Direction direction, CallbackInfo info) {
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.BREAK_PARTICLES);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.BREAK_PARTICLES);
         EventManager.a(event);
         if (event.a()) {
             info.cancel();
@@ -39,7 +39,7 @@ public abstract class ParticleManagerMixin {
     @Inject(method = {"addParticle*"}, at = {@At("HEAD")}, cancellable = true)
     private void onAddParticle(ParticleEffect parameters, double x, double y, double z, double velocityX, double velocityY, double velocityZ, CallbackInfoReturnable<Particle> cir) {
         if (parameters.getType() == ParticleTypes.RAIN) {
-            RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.WEATHER);
+            RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.WEATHER);
             EventManager.a(event);
             if (event.a()) {
                 cir.cancel();

@@ -76,8 +76,8 @@ public class NotificationWidget extends Widget implements Interface {
 
     @Override
     public void a(PacketEvent event) {
-        if (this.f.c().booleanValue() && event.c()) {
-            ItemPickupAnimationS2CPacket class_2775VarD = (ItemPickupAnimationS2CPacket) event.d();
+        if (this.f.c().booleanValue() && event.isReceive()) {
+            ItemPickupAnimationS2CPacket class_2775VarD = (ItemPickupAnimationS2CPacket) event.getPacket();
             if (class_2775VarD instanceof ItemPickupAnimationS2CPacket) {
                 ItemPickupAnimationS2CPacket itemPickupAnimationS2CPacket = class_2775VarD;
                 ClientPlayerEntity class_746VarMethod_8469 = (ClientPlayerEntity) mc.world.getEntityById(itemPickupAnimationS2CPacket.getCollectorEntityId());

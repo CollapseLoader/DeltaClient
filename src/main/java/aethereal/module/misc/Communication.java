@@ -57,8 +57,8 @@ public class Communication extends Module {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (this.c.c().booleanValue() && event.b()) {
-            ChatMessageC2SPacket packet = (ChatMessageC2SPacket) event.d();
+        if (this.c.c().booleanValue() && event.isSend()) {
+            ChatMessageC2SPacket packet = (ChatMessageC2SPacket) event.getPacket();
             if (packet instanceof ChatMessageC2SPacket) {
                 String content = packet.chatMessage();
                 if (content.startsWith("@")) {
@@ -94,7 +94,7 @@ public class Communication extends Module {
             float height = (8.0f + (3.0f * 2.0f)) - 2.0f;
             float x = screen.x() - (width / 2.0f);
             float y = screen.y() - (height / 2.0f);
-            Draw2DProcessor draw = event.d();
+            Draw2DProcessor draw = event.getDraw2DProcessor();
             draw.a(event.h(), x, y, width - 0.5f, height, 3.5f, background, 1.0f, background, 6.0f);
             draw.a(event.h(), draw.c().b(mark.b()), null, (x + 3.0f) - 0.5f, (y + 3.0f) - 1.0f, 8.0f, 8.0f, 1.0f, 1.0f);
             Fonts.e.a(event.h(), text, x + 3.0f + 8.0f + 2.0f, (y + ((height - Fonts.e.a(6.25f)) / 2.0f)) - 0.5f, 6.25f);

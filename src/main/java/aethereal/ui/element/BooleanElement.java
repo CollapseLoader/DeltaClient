@@ -86,11 +86,11 @@ public class BooleanElement extends Element<BooleanSetting> {
         float toggleY = y + 2.25f;
         int primary = theme.a(ThemeInfo.PRIMARY).toIntColor();
         Fonts.a.a(event.h(), "g", x + 5.0f, y + ((12.0f - Fonts.a.a(6.5f)) / 2.0f), 6.5f, ColorUtil.applyAlphaToColor(primary, animation));
-        event.d().a(event.i().getMatrices(), x + 15.5f, y + 3.0f, 0.75f, 6.0f, 0.0f, ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(InterfaceC0020Opcode.aN, InterfaceC0020Opcode.aN, InterfaceC0020Opcode.aN, 255), 0.5f * animation));
+        event.getDraw2DProcessor().a(event.i().getMatrices(), x + 15.5f, y + 3.0f, 0.75f, 6.0f, 0.0f, ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(InterfaceC0020Opcode.aN, InterfaceC0020Opcode.aN, InterfaceC0020Opcode.aN, 255), 0.5f * animation));
         Fonts.e.a(event.h(), this.b.i(), textX, (y + ((12.0f - Fonts.e.a(6.5f)) / 2.0f)) - 0.5f, 6.5f, ColorUtil.applyAlphaToColor(-1, animation));
         float value = getActivationAnimation().c();
-        event.d().a(event.h(), toggleX, toggleY, 11.0f, 7.5f, 2.5f, ColorUtil.applyAlphaToColor(primary, value * animation));
-        event.d().a(event.h(), toggleX, toggleY, 11.0f, 7.5f, 2.5f, 0.3f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * animation));
-        event.d().a(event.h(), toggleX + 1.5f + (3.5f * value), toggleY + 1.5f, 4.5f, 4.5f, 1.25f, ColorUtil.applyAlphaToColor(ColorUtil.lerpColor(ColorUtil.convertToARGB(InterfaceC0020Opcode.ap, InterfaceC0020Opcode.ap, InterfaceC0020Opcode.bk, 255), ColorUtil.convertToARGB(255, 255, 255, 255), value), animation));
+        event.getDraw2DProcessor().a(event.h(), toggleX, toggleY, 11.0f, 7.5f, 2.5f, ColorUtil.applyAlphaToColor(primary, value * animation));
+        event.getDraw2DProcessor().a(event.h(), toggleX, toggleY, 11.0f, 7.5f, 2.5f, 0.3f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * animation));
+        event.getDraw2DProcessor().a(event.h(), toggleX + 1.5f + (3.5f * value), toggleY + 1.5f, 4.5f, 4.5f, 1.25f, ColorUtil.applyAlphaToColor(ColorUtil.lerpColor(ColorUtil.convertToARGB(InterfaceC0020Opcode.ap, InterfaceC0020Opcode.ap, InterfaceC0020Opcode.bk, 255), ColorUtil.convertToARGB(255, 255, 255, 255), value), animation));
     }
 }

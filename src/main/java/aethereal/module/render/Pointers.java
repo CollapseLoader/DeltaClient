@@ -70,7 +70,7 @@ public class Pointers extends Module {
                         stack.push();
                         stack.translate((mc.getWindow().getScaledWidth() / 2.0f) + (((float) Math.sin(radians)) * this.d.c().floatValue()), (mc.getWindow().getScaledHeight() / 2.0f) - (((float) Math.cos(radians)) * this.d.c().floatValue()), 0.0f);
                         stack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(angle));
-                        event.d().a(stack, Identifier.of("delta", "pictures/pointer.png"), (-this.c.c().floatValue()) / 2.0f, (-this.c.c().floatValue()) / 2.0f, this.c.c().floatValue(), this.c.c().floatValue(), 0.0f, isFriend ? ColorUtil.convertToARGB(85, 255, 85, InterfaceC0020Opcode.aL) : ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.aL));
+                        event.getDraw2DProcessor().a(stack, Identifier.of("delta", "pictures/pointer.png"), (-this.c.c().floatValue()) / 2.0f, (-this.c.c().floatValue()) / 2.0f, this.c.c().floatValue(), this.c.c().floatValue(), 0.0f, isFriend ? ColorUtil.convertToARGB(85, 255, 85, InterfaceC0020Opcode.aL) : ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.aL));
                         stack.pop();
                     }
                 }

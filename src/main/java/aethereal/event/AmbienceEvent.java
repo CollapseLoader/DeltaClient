@@ -17,11 +17,11 @@ public class AmbienceEvent {
             this.time = time;
         }
 
-        public void a(long time) {
+        public void setTime(long time) {
             this.time = time;
         }
 
-        public long b() {
+        public long getTime() {
             return this.time;
         }
     }
@@ -39,35 +39,35 @@ public class AmbienceEvent {
             this.alpha = alpha;
         }
 
-        public void a(float red) {
+        public void setRed(float red) {
             this.red = red;
         }
 
-        public void b(float green) {
+        public void setGreen(float green) {
             this.green = green;
         }
 
-        public void c(float blue) {
+        public void setBlue(float blue) {
             this.blue = blue;
         }
 
-        public void d(float alpha) {
+        public void setAlpha(float alpha) {
             this.alpha = alpha;
         }
 
-        public float b() {
+        public float getRed() {
             return this.red;
         }
 
-        public float c() {
+        public float getGreen() {
             return this.green;
         }
 
-        public float d() {
+        public float getBlue() {
             return this.blue;
         }
 
-        public float e() {
+        public float getAlpha() {
             return this.alpha;
         }
     }
@@ -83,19 +83,19 @@ public class AmbienceEvent {
             this.fog = fog;
         }
 
-        public void a(Camera camera) {
+        public void setCamera(Camera camera) {
             this.camera = camera;
         }
 
-        public void a(float viewDistance) {
+        public void setViewDistance(float viewDistance) {
             this.viewDistance = viewDistance;
         }
 
-        public void a(Fog fog) {
+        public void setFog(Fog fog) {
             this.fog = fog;
         }
 
-        public Camera b() {
+        public Camera getCamera() {
             return this.camera;
         }
 
@@ -113,22 +113,22 @@ public class AmbienceEvent {
     }
 
     public static class d extends Event {
-        private final aethereal.event.AmbienceEvent.d.type a;
+        private final aethereal.event.AmbienceEvent.d.type type;
         private float value;
         private Biome.Precipitation precipitation;
 
         public d(aethereal.event.AmbienceEvent.d.type type, float value) {
-            this.a = type;
+            this.type = type;
             this.value = value;
         }
 
         public d(aethereal.event.AmbienceEvent.d.type type, Biome.Precipitation value) {
-            this.a = type;
+            this.type = type;
             this.precipitation = value;
         }
 
         public aethereal.event.AmbienceEvent.d.type b() {
-            return this.a;
+            return this.type;
         }
 
         public float c() {

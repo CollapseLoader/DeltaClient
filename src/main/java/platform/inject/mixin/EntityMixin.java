@@ -27,13 +27,13 @@ public abstract class EntityMixin {
     public final void getBoundingBox(CallbackInfoReturnable<Box> cir) {
         BoundingBoxEvent event = new BoundingBoxEvent(this.boundingBox, (Entity) (Object) this);
         EventManager.a(event);
-        cir.setReturnValue(event.b());
+        cir.setReturnValue(event.getBox());
     }
 
     @Inject(method = {"isGlowing"}, at = {@At("RETURN")}, cancellable = true)
     private void onIsGlowing(CallbackInfoReturnable<Boolean> cir) {
         if (cir.getReturnValue().booleanValue()) {
-            RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.GLOW);
+            RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.GLOW);
             EventManager.a(event);
             if (event.a()) {
                 cir.setReturnValue(false);

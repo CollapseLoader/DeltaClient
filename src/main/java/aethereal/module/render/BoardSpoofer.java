@@ -50,7 +50,7 @@ public class BoardSpoofer extends Module {
         if (this.b.a("Токены").c().booleanValue()) {
             title = a(title, "Токенов: ", this.e.c().isEmpty() ? "0" : this.e.c());
         }
-        event.a(title);
+        event.setTitle(title);
     }
 
     private Text a(Text text, String label, String newValue) {

@@ -14,6 +14,6 @@ public class ClientWorldPropertiesMixin {
     private long getTimeOfDay(long original) {
         AmbienceEvent.c event = new AmbienceEvent.c(original);
         EventManager.a(event);
-        return event.b();
+        return event.getTime();
     }
 }

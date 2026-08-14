@@ -121,7 +121,7 @@ public class ServerAssistant extends Module {
 
     @EventTarget
     public void a(ContainerEvent event) {
-        HandledScreenAccessor handledScreenAccessorB = (HandledScreenAccessor) event.b();
+        HandledScreenAccessor handledScreenAccessorB = (HandledScreenAccessor) event.getScreen();
         if (handledScreenAccessorB instanceof GenericContainerScreen) {
             HandledScreenAccessor handledScreenAccessor = handledScreenAccessorB;
             ToIntFunction<ItemStack> price = ServerUtil.a.a() ? ServerUtil.a::a : ServerUtil.d::a;
@@ -174,7 +174,7 @@ public class ServerAssistant extends Module {
                     }
                     HandledScreenAccessor accessor = handledScreenAccessor;
                     float pulse = (float) ((Math.sin(((System.currentTimeMillis() % 100000) / 1000.0f) * 10.0f) + 1.0d) * 0.5d);
-                    Delta.getInstance().getModuleProcessor().i().a(event.d(), accessor.getX() + this.cheapestSlot.x, accessor.getY() + this.cheapestSlot.y, 16.0f, 16.0f, ColorUtil.convertToARGB(0, 255, 0, (int) (25.0f + (175.0f * pulse))));
+                    Delta.getInstance().getModuleProcessor().i().a(event.getContext(), accessor.getX() + this.cheapestSlot.x, accessor.getY() + this.cheapestSlot.y, 16.0f, 16.0f, ColorUtil.convertToARGB(0, 255, 0, (int) (25.0f + (175.0f * pulse))));
                 }
             }
         }
@@ -182,14 +182,14 @@ public class ServerAssistant extends Module {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (event.c()) {
-            GameMessageS2CPacket message = (GameMessageS2CPacket) event.d();
+        if (event.isReceive()) {
+            GameMessageS2CPacket message = (GameMessageS2CPacket) event.getPacket();
             if (message instanceof GameMessageS2CPacket) {
                 if (ServerUtil.a.a() && message.content().getString().equals("На этой анархии этот предмет не работает")) {
                     int z = ServerUtil.a.d();
                 }
             }
-            InventoryS2CPacket packet = (InventoryS2CPacket) event.d();
+            InventoryS2CPacket packet = (InventoryS2CPacket) event.getPacket();
             if (packet instanceof InventoryS2CPacket) {
                 if (this.helpElements.a("Сортировать по цене").c().booleanValue() && (ServerUtil.a.a() || ServerUtil.d.a())) {
                     List<ItemStack> contents = packet.getContents();
@@ -220,7 +220,7 @@ public class ServerAssistant extends Module {
                     }
                 }
             }
-            ScreenHandlerSlotUpdateS2CPacketAccessor screenHandlerSlotUpdateS2CPacketAccessorD = (ScreenHandlerSlotUpdateS2CPacketAccessor) event.d();
+            ScreenHandlerSlotUpdateS2CPacketAccessor screenHandlerSlotUpdateS2CPacketAccessorD = (ScreenHandlerSlotUpdateS2CPacketAccessor) event.getPacket();
             if (screenHandlerSlotUpdateS2CPacketAccessorD instanceof ScreenHandlerSlotUpdateS2CPacket) {
                 ScreenHandlerSlotUpdateS2CPacketAccessor screenHandlerSlotUpdateS2CPacketAccessor = screenHandlerSlotUpdateS2CPacketAccessorD;
                 if (this.sortOrder != null && screenHandlerSlotUpdateS2CPacketAccessor.getSyncId() != 0 && screenHandlerSlotUpdateS2CPacketAccessor.getSyncId() == mc.player.currentScreenHandler.syncId && screenHandlerSlotUpdateS2CPacketAccessor.getSlot() >= 0 && screenHandlerSlotUpdateS2CPacketAccessor.getSlot() < this.sortOrder.length) {
@@ -234,8 +234,8 @@ public class ServerAssistant extends Module {
                 this.cheapestSlot = null;
             }
         }
-        if (event.b()) {
-            ClickSlotC2SPacketAccessor clickSlotC2SPacketAccessorD = (ClickSlotC2SPacketAccessor) event.d();
+        if (event.isSend()) {
+            ClickSlotC2SPacketAccessor clickSlotC2SPacketAccessorD = (ClickSlotC2SPacketAccessor) event.getPacket();
             if (clickSlotC2SPacketAccessorD instanceof ClickSlotC2SPacket) {
                 ClickSlotC2SPacketAccessor clickSlotC2SPacketAccessor = clickSlotC2SPacketAccessorD;
                 if (this.sortOrder != null && clickSlotC2SPacketAccessor.getSyncId() != 0 && clickSlotC2SPacketAccessor.getSyncId() == mc.player.currentScreenHandler.syncId && clickSlotC2SPacketAccessor.getSlot() >= 0 && clickSlotC2SPacketAccessor.getSlot() < this.sortOrder.length) {

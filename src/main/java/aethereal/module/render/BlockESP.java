@@ -90,7 +90,7 @@ public class BlockESP extends Module {
     private void renderBlock(DrawEvent event, BlockPos pos, Map<Block, Integer> colors) {
         Integer color = colors.get(mc.world.getBlockState(pos).getBlock());
         if (color != null) {
-            event.e().a(event.h(), new Box(pos), color.intValue() != -1 ? color.intValue()
+            event.getDraw3DProcessor().a(event.h(), new Box(pos), color.intValue() != -1 ? color.intValue()
                             : ColorUtil.combineColorWithAlpha(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(),
                             InterfaceC0020Opcode.al),
                     1.5f);

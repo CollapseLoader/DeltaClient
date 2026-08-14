@@ -16,8 +16,8 @@ public class TPSHandler extends BaseHandler {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (event.c()) {
-            WorldTimeUpdateS2CPacket class_2761VarD = (WorldTimeUpdateS2CPacket) event.d();
+        if (event.isReceive()) {
+            WorldTimeUpdateS2CPacket class_2761VarD = (WorldTimeUpdateS2CPacket) event.getPacket();
             if (class_2761VarD instanceof WorldTimeUpdateS2CPacket) {
                 WorldTimeUpdateS2CPacket packet = class_2761VarD;
                 long now = System.currentTimeMillis();

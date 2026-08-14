@@ -27,11 +27,11 @@ public class HeadFeatureEvent extends Event {
         if (!(o instanceof HeadFeatureEvent other)) {
             return false;
         }
-        if (!other.a(this) || !super.equals(o)) {
+        if (!other.matches(this) || !super.equals(o)) {
             return false;
         }
-        Object this$matrix = b();
-        Object other$matrix = other.b();
+        Object this$matrix = getMatrixStack();
+        Object other$matrix = other.getMatrixStack();
         if (this$matrix == null) {
             if (other$matrix != null) {
                 return false;
@@ -39,8 +39,8 @@ public class HeadFeatureEvent extends Event {
         } else if (!this$matrix.equals(other$matrix)) {
             return false;
         }
-        Object this$vertexConsumerProvider = c();
-        Object other$vertexConsumerProvider = other.c();
+        Object this$vertexConsumerProvider = getVertexConsumerProvider();
+        Object other$vertexConsumerProvider = other.getVertexConsumerProvider();
         if (this$vertexConsumerProvider == null) {
             if (other$vertexConsumerProvider != null) {
                 return false;
@@ -48,8 +48,8 @@ public class HeadFeatureEvent extends Event {
         } else if (!this$vertexConsumerProvider.equals(other$vertexConsumerProvider)) {
             return false;
         }
-        Object this$player = d();
-        Object other$player = other.d();
+        Object this$player = getPlayer();
+        Object other$player = other.getPlayer();
         if (this$player == null) {
             if (other$player != null) {
                 return false;
@@ -57,63 +57,63 @@ public class HeadFeatureEvent extends Event {
         } else if (!this$player.equals(other$player)) {
             return false;
         }
-        Object this$model = e();
-        Object other$model = other.e();
+        Object this$model = getModel();
+        Object other$model = other.getModel();
         if (this$model == null) {
             return other$model == null;
         }
         return this$model.equals(other$model);
     }
 
-    protected boolean a(Object other) {
+    protected boolean matches(Object other) {
         return other instanceof HeadFeatureEvent;
     }
 
     public int hashCode() {
         int result = super.hashCode();
-        Object $matrix = b();
+        Object $matrix = getMatrixStack();
         int result2 = (result * 59) + ($matrix == null ? 43 : $matrix.hashCode());
-        Object $vertexConsumerProvider = c();
+        Object $vertexConsumerProvider = getVertexConsumerProvider();
         int result3 = (result2 * 59) + ($vertexConsumerProvider == null ? 43 : $vertexConsumerProvider.hashCode());
-        Object $player = d();
+        Object $player = getPlayer();
         int result4 = (result3 * 59) + ($player == null ? 43 : $player.hashCode());
-        Object $model = e();
+        Object $model = getModel();
         return (result4 * 59) + ($model == null ? 43 : $model.hashCode());
     }
 
-    public void a(MatrixStack matrix) {
+    public void setMatrixStack(MatrixStack matrix) {
         this.matrixStack = matrix;
     }
 
-    public void a(VertexConsumerProvider vertexConsumerProvider) {
+    public void setVertexConsumerProvider(VertexConsumerProvider vertexConsumerProvider) {
         this.vertexConsumerProvider = vertexConsumerProvider;
     }
 
-    public void a(PlayerEntity player) {
+    public void setPlayer(PlayerEntity player) {
         this.player = player;
     }
 
-    public void a(ModelWithHead model) {
+    public void setModel(ModelWithHead model) {
         this.model = model;
     }
 
     public String toString() {
-        return "HeadFeatureEvent(matrix=" + b() + ", vertexConsumerProvider=" + c() + ", player=" + d() + ", model=" + e() + ")";
+        return "HeadFeatureEvent(matrix=" + getMatrixStack() + ", vertexConsumerProvider=" + getVertexConsumerProvider() + ", player=" + getPlayer() + ", model=" + getModel() + ")";
     }
 
-    public MatrixStack b() {
+    public MatrixStack getMatrixStack() {
         return this.matrixStack;
     }
 
-    public VertexConsumerProvider c() {
+    public VertexConsumerProvider getVertexConsumerProvider() {
         return this.vertexConsumerProvider;
     }
 
-    public PlayerEntity d() {
+    public PlayerEntity getPlayer() {
         return this.player;
     }
 
-    public ModelWithHead e() {
+    public ModelWithHead getModel() {
         return this.model;
     }
 }

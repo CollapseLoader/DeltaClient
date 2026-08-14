@@ -115,27 +115,27 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
         if (mc.currentScreen instanceof ChatScreen) {
             if (event.b() && event.h() == 0) {
                 for (DragInfo dragInfo : e()) {
-                    if (dragInfo.getDragStatus() != 2 && MathUtil.a(event.f(), event.g(), dragInfo.getClampedX(), dragInfo.getClampedY(), dragInfo.getWidth(), dragInfo.getHeight())) {
+                    if (dragInfo.getDragStatus() != 2 && MathUtil.a(event.getMouseX(), event.getMouseY(), dragInfo.getClampedX(), dragInfo.getClampedY(), dragInfo.getWidth(), dragInfo.getHeight())) {
                         CursorUtil.a(CursorUtil.a.HAND);
                         this.g = dragInfo;
-                        this.g.setOffsetX(event.f() - ((double) dragInfo.getClampedX()));
-                        this.g.setOffsetY(event.g() - ((double) dragInfo.getClampedY()));
+                        this.g.setOffsetX(event.getMouseX() - ((double) dragInfo.getClampedX()));
+                        this.g.setOffsetY(event.getMouseY() - ((double) dragInfo.getClampedY()));
                         break;
                     }
                 }
             } else if (event.c() && event.h() == 0) {
                 resetDrag();
             } else if (event.d() && this.g != null && event.h() == 0) {
-                updateDragPosition((float) (event.f() - this.g.getOffsetX()), (float) (event.g() - this.g.getOffsetY()), this.g);
+                updateDragPosition((float) (event.getMouseX() - this.g.getOffsetX()), (float) (event.getMouseY() - this.g.getOffsetY()), this.g);
             }
             for (DragInfo dragInfo2 : e()) {
                 if (event.h() == 1 && event.b()) {
-                    if (MathUtil.a(event.f(), event.g(), dragInfo2.getClampedX(), dragInfo2.getClampedY(), dragInfo2.getWidth(), dragInfo2.getHeight())) {
+                    if (MathUtil.a(event.getMouseX(), event.getMouseY(), dragInfo2.getClampedX(), dragInfo2.getClampedY(), dragInfo2.getWidth(), dragInfo2.getHeight())) {
                         dragInfo2.getWidget().a(!dragInfo2.getWidget().g());
                     }
                 } else if (event.h() == 0 && event.c() && dragInfo2.getWidget().g()) {
                     for (Element<?> element : dragInfo2.getWidget().c()) {
-                        element.onMouseClick(event.f(), event.g(), event.h());
+                        element.onMouseClick(event.getMouseX(), event.getMouseY(), event.h());
                     }
                 }
             }
@@ -244,10 +244,10 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
 
     private void b(DrawEvent event) {
         if (this.e.a()) {
-            event.d().a(event.i(), this.e.c().floatValue() - 0.5f, 0.0f, 0.5f, mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont()), ColorUtil.convertToARGB(255, 255, 255, (int) (this.e.b().c() * 200.0f)));
+            event.getDraw2DProcessor().a(event.i(), this.e.c().floatValue() - 0.5f, 0.0f, 0.5f, mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont()), ColorUtil.convertToARGB(255, 255, 255, (int) (this.e.b().c() * 200.0f)));
         }
         if (this.f.a()) {
-            event.d().a(event.i(), 0.0f, this.f.c().floatValue() - 0.5f, mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont()), 0.5f, ColorUtil.convertToARGB(255, 255, 255, (int) (this.f.b().c() * 200.0f)));
+            event.getDraw2DProcessor().a(event.i(), 0.0f, this.f.c().floatValue() - 0.5f, mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont()), 0.5f, ColorUtil.convertToARGB(255, 255, 255, (int) (this.f.b().c() * 200.0f)));
         }
     }
 

@@ -99,12 +99,12 @@ public class Structures extends Module {
                 float iconBoxX = project.x() - (totalWidth / 2.0f);
                 float iconBoxY = project.y() - 6.0f;
                 int rectAlpha = (int) (120.0f * structure.b().c());
-                event.d().a(event.i().getMatrices(), iconBoxX, iconBoxY, 12.0f, 12.0f, 0.0f,
+                event.getDraw2DProcessor().a(event.i().getMatrices(), iconBoxX, iconBoxY, 12.0f, 12.0f, 0.0f,
                         ColorUtil.convertToARGB(0, 0, 0, rectAlpha));
-                event.e().a(event.i(), structure.d().e().getDefaultStack(), iconBoxX + 1.5f, iconBoxY + 1.5f, 0,
+                event.getDraw3DProcessor().a(event.i(), structure.d().e().getDefaultStack(), iconBoxX + 1.5f, iconBoxY + 1.5f, 0,
                         structure.b().c(), 0.55f, false);
                 float textBoxX = iconBoxX + 12.0f + 2.0f;
-                event.d().a(event.i().getMatrices(), textBoxX, iconBoxY, totalTextWidth, 12.0f, 0.0f,
+                event.getDraw2DProcessor().a(event.i().getMatrices(), textBoxX, iconBoxY, totalTextWidth, 12.0f, 0.0f,
                         ColorUtil.convertToARGB(0, 0, 0, rectAlpha));
                 Fonts.d.a(event.i().getMatrices(), text, textBoxX + ((totalTextWidth - textWidth) / 2.0f),
                         iconBoxY + ((12.0f - textHeight) / 2.0f) + 0.5f, 7.5f,

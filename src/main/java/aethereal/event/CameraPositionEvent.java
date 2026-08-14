@@ -12,7 +12,7 @@ public class CameraPositionEvent extends Event {
         this.position = position;
     }
 
-    public void a(Vec3d position) {
+    public void setPosition(Vec3d position) {
         this.position = position;
     }
 

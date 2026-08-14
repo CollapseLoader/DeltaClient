@@ -26,8 +26,8 @@ public class WindHop extends Module {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (event.b()) {
-            if (event.d() instanceof PlayerInteractItemC2SPacket packet) {
+        if (event.isSend()) {
+            if (event.getPacket() instanceof PlayerInteractItemC2SPacket packet) {
                 if (mc.player.getStackInHand(packet.getHand()).isOf(Items.WIND_CHARGE)) {
                     this.c = 2;
                 }

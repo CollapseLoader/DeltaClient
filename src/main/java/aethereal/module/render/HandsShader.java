@@ -21,10 +21,10 @@ public class HandsShader extends Module {
     public void a(HandEvent event) {
         NoiseShader shader = Delta.getInstance().getModuleProcessor().i().f();
         if (mc.options.getPerspective() == Perspective.FIRST_PERSON) {
-            if (event.b()) {
+            if (event.isPreEvent()) {
                 shader.e();
             }
-            if (event.c()) {
+            if (event.isPostEvent()) {
                 float[] color = ColorUtil.a(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor());
                 color[3] = this.b.c().floatValue();
                 shader.a(color);

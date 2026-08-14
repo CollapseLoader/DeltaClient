@@ -118,12 +118,12 @@ public class AutoDodge extends Module {
 
     @EventTarget
     public void a(PacketEvent packetEvent) {
-        if (!packetEvent.c() || mc.player == null || mc.world == null) {
+        if (!packetEvent.isReceive() || mc.player == null || mc.world == null) {
             return;
         }
-        a(packetEvent.d());
-        if (packetEvent.c()) {
-            GameMessageS2CPacket gameMsg = (GameMessageS2CPacket) packetEvent.d();
+        a(packetEvent.getPacket());
+        if (packetEvent.isReceive()) {
+            GameMessageS2CPacket gameMsg = (GameMessageS2CPacket) packetEvent.getPacket();
             if (gameMsg instanceof GameMessageS2CPacket) {
                 if (gameMsg.content().getString().equals("На этой анархии этот предмет не работает")) {
                     this.b = -50;

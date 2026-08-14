@@ -87,7 +87,7 @@ public class Scaffold extends Module {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (!event.b() || !(event.d() instanceof UpdateSelectedSlotC2SPacket)) {
+        if (!event.isSend() || !(event.getPacket() instanceof UpdateSelectedSlotC2SPacket)) {
             return;
         }
         this.e[2] = 9;

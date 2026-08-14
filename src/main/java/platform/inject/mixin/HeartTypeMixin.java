@@ -14,7 +14,7 @@ public class HeartTypeMixin {
         if (!original) {
             return false;
         }
-        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.BLACK_HEARTS);
+        RemovalsEvent event = new RemovalsEvent(RemovalsEvent.type.BLACK_HEARTS);
         EventManager.a(event);
         return !event.a();
     }

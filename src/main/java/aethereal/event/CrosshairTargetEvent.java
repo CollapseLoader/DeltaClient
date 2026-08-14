@@ -13,7 +13,7 @@ public class CrosshairTargetEvent extends Event {
         this.tickDelta = tickDelta;
     }
 
-    public void a(HitResult target) {
+    public void setTarget(HitResult target) {
         this.target = target;
     }
 

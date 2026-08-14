@@ -14,19 +14,19 @@ public class PacketEvent extends Event {
         this.type = type;
     }
 
-    public Packet<?> d() {
+    public Packet<?> getPacket() {
         return this.packet;
     }
 
-    public Type e() {
+    public Type getType() {
         return this.type;
     }
 
-    public boolean b() {
+    public boolean isSend() {
         return this.type == Type.SEND;
     }
 
-    public boolean c() {
+    public boolean isReceive() {
         return this.type == Type.RECEIVE;
     }
 

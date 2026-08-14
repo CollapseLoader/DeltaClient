@@ -32,7 +32,7 @@ public class ViewModel extends Module {
 
     @EventTarget
     public void a(HandViewEvent e) {
-        MatrixStack matrix = e.b();
+        MatrixStack matrix = e.getMatrices();
         if (e.d().equals(Hand.MAIN_HAND)) {
             matrix.translate(this.b.h().floatValue(), this.c.h().floatValue(), this.d.h().floatValue());
         } else {

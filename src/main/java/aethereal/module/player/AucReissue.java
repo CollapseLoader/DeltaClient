@@ -69,8 +69,8 @@ public class AucReissue extends Module {
     @EventTarget
     public void a(PacketEvent eventPacket) {
         if (!ServerUtil.e()) {
-            if ((ServerUtil.a.d() != -1 || ServerUtil.d.b() != -1) && mc.player.age >= 220 && eventPacket.c()) {
-                if (eventPacket.d() instanceof GameMessageS2CPacket packet) {
+            if ((ServerUtil.a.d() != -1 || ServerUtil.d.b() != -1) && mc.player.age >= 220 && eventPacket.isReceive()) {
+                if (eventPacket.getPacket() instanceof GameMessageS2CPacket packet) {
                     String msg = packet.content().getString();
                     if (msg.equals("Данная команда недоступна в режиме AFK")) {
                         Delta.getInstance().getModuleProcessor().v().getAFKHandler().a(10);

@@ -34,7 +34,7 @@ public class WallClimb extends Module {
 
     private void a(MotionEvent event, long value) {
         if (this.d.a(value * 5) && mc.player.horizontalCollision) {
-            event.b(true);
+            event.setOnGround(true);
             mc.player.setOnGround(true);
             mc.player.verticalCollision = true;
             mc.player.horizontalCollision = true;

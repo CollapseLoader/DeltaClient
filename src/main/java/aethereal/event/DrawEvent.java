@@ -30,15 +30,15 @@ public class DrawEvent extends Event implements Interface {
         this.type = type;
     }
 
-    public Draw2DProcessor d() {
+    public Draw2DProcessor getDraw2DProcessor() {
         return this.draw2DProcessor;
     }
 
-    public Draw3DProcessor e() {
+    public Draw3DProcessor getDraw3DProcessor() {
         return this.draw3DProcessor;
     }
 
-    public a f() {
+    public a getType() {
         return this.type;
     }
 

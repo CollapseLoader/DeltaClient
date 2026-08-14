@@ -268,7 +268,7 @@ public class AncientFarmer extends Module {
     @EventTarget
     public void a(DrawEvent draw) {
         if (draw.c() && this.targetPos != null) {
-            draw.e().a(draw.h(), new Box(this.targetPos), ColorUtil.convertToARGB(230, 90, 70, InterfaceC0020Opcode.ap), 1.0f);
+            draw.getDraw3DProcessor().a(draw.h(), new Box(this.targetPos), ColorUtil.convertToARGB(230, 90, 70, InterfaceC0020Opcode.ap), 1.0f);
         }
     }
 

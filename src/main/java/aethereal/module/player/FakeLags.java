@@ -58,8 +58,8 @@ public class FakeLags extends Module {
         if (mc.player == null) {
             return;
         }
-        if (event.c()) {
-            if (event.d() instanceof EntityVelocityUpdateS2CPacket velocity) {
+        if (event.isReceive()) {
+            if (event.getPacket() instanceof EntityVelocityUpdateS2CPacket velocity) {
                 if (velocity.getEntityId() == mc.player.getId()) {
                     q();
                     return;
@@ -68,11 +68,11 @@ public class FakeLags extends Module {
             }
             return;
         }
-        if (event.b()) {
-            if (this.attackCooldown > 0 || a(event.d())) {
+        if (event.isSend()) {
+            if (this.attackCooldown > 0 || a(event.getPacket())) {
                 q();
             } else {
-                this.d.offer(event.d());
+                this.d.offer(event.getPacket());
                 event.a(true);
             }
         }
@@ -94,7 +94,7 @@ public class FakeLags extends Module {
     @EventTarget
     public void a(DrawEvent event) {
         if (event.c() && this.c.c().booleanValue() && this.serverPosition != null) {
-            event.e().a(event.h(), mc.player.getBoundingBox().offset(this.serverPosition.subtract(mc.player.getPos())), ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.aN), 0.75f);
+            event.getDraw3DProcessor().a(event.h(), mc.player.getBoundingBox().offset(this.serverPosition.subtract(mc.player.getPos())), ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.aN), 0.75f);
         }
     }
 

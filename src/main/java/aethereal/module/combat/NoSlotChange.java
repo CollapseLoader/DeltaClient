@@ -12,7 +12,7 @@ import net.minecraft.network.packet.s2c.play.UpdateSelectedSlotS2CPacket;
 public class NoSlotChange extends Module {
     @EventTarget
     public void a(PacketEvent event) {
-        if (event.c() && (event.d() instanceof UpdateSelectedSlotS2CPacket)) {
+        if (event.isReceive() && (event.getPacket() instanceof UpdateSelectedSlotS2CPacket)) {
             mc.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(mc.player.getInventory().selectedSlot));
             event.a(true);
         }

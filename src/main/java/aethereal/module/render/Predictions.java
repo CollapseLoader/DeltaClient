@@ -130,7 +130,7 @@ public class Predictions extends Module {
             float hue = (((hueBase + ((float) ((path.get(i).x * 0.05000000070627959d) + (path.get(i).z * 0.05000000070627959d)))) % 1.0f) + 1.0f) % 1.0f;
             int base = this.c.c().booleanValue() ? (-16777216) | (Color.HSBtoRGB(hue, 1.0f, 1.0f) & 16777215) : primaryColor;
             int lineAlpha = (int) (255.0f * (0.3f + (0.7f * (1.0f - (i / segCount)))) * max * alpha);
-            event.e().a(event.h(), path.get(i), path.get(i + 1), null, (base & 16777215) | (lineAlpha << 24), 1.5f);
+            event.getDraw3DProcessor().a(event.h(), path.get(i), path.get(i + 1), null, (base & 16777215) | (lineAlpha << 24), 1.5f);
         }
         this.d.put(Integer.valueOf(entity.getId()), new b(path.getLast(), segCount, item, anim));
     }
@@ -153,8 +153,8 @@ public class Predictions extends Module {
             matrices.translate(screen.x(), screen.y(), 0.0f);
             matrices.scale(0.8f + (alpha * 0.2f), 0.8f + (alpha * 0.2f), 1.0f);
             matrices.translate(-screen.x(), -screen.y(), 0.0f);
-            event.d().a(matrices, x, y, width + 1.0f, height, 2.0f, ColorUtil.convertToARGB(0, 0, 0, (int) (130.0f * alpha)));
-            event.e().a(event.i(), info.c(), x + 2.0f, (y + 2.0f) - 0.25f, 0, alpha, iconSize / 16.0f, false);
+            event.getDraw2DProcessor().a(matrices, x, y, width + 1.0f, height, 2.0f, ColorUtil.convertToARGB(0, 0, 0, (int) (130.0f * alpha)));
+            event.getDraw3DProcessor().a(event.i(), info.c(), x + 2.0f, (y + 2.0f) - 0.25f, 0, alpha, iconSize / 16.0f, false);
             Fonts.e.a(matrices, format, x + (2.0f * 2.0f) + iconSize, y + 2.0f, 7.25f, ColorUtil.applyAlphaToColor(-1, alpha), 0.0f);
             matrices.pop();
         }
@@ -220,7 +220,7 @@ public class Predictions extends Module {
             a result = a(speed, isThrowable, potion ? -20.0f : 0.0f, potion ? 0.05000000070627959d : 0.030000000582077163d, viewSpreadDegrees, event.g());
             if (result.a().size() >= 2) {
                 if (result.c() != null) {
-                    event.e().a(event.h(), result.c().getBoundingBox(), ColorUtil.convertToARGB(255, 100, 100, InterfaceC0020Opcode.aN), 1.0f);
+                    event.getDraw3DProcessor().a(event.h(), result.c().getBoundingBox(), ColorUtil.convertToARGB(255, 100, 100, InterfaceC0020Opcode.aN), 1.0f);
                 } else if (result.b() != null && result.d() != null) {
                     a(event, result.a().getLast(), 0.33f, ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.aN), result.d());
                 }
@@ -239,7 +239,7 @@ public class Predictions extends Module {
             double a1 = step * ((double) i);
             double a2 = step * ((double) (i + 1));
             double am = a1 + (step / 2.0d);
-            event.e().a(event.h(), a(center, u, v, radius, a1), a(center, u, v, radius, a2), a(center, u, v, controlRadius, am), color, 1.5f);
+            event.getDraw3DProcessor().a(event.h(), a(center, u, v, radius, a1), a(center, u, v, radius, a2), a(center, u, v, controlRadius, am), color, 1.5f);
         }
     }
 

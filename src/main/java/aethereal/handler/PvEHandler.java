@@ -51,10 +51,10 @@ public class PvEHandler extends BaseHandler implements Interface {
 
     @EventTarget
     public void onPacketEvent(PacketEvent event) {
-        if (this.b.isEmpty() || !event.c()) {
+        if (this.b.isEmpty() || !event.isReceive()) {
             return;
         }
-        GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.d();
+        GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.getPacket();
         if (class_7439VarD instanceof GameMessageS2CPacket) {
             GameMessageS2CPacket gameMsg = class_7439VarD;
             if (gameMsg.content().getString().equals("Данная команда недоступна в режиме AFK")) {

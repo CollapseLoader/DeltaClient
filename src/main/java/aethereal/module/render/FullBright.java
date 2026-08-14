@@ -34,7 +34,7 @@ public class FullBright extends Module {
     @EventTarget
     public void a(GammaEvent event) {
         if (this.b.l("Гамма")) {
-            event.a(this.c.c().floatValue());
+            event.setGamma(this.c.c().floatValue());
         }
     }
 }

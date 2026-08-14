@@ -26,11 +26,11 @@ public class ChinaHat extends Module {
 
     @EventTarget
     public void a(HeadFeatureEvent event) {
-        if (event.e() instanceof BipedEntityModel<?> bipedModel) {
-            boolean friend = Delta.getInstance().getModuleProcessor().e().d(event.d().getName().getString());
-            if (event.d() == mc.player || friend) {
-                PlayerEntity player = event.d();
-                MatrixStack matrices = event.b();
+        if (event.getModel() instanceof BipedEntityModel<?> bipedModel) {
+            boolean friend = Delta.getInstance().getModuleProcessor().e().d(event.getPlayer().getName().getString());
+            if (event.getPlayer() == mc.player || friend) {
+                PlayerEntity player = event.getPlayer();
+                MatrixStack matrices = event.getMatrixStack();
                 double radius = player.getBoundingBox().maxX - player.getBoundingBox().minX;
                 float verticalOffset = !player.getInventory().getStack(39).isEmpty() ? 0.48f : 0.45f;
                 matrices.push();
@@ -39,9 +39,9 @@ public class ChinaHat extends Module {
                 matrices.multiply(RotationAxis.NEGATIVE_Z.rotationDegrees(180.0f));
                 matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90.0f));
                 Matrix4f matrix = matrices.peek().getPositionMatrix();
-                VertexConsumer buffer = event.c().getBuffer(RenderLayer.getDebugQuads());
+                VertexConsumer buffer = event.getVertexConsumerProvider().getBuffer(RenderLayer.getDebugQuads());
                 long time = System.currentTimeMillis();
-                int postColor = event.d() == mc.player ? this.b.c().intValue() : friend ? ColorUtil.convertToARGB(0, InterfaceC0020Opcode.bk, 0, 255) : 0;
+                int postColor = event.getPlayer() == mc.player ? this.b.c().intValue() : friend ? ColorUtil.convertToARGB(0, InterfaceC0020Opcode.bk, 0, 255) : 0;
                 for (int i = 0; i < 360; i++) {
                     float angle1 = i * 0.06981317f;
                     float angle2 = (i + 1) * 0.06981317f;
@@ -84,7 +84,7 @@ public class ChinaHat extends Module {
                     prevInnerZ = innerZ;
                 }
                 matrices.pop();
-                VertexConsumerProvider provider = event.c();
+                VertexConsumerProvider provider = event.getVertexConsumerProvider();
                 if (provider instanceof VertexConsumerProvider.Immediate immediate) {
                     immediate.draw();
                 }

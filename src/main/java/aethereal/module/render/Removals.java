@@ -70,67 +70,67 @@ public class Removals extends Module {
     }
 
     static class AnonymousClass1 {
-        static final int[] a = new int[RemovalsEvent.a.values().length];
+        static final int[] a = new int[RemovalsEvent.type.values().length];
 
         static {
             try {
-                a[RemovalsEvent.a.HURT_CAM.ordinal()] = 1;
+                a[RemovalsEvent.type.HURT_CAM.ordinal()] = 1;
             } catch (NoSuchFieldError e) {
             }
             try {
-                a[RemovalsEvent.a.SCOREBOARD.ordinal()] = 2;
+                a[RemovalsEvent.type.SCOREBOARD.ordinal()] = 2;
             } catch (NoSuchFieldError e2) {
             }
             try {
-                a[RemovalsEvent.a.BOSS_BAR.ordinal()] = 3;
+                a[RemovalsEvent.type.BOSS_BAR.ordinal()] = 3;
             } catch (NoSuchFieldError e3) {
             }
             try {
-                a[RemovalsEvent.a.PORTAL.ordinal()] = 4;
+                a[RemovalsEvent.type.PORTAL.ordinal()] = 4;
             } catch (NoSuchFieldError e4) {
             }
             try {
-                a[RemovalsEvent.a.FIRE.ordinal()] = 5;
+                a[RemovalsEvent.type.FIRE.ordinal()] = 5;
             } catch (NoSuchFieldError e5) {
             }
             try {
-                a[RemovalsEvent.a.CLIP.ordinal()] = 6;
+                a[RemovalsEvent.type.CLIP.ordinal()] = 6;
             } catch (NoSuchFieldError e6) {
             }
             try {
-                a[RemovalsEvent.a.BREAK_PARTICLES.ordinal()] = 7;
+                a[RemovalsEvent.type.BREAK_PARTICLES.ordinal()] = 7;
             } catch (NoSuchFieldError e7) {
             }
             try {
-                a[RemovalsEvent.a.WATER.ordinal()] = 8;
+                a[RemovalsEvent.type.WATER.ordinal()] = 8;
             } catch (NoSuchFieldError e8) {
             }
             try {
-                a[RemovalsEvent.a.NAUSEA.ordinal()] = 9;
+                a[RemovalsEvent.type.NAUSEA.ordinal()] = 9;
             } catch (NoSuchFieldError e9) {
             }
             try {
-                a[RemovalsEvent.a.BLINDNESS.ordinal()] = 10;
+                a[RemovalsEvent.type.BLINDNESS.ordinal()] = 10;
             } catch (NoSuchFieldError e10) {
             }
             try {
-                a[RemovalsEvent.a.PUMPKIN.ordinal()] = 11;
+                a[RemovalsEvent.type.PUMPKIN.ordinal()] = 11;
             } catch (NoSuchFieldError e11) {
             }
             try {
-                a[RemovalsEvent.a.WEATHER.ordinal()] = 12;
+                a[RemovalsEvent.type.WEATHER.ordinal()] = 12;
             } catch (NoSuchFieldError e12) {
             }
             try {
-                a[RemovalsEvent.a.GLOW.ordinal()] = 13;
+                a[RemovalsEvent.type.GLOW.ordinal()] = 13;
             } catch (NoSuchFieldError e13) {
             }
             try {
-                a[RemovalsEvent.a.DARKNESS.ordinal()] = 14;
+                a[RemovalsEvent.type.DARKNESS.ordinal()] = 14;
             } catch (NoSuchFieldError e14) {
             }
             try {
-                a[RemovalsEvent.a.BLACK_HEARTS.ordinal()] = 15;
+                a[RemovalsEvent.type.BLACK_HEARTS.ordinal()] = 15;
             } catch (NoSuchFieldError e15) {
             }
         }

@@ -208,8 +208,8 @@ public class AutoWarden extends Module {
 
     @EventTarget
     public void onPacket(PacketEvent event) {
-        if (event.c()) {
-            GameMessageS2CPacket message = (GameMessageS2CPacket) event.d();
+        if (event.isReceive()) {
+            GameMessageS2CPacket message = (GameMessageS2CPacket) event.getPacket();
             if (message instanceof GameMessageS2CPacket) {
                 if (!message.content().getString().contains("Помянем. Вы погибли")) {
                     return;
@@ -232,7 +232,7 @@ public class AutoWarden extends Module {
 
     @EventTarget
     public void onSound(SoundEvent event) {
-        String path = event.b().getId().getPath();
+        String path = event.getSound().getId().getPath();
         if (mc.player != null) {
             if (path.contains("warden.roar") || path.contains("warden.angry") || path.contains("warden.sonic")) {
                 this.roarTimer = mc.player.age + 100;

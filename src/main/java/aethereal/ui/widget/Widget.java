@@ -131,7 +131,7 @@ public class Widget {
                 element.onDrawEvent(event, baseX2, y, panelWidth, anim);
                 y += 12.0f + 1.0f;
                 if (element != visible.getLast()) {
-                    event.d().a(event.i().getMatrices(), baseX2, y - 1.0f, panelWidth, 0.75f, 0.0f, ColorUtil.applyAlphaToColor(
+                    event.getDraw2DProcessor().a(event.i().getMatrices(), baseX2, y - 1.0f, panelWidth, 0.75f, 0.0f, ColorUtil.applyAlphaToColor(
                             ColorUtil.convertToARGB(InterfaceC0020Opcode.aN, InterfaceC0020Opcode.aN, InterfaceC0020Opcode.aN, 255),
                             0.2f * anim));
                 }
@@ -188,17 +188,17 @@ public class Widget {
                     themeProcessor.a(ThemeInfo.PRIMARY).toIntColor(), themeProcessor.a(ThemeInfo.PRIMARY).b() / 6.0f);
             themeProcessor.a(ThemeInfo.BACKGROUND_HUD).e(InterfaceC0020Opcode.cY);
             if (glow) {
-                event.d().a(event.h(), x, y, width, height, 5.0f + (this.b.c()), ColorUtil.applyAlphaToColor(background, alpha),
+                event.getDraw2DProcessor().a(event.h(), x, y, width, height, 5.0f + (this.b.c()), ColorUtil.applyAlphaToColor(background, alpha),
                         animation, ColorUtil.applyAlphaToColor(background, alpha), 8.0f + (2.0f * this.b.c()));
             } else {
-                event.d().b(event.h(), x, y, width, height, 5.0f, ColorUtil.applyAlphaToColor(background, alpha), animation);
+                event.getDraw2DProcessor().b(event.h(), x, y, width, height, 5.0f, ColorUtil.applyAlphaToColor(background, alpha), animation);
             }
         }
     }
 
     protected void a(DrawEvent event, float x, float y, float height, float animation) {
         float separatorHeight = height / 2.0f;
-        event.d().a(event.i().getMatrices(), x, y + ((height - separatorHeight) / 2.0f), 0.75f, separatorHeight, 0.0f,
+        event.getDraw2DProcessor().a(event.i().getMatrices(), x, y + ((height - separatorHeight) / 2.0f), 0.75f, separatorHeight, 0.0f,
                 ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(InterfaceC0020Opcode.aN, InterfaceC0020Opcode.aN, InterfaceC0020Opcode.aN, 255),
                         0.5f * animation));
     }

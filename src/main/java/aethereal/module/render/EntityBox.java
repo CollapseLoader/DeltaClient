@@ -38,7 +38,7 @@ public class EntityBox extends Module {
             if (event.c()) {
                 for (Entity entity : mc.world.getEntities()) {
                     if (shouldRender(entity)) {
-                        event.e().a(event.h(), entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())), this.colorSource.l("Статичный") ? this.colorSetting.c().intValue() : Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), 0.75f);
+                        event.getDraw3DProcessor().a(event.h(), entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())), this.colorSource.l("Статичный") ? this.colorSetting.c().intValue() : Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), 0.75f);
                     }
                 }
                 return;
@@ -47,7 +47,7 @@ public class EntityBox extends Module {
         }
         if (event.b()) {
             if (this.visualMode.l("Квадрат") || this.visualMode.l("Углы")) {
-                Draw2DProcessor draw = event.d();
+                Draw2DProcessor draw = event.getDraw2DProcessor();
                 for (Entity entity : mc.world.getEntities()) {
                     Box box = shouldRender(entity) ? entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())) : null;
                     float[] bounds = box == null ? null : ProjectUtil.getBounds(box);

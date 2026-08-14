@@ -118,8 +118,8 @@ public class ServerJoiner extends Module {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (this.b.l("SpookyTime") && event.c()) {
-            OpenScreenS2CPacket openScreenPacket = (OpenScreenS2CPacket) event.d();
+        if (this.b.l("SpookyTime") && event.isReceive()) {
+            OpenScreenS2CPacket openScreenPacket = (OpenScreenS2CPacket) event.getPacket();
             if (openScreenPacket instanceof OpenScreenS2CPacket) {
                 if (openScreenPacket.getName().getString().contains("☫ Выберите режим:")) {
                     this.e = openScreenPacket.getSyncId();

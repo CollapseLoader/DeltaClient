@@ -52,7 +52,7 @@ public class TargetWidget extends Widget {
             float headSize = j().getHeight() / 1.35f;
             float headY = y + ((j().getHeight() - headSize) / 2.0f);
             if (this.j instanceof AbstractClientPlayerEntity player) {
-                event.d().a(event.h(), x + 5.0f, headY, headSize, headSize, 2.0f, ColorUtil.applyAlphaToColor(-1, a()), 0.125f, 0.125f, 0.125f, 0.125f, Interface.mc.getTextureManager().getTexture(player.getSkinTextures().texture()).getGlId());
+                event.getDraw2DProcessor().a(event.h(), x + 5.0f, headY, headSize, headSize, 2.0f, ColorUtil.applyAlphaToColor(-1, a()), 0.125f, 0.125f, 0.125f, 0.125f, Interface.mc.getTextureManager().getTexture(player.getSkinTextures().texture()).getGlId());
             } else if (this.j != null) {
                 Fonts.a.a(event.h(), "B", x + 6.5f + ((headSize - 24.0f) / 2.0f), headY + ((headSize - 24.0f) / 2.0f), 24.0f, ColorUtil.applyAlphaToColor(-1, a()));
             }
@@ -73,7 +73,7 @@ public class TargetWidget extends Widget {
                 int i = 0;
                 for (ItemStack stack : new ItemStack[]{this.j.getEquippedStack(EquipmentSlot.FEET), this.j.getEquippedStack(EquipmentSlot.LEGS), this.j.getEquippedStack(EquipmentSlot.CHEST), this.j.getEquippedStack(EquipmentSlot.HEAD), this.j.getOffHandStack(), this.j.getMainHandStack()}) {
                     if (!stack.isEmpty()) {
-                        event.e().a(event.i(), InventoryUtil.a(stack), ((x + j().getWidth()) - 10.0f) - (i * 9), y + j().getHeight(), 0, a(), 0.55f, true);
+                        event.getDraw3DProcessor().a(event.i(), InventoryUtil.a(stack), ((x + j().getWidth()) - 10.0f) - (i * 9), y + j().getHeight(), 0, a(), 0.55f, true);
                         i++;
                     }
                 }
@@ -92,8 +92,8 @@ public class TargetWidget extends Widget {
             float targetHP = MathUtil.b(MathUtil.b(ServerUtil.a.a(this.j), 0.0f, this.j.getMaxHealth()) / this.j.getMaxHealth(), 0.0f, 1.0f);
             float lineHP = this.h.a(targetHP, targetHP, 0.5f);
             float alpha = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).b() * a();
-            event.d().a(event.h(), textX, headY + 12.5f, 54.0f, 3.0f, 0.5f, ColorUtil.applyAlphaToColor(ColorUtil.b(primary, 0.3f), a()));
-            event.d().a(event.h(), textX, headY + 12.5f, 54.0f * lineHP, 3.0f, 0.5f, ColorUtil.applyAlphaToColor(primary, alpha));
+            event.getDraw2DProcessor().a(event.h(), textX, headY + 12.5f, 54.0f, 3.0f, 0.5f, ColorUtil.applyAlphaToColor(ColorUtil.b(primary, 0.3f), a()));
+            event.getDraw2DProcessor().a(event.h(), textX, headY + 12.5f, 54.0f * lineHP, 3.0f, 0.5f, ColorUtil.applyAlphaToColor(primary, alpha));
         }
         super.a(event);
     }

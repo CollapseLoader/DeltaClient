@@ -113,7 +113,7 @@ public class Collector extends Module {
     @EventTarget
     public void onContainer(ContainerEvent event) {
         if (this.h != null && event.h() != ContainerEvent.Phase.PRE) {
-            String title = event.b().getTitle().getString().replaceAll("§.", "").toLowerCase().trim();
+            String title = event.getScreen().getTitle().getString().replaceAll("§.", "").toLowerCase().trim();
             if (title.contains(this.h.j().toLowerCase())) {
                 if (this.f.a(300L, 80L) && a(this.h) >= a(this.h, false)) {
                     ChatUtil.sendMessage("Предмет " + this.h.j() + " приобретен, перехожу к следующему");
@@ -160,7 +160,7 @@ public class Collector extends Module {
                                         })).orElse(null);
                                     }
                                     if (offer2 != null) {
-                                        mc.interactionManager.clickSlot(event.c().syncId, offer2.id, 0, SlotActionType.QUICK_MOVE, mc.player);
+                                        mc.interactionManager.clickSlot(event.getHandler().syncId, offer2.id, 0, SlotActionType.QUICK_MOVE, mc.player);
                                         this.f.b();
                                     } else {
                                         ChatUtil.sendMessage("Оффер пропал, пересканирую");
@@ -195,7 +195,7 @@ public class Collector extends Module {
                                 })).orElse(null);
                             }
                             if (cheapest != null) {
-                                mc.interactionManager.clickSlot(event.c().syncId, cheapest.id, 0, SlotActionType.QUICK_MOVE, mc.player);
+                                mc.interactionManager.clickSlot(event.getHandler().syncId, cheapest.id, 0, SlotActionType.QUICK_MOVE, mc.player);
                                 this.f.b();
                             } else {
                                 Matcher matcher2 = Pattern.compile("(\\d+)/(\\d+)").matcher(title);
@@ -233,8 +233,8 @@ public class Collector extends Module {
 
     @EventTarget
     public void onPacket(PacketEvent event) {
-        if (this.h != null && event.c()) {
-            GameMessageS2CPacket packet = (GameMessageS2CPacket) event.d();
+        if (this.h != null && event.isReceive()) {
+            GameMessageS2CPacket packet = (GameMessageS2CPacket) event.getPacket();
             if (packet instanceof GameMessageS2CPacket) {
                 String message = packet.content().getString();
                 if (message.toLowerCase().contains("[✘] Ошибка! Этот товар уже Купили!")) {
@@ -249,7 +249,7 @@ public class Collector extends Module {
                     Delta.getInstance().getModuleProcessor().v().getAFKHandler().a(10);
                 }
             }
-            if ((event.d() instanceof OpenScreenS2CPacket) && !(mc.currentScreen instanceof GenericContainerScreen)) {
+            if ((event.getPacket() instanceof OpenScreenS2CPacket) && !(mc.currentScreen instanceof GenericContainerScreen)) {
                 if (this.j >= 8) {
                     int anarchy = (int) (MathUtil.a(0.0f, 100.0f) <= 50.0f ? MathUtil.a(205.0f, 231.0f) : MathUtil.a(305.0f, 325.0f));
                     mc.player.networkHandler.sendChatMessage("/an" + anarchy);
@@ -283,7 +283,7 @@ public class Collector extends Module {
         event.e().stream().filter(slot -> {
             return slot.getStack().getName().getString().toLowerCase().contains(name.toLowerCase());
         }).findFirst().ifPresent(slot2 -> {
-            mc.interactionManager.clickSlot(event.c().syncId, slot2.id, 0, SlotActionType.QUICK_MOVE, mc.player);
+            mc.interactionManager.clickSlot(event.getHandler().syncId, slot2.id, 0, SlotActionType.QUICK_MOVE, mc.player);
         });
     }
 

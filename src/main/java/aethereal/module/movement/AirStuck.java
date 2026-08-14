@@ -68,8 +68,8 @@ public class AirStuck extends Module {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (event.c()) {
-            if ((event.d() instanceof PlayerMoveC2SPacket) || (event.d() instanceof PlayerInputC2SPacket) || (event.d() instanceof PlayerActionC2SPacket)) {
+        if (event.isReceive()) {
+            if ((event.getPacket() instanceof PlayerMoveC2SPacket) || (event.getPacket() instanceof PlayerInputC2SPacket) || (event.getPacket() instanceof PlayerActionC2SPacket)) {
                 event.a(true);
             }
         }

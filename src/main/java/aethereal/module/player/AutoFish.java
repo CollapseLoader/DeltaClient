@@ -40,7 +40,7 @@ public class AutoFish extends Module {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (event.d() instanceof PlaySoundS2CPacket packet) {
+        if (event.getPacket() instanceof PlaySoundS2CPacket packet) {
             if (packet.getSound().value().id().equals(SoundEvents.ENTITY_FISHING_BOBBER_SPLASH.id()) && mc.player.fishHook.squaredDistanceTo(packet.getX(), packet.getY(), packet.getZ()) <= 0.48999979194765847d && mc.player.fishHook != null) {
                 d(true);
                 this.b.b();

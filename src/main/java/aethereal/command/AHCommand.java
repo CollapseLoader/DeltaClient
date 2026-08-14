@@ -48,8 +48,8 @@ public class AHCommand extends BaseCommand {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (this.searchRequest != null && this.pendingCommand == null && event.c()) {
-            InventoryS2CPacket class_2649VarD = (InventoryS2CPacket) event.d();
+        if (this.searchRequest != null && this.pendingCommand == null && event.isReceive()) {
+            InventoryS2CPacket class_2649VarD = (InventoryS2CPacket) event.getPacket();
             if (class_2649VarD instanceof InventoryS2CPacket) {
                 InventoryS2CPacket packet = class_2649VarD;
                 if (packet.getSyncId() != 0) {

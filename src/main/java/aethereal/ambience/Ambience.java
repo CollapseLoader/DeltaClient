@@ -65,20 +65,20 @@ public class Ambience extends Module {
                 jB = 18000;
                 break;
             default:
-                jB = event.b();
+                jB = event.getTime();
                 break;
         }
-        event.a(jB);
+        event.setTime(jB);
     }
 
     @EventTarget
     public void a(AmbienceEvent.a event) {
         if (this.d.c().booleanValue()) {
             float[] rgba = ColorUtil.a(this.e.c().intValue());
-            event.a(rgba[0]);
-            event.b(rgba[1]);
-            event.c(rgba[2]);
-            event.d(rgba[3]);
+            event.setRed(rgba[0]);
+            event.setGreen(rgba[1]);
+            event.setBlue(rgba[2]);
+            event.setAlpha(rgba[3]);
             event.a(true);
         }
     }
@@ -87,7 +87,7 @@ public class Ambience extends Module {
     public void a(AmbienceEvent.b event) {
         if (this.d.c().booleanValue()) {
             FogShape shape = event.d().shape();
-            if (event.b().getSubmersionType() == CameraSubmersionType.NONE) {
+            if (event.getCamera().getSubmersionType() == CameraSubmersionType.NONE) {
                 shape = FogShape.SPHERE;
             }
             float[] rgba = ColorUtil.a(this.e.c().intValue());

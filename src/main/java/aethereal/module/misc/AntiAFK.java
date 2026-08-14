@@ -48,8 +48,8 @@ public class AntiAFK extends Module {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (this.b.l("FunTime") && this.d.c().booleanValue() && event.c()) {
-            GameMessageS2CPacket message = (GameMessageS2CPacket) event.d();
+        if (this.b.l("FunTime") && this.d.c().booleanValue() && event.isReceive()) {
+            GameMessageS2CPacket message = (GameMessageS2CPacket) event.getPacket();
             if (message instanceof GameMessageS2CPacket) {
                 if (message.content().getString().equals("Данная команда недоступна в режиме AFK")) {
                     Delta.getInstance().getModuleProcessor().v().getAFKHandler().a(7);
