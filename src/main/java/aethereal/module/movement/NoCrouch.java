@@ -14,7 +14,7 @@ public class NoCrouch extends Module {
     @EventTarget
     public void a(InputEvent e) {
         ClientCommandC2SPacket.Mode mode;
-        boolean sneaking = e.e();
+        boolean sneaking = e.isSneak();
         if (sneaking) {
             mode = ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY;
         } else {
@@ -24,6 +24,6 @@ public class NoCrouch extends Module {
             mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, mode));
         }
         this.b = sneaking;
-        e.c(false);
+        e.setSneak(false);
     }
 }

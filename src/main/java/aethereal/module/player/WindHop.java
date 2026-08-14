@@ -45,7 +45,7 @@ public class WindHop extends Module implements Interface {
     @EventTarget
     public void a(InputEvent event) {
         if (this.c == 0) {
-            event.b(true);
+            event.setJump(true);
             this.c = -1;
         }
     }

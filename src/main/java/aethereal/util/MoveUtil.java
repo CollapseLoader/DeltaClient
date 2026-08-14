@@ -30,8 +30,8 @@ public class MoveUtil implements Interface {
         if (b == Integer.MAX_VALUE) {
             return;
         }
-        float forward = event.b();
-        float strafe = event.c();
+        float forward = event.getForward();
+        float strafe = event.getStrafe();
         if (forward == 0.0f && strafe == 0.0f) {
             return;
         }
@@ -54,8 +54,8 @@ public class MoveUtil implements Interface {
             }
         }
         b = Integer.MAX_VALUE;
-        event.a(bestF);
-        event.b(bestS);
+        event.setForward(bestF);
+        event.setStrafe(bestS);
     }
 
     private static double a(float rotationYaw, double moveForward, double moveStrafing) {
@@ -84,8 +84,8 @@ public class MoveUtil implements Interface {
     }
 
     public static void b(InputEvent event) {
-        event.a(0.0f);
-        event.b(0.0f);
+        event.setForward(0.0f);
+        event.setStrafe(0.0f);
     }
 
     public static boolean a(float under) {

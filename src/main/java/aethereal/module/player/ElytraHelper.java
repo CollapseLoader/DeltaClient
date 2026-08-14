@@ -129,7 +129,7 @@ public class ElytraHelper extends Module implements Interface {
     private void b(InputEvent event) {
         boolean wearingElytra = mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Items.ELYTRA;
         if (!mc.player.isGliding() && wearingElytra) {
-            event.b(mc.player.age % 2 == 0);
+            event.setJump(mc.player.age % 2 == 0);
             this.i = mc.player.age;
             if (!this.d.c().booleanValue()) {
                 this.g = false;

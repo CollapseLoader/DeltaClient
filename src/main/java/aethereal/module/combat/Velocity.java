@@ -87,13 +87,13 @@ public class Velocity extends Module {
         } else {
             forward = 1.0f;
         }
-        event.a(forward);
+        event.setForward(forward);
         if (angle < 45.0d || angle > 135.0d) {
             strafe = (angle > -45.0d || angle < -135.0d) ? 0.0f : 1.0f;
         } else {
             strafe = -1.0f;
         }
-        event.b(strafe);
-        event.b(this.c.c().booleanValue() && mc.player.isOnGround());
+        event.setStrafe(strafe);
+        event.setJump(this.c.c().booleanValue() && mc.player.isOnGround());
     }
 }

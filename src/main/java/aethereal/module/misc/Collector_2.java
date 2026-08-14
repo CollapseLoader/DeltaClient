@@ -265,8 +265,8 @@ public class Collector_2 extends Module {
     @EventTarget
     public void a(InputEvent event) {
         if (this.h != null && (mc.currentScreen instanceof HandledScreen)) {
-            event.a(0.0f);
-            event.b(0.0f);
+            event.setForward(0.0f);
+            event.setStrafe(0.0f);
         }
     }
 

@@ -107,8 +107,8 @@ public class Aura extends Module {
             MoveUtil.a(e, !this.r.l("Фокус") ? Look.b() : this.c[1], 2);
         }
         if (this.c[0] > 0.0f && this.t != null && AuraUtil.a(this.t, this.j.c().floatValue())) {
-            e.a(0.0f);
-            e.b(0.0f);
+            e.setForward(0.0f);
+            e.setStrafe(0.0f);
             float[] fArr = this.c;
             fArr[0] = fArr[0] - 1.0f;
         }

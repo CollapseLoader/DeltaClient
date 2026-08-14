@@ -269,12 +269,12 @@ public class AutoWarden extends Module {
             return;
         }
         if (!mc.player.isOnGround() && !mc.player.isClimbing()) {
-            event.c(false);
+            event.setSneak(false);
         }
         if (isStuck() && mc.player.getMainHandStack().isEmpty() && !isNearChest(3.0d)) {
             int dir = ((float) (mc.player.age % 10)) <= MathUtil.a(3.0f, 8.0f) ? -1 : 1;
-            event.a(dir);
-            event.b(dir);
+            event.setForward(dir);
+            event.setStrafe(dir);
         }
     }
 

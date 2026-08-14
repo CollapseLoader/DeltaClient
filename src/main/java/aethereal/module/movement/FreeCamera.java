@@ -113,10 +113,10 @@ public class FreeCamera extends Module implements Interface {
         float f2;
         if (this.e != null && mc.player.isAlive()) {
             if (mc.currentScreen != null) {
-                event.a(0.0f);
-                event.b(0.0f);
-                event.b(false);
-                event.c(false);
+                event.setForward(0.0f);
+                event.setStrafe(0.0f);
+                event.setJump(false);
+                event.setSneak(false);
                 return;
             }
             if (InputUtil.isKeyPressed(mc.getWindow().getHandle(), 265)) {
@@ -124,15 +124,15 @@ public class FreeCamera extends Module implements Interface {
             } else {
                 f = InputUtil.isKeyPressed(mc.getWindow().getHandle(), 264) ? -1.0f : 0.0f;
             }
-            event.a(f);
+            event.setForward(f);
             if (InputUtil.isKeyPressed(mc.getWindow().getHandle(), 262)) {
                 f2 = -1.0f;
             } else {
                 f2 = InputUtil.isKeyPressed(mc.getWindow().getHandle(), 263) ? 1.0f : 0.0f;
             }
-            event.b(f2);
-            event.b(false);
-            event.c(false);
+            event.setStrafe(f2);
+            event.setJump(false);
+            event.setSneak(false);
         }
     }
 

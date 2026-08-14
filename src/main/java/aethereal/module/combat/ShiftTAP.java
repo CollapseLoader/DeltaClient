@@ -30,7 +30,7 @@ public class ShiftTAP extends Module {
     @EventTarget
     public void a(InputEvent event) {
         if (this.b > 0) {
-            event.c(true);
+            event.setSneak(true);
         }
     }
 }

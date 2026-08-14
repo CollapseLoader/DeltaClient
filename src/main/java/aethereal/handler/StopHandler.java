@@ -39,9 +39,9 @@ public class StopHandler extends BaseHandler implements Interface {
     @EventTarget(a = 0)
     public void a(InputEvent eventInput) {
         if (this.b >= 0) {
-            eventInput.a(0.0f);
-            eventInput.b(0.0f);
-            eventInput.b(false);
+            eventInput.setForward(0.0f);
+            eventInput.setStrafe(0.0f);
+            eventInput.setJump(false);
         }
     }
 }

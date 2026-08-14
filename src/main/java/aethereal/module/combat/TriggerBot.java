@@ -80,8 +80,8 @@ public class TriggerBot extends Module {
             this.n = targetPosition == Vec3d.ZERO ? Look.b() : (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(targetPosition.z, targetPosition.x)) - 90.0d);
         }
         if (this.i.l("Легитный") && this.l > 0) {
-            e.a(0.0f);
-            e.b(0.0f);
+            e.setForward(0.0f);
+            e.setStrafe(0.0f);
             this.l--;
         }
     }

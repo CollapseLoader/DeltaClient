@@ -29,7 +29,7 @@ public class AntiAFK extends Module {
         if (mc.player.age % 600 == 0) {
             if (this.b.l("Обычный")) {
                 if (this.c.a("Прыжок").c().booleanValue() && mc.player.isOnGround()) {
-                    event.b(true);
+                    event.setJump(true);
                 }
                 if (this.c.a("Взмах").c().booleanValue()) {
                     mc.player.swingHand(Hand.MAIN_HAND);
