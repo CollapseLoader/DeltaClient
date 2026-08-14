@@ -6,7 +6,6 @@ import aethereal.event.ContainerEvent;
 import aethereal.event.RayTraceEvent;
 import aethereal.setting.BooleanSetting;
 import aethereal.util.CounterUtil;
-import lombok.Generated;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.client.gui.screen.ingame.ShulkerBoxScreen;
 import net.minecraft.screen.slot.Slot;
@@ -22,17 +21,14 @@ public class ChestStealer extends Module implements Interface {
         a(this.b, this.c);
     }
 
-    @Generated
     public BooleanSetting q() {
         return this.b;
     }
 
-    @Generated
     public BooleanSetting r() {
         return this.c;
     }
 
-    @Generated
     public CounterUtil s() {
         return this.d;
     }

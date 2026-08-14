@@ -3,7 +3,6 @@ package aethereal.discord;
 import aethereal.api.Compile;
 import aethereal.config.BaseProcessor;
 import aethereal.core.Delta;
-import lombok.Generated;
 
 import java.io.IOException;
 
@@ -19,7 +18,6 @@ public class DiscordProcessor extends BaseProcessor {
     public void unSetup() {
     }
 
-    @Generated
     public DiscordIPC a() {
         return this.b;
     }

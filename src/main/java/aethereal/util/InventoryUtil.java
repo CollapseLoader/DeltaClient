@@ -2,7 +2,6 @@ package aethereal.util;
 
 import aethereal.autobuy.AutoBuyEntry;
 import aethereal.core.Interface;
-import lombok.Generated;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.BundleContentsComponent;
@@ -29,7 +28,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class InventoryUtil implements Interface {
-    @Generated
     private InventoryUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }

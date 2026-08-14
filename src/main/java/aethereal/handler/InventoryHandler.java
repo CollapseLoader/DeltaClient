@@ -5,7 +5,6 @@ import aethereal.core.EventTarget;
 import aethereal.core.Interface;
 import aethereal.event.TickEvent;
 import aethereal.util.InventoryUtil;
-import lombok.Generated;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,7 +18,6 @@ import java.util.List;
 public class InventoryHandler extends BaseHandler implements Interface {
     private final List<a> b = new ArrayList();
 
-    @Generated
     public List<a> a() {
         return this.b;
     }
@@ -110,25 +108,21 @@ public class InventoryHandler extends BaseHandler implements Interface {
     record a(int a, int b, int c, boolean d) {
 
         @Override
-        @Generated
             public int a() {
                 return this.a;
             }
 
             @Override
-            @Generated
             public int b() {
                 return this.b;
             }
 
             @Override
-            @Generated
             public int c() {
                 return this.c;
             }
 
             @Override
-            @Generated
             public boolean d() {
                 return this.d;
             }

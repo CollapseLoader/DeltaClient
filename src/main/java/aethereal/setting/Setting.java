@@ -1,7 +1,6 @@
 package aethereal.setting;
 
 import aethereal.ui.element.Element_2;
-import lombok.Generated;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -25,32 +24,26 @@ public abstract class Setting<Value> {
 
     public abstract Element_2<?> d();
 
-    @Generated
     public java.util.function.Supplier<Boolean> e() {
         return this.a;
     }
 
-    @Generated
     public Consumer<Value> f() {
         return this.b;
     }
 
-    @Generated
     public Value g() {
         return this.c;
     }
 
-    @Generated
     public Value h() {
         return this.d;
     }
 
-    @Generated
     public String i() {
         return this.e;
     }
 
-    @Generated
     public boolean j() {
         return this.f;
     }

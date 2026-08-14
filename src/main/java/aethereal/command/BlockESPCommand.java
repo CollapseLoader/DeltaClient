@@ -4,7 +4,6 @@ import aethereal.core.InterfaceC0020Opcode;
 import aethereal.render.ColorUtil;
 import aethereal.util.ChatUtil;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import lombok.Generated;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.command.CommandSource;
@@ -21,7 +20,6 @@ import java.util.stream.Stream;
 public class BlockESPCommand extends BaseCommand {
     private final List<a> c = new CopyOnWriteArrayList();
 
-    @Generated
     public List<a> c() {
         return this.c;
     }
@@ -140,7 +138,6 @@ public class BlockESPCommand extends BaseCommand {
         final int u;
         final int v;
 
-        @Generated
         EspColor(final int r, final int g, final int b) {
             this.t = r;
             this.u = g;
@@ -158,18 +155,15 @@ public class BlockESPCommand extends BaseCommand {
     }
 
     public record a(Block a, int b) {
-        @Generated
         public a {
         }
 
             @Override
-            @Generated
             public Block a() {
                 return this.a;
             }
 
             @Override
-            @Generated
             public int b() {
                 return this.b;
             }

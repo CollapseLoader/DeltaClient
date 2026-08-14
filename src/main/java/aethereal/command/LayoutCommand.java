@@ -5,7 +5,6 @@ import aethereal.core.EventTarget;
 import aethereal.event.TickEvent;
 import aethereal.util.ChatUtil;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import lombok.Generated;
 import net.minecraft.command.CommandSource;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,7 +23,6 @@ public class LayoutCommand extends BaseCommand {
     private final List<a> d = new ArrayList();
     private int e;
 
-    @Generated
     public List<a> c() {
         return this.c;
     }
@@ -174,24 +172,20 @@ public class LayoutCommand extends BaseCommand {
     }
 
     public record a(String a, ItemStack b, int c) {
-        @Generated
         public a {
         }
 
             @Override
-            @Generated
             public String a() {
                 return this.a;
             }
 
             @Override
-            @Generated
             public ItemStack b() {
                 return this.b;
             }
 
             @Override
-            @Generated
             public int c() {
                 return this.c;
             }

@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 import aethereal.core.IEvent;
 
-import lombok.Generated;
 import net.minecraft.item.Item;
 
 public class CooldownEvent extends Event implements IEvent {
@@ -15,12 +14,10 @@ public class CooldownEvent extends Event implements IEvent {
         this.b = cooldown;
     }
 
-    @Generated
     public Item b() {
         return this.a;
     }
 
-    @Generated
     public int c() {
         return this.b;
     }

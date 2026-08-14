@@ -1,7 +1,6 @@
 package aethereal.util;
 
 
-import lombok.Generated;
 
 public class CounterUtil {
     private long a;
@@ -12,12 +11,10 @@ public class CounterUtil {
         b();
     }
 
-    @Generated
     public void c(long millis) {
         this.a = millis;
     }
 
-    @Generated
     public void d(long ticks) {
         this.b = ticks;
     }

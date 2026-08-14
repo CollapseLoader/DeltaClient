@@ -9,11 +9,9 @@ import aethereal.module.combat.AimHandler;
 import aethereal.module.combat.AuraHandler;
 import aethereal.module.misc.AFKHandler;
 import aethereal.network.DistributionHandler;
-import lombok.Generated;
 
 public class HandlerProcessor extends BaseProcessor {
 
-    @Generated
     private static final Logger_2 b;
 
     static {
@@ -39,66 +37,53 @@ public class HandlerProcessor extends BaseProcessor {
     public void setup() {
     }
 
-    @Generated
     public InventoryHandler a() {
         return this.c;
     }
 
-    @Generated
     public UseableHandler b() {
         return this.d;
     }
 
-    @Generated
     public StopHandler c() {
         return this.e;
     }
 
-    @Generated
     public AuraHandler d() {
         return this.f;
     }
 
-    @Generated
     public AimHandler e() {
         return this.g;
     }
 
-    @Generated
     public ANFindHandler f() {
         return this.h;
     }
 
-    @Generated
     public AFKHandler g() {
         return this.i;
     }
 
-    @Generated
     public MainHandler h() {
         return this.j;
     }
 
-    @Generated
     public PvEHandler i() {
         return this.k;
     }
 
-    @Generated
     public TPSHandler j() {
         return this.l;
     }
 
-    @Generated
     public InteractHandler k() {
         return this.m;
     }
 
-    @Generated
     public void l() {
     }
 
-    @Generated
     public DistributionHandler m() {
         return this.o;
     }

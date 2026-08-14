@@ -11,7 +11,6 @@ import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.ParsedCommandNode;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import lombok.Generated;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientCommandSource;
 import net.minecraft.command.CommandSource;
@@ -23,7 +22,6 @@ import java.util.Objects;
 
 public class CommandProcessor extends BaseProcessor {
 
-    @Generated
     private static final Logger_2 b;
 
     static {
@@ -50,47 +48,38 @@ public class CommandProcessor extends BaseProcessor {
         a(this.e, this.f, this.g, this.h, this.i, new AHCommand(), new MacrosCommand(), new FriendCommand(), new StaffCommand(), new WardenCommand(), new ConfigCommand(), new BindCommand(), new VClipCommand(), new HClipCommand(), new CCCommand());
     }
 
-    @Generated
     public CommandDispatcher<CommandSource> a() {
         return this.c;
     }
 
-    @Generated
     public List<BaseCommand> b() {
         return this.d;
     }
 
-    @Generated
     public WayCommand c() {
         return this.e;
     }
 
-    @Generated
     public GPSCommand d() {
         return this.f;
     }
 
-    @Generated
     public LayoutCommand e() {
         return this.g;
     }
 
-    @Generated
     public RCTCommand f() {
         return this.h;
     }
 
-    @Generated
     public BlockESPCommand g() {
         return this.i;
     }
 
-    @Generated
     public ClientCommandSource h() {
         return this.j;
     }
 
-    @Generated
     public String i() {
         return ".";
     }

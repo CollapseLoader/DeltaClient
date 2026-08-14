@@ -12,7 +12,6 @@ import aethereal.setting.BooleanSetting;
 import aethereal.setting.MultiModeSetting;
 import aethereal.util.CounterUtil;
 import aethereal.util.ProjectUtil;
-import lombok.Generated;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
@@ -91,12 +90,10 @@ public class SoundESP extends Module {
             this.a.b();
         }
 
-        @Generated
         public CounterUtil a() {
             return this.a;
         }
 
-        @Generated
         public SoundInstance b() {
             return this.b;
         }

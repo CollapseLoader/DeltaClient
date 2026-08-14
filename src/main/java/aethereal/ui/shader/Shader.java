@@ -2,7 +2,6 @@ package aethereal.ui.shader;
 
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import lombok.Generated;
 import net.minecraft.client.gl.Defines;
 import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.gl.ShaderProgramKey;
@@ -20,12 +19,10 @@ public abstract class Shader {
 
     protected abstract void b();
 
-    @Generated
     public ShaderProgramKey c() {
         return this.a;
     }
 
-    @Generated
     public ShaderProgram d() {
         return this.b;
     }

@@ -11,7 +11,6 @@ import aethereal.render.Fonts;
 import aethereal.util.ChatUtil;
 import aethereal.util.ProjectUtil;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import lombok.Generated;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.command.CommandSource;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
@@ -35,12 +34,10 @@ public class WayCommand extends BaseCommand {
     private final List<String> d = new ArrayList();
     private a e = a.NONE;
 
-    @Generated
     public List<b> c() {
         return this.c;
     }
 
-    @Generated
     public void a(a eventMode) {
         this.e = eventMode;
     }
@@ -230,18 +227,15 @@ public class WayCommand extends BaseCommand {
     }
 
     public record b(String a, Vec3d b) {
-        @Generated
         public b {
         }
 
             @Override
-            @Generated
             public String a() {
                 return this.a;
             }
 
             @Override
-            @Generated
             public Vec3d b() {
                 return this.b;
             }

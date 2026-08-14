@@ -11,7 +11,6 @@ import aethereal.setting.MultiModeSetting;
 import aethereal.ui.screen.AssistantScreen;
 import aethereal.ui.screen.GUIScreen;
 import aethereal.util.*;
-import lombok.Generated;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -51,12 +50,10 @@ public class TriggerBot extends Module {
         a(this.f, this.g, this.h, this.i, this.j, this.b);
     }
 
-    @Generated
     public int r() {
         return this.d;
     }
 
-    @Generated
     public LivingEntity s() {
         return this.o;
     }

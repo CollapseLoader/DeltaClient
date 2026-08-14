@@ -21,7 +21,6 @@ import aethereal.setting.MultiModeSetting;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import lombok.Generated;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.Entity;
@@ -46,7 +45,6 @@ public class EntityESP extends Module {
     private final MultiModeSetting trackedEntities = new MultiModeSetting("Отслеживаемые сущности", new BooleanSetting("Игроки", true), new BooleanSetting("Животные", false), new BooleanSetting("Мобы", false), new BooleanSetting("Предметы", false));
     private final List<Tracker> trackers = new ArrayList();
 
-    @Generated
     public List<Tracker> getTrackers() {
         return this.trackers;
     }

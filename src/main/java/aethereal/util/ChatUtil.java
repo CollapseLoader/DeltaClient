@@ -5,14 +5,12 @@ import aethereal.core.Delta;
 import aethereal.core.Interface;
 import aethereal.render.ColorUtil;
 import aethereal.ui.shader.GradientUtil;
-import lombok.Generated;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
 public class ChatUtil implements Interface {
-    @Generated
     private ChatUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }

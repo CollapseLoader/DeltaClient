@@ -6,7 +6,6 @@ import aethereal.setting.BindSetting;
 import aethereal.setting.ModeSetting;
 import aethereal.ui.screen.SwapScreen;
 import aethereal.util.InventoryUtil;
-import lombok.Generated;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
@@ -40,7 +39,6 @@ public class AutoSwap extends Module implements Interface {
         a(f, this.b, this.c, this.d);
     }
 
-    @Generated
     public SwapScreen q() {
         return this.e;
     }

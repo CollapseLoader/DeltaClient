@@ -12,7 +12,6 @@ import aethereal.util.CounterUtil;
 import aethereal.util.InventoryUtil;
 import aethereal.util.ServerUtil;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
-import lombok.Generated;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -37,22 +36,18 @@ public class ServerJoiner extends Module implements Interface {
         a(this.b, this.c);
     }
 
-    @Generated
     public ModeSetting q() {
         return this.b;
     }
 
-    @Generated
     public SliderSetting r() {
         return this.c;
     }
 
-    @Generated
     public CounterUtil s() {
         return this.d;
     }
 
-    @Generated
     public int t() {
         return this.e;
     }

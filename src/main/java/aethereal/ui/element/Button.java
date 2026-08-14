@@ -4,7 +4,6 @@ import aethereal.core.Delta;
 import aethereal.core.InterfaceC0020Opcode;
 import aethereal.render.*;
 import aethereal.util.MathUtil;
-import lombok.Generated;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Style;
@@ -26,37 +25,30 @@ public class Button {
         this.e = action;
     }
 
-    @Generated
     public AnimationUtil a() {
         return this.a;
     }
 
-    @Generated
     public float b() {
         return this.b;
     }
 
-    @Generated
     public float c() {
         return this.c;
     }
 
-    @Generated
     public String d() {
         return this.d;
     }
 
-    @Generated
     public Runnable e() {
         return this.e;
     }
 
-    @Generated
     public float f() {
         return this.f;
     }
 
-    @Generated
     public float g() {
         return this.g;
     }

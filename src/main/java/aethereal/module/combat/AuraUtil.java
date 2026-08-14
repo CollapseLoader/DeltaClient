@@ -2,7 +2,6 @@ package aethereal.module.combat;
 
 import aethereal.core.Interface;
 import aethereal.handler.RotationProcessor;
-import lombok.Generated;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffects;
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class AuraUtil implements Interface {
-    @Generated
     private AuraUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }

@@ -5,7 +5,6 @@ import aethereal.core.Interface;
 import aethereal.render.AnimationUtil;
 import aethereal.util.MathUtil;
 import aethereal.util.StringUtils;
-import lombok.Generated;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
@@ -34,36 +33,30 @@ public class DescriptionCondition implements Condition {
     }
 
     @Override
-    @Generated
     public AnimationUtil a() {
         return this.a;
     }
 
-    @Generated
     public String i() {
         return this.b;
     }
 
     @Override
-    @Generated
     public void a(ItemType type) {
         this.c = type;
     }
 
     @Override
-    @Generated
     public ItemType h() {
         return this.c;
     }
 
     @Override
-    @Generated
     public void a(int requiredLevel) {
         this.d = requiredLevel;
     }
 
     @Override
-    @Generated
     public int g() {
         return this.d;
     }

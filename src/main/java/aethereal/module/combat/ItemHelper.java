@@ -4,7 +4,6 @@ import aethereal.core.*;
 import aethereal.core.Module;
 import aethereal.setting.BindSetting;
 import aethereal.util.InventoryUtil;
-import lombok.Generated;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 
@@ -29,22 +28,18 @@ public class ItemHelper extends Module implements Interface {
             this.b = new BindSetting(name, -1, 1).a(this::e);
         }
 
-        @Generated
         public Item a() {
             return this.a;
         }
 
-        @Generated
         public BindSetting b() {
             return this.b;
         }
 
-        @Generated
         public int c() {
             return this.c;
         }
 
-        @Generated
         public int d() {
             return this.d;
         }

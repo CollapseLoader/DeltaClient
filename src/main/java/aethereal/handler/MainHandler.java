@@ -8,7 +8,6 @@ import aethereal.lib.javassist.TokenId;
 import aethereal.util.ChatUtil;
 import aethereal.util.ServerUtil;
 import aethereal.util.StringUtils;
-import lombok.Generated;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ServerInfo;
@@ -34,22 +33,18 @@ public class MainHandler extends BaseHandler implements Interface {
     private ServerInfo b;
     private String c;
 
-    @Generated
     public void a(ServerInfo serverInfo) {
         this.b = serverInfo;
     }
 
-    @Generated
     public ServerInfo a() {
         return this.b;
     }
 
-    @Generated
     public void a(String confirm) {
         this.c = confirm;
     }
 
-    @Generated
     public String b() {
         return this.c;
     }

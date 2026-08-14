@@ -3,7 +3,6 @@ package platform.inject.mixin;
 
 import aethereal.mixin.ISlot;
 import aethereal.render.AnimationUtil;
-import lombok.Generated;
 import net.minecraft.screen.slot.Slot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -18,7 +17,6 @@ public abstract class SlotMixin implements ISlot {
     private final AnimationUtil animation = new AnimationUtil();
 
     @Override
-    @Generated
     public AnimationUtil getAnimation() {
         return this.animation;
     }

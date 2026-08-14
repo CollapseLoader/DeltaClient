@@ -3,7 +3,6 @@ package aethereal.config;
 import aethereal.autobuy.ItemType;
 import aethereal.core.Interface;
 import aethereal.render.AnimationUtil;
-import lombok.Generated;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
 import net.minecraft.enchantment.Enchantment;
@@ -36,36 +35,30 @@ public class EnchantmentCondition implements Condition {
     }
 
     @Override
-    @Generated
     public AnimationUtil a() {
         return this.a;
     }
 
-    @Generated
     public RegistryKey<Enchantment> i() {
         return this.b;
     }
 
     @Override
-    @Generated
     public void a(ItemType type) {
         this.c = type;
     }
 
     @Override
-    @Generated
     public ItemType h() {
         return this.c;
     }
 
     @Override
-    @Generated
     public void a(int requiredLevel) {
         this.d = requiredLevel;
     }
 
     @Override
-    @Generated
     public int g() {
         return this.d;
     }

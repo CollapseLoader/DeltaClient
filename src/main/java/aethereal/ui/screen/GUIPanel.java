@@ -11,7 +11,6 @@ import aethereal.render.*;
 import aethereal.ui.element.Element_2;
 import aethereal.util.KeyUtil;
 import aethereal.util.MathUtil;
-import lombok.Generated;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import org.joml.Vector4f;
@@ -96,42 +95,34 @@ public class GUIPanel {
         return true;
     }
 
-    @Generated
     public void a(List<Module> modules) {
         this.e = modules;
     }
 
-    @Generated
     public void a(Module hovered) {
         this.f = hovered;
     }
 
-    @Generated
     public Vector4f f() {
         return this.a;
     }
 
-    @Generated
     public AnimationUtil a() {
         return this.b;
     }
 
-    @Generated
     public AnimationUtil b() {
         return this.c;
     }
 
-    @Generated
     public Category c() {
         return this.d;
     }
 
-    @Generated
     public List<Module> d() {
         return this.e;
     }
 
-    @Generated
     public Module e() {
         return this.f;
     }

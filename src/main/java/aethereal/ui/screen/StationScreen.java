@@ -10,7 +10,6 @@ import aethereal.core.Interface;
 import aethereal.render.*;
 import aethereal.ui.element.Section;
 import aethereal.util.MathUtil;
-import lombok.Generated;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -156,7 +155,6 @@ public class StationScreen extends Screen {
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
-    @Generated
     public AnimationUtil a() {
         return this.e;
     }

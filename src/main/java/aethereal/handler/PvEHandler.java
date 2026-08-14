@@ -7,7 +7,6 @@ import aethereal.event.InputEvent;
 import aethereal.event.PacketEvent;
 import aethereal.event.TickEvent;
 import aethereal.util.*;
-import lombok.Generated;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
@@ -32,7 +31,6 @@ public class PvEHandler extends BaseHandler implements Interface {
         return (1.0d - (((double) stack.getDamage()) / ((double) stack.getMaxDamage()))) * 100.0d;
     }
 
-    @Generated
     public Deque<b> a() {
         return this.b;
     }

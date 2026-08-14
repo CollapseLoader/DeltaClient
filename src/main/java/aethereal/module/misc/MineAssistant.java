@@ -8,7 +8,6 @@ import aethereal.render.ColorUtil;
 import aethereal.setting.BooleanSetting;
 import aethereal.setting.MultiModeSetting;
 import aethereal.util.ServerUtil;
-import lombok.Generated;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.decoration.ArmorStandEntity;
@@ -28,7 +27,6 @@ public class MineAssistant extends Module implements Interface {
         a(this.b);
     }
 
-    @Generated
     public Box r() {
         return this.d;
     }
@@ -109,17 +107,14 @@ public class MineAssistant extends Module implements Interface {
             this.c = name;
         }
 
-        @Generated
         public Block a() {
             return this.a;
         }
 
-        @Generated
         public int b() {
             return this.b;
         }
 
-        @Generated
         public String c() {
             return this.c;
         }

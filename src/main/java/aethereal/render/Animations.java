@@ -9,7 +9,6 @@ import aethereal.event.TickEvent;
 import aethereal.setting.BooleanSetting;
 import aethereal.setting.MultiModeSetting;
 import aethereal.util.MathUtil;
-import lombok.Generated;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.option.Perspective;
@@ -27,32 +26,26 @@ public class Animations extends Module {
         a(this.b);
     }
 
-    @Generated
     public MultiModeSetting q() {
         return this.b;
     }
 
-    @Generated
     public AnimationUtil r() {
         return this.c;
     }
 
-    @Generated
     public AnimationUtil s() {
         return this.d;
     }
 
-    @Generated
     public AnimationUtil t() {
         return this.e;
     }
 
-    @Generated
     public AnimationUtil u() {
         return this.f;
     }
 
-    @Generated
     public float v() {
         return this.g;
     }

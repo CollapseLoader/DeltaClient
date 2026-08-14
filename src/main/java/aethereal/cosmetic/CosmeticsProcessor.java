@@ -6,7 +6,6 @@ import aethereal.core.EventTarget;
 import aethereal.event.BackendEvent;
 import aethereal.network.PacketSecurity;
 import com.google.gson.JsonParser;
-import lombok.Generated;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
@@ -53,12 +52,10 @@ public class CosmeticsProcessor extends BaseProcessor {
         });
     }
 
-    @Generated
     public List<Cosmetic> getCosmetics() {
         return this.cosmetics;
     }
 
-    @Generated
     public ScheduledExecutorService getBootstrapper() {
         return this.bootstrapper;
     }

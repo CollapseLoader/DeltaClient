@@ -8,7 +8,6 @@ import aethereal.module.player.WindHop;
 import aethereal.util.InventoryUtil;
 import aethereal.util.Look;
 import aethereal.util.Rotation;
-import lombok.Generated;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -23,7 +22,6 @@ import java.util.List;
 public class UseableHandler extends BaseHandler implements Interface {
     private final List<a> b = new ArrayList();
 
-    @Generated
     public List<a> a() {
         return this.b;
     }
@@ -105,37 +103,30 @@ public class UseableHandler extends BaseHandler implements Interface {
             this.a = itemStack;
         }
 
-        @Generated
         public void a(int selectedSlot) {
             this.b = selectedSlot;
         }
 
-        @Generated
         public void b(int itemSlot) {
             this.c = itemSlot;
         }
 
-        @Generated
         public void c(int ticks) {
             this.d = ticks;
         }
 
-        @Generated
         public ItemStack a() {
             return this.a;
         }
 
-        @Generated
         public int b() {
             return this.b;
         }
 
-        @Generated
         public int c() {
             return this.c;
         }
 
-        @Generated
         public int d() {
             return this.d;
         }

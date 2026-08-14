@@ -11,7 +11,6 @@ import aethereal.setting.ButtonSetting;
 import aethereal.ui.screen.StationScreen;
 import aethereal.util.*;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
-import lombok.Generated;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -56,22 +55,18 @@ public class AutoBuy extends Module implements Interface {
         a(c, this.b);
     }
 
-    @Generated
     public boolean q() {
         return this.j;
     }
 
-    @Generated
     public boolean r() {
         return this.k;
     }
 
-    @Generated
     public void d(boolean status) {
         this.j = status;
     }
 
-    @Generated
     public void e(boolean ah) {
         this.k = ah;
     }

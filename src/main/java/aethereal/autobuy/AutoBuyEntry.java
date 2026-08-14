@@ -5,7 +5,6 @@ import aethereal.core.InterfaceC0020Opcode;
 import aethereal.lib.javassist.TokenId;
 import aethereal.render.AnimationUtil;
 import com.mojang.authlib.GameProfile;
-import lombok.Generated;
 import net.minecraft.component.ComponentType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.PotionContentsComponent;
@@ -159,67 +158,54 @@ public enum AutoBuyEntry {
         this.az = profile;
     }
 
-    @Generated
     public String b() {
         return this.ay;
     }
 
-    @Generated
     public Object c() {
         return this.az;
     }
 
-    @Generated
     public Item d() {
         return this.aA;
     }
 
-    @Generated
     public AttributeProcessor e() {
         return this.aB;
     }
 
-    @Generated
     public EnchantmentProcessor f() {
         return this.aC;
     }
 
-    @Generated
     public DescriptionProcessor g() {
         return this.aD;
     }
 
-    @Generated
     public NBTProcessor h() {
         return this.aE;
     }
 
-    @Generated
     public PotionProcessor i() {
         return this.aF;
     }
 
-    @Generated
     public AnimationUtil j() {
         return this.aG;
     }
 
-    @Generated
     public void a(double price) {
         this.aH = price;
     }
 
-    @Generated
     public double k() {
         return this.aH;
     }
 
-    @Generated
     public void a(boolean status) {
         this.aI = status;
     }
 
-    @Generated
     public boolean l() {
         return this.aI;
     }

@@ -6,7 +6,6 @@ import aethereal.event.TickEvent;
 import aethereal.network.FunPay;
 import aethereal.setting.SliderSetting;
 import aethereal.setting.StringSetting;
-import lombok.Generated;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -34,17 +33,14 @@ public class FunDeliver extends Module implements Interface {
     private void t() {
     }
 
-    @Generated
     public StringSetting q() {
         return this.b;
     }
 
-    @Generated
     public SliderSetting r() {
         return this.c;
     }
 
-    @Generated
     public SliderSetting s() {
         return this.d;
     }

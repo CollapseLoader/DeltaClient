@@ -4,14 +4,12 @@ package aethereal.discord;
 import aethereal.lib.javassist.Frame;
 import aethereal.lib.log4j.LogManager;
 import aethereal.lib.log4j.Logger;
-import lombok.Generated;
 
 import java.io.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class WindowsConnection implements aethereal.lib.jsoup.Connection {
 
-    @Generated
     private static final Logger a = LogManager.b(WindowsConnection.class);
     private static final int b = 50;
     final RandomAccessFile d;

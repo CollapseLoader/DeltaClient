@@ -1,7 +1,6 @@
 package aethereal.core;
 
 import aethereal.network.PacketSecurity;
-import lombok.Generated;
 
 public class Packet {
     private final PacketSecurity security;
@@ -14,22 +13,18 @@ public class Packet {
         this.security = security;
     }
 
-    @Generated
     public PacketSecurity getSecurity() {
         return this.security;
     }
 
-    @Generated
     public String getId() {
         return this.id;
     }
 
-    @Generated
     public String getPayload() {
         return this.payload;
     }
 
-    @Generated
     public void setPayload(String payload) {
         this.payload = payload;
     }

@@ -3,7 +3,6 @@ package aethereal.setting;
 import aethereal.core.Action;
 import aethereal.ui.element.BindElement;
 import aethereal.ui.element.Element_2;
-import lombok.Generated;
 
 public class BindSetting extends Setting<Integer> {
     private final int c;
@@ -20,17 +19,14 @@ public class BindSetting extends Setting<Integer> {
         this.c = type;
     }
 
-    @Generated
     public Action k() {
         return this.a;
     }
 
-    @Generated
     public Action l() {
         return this.b;
     }
 
-    @Generated
     public int m() {
         return this.c;
     }

@@ -1,7 +1,6 @@
 package aethereal.discord;
 
 
-import lombok.Generated;
 
 import java.util.Optional;
 
@@ -29,12 +28,10 @@ public enum EventType {
         return Optional.empty();
     }
 
-    @Generated
     public String a() {
         return this.f;
     }
 
-    @Generated
     public boolean b() {
         return this.g;
     }

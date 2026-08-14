@@ -12,7 +12,6 @@ import baritone.api.BaritoneAPI;
 import baritone.api.IBaritone;
 import baritone.api.pathing.goals.GoalBlock;
 import baritone.api.pathing.goals.GoalRunAway;
-import lombok.Generated;
 import net.minecraft.block.Blocks;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.PotionContentsComponent;
@@ -390,12 +389,10 @@ public class AncientFarmer extends Module {
             });
         }
 
-        @Generated
         public BooleanSupplier b() {
             return this.h;
         }
 
-        @Generated
         public String c() {
             return this.i;
         }

@@ -12,7 +12,6 @@ import aethereal.render.Fonts;
 import aethereal.util.InventoryUtil;
 import aethereal.util.Marker_2;
 import com.mojang.blaze3d.systems.RenderSystem;
-import lombok.Generated;
 import net.minecraft.client.gl.ShaderProgramKeys;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
@@ -35,12 +34,10 @@ public class RadialScreen implements Interface {
         this.d = outer;
     }
 
-    @Generated
     public int b() {
         return this.e;
     }
 
-    @Generated
     public void e(int selectedSlot) {
         this.e = selectedSlot;
     }
@@ -272,7 +269,6 @@ public class RadialScreen implements Interface {
             this.d = editable;
         }
 
-        @Generated
         public AnimationUtil a() {
             return this.a;
         }

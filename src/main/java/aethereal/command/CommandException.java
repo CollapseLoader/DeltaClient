@@ -3,7 +3,6 @@ package aethereal.command;
 import aethereal.discord.DiscordIPCException;
 
 import aethereal.discord.RpcErrorCode;
-import lombok.Generated;
 
 public class CommandException extends DiscordIPCException {
     private final RpcErrorCode a;
@@ -13,7 +12,6 @@ public class CommandException extends DiscordIPCException {
         this.a = errorCode;
     }
 
-    @Generated
     public RpcErrorCode a() {
         return this.a;
     }

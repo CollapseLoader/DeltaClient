@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
-import lombok.Generated;
 import net.minecraft.util.Hand;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -100,7 +99,6 @@ public class AutoWarden extends Module {
         ESCAPE
     }
 
-    @Generated
     public List<Integer> getAnarchyList() {
         return this.anarchyList;
     }

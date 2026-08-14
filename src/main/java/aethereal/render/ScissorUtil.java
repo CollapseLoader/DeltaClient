@@ -2,7 +2,6 @@ package aethereal.render;
 
 import aethereal.core.Interface;
 import com.mojang.blaze3d.systems.RenderSystem;
-import lombok.Generated;
 import net.minecraft.client.util.math.MatrixStack;
 import org.joml.Matrix4f;
 
@@ -13,7 +12,6 @@ public class ScissorUtil implements Interface {
     private static final Deque<a> b = new ArrayDeque();
     private static final Matrix4f c = new Matrix4f();
 
-    @Generated
     private ScissorUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }

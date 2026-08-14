@@ -2,7 +2,6 @@ package aethereal.config;
 
 import aethereal.api.Compile;
 import aethereal.lib.json.JSONObject;
-import lombok.Generated;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +62,6 @@ public class ThemeProcessor extends ConfigProcessor<ThemeConstructor> {
         return jSONObject.a(2);
     }
 
-    @Generated
     public ThemeType a() {
         return this.e;
     }

@@ -6,7 +6,6 @@ import aethereal.core.Module;
 import aethereal.core.ModuleRegister;
 import aethereal.event.TickEvent;
 import aethereal.setting.SliderSetting;
-import lombok.Generated;
 
 @ModuleRegister(name = "See Invisibles", description = "Делает невидимых игроков видимыми", category = Category.Render)
 public class SeeInvisibles extends Module {
@@ -16,7 +15,6 @@ public class SeeInvisibles extends Module {
         a(this.b);
     }
 
-    @Generated
     public SliderSetting r() {
         return this.b;
     }

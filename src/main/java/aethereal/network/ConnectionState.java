@@ -1,6 +1,5 @@
 package aethereal.network;
 
-
 import aethereal.core.User_2;
 import aethereal.discord.DiscordBuild;
 import aethereal.discord.FailureInfo;

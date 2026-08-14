@@ -2,7 +2,6 @@ package aethereal.util;
 
 import aethereal.core.Delta;
 import aethereal.core.Interface;
-import lombok.Generated;
 import net.minecraft.util.math.Box;
 import org.joml.Quaternionf;
 import org.joml.Vector2f;
@@ -10,7 +9,6 @@ import org.joml.Vector3f;
 import platform.inject.invokers.GameRendererInvoker;
 
 public class ProjectUtil implements Interface {
-    @Generated
     private ProjectUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }

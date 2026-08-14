@@ -14,7 +14,6 @@ import aethereal.render.ColorUtil;
 import aethereal.render.EasingList;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import lombok.Generated;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.ShaderProgramKeys;
 import net.minecraft.client.render.*;
@@ -35,7 +34,6 @@ public class AuraHandler extends BaseHandler implements Interface {
     private final AnimationUtil e = new AnimationUtil();
     private LivingEntity f;
 
-    @Generated
     public AnimationUtil a() {
         return this.e;
     }

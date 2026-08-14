@@ -1,12 +1,10 @@
 package aethereal.render;
 
 
-import lombok.Generated;
 
 import java.awt.*;
 
 public class ColorUtil {
-    @Generated
     private ColorUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }

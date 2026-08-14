@@ -13,7 +13,6 @@ import aethereal.render.Draw2DProcessor;
 import aethereal.render.Draw3DProcessor;
 import aethereal.render.Fonts;
 import aethereal.util.MathUtil;
-import lombok.Generated;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -46,12 +45,10 @@ public class AssistantScreen extends Screen implements Interface {
         a(this.b.a());
     }
 
-    @Generated
     public RadialScreen a() {
         return this.b;
     }
 
-    @Generated
     public int b() {
         return this.g;
     }

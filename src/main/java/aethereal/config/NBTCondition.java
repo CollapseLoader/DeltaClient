@@ -3,14 +3,12 @@ package aethereal.config;
 
 import aethereal.core.Interface;
 import aethereal.util.StringUtils;
-import lombok.Generated;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtElement;
 
 public record NBTCondition(String a) {
 
     @Override
-    @Generated
     public String a() {
         return this.a;
     }

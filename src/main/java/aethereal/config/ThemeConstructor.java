@@ -3,7 +3,6 @@ package aethereal.config;
 
 import aethereal.render.ColorUtil;
 
-import lombok.Generated;
 
 public class ThemeConstructor {
     private String name;
@@ -12,11 +11,9 @@ public class ThemeConstructor {
     private int blue;
     private int alpha;
 
-    @Generated
     public ThemeConstructor() {
     }
 
-    @Generated
     public ThemeConstructor(String name, int r, int g, int b, int a) {
         this.name = name;
         this.red = r;
@@ -25,52 +22,42 @@ public class ThemeConstructor {
         this.alpha = a;
     }
 
-    @Generated
     public String getName() {
         return this.name;
     }
 
-    @Generated
     public void setName(String name) {
         this.name = name;
     }
 
-    @Generated
     public int getRed() {
         return this.red;
     }
 
-    @Generated
     public void setRed(int r) {
         this.red = r;
     }
 
-    @Generated
     public int getGreen() {
         return this.green;
     }
 
-    @Generated
     public void setGreen(int g) {
         this.green = g;
     }
 
-    @Generated
     public int getBlue() {
         return this.blue;
     }
 
-    @Generated
     public void setBlue(int b) {
         this.blue = b;
     }
 
-    @Generated
     public int getAlpha() {
         return this.alpha;
     }
 
-    @Generated
     public void setAlpha(int a) {
         this.alpha = a;
     }

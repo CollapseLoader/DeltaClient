@@ -6,7 +6,6 @@ import aethereal.event.PacketEvent;
 import aethereal.event.TickEvent;
 import aethereal.setting.StringSetting;
 import aethereal.util.ServerUtil;
-import lombok.Generated;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 
 @ModuleRegister(name = "Auto Auth", description = "Автоматически вводит пароль при авторизации и регистрации", category = Category.Player)
@@ -19,17 +18,14 @@ public class AutoAuth extends Module implements Interface {
         a(this.b, this.c);
     }
 
-    @Generated
     public StringSetting q() {
         return this.b;
     }
 
-    @Generated
     public StringSetting r() {
         return this.c;
     }
 
-    @Generated
     public String s() {
         return this.d;
     }

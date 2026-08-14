@@ -1,7 +1,6 @@
 package aethereal.discord;
 
 
-import lombok.Generated;
 
 public enum DiscordBuild {
     STABLE("//discord.com/api"),
@@ -37,7 +36,6 @@ public enum DiscordBuild {
         return ANY;
     }
 
-    @Generated
     public String a() {
         return this.f;
     }

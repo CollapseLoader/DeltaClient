@@ -4,7 +4,6 @@ import aethereal.core.Delta;
 import aethereal.util.BooleanUtils;
 import aethereal.util.ChatUtil;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import lombok.Generated;
 import net.minecraft.command.CommandSource;
 import net.minecraft.util.math.Vec3d;
 
@@ -12,7 +11,6 @@ import net.minecraft.util.math.Vec3d;
 public class GPSCommand extends BaseCommand {
     private Vec3d c;
 
-    @Generated
     public Vec3d c() {
         return this.c;
     }

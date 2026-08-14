@@ -3,7 +3,6 @@ package aethereal.util;
 
 import aethereal.core.InterfaceC0020Opcode;
 import aethereal.lib.javassist.TokenId;
-import lombok.Generated;
 
 import java.util.Locale;
 
@@ -207,12 +206,10 @@ public enum KeyUtil {
         return a(code).keyLabel;
     }
 
-    @Generated
     public int a() {
         return this.keyCode;
     }
 
-    @Generated
     public String b() {
         return this.keyLabel;
     }

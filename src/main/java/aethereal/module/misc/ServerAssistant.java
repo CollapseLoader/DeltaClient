@@ -18,7 +18,6 @@ import aethereal.util.ChatUtil;
 import aethereal.util.CounterUtil;
 import aethereal.util.InventoryUtil;
 import aethereal.util.ServerUtil;
-import lombok.Generated;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.enchantment.Enchantments;
@@ -86,7 +85,6 @@ public class ServerAssistant extends Module implements Interface {
         a(this.b, this.c, this.d, this.e, this.f, g, h, i, j, k, m, l, n, o, p, q, r, s, this.t);
     }
 
-    @Generated
     public List<b> q() {
         return this.w;
     }

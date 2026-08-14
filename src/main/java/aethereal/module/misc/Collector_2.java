@@ -13,7 +13,6 @@ import aethereal.util.ChatUtil;
 import aethereal.util.CounterUtil;
 import aethereal.util.MathUtil;
 import aethereal.util.ServerUtil;
-import lombok.Generated;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.component.DataComponentTypes;
@@ -58,7 +57,6 @@ public class Collector_2 extends Module {
         a(b, c);
     }
 
-    @Generated
     public List<b> q() {
         return this.d;
     }
@@ -362,57 +360,46 @@ public class Collector_2 extends Module {
             return new b(item, count, name);
         }
 
-        @Generated
         public void b(int count) {
             this.i = count;
         }
 
-        @Generated
         public DescriptionProcessor e() {
             return this.a;
         }
 
-        @Generated
         public EnchantmentProcessor f() {
             return this.b;
         }
 
-        @Generated
         public PotionProcessor g() {
             return this.c;
         }
 
-        @Generated
         public AnimationUtil h() {
             return this.d;
         }
 
-        @Generated
         public Item i() {
             return this.e;
         }
 
-        @Generated
         public String j() {
             return this.f;
         }
 
-        @Generated
         public boolean k() {
             return this.g;
         }
 
-        @Generated
         public boolean l() {
             return this.h;
         }
 
-        @Generated
         public int m() {
             return this.i;
         }
 
-        @Generated
         public int n() {
             return this.j;
         }

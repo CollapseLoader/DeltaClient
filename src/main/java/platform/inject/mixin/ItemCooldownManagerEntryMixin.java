@@ -3,7 +3,6 @@ package platform.inject.mixin;
 
 import aethereal.mixin.IItemCooldownManager;
 import aethereal.render.AnimationUtil;
-import lombok.Generated;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
@@ -14,7 +13,6 @@ public class ItemCooldownManagerEntryMixin implements IItemCooldownManager {
     private final AnimationUtil animation = new AnimationUtil();
 
     @Override
-    @Generated
     public AnimationUtil getAnimation() {
         return this.animation;
     }

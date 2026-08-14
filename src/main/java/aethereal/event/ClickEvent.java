@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 import aethereal.core.IEvent;
 
-import lombok.Generated;
 
 public class ClickEvent extends Event implements IEvent {
     private final a type;
@@ -18,22 +17,18 @@ public class ClickEvent extends Event implements IEvent {
         this.type = type;
     }
 
-    @Generated
     public a e() {
         return this.type;
     }
 
-    @Generated
     public double f() {
         return this.b;
     }
 
-    @Generated
     public double g() {
         return this.c;
     }
 
-    @Generated
     public int h() {
         return this.d;
     }

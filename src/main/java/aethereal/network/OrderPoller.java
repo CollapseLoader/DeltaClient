@@ -2,7 +2,6 @@ package aethereal.network;
 
 import aethereal.lib.jsoup.Connection_2;
 import aethereal.lib.jsoup.Element;
-import lombok.Generated;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,6 @@ public class OrderPoller {
         this.c = Objects.requireNonNull(funPay);
     }
 
-    @Generated
     public List<OrderModel> b() {
         return this.b;
     }

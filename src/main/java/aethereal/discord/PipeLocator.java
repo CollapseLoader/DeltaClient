@@ -3,7 +3,6 @@ package aethereal.discord;
 
 import aethereal.lib.log4j.LogManager;
 import aethereal.lib.log4j.Logger;
-import lombok.Generated;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,7 +16,6 @@ import java.util.Map;
 public class PipeLocator {
 
     static final int a = 10;
-    @Generated
     private static final Logger b = LogManager.b(PipeLocator.class);
     private static final List<String> c = List.of("XDG_RUNTIME_DIR", "TMPDIR", "TMP", "TEMP");
     private static final Path d = a(System.getenv(), System.getProperty("java.io.tmpdir"), System.getProperty("user.name", ""));

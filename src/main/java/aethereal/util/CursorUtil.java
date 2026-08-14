@@ -1,11 +1,9 @@
 package aethereal.util;
 
 import aethereal.core.Interface;
-import lombok.Generated;
 import org.lwjgl.glfw.GLFW;
 
 public class CursorUtil implements Interface {
-    @Generated
     private CursorUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
@@ -31,12 +29,10 @@ public class CursorUtil implements Interface {
 
         private final int i;
 
-        @Generated
         a(final int glfwType) {
             this.i = glfwType;
         }
 
-        @Generated
         public int a() {
             return this.i;
         }

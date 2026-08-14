@@ -8,7 +8,6 @@ import aethereal.render.Fonts;
 import aethereal.util.CounterUtil;
 import aethereal.util.ProjectUtil;
 import aethereal.util.ServerUtil;
-import lombok.Generated;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.decoration.ArmorStandEntity;
@@ -151,22 +150,18 @@ public class WardenESP extends Module {
             this.a.b();
         }
 
-        @Generated
         public CounterUtil b() {
             return this.a;
         }
 
-        @Generated
         public BlockPos c() {
             return this.b;
         }
 
-        @Generated
         public long d() {
             return this.c;
         }
 
-        @Generated
         public int e() {
             return this.d;
         }

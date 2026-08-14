@@ -22,7 +22,6 @@ import aethereal.setting.BindSetting;
 import aethereal.setting.Setting;
 import aethereal.ui.screen.AssistantScreen;
 import aethereal.ui.screen.RadialScreen;
-import lombok.Generated;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -431,522 +430,418 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
         return jSONObject4.a(2);
     }
 
-    @Generated
     public OpenWalls a() {
         return this.e;
     }
 
-    @Generated
     public ScreenWalk f() {
         return this.f;
     }
 
-    @Generated
     public FakeLags g() {
         return this.g;
     }
 
-    @Generated
     public FreeCamera h() {
         return this.h;
     }
 
-    @Generated
     public WardenESP i() {
         return this.i;
     }
 
-    @Generated
     public Structures j() {
         return this.j;
     }
 
-    @Generated
     public AutoAuth k() {
         return this.k;
     }
 
-    @Generated
     public AutoDodge l() {
         return this.l;
     }
 
-    @Generated
     public SoundESP m() {
         return this.m;
     }
 
-    @Generated
     public NoCrouch n() {
         return this.n;
     }
 
-    @Generated
     public Sprint o() {
         return this.o;
     }
 
-    @Generated
     public LockSlot p() {
         return this.p;
     }
 
-    @Generated
     public NoSlowDown q() {
         return this.q;
     }
 
-    @Generated
     public SoundReducer r() {
         return this.r;
     }
 
-    @Generated
     public NoInteract s() {
         return this.s;
     }
 
-    @Generated
     public HitBoxes t() {
         return this.t;
     }
 
-    @Generated
     public TapeMouse u() {
         return this.u;
     }
 
-    @Generated
     public NoServerPack v() {
         return this.v;
     }
 
-    @Generated
     public ItemScroller w() {
         return this.w;
     }
 
-    @Generated
     public BoardSpoofer x() {
         return this.x;
     }
 
-    @Generated
     public Communication y() {
         return this.y;
     }
 
-    @Generated
     public UseTracker z() {
         return this.z;
     }
 
-    @Generated
     public ShiftTAP A() {
         return this.A;
     }
 
-    @Generated
     public Aura B() {
         return this.B;
     }
 
-    @Generated
     public AutoExplosion C() {
         return this.C;
     }
 
-    @Generated
     public ProjectileHelper D() {
         return this.D;
     }
 
-    @Generated
     public XRay E() {
         return this.E;
     }
 
-    @Generated
     public ElytraHelper F() {
         return this.F;
     }
 
-    @Generated
     public ElytraTarget G() {
         return this.G;
     }
 
-    @Generated
     public MaceHelper H() {
         return this.H;
     }
 
-    @Generated
     public AntiAFK I() {
         return this.I;
     }
 
-    @Generated
     public DeathCoords J() {
         return this.J;
     }
 
-    @Generated
     public AutoAccept K() {
         return this.K;
     }
 
-    @Generated
     public AutoSwap L() {
         return this.L;
     }
 
-    @Generated
     public ThirdPerson M() {
         return this.M;
     }
 
-    @Generated
     public AutoTool N() {
         return this.N;
     }
 
-    @Generated
     public NoPush O() {
         return this.O;
     }
 
-    @Generated
     public AutoRespawn P() {
         return this.P;
     }
 
-    @Generated
     public Animations Q() {
         return this.Q;
     }
 
-    @Generated
     public SwingAnimation R() {
         return this.R;
     }
 
-    @Generated
     public AucReissue S() {
         return this.S;
     }
 
-    @Generated
     public SeeInvisibles T() {
         return this.T;
     }
 
-    @Generated
     public EntityBox U() {
         return this.U;
     }
 
-    @Generated
     public AutoTotem V() {
         return this.V;
     }
 
-    @Generated
     public AutoArmor W() {
         return this.W;
     }
 
-    @Generated
     public TriggerBot X() {
         return this.X;
     }
 
-    @Generated
     public AimAssistant Y() {
         return this.Y;
     }
 
-    @Generated
     public AntiBot Z() {
         return this.Z;
     }
 
-    @Generated
     public EntityESP aa() {
         return this.aa;
     }
 
-    @Generated
     public BlockESP ab() {
         return this.ab;
     }
 
-    @Generated
     public NoFriendDamage ac() {
         return this.ac;
     }
 
-    @Generated
     public ShaderESP ad() {
         return this.ad;
     }
 
-    @Generated
     public NoServerDesync ae() {
         return this.ae;
     }
 
-    @Generated
     public NoSlotChange af() {
         return this.af;
     }
 
-    @Generated
     public ItemPhysic ag() {
         return this.ag;
     }
 
-    @Generated
     public SafeWalk ah() {
         return this.ah;
     }
 
-    @Generated
     public Removals ai() {
         return this.ai;
     }
 
-    @Generated
     public ServerAssistant aj() {
         return this.aj;
     }
 
-    @Generated
     public MineAssistant ak() {
         return this.ak;
     }
 
-    @Generated
     public AutoFish al() {
         return this.al;
     }
 
-    @Generated
     public NoCommands am() {
         return this.am;
     }
 
-    @Generated
     public ServerJoiner an() {
         return this.an;
     }
 
-    @Generated
     public ViewModel ao() {
         return this.ao;
     }
 
-    @Generated
     public ClickAction ap() {
         return this.ap;
     }
 
-    @Generated
     public WaterJump aq() {
         return this.aq;
     }
 
-    @Generated
     public ClanUpgrader ar() {
         return this.ar;
     }
 
-    @Generated
     public ChatHelper as() {
         return this.as;
     }
 
-    @Generated
     public Sounds at() {
         return this.at;
     }
 
-    @Generated
     public Crosshair au() {
         return this.au;
     }
 
-    @Generated
     public AirStuck av() {
         return this.av;
     }
 
-    @Generated
     public ShulkerPreview aw() {
         return this.aw;
     }
 
-    @Generated
     public NoDelay ax() {
         return this.ax;
     }
 
-    @Generated
     public ChinaHat ay() {
         return this.ay;
     }
 
-    @Generated
     public AppleFarmer az() {
         return this.az;
     }
 
-    @Generated
     public AncientFarmer aA() {
         return this.aA;
     }
 
-    @Generated
     public AspectRatio aB() {
         return this.aB;
     }
 
-    @Generated
     public Predictions aC() {
         return this.aC;
     }
 
-    @Generated
     public ChestStealer aD() {
         return this.aD;
     }
 
-    @Generated
     public StreamerMode aE() {
         return this.aE;
     }
 
-    @Generated
     public Ambience aF() {
         return this.aF;
     }
 
-    @Generated
     public PortalBypass aG() {
         return this.aG;
     }
 
-    @Generated
     public CaptchaSolver aH() {
         return this.aH;
     }
 
-    @Generated
     public FastEXP aI() {
         return this.aI;
     }
 
-    @Generated
     public Collector_2 aJ() {
         return this.aJ;
     }
 
-    @Generated
     public ItemHelper aK() {
         return this.aK;
     }
 
-    @Generated
     public Pointers aL() {
         return this.aL;
     }
 
-    @Generated
     public Nuker aM() {
         return this.aM;
     }
 
-    @Generated
     public FastLoad aN() {
         return this.aN;
     }
 
-    @Generated
     public FullBright aO() {
         return this.aO;
     }
 
-    @Generated
     public AutoEXP aP() {
         return this.aP;
     }
 
-    @Generated
     public Fly aQ() {
         return this.aQ;
     }
 
-    @Generated
     public WallClimb aR() {
         return this.aR;
     }
 
-    @Generated
     public Scaffold aS() {
         return this.aS;
     }
 
-    @Generated
     public HandsShader aT() {
         return this.aT;
     }
 
-    @Generated
     public AutoWarden aU() {
         return this.aU;
     }
 
-    @Generated
     public AutoEat aV() {
         return this.aV;
     }
 
-    @Generated
     public WindHop aW() {
         return this.aW;
     }
 
-    @Generated
     public FastBreak aX() {
         return this.aX;
     }
 
-    @Generated
     public FunDeliver aY() {
         return this.aY;
     }
 
-    @Generated
     public PotionThrower aZ() {
         return this.aZ;
     }
 
-    @Generated
     public AutoBuy ba() {
         return this.ba;
     }
 
-    @Generated
     public AutoLeave bb() {
         return this.bb;
     }
 
-    @Generated
     public Velocity bc() {
         return this.bc;
     }
 
-    @Generated
     public Interface_2 bd() {
         return this.bd;
     }

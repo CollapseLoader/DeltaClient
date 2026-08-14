@@ -4,7 +4,6 @@ import aethereal.core.Event;
 import aethereal.core.IEvent;
 
 import aethereal.core.Packet;
-import lombok.Generated;
 
 public class BackendEvent extends Event implements IEvent {
     private final Packet packet;
@@ -20,12 +19,10 @@ public class BackendEvent extends Event implements IEvent {
         this.packet = null;
     }
 
-    @Generated
     public Packet getPacket() {
         return this.packet;
     }
 
-    @Generated
     public Phase getPhase() {
         return this.phase;
     }

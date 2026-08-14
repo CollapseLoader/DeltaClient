@@ -1,7 +1,6 @@
 package aethereal.config;
 
 
-import lombok.Generated;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -21,19 +20,16 @@ public record AttributeCondition(RegistryEntry<EntityAttribute> a, EntityAttribu
     }
 
     @Override
-    @Generated
     public RegistryEntry<EntityAttribute> a() {
         return this.a;
     }
 
     @Override
-    @Generated
     public EntityAttributeModifier.Operation b() {
         return this.b;
     }
 
     @Override
-    @Generated
     public double c() {
         return this.c;
     }

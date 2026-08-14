@@ -11,7 +11,6 @@ import aethereal.render.AnimationUtil;
 import aethereal.render.ColorUtil;
 import aethereal.render.EasingList;
 import aethereal.util.ProjectUtil;
-import lombok.Generated;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -24,7 +23,6 @@ public class AimHandler extends BaseHandler implements Interface {
     private final AnimationUtil b = new AnimationUtil();
     private LivingEntity c;
 
-    @Generated
     public AnimationUtil a() {
         return this.b;
     }

@@ -2,7 +2,6 @@ package aethereal.event;
 
 import aethereal.core.Event;
 import aethereal.core.IEvent;
-import lombok.Generated;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 
@@ -17,12 +16,10 @@ public class TooltipEvent extends Event implements IEvent {
         this.b = lines;
     }
 
-    @Generated
     public ItemStack b() {
         return this.a;
     }
 
-    @Generated
     public List<Text> c() {
         return this.b;
     }

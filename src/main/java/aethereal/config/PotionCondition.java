@@ -1,7 +1,6 @@
 package aethereal.config;
 
 
-import lombok.Generated;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.effect.StatusEffect;
@@ -18,19 +17,16 @@ public record PotionCondition(RegistryEntry<StatusEffect> a, int b, int c) {
     }
 
     @Override
-    @Generated
     public RegistryEntry<StatusEffect> a() {
         return this.a;
     }
 
     @Override
-    @Generated
     public int b() {
         return this.b;
     }
 
     @Override
-    @Generated
     public int c() {
         return this.c;
     }

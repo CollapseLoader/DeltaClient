@@ -9,7 +9,6 @@ import aethereal.handler.BaseHandler;
 import aethereal.handler.Handler_2;
 import aethereal.util.MathUtil;
 import aethereal.util.Rotation;
-import lombok.Generated;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -17,7 +16,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class AFKHandler extends BaseHandler implements Interface {
     private int b = -1;
 
-    @Generated
     public int b() {
         return this.b;
     }

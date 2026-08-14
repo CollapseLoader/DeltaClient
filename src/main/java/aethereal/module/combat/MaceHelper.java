@@ -7,7 +7,6 @@ import aethereal.handler.UseableHandler;
 import aethereal.setting.BooleanSetting;
 import aethereal.util.InventoryUtil;
 import aethereal.util.ServerUtil;
-import lombok.Generated;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
@@ -27,27 +26,22 @@ public class MaceHelper extends Module {
         a(this.b, this.c);
     }
 
-    @Generated
     public BooleanSetting q() {
         return this.b;
     }
 
-    @Generated
     public BooleanSetting r() {
         return this.c;
     }
 
-    @Generated
     public int s() {
         return this.d;
     }
 
-    @Generated
     public boolean t() {
         return this.e;
     }
 
-    @Generated
     public int[] u() {
         return this.f;
     }

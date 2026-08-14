@@ -10,7 +10,6 @@ import aethereal.render.Font;
 import aethereal.render.Fonts;
 import aethereal.util.CursorUtil;
 import aethereal.util.MathUtil;
-import lombok.Generated;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector2f;
@@ -44,72 +43,58 @@ public class TextField {
         this.b = numbers;
     }
 
-    @Generated
     public a b() {
         return this.a;
     }
 
-    @Generated
     public boolean c() {
         return this.b;
     }
 
-    @Generated
     public void a(Vector2f position) {
         this.c = position;
     }
 
-    @Generated
     public Vector2f d() {
         return this.c;
     }
 
-    @Generated
     public void b(Vector2f size) {
         this.d = size;
     }
 
-    @Generated
     public Vector2f e() {
         return this.d;
     }
 
-    @Generated
     public void a(String placeholder) {
         this.e = placeholder;
     }
 
-    @Generated
     public String f() {
         return this.e;
     }
 
-    @Generated
     public StringBuilder g() {
         return this.f;
     }
 
-    @Generated
     public Vector2f h() {
         return this.g;
     }
 
-    @Generated
     public int i() {
         return this.h;
     }
 
-    @Generated
     public boolean j() {
         return this.i;
     }
 
-    @Generated
     public boolean k() {
         return this.j;
     }
 
-    @Generated
     public float l() {
         return this.k;
     }
@@ -366,7 +351,6 @@ public class TextField {
         final float g;
         final boolean h;
 
-        @Generated
         a(final Font font, final float fontSize, final float paddingX, final float textOffset, final boolean placeholder) {
             this.d = font;
             this.e = fontSize;
@@ -377,27 +361,22 @@ public class TextField {
 
         public abstract void a(Draw2DProcessor draw2DProcessor, MatrixStack class_4587Var, float f, float f2, float f3, float f4, float f5);
 
-        @Generated
         public Font a() {
             return this.d;
         }
 
-        @Generated
         public float b() {
             return this.e;
         }
 
-        @Generated
         public float c() {
             return this.f;
         }
 
-        @Generated
         public float d() {
             return this.g;
         }
 
-        @Generated
         public boolean e() {
             return this.h;
         }

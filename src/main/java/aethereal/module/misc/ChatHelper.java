@@ -7,7 +7,6 @@ import aethereal.core.ModuleRegister;
 import aethereal.event.TickEvent;
 import aethereal.setting.BooleanSetting;
 import aethereal.util.ServerUtil;
-import lombok.Generated;
 
 @ModuleRegister(name = "Chat Helper", description = "Расширяет возможности чата и его настройки", category = Category.Misc)
 public class ChatHelper extends Module {
@@ -19,7 +18,6 @@ public class ChatHelper extends Module {
         a(this.b, this.c);
     }
 
-    @Generated
     public BooleanSetting q() {
         return this.b;
     }

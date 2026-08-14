@@ -2,7 +2,6 @@ package aethereal.config;
 
 import aethereal.autobuy.ItemFilter;
 import aethereal.autobuy.ItemType;
-import lombok.Generated;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.List;
 public class DescriptionProcessor implements ItemFilter {
     private final List<DescriptionCondition> a = new ArrayList();
 
-    @Generated
     public List<DescriptionCondition> b() {
         return this.a;
     }

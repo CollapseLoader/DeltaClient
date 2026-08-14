@@ -6,7 +6,6 @@ import aethereal.core.Module;
 import aethereal.setting.BindSetting;
 import aethereal.setting.ModeSetting;
 import aethereal.ui.screen.AssistantScreen;
-import lombok.Generated;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 
@@ -40,7 +39,6 @@ public class PotionThrower extends Module implements Interface {
         }
     }
 
-    @Generated
     public AssistantScreen q() {
         return this.c;
     }

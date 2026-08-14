@@ -1,12 +1,10 @@
 package aethereal.render;
 
 import aethereal.core.Interface;
-import lombok.Generated;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.Window;
 
 public class ScaleUtil implements Interface {
-    @Generated
     private ScaleUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }

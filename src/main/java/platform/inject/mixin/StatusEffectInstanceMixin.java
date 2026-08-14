@@ -3,7 +3,6 @@ package platform.inject.mixin;
 
 import aethereal.mixin.IStatusEffectInstance;
 import aethereal.render.AnimationUtil;
-import lombok.Generated;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -32,19 +31,16 @@ public abstract class StatusEffectInstanceMixin implements IStatusEffectInstance
     public abstract RegistryEntry<StatusEffect> getEffectType();
 
     @Override
-    @Generated
     public AnimationUtil getAnimation() {
         return this.animation;
     }
 
     @Override
-    @Generated
     public int getInitialDuration() {
         return this.initialDuration;
     }
 
     @Override
-    @Generated
     public void setInitialDuration(int initialDuration) {
         this.initialDuration = initialDuration;
     }

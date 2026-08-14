@@ -2,7 +2,6 @@ package aethereal.ui.screen;
 
 import aethereal.core.Delta;
 import aethereal.core.Interface;
-import lombok.Generated;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
@@ -25,12 +24,10 @@ public class SwapScreen extends Screen implements Interface {
         }
     }
 
-    @Generated
     public boolean b() {
         return this.c;
     }
 
-    @Generated
     public void a(boolean open) {
         this.c = open;
     }

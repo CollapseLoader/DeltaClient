@@ -17,7 +17,6 @@ import aethereal.setting.Setting;
 import aethereal.ui.element.DragInfo;
 import aethereal.ui.element.Element_2;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import lombok.Generated;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -40,52 +39,42 @@ public class Widget {
         dragInfo.a(this);
     }
 
-    @Generated
     public List<Setting<?>> b() {
         return this.f;
     }
 
-    @Generated
     public List<Element_2<?>> c() {
         return this.g;
     }
 
-    @Generated
     public AnimationUtil d() {
         return this.a;
     }
 
-    @Generated
     public AnimationUtil e() {
         return this.b;
     }
 
-    @Generated
     public AnimationUtil f() {
         return this.c;
     }
 
-    @Generated
     public void a(boolean status) {
         this.h = status;
     }
 
-    @Generated
     public boolean g() {
         return this.h;
     }
 
-    @Generated
     public float h() {
         return this.d;
     }
 
-    @Generated
     public float i() {
         return this.e;
     }
 
-    @Generated
     public DragInfo j() {
         return this.i;
     }

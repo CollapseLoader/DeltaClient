@@ -2,7 +2,6 @@ package aethereal.discord;
 
 
 import aethereal.lib.javassist.CloseFrame;
-import lombok.Generated;
 
 public enum RpcErrorCode {
     UNKNOWN_ERROR(CloseFrame.a, "Unknown error"),
@@ -32,12 +31,10 @@ public enum RpcErrorCode {
         return UNKNOWN_ERROR;
     }
 
-    @Generated
     public int a() {
         return this.j;
     }
 
-    @Generated
     public String b() {
         return this.k;
     }

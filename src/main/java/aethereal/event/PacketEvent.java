@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 import aethereal.core.IEvent;
 
-import lombok.Generated;
 import net.minecraft.network.packet.Packet;
 
 public class PacketEvent extends Event implements IEvent {
@@ -15,12 +14,10 @@ public class PacketEvent extends Event implements IEvent {
         this.type = type;
     }
 
-    @Generated
     public Packet<?> d() {
         return this.packet;
     }
 
-    @Generated
     public Type e() {
         return this.type;
     }

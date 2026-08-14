@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 import aethereal.core.IEvent;
 
-import lombok.Generated;
 import net.minecraft.client.sound.SoundInstance;
 
 public class SoundEvent extends Event implements IEvent {
@@ -15,17 +14,14 @@ public class SoundEvent extends Event implements IEvent {
         this.b = volume;
     }
 
-    @Generated
     public SoundInstance b() {
         return this.a;
     }
 
-    @Generated
     public void a(float volume) {
         this.b = volume;
     }
 
-    @Generated
     public float c() {
         return this.b;
     }

@@ -1,7 +1,6 @@
 package aethereal.core;
 
 
-import lombok.Generated;
 
 public enum Category {
     Combat("V"),
@@ -16,7 +15,6 @@ public enum Category {
         this.f = icon;
     }
 
-    @Generated
     public String a() {
         return this.f;
     }

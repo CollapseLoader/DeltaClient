@@ -1,6 +1,5 @@
 package aethereal.render;
 
-import lombok.Generated;
 
 public class Fonts {
     public static final Font a = Font.a().a("icons").a();
@@ -9,7 +8,6 @@ public class Fonts {
     public static final Font d = Font.a().a("sf_medium").a();
     public static final Font e = Font.a().a("gt_regular").a();
 
-    @Generated
     private Fonts() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }

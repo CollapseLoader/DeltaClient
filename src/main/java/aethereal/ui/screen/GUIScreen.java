@@ -8,7 +8,6 @@ import aethereal.core.Module;
 import aethereal.render.*;
 import aethereal.ui.element.TextField;
 import aethereal.util.MathUtil;
-import lombok.Generated;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -200,22 +199,18 @@ public class GUIScreen extends Screen {
         return super.charTyped(character, modifiers);
     }
 
-    @Generated
     public TextField a() {
         return this.a;
     }
 
-    @Generated
     public AnimationUtil b() {
         return this.b;
     }
 
-    @Generated
     public List<GUIPanel> c() {
         return this.c;
     }
 
-    @Generated
     public String d() {
         return this.d;
     }

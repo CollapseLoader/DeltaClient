@@ -7,7 +7,6 @@ import aethereal.event.PacketEvent;
 import aethereal.setting.BindSetting;
 import aethereal.setting.BooleanSetting;
 import aethereal.util.InventoryUtil;
-import lombok.Generated;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
@@ -49,42 +48,34 @@ public class ElytraHelper extends Module implements Interface {
         a(this.f, this.e, this.b, this.c, this.d);
     }
 
-    @Generated
     public BooleanSetting q() {
         return this.b;
     }
 
-    @Generated
     public BooleanSetting r() {
         return this.c;
     }
 
-    @Generated
     public BooleanSetting s() {
         return this.d;
     }
 
-    @Generated
     public BindSetting t() {
         return this.e;
     }
 
-    @Generated
     public BindSetting u() {
         return this.f;
     }
 
-    @Generated
     public boolean v() {
         return this.g;
     }
 
-    @Generated
     public boolean w() {
         return this.h;
     }
 
-    @Generated
     public int x() {
         return this.i;
     }

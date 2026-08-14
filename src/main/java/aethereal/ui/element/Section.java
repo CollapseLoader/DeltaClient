@@ -2,7 +2,6 @@ package aethereal.ui.element;
 
 
 import aethereal.render.AnimationUtil;
-import lombok.Generated;
 import net.minecraft.client.gui.DrawContext;
 import org.joml.Vector4f;
 
@@ -16,17 +15,14 @@ public class Section {
         this.c = name;
     }
 
-    @Generated
     public AnimationUtil a() {
         return this.a;
     }
 
-    @Generated
     public String b() {
         return this.b;
     }
 
-    @Generated
     public String c() {
         return this.c;
     }

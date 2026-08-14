@@ -5,7 +5,6 @@ import aethereal.core.Module;
 import aethereal.event.RemovalsEvent;
 import aethereal.setting.BooleanSetting;
 import aethereal.setting.MultiModeSetting;
-import lombok.Generated;
 
 @ModuleRegister(name = "Removals", description = "Убирает выбранные визуальные эффекты и элементы игры", category = Category.Render)
 public class Removals extends Module {
@@ -15,7 +14,6 @@ public class Removals extends Module {
         a(this.b);
     }
 
-    @Generated
     public MultiModeSetting q() {
         return this.b;
     }

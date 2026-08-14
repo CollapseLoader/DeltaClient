@@ -9,7 +9,6 @@ import aethereal.module.misc.FunDeliver;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import lombok.Generated;
 
 import java.util.Map;
 
@@ -23,22 +22,18 @@ public class FunPay {
         this.d = deliver;
     }
 
-    @Generated
     public Session c() {
         return this.a;
     }
 
-    @Generated
     public ChatPoller d() {
         return this.b;
     }
 
-    @Generated
     public OrderPoller e() {
         return this.c;
     }
 
-    @Generated
     public FunDeliver f() {
         return this.d;
     }
@@ -74,20 +69,36 @@ public class FunPay {
     }
 
     public Connection_2.e a(String objectsJson, String requestJson) throws Exception {
-        return Jsoup.b("https://funpay.com/runner/").c(Map.of("golden_key", this.d.q().c(), "PHPSESSID", this.a.c(), "golden_seal", this.a.d())).b(Map.of("accept", "*/*", "content-type", "application/x-www-form-urlencoded; charset=UTF-8", "x-requested-with", "XMLHttpRequest")).a(Connection_2.c.POST).a(Map.of("objects", objectsJson == null ? "" : objectsJson, "request", requestJson == null ? "" : requestJson, "csrf_token", this.a.e() == null ? "" : this.a.e())).c(true).a(5000).e();
+        return Jsoup.b("https://funpay.com/runner/")
+                .c(Map.of("golden_key", this.d.q().c(), "PHPSESSID", this.a.c(), "golden_seal", this.a.d()))
+                .b(Map.of("accept", "*/*", "content-type", "application/x-www-form-urlencoded; charset=UTF-8",
+                        "x-requested-with", "XMLHttpRequest"))
+                .a(Connection_2.c.POST)
+                .a(Map.of("objects", objectsJson == null ? "" : objectsJson, "request",
+                        requestJson == null ? "" : requestJson, "csrf_token", this.a.e() == null ? "" : this.a.e()))
+                .c(true).a(5000).e();
     }
 
     public Connection_2.e a(String url) throws Exception {
-        return Jsoup.b(url).c(Map.of("golden_key", this.d.q().c(), "PHPSESSID", this.a.c(), "golden_seal", this.a.d())).b(Map.of("accept", "*/*", "x-requested-with", "XMLHttpRequest")).a(Connection_2.c.POST).c(true).a(5000).e();
+        return Jsoup.b(url).c(Map.of("golden_key", this.d.q().c(), "PHPSESSID", this.a.c(), "golden_seal", this.a.d()))
+                .b(Map.of("accept", "*/*", "x-requested-with", "XMLHttpRequest")).a(Connection_2.c.POST).c(true).a(5000)
+                .e();
     }
 
     public void b(String orderId) {
         try {
-            Element form = Jsoup.b("https://funpay.com/orders/" + (orderId.startsWith("#") ? orderId.substring(1) : orderId) + "/").c(Map.of("golden_key", this.d.q().c(), "PHPSESSID", this.a.c(), "golden_seal", this.a.d())).a(5000).c().k(".modal-refund form");
+            Element form = Jsoup
+                    .b("https://funpay.com/orders/" + (orderId.startsWith("#") ? orderId.substring(1) : orderId) + "/")
+                    .c(Map.of("golden_key", this.d.q().c(), "PHPSESSID", this.a.c(), "golden_seal", this.a.d())).a(5000)
+                    .c().k(".modal-refund form");
             if (form == null) {
                 return;
             }
-            Connection_2 refund = Jsoup.b(form.a_("action").startsWith("http") ? form.a_("action") : "https://funpay.com" + form.a_("action")).c(Map.of("golden_key", this.d.q().c(), "PHPSESSID", this.a.c(), "golden_seal", this.a.d())).a(Connection_2.c.POST).c(true).a(5000);
+            Connection_2 refund = Jsoup
+                    .b(form.a_("action").startsWith("http") ? form.a_("action")
+                            : "https://funpay.com" + form.a_("action"))
+                    .c(Map.of("golden_key", this.d.q().c(), "PHPSESSID", this.a.c(), "golden_seal", this.a.d()))
+                    .a(Connection_2.c.POST).c(true).a(5000);
             form.select("input[type=hidden]").forEach(node -> {
                 refund.a(node.attr("name"), node.attr("value"));
             });

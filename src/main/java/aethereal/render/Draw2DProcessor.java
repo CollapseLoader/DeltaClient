@@ -6,7 +6,6 @@ import aethereal.core.Interface;
 import aethereal.ui.shader.*;
 import aethereal.util.MathUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
-import lombok.Generated;
 import net.minecraft.client.gl.Framebuffer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
@@ -29,37 +28,30 @@ public class Draw2DProcessor extends BaseProcessor implements Interface {
     public void setup() {
     }
 
-    @Generated
     public void a(float scale) {
         this.b = scale;
     }
 
-    @Generated
     public float a() {
         return this.b;
     }
 
-    @Generated
     public RectangleShader b() {
         return this.c;
     }
 
-    @Generated
     public TextureShader c() {
         return this.d;
     }
 
-    @Generated
     public GradientShader d() {
         return this.e;
     }
 
-    @Generated
     public BlurShader e() {
         return this.f;
     }
 
-    @Generated
     public NoiseShader f() {
         return this.g;
     }

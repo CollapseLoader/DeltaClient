@@ -13,7 +13,6 @@ import aethereal.util.CounterUtil;
 import aethereal.util.ProjectUtil;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import lombok.Generated;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.hud.ClientBossBar;
@@ -127,7 +126,6 @@ public class Structures extends Module {
         private final long i;
         private final Item j;
 
-        @Generated
         b(final String displayName, final int[][] dimensions, final boolean hollow, final long cooldown, final Item item) {
             this.f = displayName;
             this.g = dimensions;
@@ -136,27 +134,22 @@ public class Structures extends Module {
             this.j = item;
         }
 
-        @Generated
         public String a() {
             return this.f;
         }
 
-        @Generated
         public int[][] b() {
             return this.g;
         }
 
-        @Generated
         public boolean c() {
             return this.h;
         }
 
-        @Generated
         public long d() {
             return this.i;
         }
 
-        @Generated
         public Item e() {
             return this.j;
         }
@@ -190,27 +183,22 @@ public class Structures extends Module {
             this.c.b();
         }
 
-        @Generated
         public AnimationUtil b() {
             return this.b;
         }
 
-        @Generated
         public CounterUtil c() {
             return this.c;
         }
 
-        @Generated
         public b d() {
             return this.d;
         }
 
-        @Generated
         public BlockBox e() {
             return this.e;
         }
 
-        @Generated
         public ClientBossBar f() {
             return this.f;
         }

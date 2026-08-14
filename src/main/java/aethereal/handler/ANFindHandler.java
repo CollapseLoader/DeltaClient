@@ -10,7 +10,6 @@ import aethereal.ui.shader.GradientUtil;
 import aethereal.util.ChatUtil;
 import aethereal.util.MathUtil;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
-import lombok.Generated;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -189,17 +188,14 @@ public class ANFindHandler extends BaseHandler implements Interface {
             this.a = title;
         }
 
-        @Generated
         public String b() {
             return this.a;
         }
 
-        @Generated
         public String c() {
             return this.b;
         }
 
-        @Generated
         public int d() {
             return this.c;
         }

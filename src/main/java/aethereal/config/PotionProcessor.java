@@ -1,7 +1,6 @@
 package aethereal.config;
 
 import aethereal.autobuy.ItemFilter;
-import lombok.Generated;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.List;
 public class PotionProcessor implements ItemFilter {
     private final List<PotionCondition> a = new ArrayList();
 
-    @Generated
     public List<PotionCondition> a() {
         return this.a;
     }

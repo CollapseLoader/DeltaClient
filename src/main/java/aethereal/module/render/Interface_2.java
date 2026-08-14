@@ -10,7 +10,6 @@ import aethereal.setting.BooleanSetting;
 import aethereal.setting.ColorSetting;
 import aethereal.setting.MultiModeSetting;
 import aethereal.ui.widget.*;
-import lombok.Generated;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,6 @@ public class Interface_2 extends Module {
         this.d.add(new EnvironmentWidget());
     }
 
-    @Generated
     public List<Widget> q() {
         return this.d;
     }

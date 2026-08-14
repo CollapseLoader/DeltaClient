@@ -2,7 +2,6 @@ package aethereal.config;
 
 import aethereal.autobuy.ItemFilter;
 import aethereal.autobuy.ItemType;
-import lombok.Generated;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
@@ -14,7 +13,6 @@ import java.util.List;
 public class EnchantmentProcessor implements ItemFilter {
     private final List<EnchantmentCondition> a = new ArrayList();
 
-    @Generated
     public List<EnchantmentCondition> b() {
         return this.a;
     }

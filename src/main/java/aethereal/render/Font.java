@@ -3,7 +3,6 @@ package aethereal.render;
 import aethereal.ui.shader.GradientUtil;
 import aethereal.util.ChatUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
-import lombok.Generated;
 import net.minecraft.client.gl.Defines;
 import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.gl.ShaderProgramKey;
@@ -40,17 +39,14 @@ public class Font {
         return new FontBuilder();
     }
 
-    @Generated
     public String b() {
         return this.b;
     }
 
-    @Generated
     public FontData.AtlasData c() {
         return this.d;
     }
 
-    @Generated
     public FontData.MetricsData d() {
         return this.e;
     }

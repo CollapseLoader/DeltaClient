@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 import aethereal.core.IEvent;
 
-import lombok.Generated;
 
 public class KeyEvent extends Event implements IEvent {
     private final int key;
@@ -18,7 +17,6 @@ public class KeyEvent extends Event implements IEvent {
         this.modifiers = modifiers;
     }
 
-    @Generated
     public int getKey() {
         return this.key;
     }
@@ -31,7 +29,6 @@ public class KeyEvent extends Event implements IEvent {
         return getKey();
     }
 
-    @Generated
     public int getScanCode() {
         return this.scanCode;
     }
@@ -44,7 +41,6 @@ public class KeyEvent extends Event implements IEvent {
         return getScanCode();
     }
 
-    @Generated
     public int getAction() {
         return this.action;
     }
@@ -57,7 +53,6 @@ public class KeyEvent extends Event implements IEvent {
         return getAction();
     }
 
-    @Generated
     public int getModifiers() {
         return this.modifiers;
     }

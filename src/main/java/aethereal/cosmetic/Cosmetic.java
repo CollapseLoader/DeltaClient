@@ -1,7 +1,6 @@
 package aethereal.cosmetic;
 
 import aethereal.core.Interface;
-import lombok.Generated;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.NativeImageBackedTexture;
 import net.minecraft.util.Identifier;
@@ -61,57 +60,46 @@ public class Cosmetic implements GeoAnimatable {
         this.renderer = null;
     }
 
-    @Generated
     public AnimatableInstanceCache getCache() {
         return this.cache;
     }
 
-    @Generated
     public GeoObjectRenderer<Cosmetic> getRenderer() {
         return this.renderer;
     }
 
-    @Generated
     public String getName() {
         return this.name;
     }
 
-    @Generated
     public UUID getUuid() {
         return this.uuid;
     }
 
-    @Generated
     public CosmeticsType getType() {
         return this.type;
     }
 
-    @Generated
     public CosmeticsCategory getCategory() {
         return this.category;
     }
 
-    @Generated
     public Vector3f getOffset() {
         return this.offset;
     }
 
-    @Generated
     public float getScale() {
         return this.scale;
     }
 
-    @Generated
     public BakedGeoModel getBakedModel() {
         return this.bakedModel;
     }
 
-    @Generated
     public BakedAnimations getBakedAnimations() {
         return this.bakedAnimations;
     }
 
-    @Generated
     public Identifier getImage() {
         return this.image;
     }

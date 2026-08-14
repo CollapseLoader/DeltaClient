@@ -2,7 +2,6 @@ package aethereal.render;
 
 import aethereal.core.Interface;
 import aethereal.util.MathUtil;
-import lombok.Generated;
 
 public class AnimationUtil implements Interface {
     private float b;
@@ -13,32 +12,26 @@ public class AnimationUtil implements Interface {
     private float f = 1.0f;
     private long h = System.currentTimeMillis();
 
-    @Generated
     public void c(float value) {
         this.b = value;
     }
 
-    @Generated
     public void d(float prevValue) {
         this.c = prevValue;
     }
 
-    @Generated
     public float a() {
         return this.b;
     }
 
-    @Generated
     public float b() {
         return this.c;
     }
 
-    @Generated
     public float c() {
         return this.g;
     }
 
-    @Generated
     public void e(float animationValue) {
         this.g = animationValue;
     }

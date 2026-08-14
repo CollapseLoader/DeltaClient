@@ -7,7 +7,6 @@ import aethereal.core.ModuleRegister;
 import aethereal.event.PushEvent;
 import aethereal.setting.BooleanSetting;
 import aethereal.setting.MultiModeSetting;
-import lombok.Generated;
 
 @ModuleRegister(name = "No Push", description = "Отключает отталкивание от выбранных объектов", category = Category.Movement)
 public class NoPush extends Module {
@@ -17,7 +16,6 @@ public class NoPush extends Module {
         a(this.b);
     }
 
-    @Generated
     public MultiModeSetting q() {
         return this.b;
     }

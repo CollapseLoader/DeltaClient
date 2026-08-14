@@ -6,7 +6,6 @@ import aethereal.event.HandAnimationEvent;
 import aethereal.setting.BooleanSetting;
 import aethereal.setting.ModeSetting;
 import aethereal.setting.SliderSetting;
-import lombok.Generated;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.RotationAxis;
@@ -27,27 +26,22 @@ public class SwingAnimation extends Module {
         a(this.b, this.c, this.d, this.e, this.f);
     }
 
-    @Generated
     public BooleanSetting q() {
         return this.b;
     }
 
-    @Generated
     public ModeSetting r() {
         return this.c;
     }
 
-    @Generated
     public SliderSetting s() {
         return this.d;
     }
 
-    @Generated
     public SliderSetting t() {
         return this.e;
     }
 
-    @Generated
     public SliderSetting u() {
         return this.f;
     }

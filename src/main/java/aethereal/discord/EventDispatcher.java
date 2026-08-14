@@ -5,14 +5,12 @@ import aethereal.lib.log4j.LogManager;
 import aethereal.lib.log4j.Logger;
 import aethereal.util.JsonUtils;
 import com.google.gson.JsonObject;
-import lombok.Generated;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class EventDispatcher {
 
-    @Generated
     private static final Logger a = LogManager.b(EventDispatcher.class);
     private final List<DiscordEventListener> b = new CopyOnWriteArrayList();
 

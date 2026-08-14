@@ -8,7 +8,6 @@ import aethereal.render.EasingList;
 import aethereal.render.ScaleUtil;
 import aethereal.ui.screen.GUIPanel;
 import aethereal.ui.screen.GUIScreen;
-import lombok.Generated;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
@@ -38,12 +37,10 @@ public class Delta {
         publishUser(user);
     }
 
-    @Generated
     public static Delta getInstance() {
         return instance;
     }
 
-    @Generated
     public static Delta h() {
         return instance;
     }
@@ -77,32 +74,26 @@ public class Delta {
         return null;
     }
 
-    @Generated
     public Processor_2 d() {
         return this.moduleProcessor;
     }
 
-    @Generated
     public GUIScreen getCurrentScreen() {
         return this.currentScreen;
     }
 
-    @Generated
     public void setCurrentScreen(GUIScreen guiScreen) {
         this.currentScreen = guiScreen;
     }
 
-    @Generated
     public GUIScreen e() {
         return this.currentScreen;
     }
 
-    @Generated
     public Client f() {
         return this.networkClient;
     }
 
-    @Generated
     public User g() {
         return this.currentUser;
     }
@@ -113,22 +104,18 @@ public class Delta {
         return getDeveloperName();
     }
 
-    @Generated
     public void a(Processor_2 processor) {
         this.moduleProcessor = processor;
     }
 
-    @Generated
     public void a(GUIScreen guiScreen) {
         this.currentScreen = guiScreen;
     }
 
-    @Generated
     public void a(Client client) {
         this.networkClient = client;
     }
 
-    @Generated
     public void a(User user) {
         this.currentUser = user;
     }

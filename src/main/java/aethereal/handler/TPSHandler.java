@@ -2,7 +2,6 @@ package aethereal.handler;
 
 import aethereal.core.EventTarget;
 import aethereal.event.PacketEvent;
-import lombok.Generated;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 
 @Handler_2
@@ -11,7 +10,6 @@ public class TPSHandler extends BaseHandler {
     private long b = -1;
     private float c = 20.0f;
 
-    @Generated
     public float a() {
         return this.c;
     }

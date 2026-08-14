@@ -14,7 +14,6 @@ import aethereal.setting.MultiModeSetting;
 import aethereal.util.ChatUtil;
 import aethereal.util.MathUtil;
 import aethereal.util.ServerUtil;
-import lombok.Generated;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
@@ -178,7 +177,6 @@ public class UseTracker extends Module {
         private final int[] j;
         private final int[] k;
 
-        @Generated
         a(final List effects, final String displayName, final int[] throwColor, final int[] nameColors) {
             this.h = effects;
             this.i = displayName;
@@ -186,22 +184,18 @@ public class UseTracker extends Module {
             this.k = nameColors;
         }
 
-        @Generated
         public List<Map.Entry<RegistryEntry<StatusEffect>, int[]>> b() {
             return this.h;
         }
 
-        @Generated
         public String c() {
             return this.i;
         }
 
-        @Generated
         public int[] d() {
             return this.j;
         }
 
-        @Generated
         public int[] e() {
             return this.k;
         }

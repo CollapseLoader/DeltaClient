@@ -7,7 +7,6 @@ import aethereal.setting.BooleanSetting;
 import aethereal.setting.ModeSetting;
 import aethereal.setting.SliderSetting;
 import aethereal.util.CounterUtil;
-import lombok.Generated;
 
 @ModuleRegister(name = "Tape Mouse", description = "Автоматически кликает выбранной кнопкой мыши через заданные промежутки времени", category = Category.Combat)
 public class TapeMouse extends Module implements Interface {
@@ -20,22 +19,18 @@ public class TapeMouse extends Module implements Interface {
         a(this.d, this.c, this.b);
     }
 
-    @Generated
     public SliderSetting q() {
         return this.b;
     }
 
-    @Generated
     public BooleanSetting r() {
         return this.c;
     }
 
-    @Generated
     public ModeSetting s() {
         return this.d;
     }
 
-    @Generated
     public CounterUtil t() {
         return this.e;
     }

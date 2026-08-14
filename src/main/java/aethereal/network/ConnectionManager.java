@@ -12,7 +12,6 @@ import aethereal.lib.log4j.LogManager;
 import aethereal.lib.log4j.Logger;
 import aethereal.util.JsonUtils;
 import com.google.gson.JsonObject;
-import lombok.Generated;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,7 +26,6 @@ import java.util.function.Consumer;
 
 public class ConnectionManager {
 
-    @Generated
     private static final Logger a = LogManager.b(ConnectionManager.class);
     private final AtomicReference<ConnectionState> b;
     private final AtomicLong c;
@@ -74,72 +72,58 @@ public class ConnectionManager {
         this.j = connectionFactory;
     }
 
-    @Generated
     public AtomicReference<ConnectionState> f() {
         return this.b;
     }
 
-    @Generated
     public AtomicLong g() {
         return this.c;
     }
 
-    @Generated
     public AtomicLong h() {
         return this.d;
     }
 
-    @Generated
     public ExecutorService i() {
         return this.e;
     }
 
-    @Generated
     public DiscordIPCConfig j() {
         return this.f;
     }
 
-    @Generated
     public CommandExecutor k() {
         return this.g;
     }
 
-    @Generated
     public EventDispatcher l() {
         return this.h;
     }
 
-    @Generated
     public PipePathProvider m() {
         return this.i;
     }
 
-    @Generated
     public ConnectionFactory n() {
         return this.j;
     }
 
-    @Generated
     public Connection o() {
         return this.k;
     }
 
-    @Generated
     public User_2 p() {
         return this.l;
     }
 
-    @Generated
     public DiscordBuild q() {
         return this.m;
     }
 
-    @Generated
     public Future<?> r() {
         return this.n;
     }
 
-    @Generated
     public Consumer<ConnectionState> s() {
         return this.o;
     }

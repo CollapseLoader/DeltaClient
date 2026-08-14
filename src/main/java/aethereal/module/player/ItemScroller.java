@@ -5,7 +5,6 @@ import aethereal.core.Module;
 import aethereal.core.ModuleRegister;
 import aethereal.setting.SliderSetting;
 import aethereal.util.CounterUtil;
-import lombok.Generated;
 
 @ModuleRegister(name = "Item Scroller", description = "Позволяет быстро перекладывать предметы в окнах прокруткой", category = Category.Player)
 public class ItemScroller extends Module {
@@ -16,12 +15,10 @@ public class ItemScroller extends Module {
         a(this.b);
     }
 
-    @Generated
     public SliderSetting q() {
         return this.b;
     }
 
-    @Generated
     public CounterUtil r() {
         return this.c;
     }

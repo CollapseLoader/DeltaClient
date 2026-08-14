@@ -1,7 +1,6 @@
 package aethereal.discord;
 
 
-import lombok.Generated;
 
 public enum ActivityType {
     PLAYING(0),
@@ -25,7 +24,6 @@ public enum ActivityType {
         throw new IllegalArgumentException("Unknown activity type: " + value);
     }
 
-    @Generated
     public int a() {
         return this.f;
     }

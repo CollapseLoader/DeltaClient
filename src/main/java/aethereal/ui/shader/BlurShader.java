@@ -5,7 +5,6 @@ import aethereal.core.EventTarget;
 import aethereal.core.Interface;
 import aethereal.event.ResizeEvent;
 import com.mojang.blaze3d.systems.RenderSystem;
-import lombok.Generated;
 import net.minecraft.client.gl.*;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
@@ -40,7 +39,6 @@ public class BlurShader extends Shader implements Interface {
         EventManager.a(this);
     }
 
-    @Generated
     public List<SimpleFramebuffer> e() {
         return this.n;
     }

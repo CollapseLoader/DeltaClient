@@ -6,7 +6,6 @@ import aethereal.core.IEvent;
 import aethereal.core.Interface;
 import aethereal.render.Draw2DProcessor;
 import aethereal.render.Draw3DProcessor;
-import lombok.Generated;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -31,32 +30,26 @@ public class DrawEvent extends Event implements Interface, IEvent {
         this.d = type;
     }
 
-    @Generated
     public Draw2DProcessor d() {
         return this.b;
     }
 
-    @Generated
     public Draw3DProcessor e() {
         return this.c;
     }
 
-    @Generated
     public a f() {
         return this.d;
     }
 
-    @Generated
     public float g() {
         return this.e;
     }
 
-    @Generated
     public MatrixStack h() {
         return this.f;
     }
 
-    @Generated
     public DrawContext i() {
         return this.g;
     }

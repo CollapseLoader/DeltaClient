@@ -4,19 +4,16 @@ import aethereal.core.EventTarget;
 import aethereal.event.TickEvent;
 import aethereal.util.ServerUtil;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import lombok.Generated;
 import net.minecraft.command.CommandSource;
 
 @Command(name = "rct")
 public class RCTCommand extends BaseCommand {
     private int c = -1;
 
-    @Generated
     public void b(int anarchy) {
         this.c = anarchy;
     }
 
-    @Generated
     public int f() {
         return this.c;
     }

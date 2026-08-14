@@ -2,14 +2,12 @@ package aethereal.util;
 
 import aethereal.core.Interface;
 import aethereal.event.InputEvent;
-import lombok.Generated;
 import net.minecraft.util.math.MathHelper;
 
 public class MoveUtil implements Interface {
     private static int b = Integer.MAX_VALUE;
     private static float c;
 
-    @Generated
     private MoveUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }

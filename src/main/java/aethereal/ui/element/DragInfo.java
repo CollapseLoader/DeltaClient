@@ -4,7 +4,6 @@ import aethereal.core.Delta;
 import aethereal.core.Interface;
 import aethereal.ui.widget.Widget;
 import aethereal.util.MathUtil;
-import lombok.Generated;
 
 public class DragInfo implements Interface {
     private final String i;
@@ -26,77 +25,62 @@ public class DragInfo implements Interface {
         Delta.h().d().s().e().add(this);
     }
 
-    @Generated
     public void a(Widget widget) {
         this.b = widget;
     }
 
-    @Generated
     public void a(float x) {
         this.c = x;
     }
 
-    @Generated
     public void b(float y) {
         this.d = y;
     }
 
-    @Generated
     public void c(float width) {
         this.e = width;
     }
 
-    @Generated
     public void d(float height) {
         this.f = height;
     }
 
-    @Generated
     public void a(double offsetX) {
         this.g = offsetX;
     }
 
-    @Generated
     public void b(double offsetY) {
         this.h = offsetY;
     }
 
-    @Generated
     public void a(int status) {
         this.j = status;
     }
 
-    @Generated
     public Widget e() {
         return this.b;
     }
 
-    @Generated
     public float f() {
         return this.e;
     }
 
-    @Generated
     public float g() {
         return this.f;
     }
 
-    @Generated
     public double h() {
         return this.g;
     }
 
-    @Generated
     public double i() {
         return this.h;
     }
 
-    @Generated
     public String j() {
         return this.i;
     }
 
-    @Generated
     public int k() {
         return this.j;
     }

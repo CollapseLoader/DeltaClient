@@ -7,7 +7,6 @@ import aethereal.event.TickEvent;
 import aethereal.setting.BooleanSetting;
 import aethereal.setting.MultiModeSetting;
 import aethereal.setting.SliderSetting;
-import lombok.Generated;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -36,7 +35,6 @@ public class AimAssistant extends Module {
         a(this.b, this.c, this.d, this.e);
     }
 
-    @Generated
     public LivingEntity q() {
         return this.f;
     }

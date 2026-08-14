@@ -4,7 +4,6 @@ import aethereal.core.Category;
 import aethereal.core.Module;
 import aethereal.core.ModuleRegister;
 import aethereal.setting.BooleanSetting;
-import lombok.Generated;
 
 @ModuleRegister(name = "No Interact", description = "Блокирует случайное взаимодействие с контейнерами и блоками", category = Category.Misc)
 public class NoInteract extends Module {
@@ -14,7 +13,6 @@ public class NoInteract extends Module {
         a(this.b);
     }
 
-    @Generated
     public BooleanSetting q() {
         return this.b;
     }

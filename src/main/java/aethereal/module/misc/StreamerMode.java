@@ -6,7 +6,6 @@ import aethereal.event.ScoreboardEvent;
 import aethereal.event.TextVisitEvent;
 import aethereal.friend.FriendConstructor;
 import aethereal.setting.BooleanSetting;
-import lombok.Generated;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -24,17 +23,14 @@ public class StreamerMode extends Module {
         a(this.b, this.c, this.d);
     }
 
-    @Generated
     public BooleanSetting q() {
         return this.b;
     }
 
-    @Generated
     public BooleanSetting r() {
         return this.c;
     }
 
-    @Generated
     public BooleanSetting s() {
         return this.d;
     }

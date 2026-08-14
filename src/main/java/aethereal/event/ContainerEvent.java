@@ -2,7 +2,6 @@ package aethereal.event;
 
 import aethereal.core.Event;
 import aethereal.core.IEvent;
-import lombok.Generated;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.screen.ScreenHandler;
@@ -42,47 +41,38 @@ public class ContainerEvent extends Event implements IEvent {
         this.title = title;
     }
 
-    @Generated
     public HandledScreen<?> b() {
         return this.screen;
     }
 
-    @Generated
     public ScreenHandler c() {
         return this.handler;
     }
 
-    @Generated
     public DrawContext d() {
         return this.context;
     }
 
-    @Generated
     public List<Slot> e() {
         return this.slots;
     }
 
-    @Generated
     public int f() {
         return this.mouseX;
     }
 
-    @Generated
     public int g() {
         return this.mouseY;
     }
 
-    @Generated
     public Phase h() {
         return this.phase;
     }
 
-    @Generated
     public void a(Text title) {
         this.title = title;
     }
 
-    @Generated
     public Text i() {
         return this.title;
     }

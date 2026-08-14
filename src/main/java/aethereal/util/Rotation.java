@@ -1,7 +1,6 @@
 package aethereal.util;
 
 import aethereal.core.Interface;
-import lombok.Generated;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -13,11 +12,9 @@ public class Rotation implements Interface {
     private float b;
     private float c;
 
-    @Generated
     public Rotation() {
     }
 
-    @Generated
     public Rotation(float yaw, float pitch) {
         this.b = yaw;
         this.c = pitch;
@@ -50,22 +47,18 @@ public class Rotation implements Interface {
         return new Rotation(Objects.requireNonNull(accessor).getLastYaw(), accessor.getLastPitch());
     }
 
-    @Generated
     public void a(float yaw) {
         this.b = yaw;
     }
 
-    @Generated
     public void b(float pitch) {
         this.c = pitch;
     }
 
-    @Generated
     public float c() {
         return this.b;
     }
 
-    @Generated
     public float d() {
         return this.c;
     }

@@ -2,7 +2,6 @@ package aethereal.event;
 
 import aethereal.core.Event;
 import aethereal.core.IEvent;
-import lombok.Generated;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.model.ModelWithHead;
 import net.minecraft.client.util.math.MatrixStack;
@@ -14,7 +13,6 @@ public class HeadFeatureEvent extends Event implements IEvent {
     private PlayerEntity c;
     private ModelWithHead d;
 
-    @Generated
     public HeadFeatureEvent(MatrixStack matrix, VertexConsumerProvider vertexConsumerProvider, PlayerEntity player, ModelWithHead model) {
         this.a = matrix;
         this.b = vertexConsumerProvider;
@@ -22,7 +20,6 @@ public class HeadFeatureEvent extends Event implements IEvent {
         this.d = model;
     }
 
-    @Generated
     public boolean equals(Object o) {
         if (o == this) {
             return true;
@@ -68,12 +65,10 @@ public class HeadFeatureEvent extends Event implements IEvent {
         return this$model.equals(other$model);
     }
 
-    @Generated
     protected boolean a(Object other) {
         return other instanceof HeadFeatureEvent;
     }
 
-    @Generated
     public int hashCode() {
         int result = super.hashCode();
         Object $matrix = b();
@@ -86,47 +81,38 @@ public class HeadFeatureEvent extends Event implements IEvent {
         return (result4 * 59) + ($model == null ? 43 : $model.hashCode());
     }
 
-    @Generated
     public void a(MatrixStack matrix) {
         this.a = matrix;
     }
 
-    @Generated
     public void a(VertexConsumerProvider vertexConsumerProvider) {
         this.b = vertexConsumerProvider;
     }
 
-    @Generated
     public void a(PlayerEntity player) {
         this.c = player;
     }
 
-    @Generated
     public void a(ModelWithHead model) {
         this.d = model;
     }
 
-    @Generated
     public String toString() {
         return "HeadFeatureEvent(matrix=" + b() + ", vertexConsumerProvider=" + c() + ", player=" + d() + ", model=" + e() + ")";
     }
 
-    @Generated
     public MatrixStack b() {
         return this.a;
     }
 
-    @Generated
     public VertexConsumerProvider c() {
         return this.b;
     }
 
-    @Generated
     public PlayerEntity d() {
         return this.c;
     }
 
-    @Generated
     public ModelWithHead e() {
         return this.d;
     }

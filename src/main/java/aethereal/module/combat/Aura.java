@@ -13,7 +13,6 @@ import aethereal.setting.SliderSetting;
 import aethereal.ui.screen.AssistantScreen;
 import aethereal.ui.screen.GUIScreen;
 import aethereal.util.*;
-import lombok.Generated;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -43,7 +42,6 @@ import java.util.stream.StreamSupport;
 @ModuleRegister(name = "Aura", description = "Автоматически атакует цели рядом с вами", category = Category.Combat)
 public class Aura extends Module {
 
-    @Generated
     private static final Logger_2 g = LoggerFactory.a(Aura.class);
     private final ModeSetting h = new ModeSetting("Выберите тип наведения", "ФанТайм", "ФанТайм", "ФанТайм ФОВ", "Легит");
     private final MultiModeSetting i = new MultiModeSetting("Цели для атаки", new BooleanSetting("Без брони", true), new BooleanSetting("Враждебные мобы", false), new BooleanSetting("Животные", false), new BooleanSetting("Друзья", false), new BooleanSetting("Игроки", true));
@@ -71,12 +69,10 @@ public class Aura extends Module {
         a(this.j, this.k, this.h, this.r, this.s, this.q, this.i, this.n, this.l, this.m, this.o, this.p);
     }
 
-    @Generated
     public ModeSetting r() {
         return this.s;
     }
 
-    @Generated
     public LivingEntity s() {
         return this.t;
     }

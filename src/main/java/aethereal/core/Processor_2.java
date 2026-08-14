@@ -23,7 +23,6 @@ import aethereal.render.Draw2DProcessor;
 import aethereal.render.Draw3DProcessor;
 import aethereal.staff.StaffProcessor;
 import aethereal.ui.element.DragProcessor;
-import lombok.Generated;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +32,6 @@ import java.util.function.Function;
 
 public class Processor_2 implements Interface {
 
-    @Generated
     private static final Logger_2 b;
 
     static {
@@ -102,102 +100,82 @@ public class Processor_2 implements Interface {
         }).toList())));
     }
 
-    @Generated
     public List<BaseProcessor> c() {
         return this.c;
     }
 
-    @Generated
     public MacrosProcessor d() {
         return this.d;
     }
 
-    @Generated
     public FriendProcessor e() {
         return this.e;
     }
 
-    @Generated
     public StaffProcessor f() {
         return this.f;
     }
 
-    @Generated
     public DiscordProcessor g() {
         return this.g;
     }
 
-    @Generated
     public AccountProcessor h() {
         return this.h;
     }
 
-    @Generated
     public Draw2DProcessor i() {
         return this.i;
     }
 
-    @Generated
     public Draw3DProcessor j() {
         return this.j;
     }
 
-    @Generated
     public RotationProcessor k() {
         return this.k;
     }
 
-    @Generated
     public BatchProcessor l() {
         return this.l;
     }
 
-    @Generated
     public NotificationProcessor m() {
         return this.m;
     }
 
-    @Generated
     public ResourcePacksProcessor n() {
         return this.n;
     }
 
-    @Generated
     public ThemeProcessor o() {
         return this.o;
     }
 
-    @Generated
     public CollectorProcessor p() {
         return this.p;
     }
 
-    @Generated
     public AutoBuyProcessor q() {
         return this.q;
     }
 
-    @Generated
     public CosmeticsProcessor r() {
         return this.r;
     }
 
-    @Generated
     public DragProcessor s() {
         return this.s;
     }
 
-    @Generated
     public ModuleProcessor t() {
         return this.t;
     }
 
-    @Generated
     public CommandProcessor u() {
         return this.u;
     }
 
-    @Generated
     public HandlerProcessor v() {
         return this.v;
     }

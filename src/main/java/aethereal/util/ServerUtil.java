@@ -2,7 +2,6 @@ package aethereal.util;
 
 
 import aethereal.core.Interface;
-import lombok.Generated;
 import net.minecraft.client.gui.hud.ClientBossBar;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.LivingEntity;
@@ -24,7 +23,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ServerUtil implements Interface {
-    @Generated
     private ServerUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
@@ -81,7 +79,6 @@ public class ServerUtil implements Interface {
     }
 
     public static final class d {
-        @Generated
         private d() {
             throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
         }
@@ -121,7 +118,6 @@ public class ServerUtil implements Interface {
     }
 
     public static final class a {
-        @Generated
         private a() {
             throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
         }
@@ -226,7 +222,6 @@ public class ServerUtil implements Interface {
     }
 
     public static final class c {
-        @Generated
         private c() {
             throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
         }
@@ -237,7 +232,6 @@ public class ServerUtil implements Interface {
     }
 
     public static final class b {
-        @Generated
         private b() {
             throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
         }

@@ -7,7 +7,6 @@ import aethereal.lib.javassist.OpCode;
 import aethereal.lib.log4j.LogManager;
 import aethereal.lib.log4j.Logger;
 import com.google.gson.JsonObject;
-import lombok.Generated;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -21,7 +20,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class UnixConnection implements aethereal.lib.jsoup.Connection {
 
-    @Generated
     private static final Logger a = LogManager.b(UnixConnection.class);
     private final ReentrantLock b = new ReentrantLock();
     private final SocketChannel c = SocketChannel.open(StandardProtocolFamily.UNIX);

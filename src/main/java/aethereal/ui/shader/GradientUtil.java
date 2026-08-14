@@ -2,7 +2,6 @@ package aethereal.ui.shader;
 
 
 import aethereal.render.ColorUtil;
-import lombok.Generated;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
@@ -10,7 +9,6 @@ import net.minecraft.text.Text;
 import java.awt.*;
 
 public class GradientUtil {
-    @Generated
     private GradientUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }

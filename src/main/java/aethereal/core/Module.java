@@ -6,7 +6,6 @@ import aethereal.render.ColorUtil;
 import aethereal.setting.Setting;
 import aethereal.ui.element.Element_2;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import lombok.Generated;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,82 +25,66 @@ public class Module implements Interface {
     private boolean m;
     private int n = -1;
 
-    @Generated
     public void b(boolean bind) {
         this.l = bind;
     }
 
-    @Generated
     public void c(boolean extended) {
         this.m = extended;
     }
 
-    @Generated
     public void a(int key) {
         this.n = key;
     }
 
-    @Generated
     public List<Element_2<?>> d() {
         return this.b;
     }
 
-    @Generated
     public List<Setting<?>> e() {
         return this.c;
     }
 
-    @Generated
     public AnimationUtil f() {
         return this.d;
     }
 
-    @Generated
     public AnimationUtil g() {
         return this.e;
     }
 
-    @Generated
     public AnimationUtil h() {
         return this.f;
     }
 
-    @Generated
     public AnimationUtil i() {
         return this.g;
     }
 
-    @Generated
     public String j() {
         return this.h;
     }
 
-    @Generated
     public String k() {
         return this.i;
     }
 
-    @Generated
     public Category l() {
         return this.j;
     }
 
-    @Generated
     public boolean m() {
         return this.k;
     }
 
-    @Generated
     public boolean n() {
         return this.l;
     }
 
-    @Generated
     public boolean o() {
         return this.m;
     }
 
-    @Generated
     public int p() {
         return this.n;
     }

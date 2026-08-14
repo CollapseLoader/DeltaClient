@@ -5,7 +5,6 @@ import aethereal.core.EventTarget;
 import aethereal.core.Interface;
 import aethereal.event.LookEvent;
 import aethereal.event.RotationEvent;
-import lombok.Generated;
 import net.minecraft.util.math.MathHelper;
 
 public class Look implements Interface {
@@ -17,22 +16,18 @@ public class Look implements Interface {
         EventManager.a(this);
     }
 
-    @Generated
     public static float b() {
         return c;
     }
 
-    @Generated
     public static float c() {
         return d;
     }
 
-    @Generated
     public static void a(float freeYaw) {
         c = freeYaw;
     }
 
-    @Generated
     public static void b(float freePitch) {
         d = freePitch;
     }
@@ -46,7 +41,6 @@ public class Look implements Interface {
         }
     }
 
-    @Generated
     public boolean a() {
         return this.b;
     }

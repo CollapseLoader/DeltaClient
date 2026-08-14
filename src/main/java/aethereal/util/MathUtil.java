@@ -1,12 +1,10 @@
 package aethereal.util;
 
 import aethereal.core.Interface;
-import lombok.Generated;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 
 public class MathUtil implements Interface {
-    @Generated
     private MathUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }

@@ -7,7 +7,6 @@ import aethereal.event.PacketEvent;
 import aethereal.event.TickEvent;
 import aethereal.util.ChatUtil;
 import aethereal.util.CounterUtil;
-import lombok.Generated;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.sound.SoundEvents;
@@ -18,12 +17,10 @@ public class AutoFish extends Module implements Interface {
     private final CounterUtil b = new CounterUtil();
     private boolean c;
 
-    @Generated
     public CounterUtil q() {
         return this.b;
     }
 
-    @Generated
     public boolean r() {
         return this.c;
     }

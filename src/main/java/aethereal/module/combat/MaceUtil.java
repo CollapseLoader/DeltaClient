@@ -1,7 +1,6 @@
 package aethereal.module.combat;
 
 import aethereal.core.Interface;
-import lombok.Generated;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class MaceUtil implements Interface {
-    @Generated
     private MaceUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }

@@ -6,7 +6,6 @@ import aethereal.lib.log4j.Logger_2;
 import aethereal.lib.websocket.ServerHandshake;
 import aethereal.lib.websocket.WebSocketClient;
 import aethereal.network.PacketSecurity;
-import lombok.Generated;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -24,7 +23,6 @@ import java.util.concurrent.ScheduledExecutorService;
 @Compile
 public class Client extends WebSocketClient {
 
-    @Generated
     private static Logger_2 b;
 
     static {
@@ -159,7 +157,6 @@ public class Client extends WebSocketClient {
         }
     }
 
-    @Generated
     public PacketSecurity B() {
         return this.e;
     }

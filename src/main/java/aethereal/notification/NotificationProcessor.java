@@ -7,7 +7,6 @@ import aethereal.core.Interface;
 import aethereal.event.DrawEvent;
 import aethereal.event.TickEvent;
 import aethereal.render.EasingList;
-import lombok.Generated;
 import net.minecraft.client.gui.screen.ChatScreen;
 
 import java.util.ArrayList;
@@ -22,12 +21,10 @@ public class NotificationProcessor extends BaseProcessor implements Interface {
     public void setup() {
     }
 
-    @Generated
     public Notification a() {
         return this.b;
     }
 
-    @Generated
     public List<Notification> b() {
         return this.c;
     }

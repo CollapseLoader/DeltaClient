@@ -2,7 +2,6 @@ package aethereal.setting;
 
 import aethereal.ui.element.Element_2;
 import aethereal.ui.element.StringElement;
-import lombok.Generated;
 
 public class StringSetting extends Setting<String> {
     private final boolean a;
@@ -17,7 +16,6 @@ public class StringSetting extends Setting<String> {
         this.a = numbers;
     }
 
-    @Generated
     public boolean k() {
         return this.a;
     }

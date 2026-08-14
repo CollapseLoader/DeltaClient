@@ -9,7 +9,6 @@ import aethereal.lib.log4j.LogManager;
 import aethereal.lib.log4j.Logger;
 import aethereal.util.JsonUtils;
 import com.google.gson.JsonObject;
-import lombok.Generated;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -19,7 +18,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class CommandExecutor {
 
-    @Generated
     private static final Logger a = LogManager.b(CommandExecutor.class);
     private final ConcurrentHashMap<String, CompletableFuture<JsonObject>> b = new ConcurrentHashMap<>();
     private final AtomicLong c = new AtomicLong();

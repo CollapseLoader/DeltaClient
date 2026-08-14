@@ -6,7 +6,6 @@ import aethereal.event.InputEvent;
 import aethereal.event.PacketEvent;
 import aethereal.event.TickEvent;
 import aethereal.setting.BooleanSetting;
-import lombok.Generated;
 import net.minecraft.item.Items;
 import net.minecraft.network.packet.c2s.play.PlayerInteractItemC2SPacket;
 
@@ -19,7 +18,6 @@ public class WindHop extends Module implements Interface {
         a(this.b);
     }
 
-    @Generated
     public BooleanSetting q() {
         return this.b;
     }

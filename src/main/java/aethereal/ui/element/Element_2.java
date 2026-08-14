@@ -7,7 +7,6 @@ import aethereal.render.AnimationUtil;
 import aethereal.render.ColorUtil;
 import aethereal.render.Font;
 import aethereal.setting.Setting;
-import lombok.Generated;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import org.joml.Vector4f;
@@ -53,32 +52,26 @@ public class Element_2<SettingType extends Setting<?>> {
         return false;
     }
 
-    @Generated
     public void a(float scroll) {
         this.c = scroll;
     }
 
-    @Generated
     public AnimationUtil b() {
         return this.d;
     }
 
-    @Generated
     public AnimationUtil c() {
         return this.e;
     }
 
-    @Generated
     public Vector4f d() {
         return this.a;
     }
 
-    @Generated
     public SettingType e() {
         return this.b;
     }
 
-    @Generated
     public float f() {
         return this.c;
     }

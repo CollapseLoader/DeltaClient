@@ -4,7 +4,6 @@ import aethereal.core.Category;
 import aethereal.core.Delta;
 import aethereal.core.Module;
 import aethereal.core.ModuleRegister;
-import lombok.Generated;
 import net.minecraft.block.*;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.hit.BlockHitResult;
@@ -21,7 +20,6 @@ import java.util.Set;
 public class OpenWalls extends Module {
     private final Set<Class<?>> b = Set.of(new Class[]{AbstractChestBlock.class, FurnaceBlock.class, CraftingTableBlock.class, SpawnerBlock.class, ShulkerBoxBlock.class, AnvilBlock.class, BeaconBlock.class, BlastFurnaceBlock.class, BrewingStandBlock.class, CampfireBlock.class, CartographyTableBlock.class, GrindstoneBlock.class, LecternBlock.class, LoomBlock.class, SmokerBlock.class, StonecutterBlock.class, BarrelBlock.class});
 
-    @Generated
     public Set<Class<?>> q() {
         return this.b;
     }

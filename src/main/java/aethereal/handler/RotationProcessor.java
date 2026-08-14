@@ -12,7 +12,6 @@ import aethereal.util.Look;
 import aethereal.util.MathUtil;
 import aethereal.util.MoveUtil;
 import aethereal.util.Rotation;
-import lombok.Generated;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
@@ -34,12 +33,10 @@ public class RotationProcessor extends BaseProcessor implements Interface {
 
     private final Look b = new Look();
 
-    @Generated
     public static a b() {
         return c;
     }
 
-    @Generated
     public static int c() {
         return i;
     }
@@ -113,7 +110,6 @@ public class RotationProcessor extends BaseProcessor implements Interface {
     public void setup() {
     }
 
-    @Generated
     public Look a() {
         return this.b;
     }

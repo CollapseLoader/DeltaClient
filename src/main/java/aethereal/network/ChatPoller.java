@@ -10,7 +10,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import lombok.Generated;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,12 +24,10 @@ public class ChatPoller {
         this.b = Objects.requireNonNull(funPay);
     }
 
-    @Generated
     public List<ChatModel> b() {
         return this.c;
     }
 
-    @Generated
     public void a(List<ChatModel> chatModels) {
         this.c = chatModels;
     }

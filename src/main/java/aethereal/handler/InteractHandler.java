@@ -7,7 +7,6 @@ import aethereal.event.ClickEvent;
 import aethereal.event.HotbarEvent;
 import aethereal.event.TickEvent;
 import aethereal.util.ChatUtil;
-import lombok.Generated;
 import net.minecraft.util.Hand;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ import java.util.List;
 public class InteractHandler extends BaseHandler implements Interface {
     private final List<a> b = new ArrayList();
 
-    @Generated
     public List<a> b() {
         return this.b;
     }
@@ -90,32 +88,26 @@ public class InteractHandler extends BaseHandler implements Interface {
             this.b = eatSlot;
         }
 
-        @Generated
         public void a(boolean returned) {
             this.c = returned;
         }
 
-        @Generated
         public void a(int ticks) {
             this.d = ticks;
         }
 
-        @Generated
         public int a() {
             return this.a;
         }
 
-        @Generated
         public int b() {
             return this.b;
         }
 
-        @Generated
         public boolean c() {
             return this.c;
         }
 
-        @Generated
         public int d() {
             return this.d;
         }

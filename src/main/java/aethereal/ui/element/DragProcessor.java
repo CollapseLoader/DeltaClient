@@ -15,7 +15,6 @@ import aethereal.render.EasingList;
 import aethereal.setting.Setting;
 import aethereal.util.CursorUtil;
 import aethereal.util.MathUtil;
-import lombok.Generated;
 import net.minecraft.client.gui.screen.ChatScreen;
 
 import java.util.ArrayList;
@@ -94,17 +93,14 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
         return jSONArray.E(2);
     }
 
-    @Generated
     public b a() {
         return this.e;
     }
 
-    @Generated
     public b f() {
         return this.f;
     }
 
-    @Generated
     public DragInfo g() {
         return this.g;
     }
@@ -287,17 +283,14 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
         b() {
         }
 
-        @Generated
         public AnimationUtil b() {
             return this.a;
         }
 
-        @Generated
         public Float c() {
             return this.b;
         }
 
-        @Generated
         public boolean d() {
             return this.c;
         }

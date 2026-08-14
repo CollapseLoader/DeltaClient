@@ -4,7 +4,6 @@ import aethereal.core.*;
 import aethereal.core.Module;
 import aethereal.setting.BindSetting;
 import aethereal.util.ChatUtil;
-import lombok.Generated;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.hit.EntityHitResult;
@@ -38,12 +37,10 @@ public class ClickAction extends Module implements Interface {
         a(this.b, this.c);
     }
 
-    @Generated
     public BindSetting q() {
         return this.b;
     }
 
-    @Generated
     public BindSetting r() {
         return this.c;
     }

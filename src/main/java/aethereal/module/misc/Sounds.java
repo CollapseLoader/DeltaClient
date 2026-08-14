@@ -5,7 +5,6 @@ import aethereal.core.Module;
 import aethereal.core.ModuleRegister;
 import aethereal.setting.ModeSetting;
 import aethereal.setting.SliderSetting;
-import lombok.Generated;
 import net.minecraft.util.Identifier;
 
 import javax.sound.sampled.*;
@@ -29,7 +28,6 @@ public class Sounds extends Module {
         a(this.b, this.c);
     }
 
-    @Generated
     public SliderSetting q() {
         return this.c;
     }

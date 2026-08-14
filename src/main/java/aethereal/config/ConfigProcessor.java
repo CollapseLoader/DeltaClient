@@ -2,7 +2,6 @@ package aethereal.config;
 
 
 import aethereal.api.Compile;
-import lombok.Generated;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -49,17 +48,14 @@ public abstract class ConfigProcessor<T> extends BaseProcessor {
     @Compile
     protected abstract String a(List<T> list) throws Exception;
 
-    @Generated
     public File c() {
         return this.b;
     }
 
-    @Generated
     public File d() {
         return this.c;
     }
 
-    @Generated
     public List<T> e() {
         return this.d;
     }

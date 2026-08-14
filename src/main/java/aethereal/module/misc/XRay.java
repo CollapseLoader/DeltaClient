@@ -8,7 +8,6 @@ import aethereal.event.TickEvent;
 import aethereal.render.ColorUtil;
 import aethereal.util.ChatUtil;
 import aethereal.util.CounterUtil;
-import lombok.Generated;
 import net.minecraft.block.Blocks;
 import net.minecraft.network.packet.s2c.play.ChunkDeltaUpdateS2CPacket;
 import net.minecraft.util.math.BlockPos;
@@ -23,17 +22,14 @@ public class XRay extends Module implements Interface {
     private final CounterUtil c = new CounterUtil();
     private boolean d;
 
-    @Generated
     public List<BlockPos> s() {
         return this.b;
     }
 
-    @Generated
     public CounterUtil q() {
         return this.c;
     }
 
-    @Generated
     public boolean r() {
         return this.d;
     }
