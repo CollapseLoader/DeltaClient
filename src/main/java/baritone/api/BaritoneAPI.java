@@ -1,12 +1,14 @@
 package baritone.api;
 
 import baritone.api.pathing.goals.Goal;
-import lombok.Getter;
 import lombok.Setter;
 
 public final class BaritoneAPI {
-    @Getter
     private static final BaritoneSettings settings = new BaritoneSettings();
+
+    public static BaritoneSettings getSettings() {
+        return settings;
+    }
     private static final IBaritone noop = new NoopBaritone();
     @Setter
     private static IBaritoneProvider provider;
