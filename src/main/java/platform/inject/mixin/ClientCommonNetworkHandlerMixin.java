@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ClientCommonNetworkHandlerMixin {
     @Inject(method = {"onResourcePackSend"}, at = {@At("HEAD")}, cancellable = true)
     private void onResourcePackSend(ResourcePackSendS2CPacket packet, CallbackInfo ci) {
-        if (Delta.h().d().t().v().m()) {
+        if (Delta.getInstance().getModuleProcessor().t().v().m()) {
             ClientCommonNetworkHandler self = (ClientCommonNetworkHandler) (Object) this;
             self.sendPacket(new ResourcePackStatusC2SPacket(packet.id(), ResourcePackStatusC2SPacket.Status.DECLINED));
             ci.cancel();

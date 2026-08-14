@@ -1,8 +1,6 @@
 package aethereal.config;
 
-
 import aethereal.render.ColorUtil;
-
 
 public class ThemeConstructor {
     private String name;
@@ -63,15 +61,7 @@ public class ThemeConstructor {
     }
 
     public int toIntColor() {
-        return ColorUtil.a(this.red, this.green, this.blue, this.alpha);
-    }
-
-    /**
-     * @deprecated Use {@link #toIntColor()}
-     */
-    @Deprecated
-    public int a() {
-        return toIntColor();
+        return ColorUtil.convertToARGB(this.red, this.green, this.blue, this.alpha);
     }
 
     public void fromIntColor(int color) {

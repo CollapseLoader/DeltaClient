@@ -44,7 +44,7 @@ public abstract class ChatInputSuggestorMixin {
     private void onRefresh(CallbackInfo ci) {
         try {
             String text = this.textField.getText();
-            CommandProcessor commandProcessor = Delta.h().d().u();
+            CommandProcessor commandProcessor = Delta.getInstance().getModuleProcessor().u();
             String prefix = commandProcessor.i();
             if (text.startsWith(prefix)) {
                 int cursor = this.textField.getCursor();

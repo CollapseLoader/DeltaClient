@@ -52,12 +52,12 @@ public class TargetWidget extends Widget {
             float headSize = j().g() / 1.35f;
             float headY = y + ((j().g() - headSize) / 2.0f);
             if (this.j instanceof AbstractClientPlayerEntity player) {
-                event.d().a(event.h(), x + 5.0f, headY, headSize, headSize, 2.0f, ColorUtil.a(-1, a()), 0.125f, 0.125f, 0.125f, 0.125f, Interface.mc.getTextureManager().getTexture(player.getSkinTextures().texture()).getGlId());
+                event.d().a(event.h(), x + 5.0f, headY, headSize, headSize, 2.0f, ColorUtil.applyAlphaToColor(-1, a()), 0.125f, 0.125f, 0.125f, 0.125f, Interface.mc.getTextureManager().getTexture(player.getSkinTextures().texture()).getGlId());
             } else if (this.j != null) {
-                Fonts.a.a(event.h(), "B", x + 6.5f + ((headSize - 24.0f) / 2.0f), headY + ((headSize - 24.0f) / 2.0f), 24.0f, ColorUtil.a(-1, a()));
+                Fonts.a.a(event.h(), "B", x + 6.5f + ((headSize - 24.0f) / 2.0f), headY + ((headSize - 24.0f) / 2.0f), 24.0f, ColorUtil.applyAlphaToColor(-1, a()));
             }
             float textX = x + 5.0f + headSize + 5.0f;
-            StreamerMode streamerMode = Delta.h().d().t().aE();
+            StreamerMode streamerMode = Delta.getInstance().getModuleProcessor().t().aE();
             if (streamerMode.m() && streamerMode.r().c().booleanValue()) {
                 string = streamerMode.a(this.j.getName().getString());
             } else {
@@ -65,9 +65,9 @@ public class TargetWidget extends Widget {
             }
             String name = string;
             if (name.length() > 12) {
-                Fonts.e.c(event.h(), name, textX, headY, 7.5f, ColorUtil.a(-1, a()), Fonts.e.a(name.substring(0, 12), 7.5f));
+                Fonts.e.c(event.h(), name, textX, headY, 7.5f, ColorUtil.applyAlphaToColor(-1, a()), Fonts.e.a(name.substring(0, 12), 7.5f));
             } else {
-                Fonts.e.a(event.h(), name, textX, headY, 7.5f, ColorUtil.a(-1, a()));
+                Fonts.e.a(event.h(), name, textX, headY, 7.5f, ColorUtil.applyAlphaToColor(-1, a()));
             }
             if (this.f.c().booleanValue()) {
                 int i = 0;
@@ -78,7 +78,7 @@ public class TargetWidget extends Widget {
                     }
                 }
             }
-            int primary = Delta.h().d().o().a(ThemeInfo.PRIMARY).a();
+            int primary = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor();
             String hpValue = String.valueOf((int) ServerUtil.a.a(this.j));
             if (this.k.isEmpty()) {
                 this.k = hpValue;
@@ -91,9 +91,9 @@ public class TargetWidget extends Widget {
             }
             float targetHP = MathUtil.b(MathUtil.b(ServerUtil.a.a(this.j), 0.0f, this.j.getMaxHealth()) / this.j.getMaxHealth(), 0.0f, 1.0f);
             float lineHP = this.h.a(targetHP, targetHP, 0.5f);
-            float alpha = Delta.h().d().o().a(ThemeInfo.BACKGROUND_HUD).b() * a();
-            event.d().a(event.h(), textX, headY + 12.5f, 54.0f, 3.0f, 0.5f, ColorUtil.a(ColorUtil.b(primary, 0.3f), a()));
-            event.d().a(event.h(), textX, headY + 12.5f, 54.0f * lineHP, 3.0f, 0.5f, ColorUtil.a(primary, alpha));
+            float alpha = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).b() * a();
+            event.d().a(event.h(), textX, headY + 12.5f, 54.0f, 3.0f, 0.5f, ColorUtil.applyAlphaToColor(ColorUtil.b(primary, 0.3f), a()));
+            event.d().a(event.h(), textX, headY + 12.5f, 54.0f * lineHP, 3.0f, 0.5f, ColorUtil.applyAlphaToColor(primary, alpha));
         }
         super.a(event);
     }
@@ -108,11 +108,11 @@ public class TargetWidget extends Widget {
             String value = String.valueOf(digit);
             cursor -= Fonts.e.a(value, size);
             if (digit == old || progress >= 1.0f) {
-                Fonts.e.a(event.h(), value, cursor, y, size, ColorUtil.a(color, a()));
+                Fonts.e.a(event.h(), value, cursor, y, size, ColorUtil.applyAlphaToColor(color, a()));
             } else {
                 ScissorUtil.a(event.h(), cursor - 0.5f, y, Fonts.e.a(value, size) + 1.0f, height + 1.0f);
-                Fonts.e.a(event.h(), String.valueOf(old), cursor, y - (height * progress), size, ColorUtil.a(color, (1.0f - progress) * a()));
-                Fonts.e.a(event.h(), value, cursor, y + (height * (1.0f - progress)), size, ColorUtil.a(color, progress * a()));
+                Fonts.e.a(event.h(), String.valueOf(old), cursor, y - (height * progress), size, ColorUtil.applyAlphaToColor(color, (1.0f - progress) * a()));
+                Fonts.e.a(event.h(), value, cursor, y + (height * (1.0f - progress)), size, ColorUtil.applyAlphaToColor(color, progress * a()));
                 ScissorUtil.a(event.h());
             }
             i++;
@@ -123,7 +123,7 @@ public class TargetWidget extends Widget {
     public void a(GlobalEvent event) {
         LivingEntity class_1309Var;
         LivingEntity class_1309Var2;
-        LivingEntity targets = Delta.h().d().t().B().s() != null ? Delta.h().d().t().B().s() : Delta.h().d().t().X().s();
+        LivingEntity targets = Delta.getInstance().getModuleProcessor().t().B().s() != null ? Delta.getInstance().getModuleProcessor().t().B().s() : Delta.getInstance().getModuleProcessor().t().X().s();
         if (this.g.c().booleanValue()) {
             EntityHitResult class_3966Var = Interface.mc.crosshairTarget instanceof EntityHitResult ? (EntityHitResult) Interface.mc.crosshairTarget : null;
             if (class_3966Var instanceof EntityHitResult) {

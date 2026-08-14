@@ -10,7 +10,7 @@ import net.minecraft.item.Items;
 import java.util.List;
 
 @ModuleRegister(name = "Item Helper", description = "Перемещает нужный предмет и возвращает его обратно по нажатию клавиши", category = Category.Combat)
-public class ItemHelper extends Module implements Interface {
+public class ItemHelper extends Module {
     public ItemHelper() {
         List.of(new a(this, "Зачарованное яблоко", Items.ENCHANTED_GOLDEN_APPLE), new a(this, "Золотое яблоко", Items.GOLDEN_APPLE), new a(this, "Плод хоруса", Items.CHORUS_FRUIT), new a(this, "Арбалет", Items.CROSSBOW)).forEach(item -> {
             a(item.b());
@@ -59,14 +59,14 @@ public class ItemHelper extends Module implements Interface {
                 if (from != -1 && from != target) {
                     this.d = from;
                     this.c = target;
-                    Delta.h().d().v().a().a(from, target, 1);
+                    Delta.getInstance().getModuleProcessor().v().a().a(from, target, 1);
                 }
             }
         }
 
         private void g() {
             if (this.d != -1) {
-                Delta.h().d().v().a().a(this.d, this.c, 1);
+                Delta.getInstance().getModuleProcessor().v().a().a(this.d, this.c, 1);
                 this.d = -1;
                 this.c = -1;
             }

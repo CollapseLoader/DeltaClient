@@ -1,6 +1,6 @@
 package aethereal.autobuy;
 
-import aethereal.api.Compile;
+
 import aethereal.config.*;
 import aethereal.core.InterfaceC0020Opcode;
 import aethereal.lib.javassist.TokenId;
@@ -20,7 +20,7 @@ public class CollectorProcessor extends ConfigProcessor<Collector_2.b> {
     }
 
     @Override
-    @Compile
+    
     protected List<Collector_2.b> a(String str) {
         if (this.d.isEmpty()) {
             this.d.addAll(a());
@@ -30,11 +30,11 @@ public class CollectorProcessor extends ConfigProcessor<Collector_2.b> {
             final JSONObject jSONObjectJ = jSONArray.j(i);
             this.d.stream().filter(obj -> obj.j().equals(jSONObjectJ.l("name"))).findFirst().ifPresent(obj -> this.b(jSONObjectJ, obj));
         }
-        return new ArrayList(this.d);
+        return new ArrayList<>(this.d);
     }
 
     @Override
-    @Compile
+    
     protected String a(List<Collector_2.b> data) {
         JSONArray jSONArray = new JSONArray();
         for (Collector_2.b bVar : data) {
@@ -59,7 +59,7 @@ public class CollectorProcessor extends ConfigProcessor<Collector_2.b> {
         return jSONArray.E(2);
     }
 
-    @Compile
+    
     public void b(JSONObject obj, Collector_2.b info) {
         if (obj.m("active")) {
             info.a(obj.b("active"));
@@ -77,7 +77,7 @@ public class CollectorProcessor extends ConfigProcessor<Collector_2.b> {
         }
     }
 
-    @Compile
+    
     private void a(JSONObject obj, String key, List<? extends Condition> conditions) {
         if (conditions.isEmpty()) {
             return;
@@ -98,7 +98,7 @@ public class CollectorProcessor extends ConfigProcessor<Collector_2.b> {
         obj.c(key, jSONObject);
     }
 
-    @Compile
+    
     private void b(JSONObject obj, String key, List<? extends Condition> conditions) {
         if (obj.m(key)) {
             JSONObject jSONObjectJ = obj.j(key);

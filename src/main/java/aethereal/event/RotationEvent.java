@@ -1,10 +1,10 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
 
 
-public class RotationEvent extends Event implements IEvent {
+
+public class RotationEvent extends Event {
     public float a;
     public float b;
 

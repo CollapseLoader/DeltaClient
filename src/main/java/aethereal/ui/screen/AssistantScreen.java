@@ -131,7 +131,7 @@ public class AssistantScreen extends Screen implements Interface {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         this.b.a(context, mouseX, mouseY, new Vector2f(this.width / 2.0f, this.height / 2.0f));
         if (this.g != -1 && this.b.a(mouseX, mouseY, new Vector2f(this.width / 2.0f, this.height / 2.0f)) != this.g) {
-            Delta.h().d().j().a(context, this.b.c(this.g), mouseX - 8, mouseY - 8, TokenId.a_, 1.0f, 1.0f, false);
+            Delta.getInstance().getModuleProcessor().j().a(context, this.b.c(this.g), mouseX - 8, mouseY - 8, TokenId.a_, 1.0f, 1.0f, false);
         }
         if (this.f != -1 && this.d != null) {
             a(context, mouseX, mouseY);
@@ -140,20 +140,20 @@ public class AssistantScreen extends Screen implements Interface {
 
     private void a(DrawContext context, int mouseX, int mouseY) {
         MatrixStack matrices = context.getMatrices();
-        Draw2DProcessor draw = Delta.h().d().i();
-        Draw3DProcessor draw3d = Delta.h().d().j();
-        ThemeProcessor theme = Delta.h().d().o();
-        draw.a(matrices, this.d.getX(), this.d.getY(), this.e.getX(), this.e.getY(), 8.0f, theme.a(ThemeInfo.BACKGROUND_GUI).a(), 1.0f, theme.a(ThemeInfo.BACKGROUND_GUI).a(), 11.0f);
-        draw.a(matrices, this.d.getX(), this.d.getY(), this.e.getX(), this.e.getY(), 8.0f, 1.0f, ColorUtil.a(255, 255, 255, 15));
+        Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
+        Draw3DProcessor draw3d = Delta.getInstance().getModuleProcessor().j();
+        ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
+        draw.a(matrices, this.d.getX(), this.d.getY(), this.e.getX(), this.e.getY(), 8.0f, theme.a(ThemeInfo.BACKGROUND_GUI).toIntColor(), 1.0f, theme.a(ThemeInfo.BACKGROUND_GUI).toIntColor(), 11.0f);
+        draw.a(matrices, this.d.getX(), this.d.getY(), this.e.getX(), this.e.getY(), 8.0f, 1.0f, ColorUtil.convertToARGB(255, 255, 255, 15));
         for (int index = 0; index < this.c.size(); index++) {
             AutoBuyEntry potion = this.c.get(index);
             float rowY = this.d.getY() + (index * 18.0f);
             boolean hovered = MathUtil.a(mouseX, mouseY, this.d.getX(), rowY, this.e.getX(), 18.0f);
             if (hovered) {
-                draw.a(matrices, this.d.getX() + 2.0f, rowY + 1.0f, this.e.getX() - 4.0f, 16.0f, 6.0f, ColorUtil.a(255, 255, 255, 12));
+                draw.a(matrices, this.d.getX() + 2.0f, rowY + 1.0f, this.e.getX() - 4.0f, 16.0f, 6.0f, ColorUtil.convertToARGB(255, 255, 255, 12));
             }
             draw3d.a(context, potion.a(), this.d.getX() + 5.0f, (rowY + 9.0f) - 6.0f, 0, 1.0f, 0.75f, false);
-            Fonts.e.a(matrices, potion.b(), this.d.getX() + 5.0f + 12.0f + 4.0f, (rowY + 9.0f) - (Fonts.e.a(6.5f) / 2.0f), 6.5f, hovered ? ColorUtil.a(255, 255, 255, 220) : ColorUtil.a(255, 255, 255, InterfaceC0020Opcode.ap));
+            Fonts.e.a(matrices, potion.b(), this.d.getX() + 5.0f + 12.0f + 4.0f, (rowY + 9.0f) - (Fonts.e.a(6.5f) / 2.0f), 6.5f, hovered ? ColorUtil.convertToARGB(255, 255, 255, 220) : ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.ap));
         }
     }
 
@@ -164,7 +164,7 @@ public class AssistantScreen extends Screen implements Interface {
                 this.d = d(slot);
                 this.e = d();
             } else {
-                Delta.h().d().v().b().a(this.b.c(slot));
+                Delta.getInstance().getModuleProcessor().v().b().a(this.b.c(slot));
                 mc.player.closeScreen();
             }
         };

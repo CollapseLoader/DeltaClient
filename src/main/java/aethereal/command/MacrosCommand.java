@@ -16,7 +16,7 @@ import java.util.Objects;
 public class MacrosCommand extends BaseCommand {
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
-        MacrosProcessor processor = Delta.h().d().d();
+        MacrosProcessor processor = Delta.getInstance().getModuleProcessor().d();
         LiteralArgumentBuilder literalArgumentBuilderThen = builder.then(a("add").executes(context -> {
             ChatUtil.sendMessage("Использование: .macros add <клавиша> <команда>");
             return 1;

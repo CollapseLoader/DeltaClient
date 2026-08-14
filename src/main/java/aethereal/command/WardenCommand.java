@@ -11,7 +11,7 @@ import java.util.List;
 public class WardenCommand extends BaseCommand {
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
-        List<Integer> anarchies = Delta.h().d().t().aU().getAnarchyList();
+        List<Integer> anarchies = Delta.getInstance().getModuleProcessor().t().aU().getAnarchyList();
         builder.then(a("add").executes(context -> {
             ChatUtil.sendMessage("Использование: .warden add <анархия>");
             return 1;

@@ -1,10 +1,10 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
 
 
-public class PushEvent extends Event implements IEvent {
+
+public class PushEvent extends Event {
     private final a a;
 
     public PushEvent(a type) {

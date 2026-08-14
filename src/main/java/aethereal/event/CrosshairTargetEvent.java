@@ -1,11 +1,11 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 
 import net.minecraft.util.hit.HitResult;
 
-public class CrosshairTargetEvent extends Event implements IEvent {
+public class CrosshairTargetEvent extends Event {
     private final float a;
     private HitResult b;
 

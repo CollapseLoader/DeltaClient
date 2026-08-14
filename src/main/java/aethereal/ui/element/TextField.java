@@ -101,7 +101,7 @@ public class TextField {
 
     public void a(DrawContext context, double mouseX, double mouseY, float delta, float alpha) {
         MatrixStack matrices = context.getMatrices();
-        Draw2DProcessor draw = Delta.h().d().i();
+        Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
         float lineHeight = this.a.d.d().lineHeight() * this.a.e;
         float textX = this.c.getX() + this.a.f;
         float textY = this.c.getY() + ((this.d.getY() - lineHeight) / 2.0f) + this.a.g;
@@ -114,7 +114,7 @@ public class TextField {
         }
         boolean placeholding = !this.i && this.f.isEmpty() && this.a.h;
         String content = placeholding ? this.e : this.f.toString();
-        int color = ColorUtil.a(Delta.h().d().o().a(placeholding ? ThemeInfo.TEXT_DISABLED : ThemeInfo.TEXT).a(), alpha);
+        int color = ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(placeholding ? ThemeInfo.TEXT_DISABLED : ThemeInfo.TEXT).toIntColor(), alpha);
         this.a.a(draw, matrices, this.c.getX(), this.c.getY(), this.d.getX(), this.d.getY(), alpha);
         a(context, textX, textY, lineHeight, visibleWidth, alpha);
         b(context, textX, textY, lineHeight, visibleWidth, alpha);
@@ -128,8 +128,8 @@ public class TextField {
             float start = Math.max((textX + a(from)) - this.k, textX);
             float end = Math.min((textX + a(to)) - this.k, textX + visibleWidth);
             if (start < end) {
-                Draw2DProcessor draw = Delta.h().d().i();
-                draw.a(context, start, textY, end - start, lineHeight, ColorUtil.a(Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), 0.47f * alpha));
+                Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
+                draw.a(context, start, textY, end - start, lineHeight, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), 0.47f * alpha));
             }
         }
     }
@@ -141,8 +141,8 @@ public class TextField {
                 float blink = (float) ((Math.sin(System.currentTimeMillis() / 150.0d) * 0.5d) + 0.5d);
                 float caretHeight = this.a.e / 1.01f;
                 float caretY = textY + ((lineHeight - caretHeight) / 2.0f);
-                Draw2DProcessor draw = Delta.h().d().i();
-                draw.a(context, caretX, caretY, 0.5f, caretHeight, ColorUtil.a(Delta.h().d().o().a(ThemeInfo.TEXT).a(), blink * alpha));
+                Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
+                draw.a(context, caretX, caretY, 0.5f, caretHeight, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), blink * alpha));
             }
         }
     }
@@ -324,24 +324,24 @@ public class TextField {
         ALT_MANAGER(Fonts.b, 7.0f, 6.0f, -0.5f, true) {
             @Override
             public void a(Draw2DProcessor draw, MatrixStack matrices, float x, float y, float width, float height, float alpha) {
-                draw.a(matrices, x, y, width + 2.0f, height, new Vector4f(5.0f, 1.0f, 5.0f, 1.0f), ColorUtil.a(16777215, 0.039215688f * alpha));
+                draw.a(matrices, x, y, width + 2.0f, height, new Vector4f(5.0f, 1.0f, 5.0f, 1.0f), ColorUtil.applyAlphaToColor(16777215, 0.039215688f * alpha));
             }
         },
         GUI(Fonts.c, 7.0f, 6.0f, 0.0f, true) {
             @Override
             public void a(Draw2DProcessor draw, MatrixStack matrices, float x, float y, float width, float height, float alpha) {
-                ThemeProcessor theme = Delta.h().d().o();
-                int background = ColorUtil.a(ColorUtil.a(theme.a(ThemeInfo.BACKGROUND_GUI).a(), theme.a(ThemeInfo.PRIMARY).a(), 0.05f), 0.78431374f * alpha);
+                ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
+                int background = ColorUtil.applyAlphaToColor(ColorUtil.lerpColor(theme.a(ThemeInfo.BACKGROUND_GUI).toIntColor(), theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.05f), 0.78431374f * alpha);
                 draw.a(matrices, x, y, width, height, 6.0f, background, alpha, background, 2.0f);
-                draw.a(matrices, x, y, width, height, 6.0f, 0.5f, ColorUtil.a(theme.a(ThemeInfo.OUTLINE_MEDIUM).a(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * alpha));
+                draw.a(matrices, x, y, width, height, 6.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * alpha));
             }
         },
         GUI_SETTING(Fonts.c, 6.5f, 4.0f, 0.0f, true) {
             @Override
             public void a(Draw2DProcessor draw, MatrixStack matrices, float x, float y, float width, float height, float alpha) {
-                ThemeProcessor theme = Delta.h().d().o();
-                draw.a(matrices, x, y, width, height, 2.0f, ColorUtil.a(theme.a(ThemeInfo.PRIMARY).a(), 0.011764706f * alpha));
-                draw.a(matrices, x, y, width, height, 2.0f, 0.5f, ColorUtil.a(theme.a(ThemeInfo.OUTLINE_SMALL).a(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * alpha));
+                ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
+                draw.a(matrices, x, y, width, height, 2.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.011764706f * alpha));
+                draw.a(matrices, x, y, width, height, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * alpha));
             }
         };
 

@@ -24,7 +24,7 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 
 @ModuleRegister(name = "Server Joiner", description = "Автоматически подключается к указанному серверу", category = Category.Misc)
-public class ServerJoiner extends Module implements Interface {
+public class ServerJoiner extends Module {
     private final ModeSetting b = new ModeSetting("Выберите сервер", "SpookyTime", "SpookyTime", "ReallyWorld");
     private final SliderSetting c = new SliderSetting("Укажите номер грифа (1-54)", 1.0f, 1.0f, 54.0f, 1.0f).a(() -> {
         return Boolean.valueOf(this.b.l("ReallyWorld"));

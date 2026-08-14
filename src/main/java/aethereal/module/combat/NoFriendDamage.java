@@ -8,6 +8,6 @@ import aethereal.event.AttackEvent;
 public class NoFriendDamage extends Module {
     @EventTarget
     public void a(AttackEvent event) {
-        event.a(Delta.h().d().e().d(event.b().getName().getString()));
+        event.a(Delta.getInstance().getModuleProcessor().e().d(event.b().getName().getString()));
     }
 }

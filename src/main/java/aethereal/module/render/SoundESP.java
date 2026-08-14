@@ -23,7 +23,7 @@ import java.util.List;
 @ModuleRegister(name = "Sound ESP", description = "Отображает место, где был воспроизведён выбранный звук", category = Category.Render)
 public class SoundESP extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Отслеживать звуки", new BooleanSetting("Трезубец", true), new BooleanSetting("Фейерверк", true), new BooleanSetting("Взрывы", true));
-    private final List<a> c = new ArrayList();
+    private final List<a> c = new ArrayList<>();
 
     public SoundESP() {
         a(this.b);
@@ -50,7 +50,7 @@ public class SoundESP extends Module {
     public void a(DrawEvent event) {
         String str;
         if (event.b()) {
-            int color = ColorUtil.a(0, 0, 0, 100);
+            int color = ColorUtil.convertToARGB(0, 0, 0, 100);
             for (a soundInfo : this.c) {
                 if (soundInfo.a().a(5500L)) {
                     this.c.remove(soundInfo);

@@ -1,10 +1,10 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
 
 
-public class HandEvent extends Event implements IEvent {
+
+public class HandEvent extends Event {
     private final a type;
 
     public HandEvent(a phase) {

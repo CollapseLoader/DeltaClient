@@ -1,6 +1,6 @@
 package aethereal.config;
 
-import aethereal.api.Compile;
+
 import aethereal.lib.json.JSONObject;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ public class ThemeProcessor extends ConfigProcessor<ThemeConstructor> {
     private ThemeType e = ThemeType.DARK;
 
     @Override
-    @Compile
+    
     protected List<ThemeConstructor> a(String json) throws Exception {
         if (json == null || json.isBlank() || json.trim().startsWith("[")) {
             return createDefaultThemes();
@@ -54,7 +54,7 @@ public class ThemeProcessor extends ConfigProcessor<ThemeConstructor> {
     }
 
     @Override
-    @Compile
+    
     protected String a(List<ThemeConstructor> data) throws Exception {
         JSONObject jSONObject = new JSONObject();
         jSONObject.c("type", this.e.name());
@@ -64,6 +64,20 @@ public class ThemeProcessor extends ConfigProcessor<ThemeConstructor> {
 
     public ThemeType a() {
         return this.e;
+    }
+
+    public void a(ThemeType type) {
+        if (this.e == type) {
+            return;
+        }
+        this.e = type;
+        int currentPrimary = a(ThemeInfo.PRIMARY).toIntColor();
+        this.d.clear();
+        for (ThemeInfo info : ThemeInfo.values()) {
+            ThemeConstructor def = info.a(this.e);
+            this.d.add(new ThemeConstructor(def.getName(), def.getRed(), def.getGreen(), def.getBlue(), def.getAlpha()));
+        }
+        a(ThemeInfo.PRIMARY).fromIntColor(currentPrimary);
     }
 
     @Override

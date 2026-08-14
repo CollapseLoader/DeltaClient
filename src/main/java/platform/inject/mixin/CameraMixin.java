@@ -24,7 +24,7 @@ import platform.inject.accessors.CameraAccessor;
 public abstract class CameraMixin {
     @ModifyReturnValue(method = {"isThirdPerson"}, at = {@At("RETURN")})
     private boolean isThirdPerson(boolean original) {
-        if (Delta.h().d().t().h().m()) {
+        if (Delta.getInstance().getModuleProcessor().t().h().m()) {
             return true;
         }
         return original;
@@ -55,7 +55,7 @@ public abstract class CameraMixin {
 
     @Inject(method = {"clipToSpace"}, at = {@At("HEAD")}, cancellable = true)
     private void onClipToSpace(float desiredCameraDistance, CallbackInfoReturnable<Float> info) {
-        Animations animations = Delta.h().d().t().Q();
+        Animations animations = Delta.getInstance().getModuleProcessor().t().Q();
         RemovalsEvent event = new RemovalsEvent(RemovalsEvent.a.CLIP);
         EventManager.a(event);
         if (animations.m()) {

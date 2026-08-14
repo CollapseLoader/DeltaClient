@@ -1,6 +1,6 @@
 package aethereal.ui.element;
 
-import aethereal.api.Compile;
+
 import aethereal.config.ThemeInfo;
 import aethereal.config.ThemeProcessor;
 import aethereal.core.Delta;
@@ -21,7 +21,7 @@ public class BindElement extends Element_2<BindSetting> {
     }
 
     @Override
-    @Compile
+    
     public boolean a(double mouseX, double mouseY, int button) {
         Vector4f vector4f = this.a;
         var setting = this.b;
@@ -51,7 +51,7 @@ public class BindElement extends Element_2<BindSetting> {
     }
 
     @Override
-    @Compile
+    
     public boolean a(int keyCode, int scanCode, int modifiers) {
         if (!this.d) {
             return false;
@@ -68,8 +68,8 @@ public class BindElement extends Element_2<BindSetting> {
     @Override
     public void a(DrawContext context, double mouseX, double mouseY, float delta, float extend) {
         MatrixStack matrices = context.getMatrices();
-        Draw2DProcessor draw = Delta.h().d().i();
-        ThemeProcessor theme = Delta.h().d().o();
+        Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
+        ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
         b().a(this.d);
         b().a(0.0f, 1.0f, 0.4f, EasingList.p, delta);
         float centerY = this.a.y + (this.a.w / 2.0f) + 0.5f;
@@ -83,15 +83,15 @@ public class BindElement extends Element_2<BindSetting> {
         float boxX = (this.a.x + this.a.z) - boxWidth;
         float boxY = centerY - (boxHeight / 2.0f);
         float textY = (boxY + ((boxHeight - Fonts.c.a(6.5f)) / 2.0f)) - 0.75f;
-        a(matrices, Fonts.c, this.b.i(), this.a.x, this.a.y, this.a.w, 6.5f, theme.a(ThemeInfo.TEXT).a(), (boxX - this.a.x) - 4.0f, hovered, extend, delta);
-        draw.a(matrices, boxX, boxY, boxWidth, boxHeight, 2.0f, ColorUtil.a(theme.a(ThemeInfo.PRIMARY).a(), 0.039215688f * extend));
-        draw.a(matrices, boxX, boxY, boxWidth, boxHeight, 2.0f, 0.5f, ColorUtil.a(theme.a(ThemeInfo.OUTLINE_MEDIUM).a(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * extend));
+        a(matrices, Fonts.c, this.b.i(), this.a.x, this.a.y, this.a.w, 6.5f, theme.a(ThemeInfo.TEXT).toIntColor(), (boxX - this.a.x) - 4.0f, hovered, extend, delta);
+        draw.a(matrices, boxX, boxY, boxWidth, boxHeight, 2.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.039215688f * extend));
+        draw.a(matrices, boxX, boxY, boxWidth, boxHeight, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * extend));
         ScissorUtil.a(matrices, boxX, boxY, boxWidth, boxHeight);
         if (reverse > 0.0f) {
-            Fonts.c.a(matrices, value, boxX + 4.0f, textY, 6.5f, ColorUtil.a(theme.a(ThemeInfo.TEXT).a(), extend * reverse));
+            Fonts.c.a(matrices, value, boxX + 4.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT).toIntColor(), extend * reverse));
         }
         if (anim > 0.0f) {
-            Fonts.c.a(matrices, "...", boxX + 4.0f, textY, 6.5f, ColorUtil.a(theme.a(ThemeInfo.TEXT).a(), extend * anim));
+            Fonts.c.a(matrices, "...", boxX + 4.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT).toIntColor(), extend * anim));
         }
         ScissorUtil.a(matrices);
     }

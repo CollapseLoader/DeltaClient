@@ -1,10 +1,10 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
 
 
-public class LookEvent extends Event implements IEvent {
+
+public class LookEvent extends Event {
     public final double a;
     public final double b;
 

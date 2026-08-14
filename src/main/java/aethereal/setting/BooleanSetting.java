@@ -9,7 +9,7 @@ public class BooleanSetting extends Setting<Boolean> {
     }
 
     @Override
-    public Element_2<?> d() {
+    public Element_2<?> createBooleanElement() {
         return new BooleanElement(this);
     }
 }

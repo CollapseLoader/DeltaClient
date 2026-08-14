@@ -22,7 +22,7 @@ public class GradientUtil {
         int length = text.length();
         for (int i = 0; i < length; i++) {
             char c = text.charAt(i);
-            int color = ColorUtil.a(startColor, endColor, i, length, time, ratio);
+            int color = ColorUtil.makeGradient(startColor, endColor, i, length, time, ratio);
             Style style = Style.EMPTY.withColor(color & 16777215);
             component.append(Text.literal(String.valueOf(c)).setStyle(style));
         }
@@ -47,6 +47,6 @@ public class GradientUtil {
     public static int a(int speed, int angle, int startColor, int endColor, long time) {
         float animatedAngle = (((long) angle) + (time / 10)) % 360;
         float ratio = animatedAngle / 360.0f;
-        return ColorUtil.b(startColor, endColor, (float) ((Math.sin(((((double) ratio) * 3.1415926649985018d) * 2.0d) * ((double) speed)) + 1.0d) / 2.0d));
+        return ColorUtil.lerpColorValue(startColor, endColor, (float) ((Math.sin(((((double) ratio) * 3.1415926649985018d) * 2.0d) * ((double) speed)) + 1.0d) / 2.0d));
     }
 }

@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 @ModuleRegister(name = "Warden ESP", description = "Отображает сундуки в городе варденов с таймером возрождения", category = Category.Render)
 public class WardenESP extends Module {
     private static final Pattern b = Pattern.compile("(\\d{2}):(\\d{2})");
-    private final List<a> c = new ArrayList();
+    private final List<a> c = new ArrayList<>();
 
     @EventTarget
     public void a(DrawEvent event) {
@@ -63,7 +63,7 @@ public class WardenESP extends Module {
     }
 
     private void a(DrawEvent event, List<BlockPos> chests) {
-        int background = ColorUtil.a(11, 11, 13, InterfaceC0020Opcode.cR);
+        int background = ColorUtil.convertToARGB(11, 11, 13, InterfaceC0020Opcode.cR);
         for (BlockPos coord : chests) {
             a info = b(coord);
             if (info != null) {
@@ -85,7 +85,7 @@ public class WardenESP extends Module {
     private void b(DrawEvent event, List<BlockPos> chests) {
         for (BlockPos coord : chests) {
             if (b(coord) == null) {
-                event.e().a(event.h(), new Box(coord.getX(), coord.getY(), coord.getZ(), coord.getX() + 1, coord.getY() + 1, coord.getZ() + 1), ColorUtil.a(255, 100, 100, 255), 1.0f);
+                event.e().a(event.h(), new Box(coord.getX(), coord.getY(), coord.getZ(), coord.getX() + 1, coord.getY() + 1, coord.getZ() + 1), ColorUtil.convertToARGB(255, 100, 100, 255), 1.0f);
             }
         }
     }

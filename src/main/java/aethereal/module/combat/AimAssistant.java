@@ -47,7 +47,7 @@ public class AimAssistant extends Module {
 
     @EventTarget
     public void a(TickEvent event) {
-        TriggerBot trigger = Delta.h().d().t().X();
+        TriggerBot trigger = Delta.getInstance().getModuleProcessor().t().X();
         LivingEntity found = trigger.m() ? trigger.s() : r();
         if (found != this.f) {
             this.g = null;
@@ -110,7 +110,7 @@ public class AimAssistant extends Module {
 
     private boolean b(LivingEntity entity) {
         if (entity instanceof PlayerEntity player) {
-            return this.b.a("Игроки").c().booleanValue() && (this.b.a("Друзья").c().booleanValue() || !Delta.h().d().e().d(player.getName().getString()));
+            return this.b.a("Игроки").c().booleanValue() && (this.b.a("Друзья").c().booleanValue() || !Delta.getInstance().getModuleProcessor().e().d(player.getName().getString()));
         }
         if (entity instanceof MobEntity) {
             return this.b.a("Мобы").c().booleanValue();

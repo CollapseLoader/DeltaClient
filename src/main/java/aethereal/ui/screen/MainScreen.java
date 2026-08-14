@@ -1,6 +1,6 @@
 package aethereal.ui.screen;
 
-import aethereal.api.Compile;
+
 import aethereal.config.ThemeInfo;
 import aethereal.core.Delta;
 import aethereal.core.Interface;
@@ -47,7 +47,7 @@ public class MainScreen extends Screen {
     public MainScreen() {
         super(Text.empty());
         this.b = new AnimationUtil();
-        this.h = new ArrayList();
+        this.h = new ArrayList<>();
         this.j = -1.0f;
         if (Interface.mc.currentScreen instanceof MainScreen) {
             this.b.c(1.0f);
@@ -81,11 +81,11 @@ public class MainScreen extends Screen {
         matrices.translate(width / 2.0f, height / 2.0f, 0.0f);
         matrices.scale(scale, scale, 1.0f);
         matrices.translate((-width) / 2.0f, (-height) / 2.0f, 0.0f);
-        Delta.h().d().i().a(matrices, Identifier.of("delta", "pictures/main.png"), (-marginX) + a[0], (-marginY) + a[1], width + (marginX * 2.0f), height + (marginY * 2.0f), 0.0f, -1);
+        Delta.getInstance().getModuleProcessor().i().a(matrices, Identifier.of("delta", "pictures/main.png"), (-marginX) + a[0], (-marginY) + a[1], width + (marginX * 2.0f), height + (marginY * 2.0f), 0.0f, -1);
         matrices.pop();
     }
 
-    @Compile
+    
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
         this.b.a(Interface.mc.currentScreen instanceof MainScreen);
@@ -97,7 +97,7 @@ public class MainScreen extends Screen {
         int iMethod_4486 = Interface.mc.getWindow().getScaledWidth();
         int iMethod_4502 = Interface.mc.getWindow().getScaledHeight();
         a(context, iMethod_4486, iMethod_4502, (int) dA, (int) dA2, 1.25f - (EasingList.s.ease(fMin) * 0.2f));
-        Delta.h().d().i().e().a(context.getMatrices());
+        Delta.getInstance().getModuleProcessor().i().e().a(context.getMatrices());
         a(iMethod_4486, iMethod_4502);
         a(context, iMethod_4486 * 0.5f, ((iMethod_4502 - this.c.c()) * 0.5f) - 58.0f, fMin);
         Iterator<Button> it = this.g.iterator();
@@ -109,7 +109,7 @@ public class MainScreen extends Screen {
         ScaleUtil.a(context);
     }
 
-    @Compile
+    
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         List<EffectMarker.a> list = this.h;
         List<Button> list2 = this.g;
@@ -130,7 +130,7 @@ public class MainScreen extends Screen {
         return super.mouseClicked(dA, dA2, button);
     }
 
-    @Compile
+    
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         if (this.j >= 0.0f) {
             return true;
@@ -138,7 +138,7 @@ public class MainScreen extends Screen {
         return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
     }
 
-    @Compile
+    
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         if (this.j < 0.0f) {
             return super.mouseReleased(mouseX, mouseY, button);
@@ -174,7 +174,7 @@ public class MainScreen extends Screen {
         float target = this.j >= 0.0f ? MathHelper.clamp((((mouseX - this.j) - this.k) - 1.75f) / 59.5f, 0.0f, 1.0f) : 0.0f;
         this.i += (target - this.i) * 0.25f;
         float scale = 0.85f + (0.15f * EasingList.s.ease(open));
-        Draw2DProcessor draw = Delta.h().d().i();
+        Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
         MatrixStack matrices = context.getMatrices();
         matrices.push();
         matrices.translate(this.k + 39.5f, this.l + 9.75f, 0.0f);
@@ -184,16 +184,16 @@ public class MainScreen extends Screen {
         float knobY = this.l + 1.75f;
         float centerX = knobX + 8.0f;
         float centerY = knobY + 8.0f;
-        draw.b(matrices, this.k, this.l, 79.0f, 19.5f, 8.0f, ColorUtil.a(11, 11, 13, InterfaceC0020Opcode.bN), open);
-        draw.a(matrices, this.k, this.l, 79.0f, 19.5f, 8.0f, 0.5f, ColorUtil.a(255, 255, 255, (int) (15.0f * open)));
-        Fonts.e.c(matrices, "Выйти из игры", this.k + 9.0f, this.l + 5.75f, 7.0f, ColorUtil.a(ColorUtil.a(220, 80, 80, 255), this.i * open), ((knobX - 3.0f) - this.k) - 9.0f);
-        int knob = ColorUtil.a(ColorUtil.a(255, 255, 255, 13), ColorUtil.a(220, 80, 80, 40), this.i);
-        draw.a(matrices, knobX, knobY, 16.0f, 16.0f, 7.0f, ColorUtil.a(knob, (ColorUtil.b(knob)[3] / 255.0f) * open));
+        draw.b(matrices, this.k, this.l, 79.0f, 19.5f, 8.0f, ColorUtil.convertToARGB(11, 11, 13, InterfaceC0020Opcode.bN), open);
+        draw.a(matrices, this.k, this.l, 79.0f, 19.5f, 8.0f, 0.5f, ColorUtil.convertToARGB(255, 255, 255, (int) (15.0f * open)));
+        Fonts.e.c(matrices, "Выйти из игры", this.k + 9.0f, this.l + 5.75f, 7.0f, ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(220, 80, 80, 255), this.i * open), ((knobX - 3.0f) - this.k) - 9.0f);
+        int knob = ColorUtil.lerpColor(ColorUtil.convertToARGB(255, 255, 255, 13), ColorUtil.convertToARGB(220, 80, 80, 40), this.i);
+        draw.a(matrices, knobX, knobY, 16.0f, 16.0f, 7.0f, ColorUtil.applyAlphaToColor(knob, (ColorUtil.b(knob)[3] / 255.0f) * open));
         matrices.push();
         matrices.translate(centerX, centerY, 0.0f);
         matrices.multiply(new Quaternionf().rotateZ((float) Math.toRadians((-90.0f) + (180.0f * this.i))));
         matrices.translate(-centerX, -centerY, 0.0f);
-        Fonts.a.a(matrices, "c", (centerX - (Fonts.a.a("c", 8.5f) / 2.0f)) + 1.0f, centerY - 4.5f, 8.5f, ColorUtil.a(ColorUtil.a(-1, ColorUtil.a(220, 80, 80, 255), this.i), open));
+        Fonts.a.a(matrices, "c", (centerX - (Fonts.a.a("c", 8.5f) / 2.0f)) + 1.0f, centerY - 4.5f, 8.5f, ColorUtil.applyAlphaToColor(ColorUtil.lerpColor(-1, ColorUtil.convertToARGB(220, 80, 80, 255), this.i), open));
         matrices.pop();
         matrices.pop();
     }
@@ -206,9 +206,9 @@ public class MainScreen extends Screen {
         matrices.translate(centerX, titleY + 8.0f, 0.0f);
         matrices.scale(scale, scale, 1.0f);
         matrices.translate(-centerX, (-titleY) - 8.0f, 0.0f);
-        int primary = Delta.h().d().o().a(ThemeInfo.PRIMARY).a();
+        int primary = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor();
         Fonts.e.a(matrices, GradientUtil.a("Delta Client", primary, 5.0f, 0.5f), centerX - (titleWidth / 2.0f), titleY + 1.5f, 12.0f, 0.0f, open);
-        Fonts.e.a(matrices, "1.21.4", centerX - (Fonts.e.a("1.21.4", 12.0f) / 2.0f), titleY + 15.0f, 12.0f, ColorUtil.a(255, 255, 255, (int) (160.0f * open)));
+        Fonts.e.a(matrices, "1.21.4", centerX - (Fonts.e.a("1.21.4", 12.0f) / 2.0f), titleY + 15.0f, 12.0f, ColorUtil.convertToARGB(255, 255, 255, (int) (160.0f * open)));
         matrices.pop();
     }
 }

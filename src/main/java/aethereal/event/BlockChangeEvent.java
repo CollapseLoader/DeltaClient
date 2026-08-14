@@ -1,11 +1,11 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 
-public class BlockChangeEvent extends Event implements IEvent {
+public class BlockChangeEvent extends Event {
     private final BlockPos a;
     private final BlockState b;
     private final BlockState c;

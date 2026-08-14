@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class SkinTexturesMixin {
     @Inject(method = {"texture"}, at = {@At("HEAD")}, cancellable = true)
     public void texture(CallbackInfoReturnable<Identifier> cir) {
-        StreamerMode streamerMode = Delta.h().d().t().aE();
+        StreamerMode streamerMode = Delta.getInstance().getModuleProcessor().t().aE();
         if (streamerMode.m() && streamerMode.q().c().booleanValue()) {
             cir.setReturnValue(Identifier.of("delta", "pictures/skin.png"));
         }

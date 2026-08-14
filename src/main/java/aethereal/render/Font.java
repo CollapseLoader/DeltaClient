@@ -237,7 +237,7 @@ public class Font {
                 float x2 = x + a(previousChar, codePoint, size);
                 int currentColor = color;
                 if (offset > 1.0f) {
-                    currentColor = ColorUtil.a(color, colorSecond, x2 - x, totalWidth, time, offset);
+                    currentColor = ColorUtil.makeGradient(color, colorSecond, x2 - x, totalWidth, time, offset);
                 }
                 x = x2 + glyph.a(matrix, consumer, size, x2, y, z, currentColor) + thickness + spacing;
                 previousChar = codePoint;
@@ -260,7 +260,7 @@ public class Font {
                 if (glyph != null) {
                     hasGlyphs = true;
                     float x2 = x + a(previousChar, codePoint, size);
-                    float advance = glyph.a(matrix, consumer, size, x2, y, z, ColorUtil.a(color, alpha));
+                    float advance = glyph.a(matrix, consumer, size, x2, y, z, ColorUtil.applyAlphaToColor(color, alpha));
                     if (i < coloredGlyphs.size() - 1) {
                         advance += thickness + spacing;
                     }

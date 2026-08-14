@@ -13,7 +13,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 
 @ModuleRegister(name = "Auto Fish", description = "Автоматически ловит рыбу в AFK-режиме", category = Category.Player)
-public class AutoFish extends Module implements Interface {
+public class AutoFish extends Module {
     private final CounterUtil b = new CounterUtil();
     private boolean c;
 

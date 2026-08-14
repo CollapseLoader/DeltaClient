@@ -1,10 +1,10 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
 
 
-public class WillLandEvent extends Event implements IEvent {
+
+public class WillLandEvent extends Event {
     private final boolean a;
 
     public WillLandEvent(boolean willLand) {

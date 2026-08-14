@@ -35,7 +35,7 @@ public class GPSCommand extends BaseCommand {
             a(new Vec3d(b(context4, "x"), b(context4, "y или z"), b(context4, "z")));
             return 1;
         })))).then(a("event").executes(context5 -> {
-            Delta.h().d().u().c().a(WayCommand.a.GPS);
+            Delta.getInstance().getModuleProcessor().u().c().a(WayCommand.a.GPS);
             mc.player.networkHandler.sendCommand("event delay");
             return 1;
         })).executes(context6 -> {

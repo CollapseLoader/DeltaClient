@@ -1,6 +1,6 @@
 package aethereal.network;
 
-import aethereal.api.Compile;
+
 import aethereal.config.ConfigProcessor;
 import aethereal.lib.json.JSONArray;
 import aethereal.lib.json.JSONObject;
@@ -10,10 +10,10 @@ import java.util.List;
 
 public class AccountProcessor extends ConfigProcessor<AccountConstructor> {
     @Override
-    @Compile
+    
     protected List<AccountConstructor> a(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
-        ArrayList arrayList = new ArrayList();
+        ArrayList arrayList = new ArrayList<>();
         for (int i = 0; i < jSONArray.a(); i++) {
             JSONObject jSONObjectJ = jSONArray.j(i);
             AccountConstructor accountConstructor = new AccountConstructor(jSONObjectJ.l("name"));
@@ -25,7 +25,7 @@ public class AccountProcessor extends ConfigProcessor<AccountConstructor> {
     }
 
     @Override
-    @Compile
+    
     protected String a(List<AccountConstructor> data) throws Exception {
         JSONArray jSONArray = new JSONArray();
         for (AccountConstructor accountConstructor : data) {

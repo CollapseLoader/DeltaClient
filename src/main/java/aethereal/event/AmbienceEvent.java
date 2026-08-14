@@ -2,7 +2,7 @@ package aethereal.event;
 
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.Fog;
 import net.minecraft.client.render.FogShape;
@@ -10,7 +10,7 @@ import net.minecraft.world.biome.Biome;
 
 public class AmbienceEvent {
 
-    public static class c extends Event implements IEvent {
+    public static class c extends Event {
         private long a;
 
         public c(long time) {
@@ -26,7 +26,7 @@ public class AmbienceEvent {
         }
     }
 
-    public static class a extends Event implements IEvent {
+    public static class a extends Event {
         private float a;
         private float b;
         private float c;
@@ -72,7 +72,7 @@ public class AmbienceEvent {
         }
     }
 
-    public static class b extends Event implements IEvent {
+    public static class b extends Event {
         private Camera a;
         private float b;
         private Fog c;
@@ -112,7 +112,7 @@ public class AmbienceEvent {
         }
     }
 
-    public static class d extends Event implements IEvent {
+    public static class d extends Event {
         private final aethereal.event.AmbienceEvent.d.a a;
         private float b;
         private Biome.Precipitation c;

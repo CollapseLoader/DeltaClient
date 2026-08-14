@@ -1,4 +1,4 @@
 package aethereal.core;
 
-public class GlobalEvent extends Event implements IEvent {
+public class GlobalEvent extends Event {
 }

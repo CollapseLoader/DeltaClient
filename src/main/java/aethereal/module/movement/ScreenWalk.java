@@ -29,7 +29,7 @@ import java.util.List;
 @ModuleRegister(name = "Screen Walk", description = "Позволяет двигаться с открытым контейнером, задерживая пакеты инвентаря", category = Category.Movement)
 public class ScreenWalk extends Module {
     private final ModeSetting b = new ModeSetting("Обход перемещения предметов", "Ускоренный", "Ускоренный", "Медленный");
-    private final List<a> c = new ArrayList();
+    private final List<a> c = new ArrayList<>();
     private boolean d = false;
 
     public ScreenWalk() {
@@ -39,7 +39,7 @@ public class ScreenWalk extends Module {
     @EventTarget(a = 0)
     public void a(PacketEvent event) {
         boolean isShulker;
-        StopHandler stopHandler = Delta.h().d().v().c();
+        StopHandler stopHandler = Delta.getInstance().getModuleProcessor().v().c();
         if (event.b()) {
             if (mc.currentScreen instanceof InventoryScreen) {
                 ClickSlotC2SPacket click = (ClickSlotC2SPacket) event.d();

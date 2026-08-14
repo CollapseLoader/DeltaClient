@@ -114,11 +114,11 @@ public class RadialScreen implements Interface {
             if (segment != null) {
                 segment.a().a(0.0f, 1.0f, 0.3f, EasingList.g, mc.getRenderTickCounter().getTickDelta(false));
                 segment.a().a(slot == a(mouseX, mouseY, center));
-                int primary = ColorUtil.a(Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), 80);
-                int hoverColor = ColorUtil.a(ColorUtil.a(255, 255, 255, 80), primary, segment.a().c());
+                int primary = ColorUtil.combineColorWithAlpha(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), 80);
+                int hoverColor = ColorUtil.lerpColor(ColorUtil.convertToARGB(255, 255, 255, 80), primary, segment.a().c());
                 boolean assistant = mc.currentScreen instanceof AssistantScreen;
                 int amount = (!assistant || segment.b.isEmpty()) ? -1 : InventoryUtil.c(segment.b, false);
-                int fillColor = ((isSelected || amount == 0) && !segment.b.isEmpty()) ? ColorUtil.a(255, 128, 128, 80) : hoverColor;
+                int fillColor = ((isSelected || amount == 0) && !segment.b.isEmpty()) ? ColorUtil.convertToARGB(255, 128, 128, 80) : hoverColor;
                 double midAngle = (startAngle + endAngle) / 2.0d;
                 float lift = segment.a().c() * 4.0f;
                 float offsetX = ((float) Math.cos(midAngle)) * lift;
@@ -127,13 +127,13 @@ public class RadialScreen implements Interface {
                 float iconX = cx + offsetX + (((float) Math.cos(midAngle)) * iconRadius);
                 float iconY = cy + offsetY + (((float) Math.sin(midAngle)) * iconRadius);
                 if (!segment.b.isEmpty()) {
-                    Delta.h().d().j().a(context, segment.b, iconX - 8.0f, iconY - 8.0f, 0, 1.0f, 1.0f, false);
+                    Delta.getInstance().getModuleProcessor().j().a(context, segment.b, iconX - 8.0f, iconY - 8.0f, 0, 1.0f, 1.0f, false);
                     if (assistant && amount > 0) {
                         String label = String.valueOf(amount);
-                        Fonts.e.a(context.getMatrices(), label, (iconX + 8.0f) - Fonts.e.a(label, 10.0f), (iconY + 10.0f) - Fonts.e.a(10.0f), 10.0f, ColorUtil.a(255, 255, 255, amount > 0 ? 235 : InterfaceC0020Opcode.al));
+                        Fonts.e.a(context.getMatrices(), label, (iconX + 8.0f) - Fonts.e.a(label, 10.0f), (iconY + 10.0f) - Fonts.e.a(10.0f), 10.0f, ColorUtil.convertToARGB(255, 255, 255, amount > 0 ? 235 : InterfaceC0020Opcode.al));
                     }
                 } else {
-                    Fonts.e.a(context.getMatrices(), Marker_2.b, iconX - (Fonts.e.a(Marker_2.b, 14.0f) / 2.0f), iconY - (Fonts.e.a(14.0f) / 2.0f), 14.0f, ColorUtil.a(255, 255, 255, 255));
+                    Fonts.e.a(context.getMatrices(), Marker_2.b, iconX - (Fonts.e.a(Marker_2.b, 14.0f) / 2.0f), iconY - (Fonts.e.a(14.0f) / 2.0f), 14.0f, ColorUtil.convertToARGB(255, 255, 255, 255));
                 }
             }
             slot++;
@@ -148,15 +148,15 @@ public class RadialScreen implements Interface {
         }
         String name = string;
         if (hasSegment) {
-            Fonts.e.a(context.getMatrices(), name, cx - (Fonts.e.a(name, 10.0f) / 2.0f), baseY, 10.0f, ColorUtil.a(255, 255, 255, 255));
+            Fonts.e.a(context.getMatrices(), name, cx - (Fonts.e.a(name, 10.0f) / 2.0f), baseY, 10.0f, ColorUtil.convertToARGB(255, 255, 255, 255));
             if (mc.currentScreen instanceof AssistantScreen) {
-                Fonts.d.a(context.getMatrices(), "СКМ – добавление слота", cx - (Fonts.d.a("СКМ – добавление слота", 7.0f) / 2.0f), baseY + Fonts.d.a(10.0f) + 3.0f, 7.0f, ColorUtil.a(255, 255, 255, InterfaceC0020Opcode.cG));
+                Fonts.d.a(context.getMatrices(), "СКМ – добавление слота", cx - (Fonts.d.a("СКМ – добавление слота", 7.0f) / 2.0f), baseY + Fonts.d.a(10.0f) + 3.0f, 7.0f, ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.cG));
                 return;
             }
             return;
         }
         if (mc.currentScreen instanceof AssistantScreen) {
-            Fonts.d.a(context.getMatrices(), "СКМ – добавление слота", cx - (Fonts.d.a("СКМ – добавление слота", 7.0f) / 2.0f), baseY, 7.0f, ColorUtil.a(255, 255, 255, InterfaceC0020Opcode.cG));
+            Fonts.d.a(context.getMatrices(), "СКМ – добавление слота", cx - (Fonts.d.a("СКМ – добавление слота", 7.0f) / 2.0f), baseY, 7.0f, ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.cG));
         }
     }
 
@@ -228,7 +228,7 @@ public class RadialScreen implements Interface {
             fillBuffer.vertex(matrix, cx + (cos * innerR), cy + (sin * innerR), 0.0f).color(cFill[0], cFill[1], cFill[2], cFill[3]);
         }
         BufferRenderer.drawWithGlobalProgram(fillBuffer.end());
-        int outlineColor = ColorUtil.a(fillColor, 0.8627451f);
+        int outlineColor = ColorUtil.applyAlphaToColor(fillColor, 0.8627451f);
         float[] cOutline = ColorUtil.a(outlineColor);
         GL11.glEnable(2848);
         GL11.glHint(3154, 4354);

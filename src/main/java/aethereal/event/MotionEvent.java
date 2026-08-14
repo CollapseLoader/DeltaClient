@@ -1,10 +1,10 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
 
 
-public class MotionEvent extends Event implements IEvent {
+
+public class MotionEvent extends Event {
     private double a;
     private double b;
     private double c;

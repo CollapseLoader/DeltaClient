@@ -1,6 +1,6 @@
 package aethereal.render;
 
-import aethereal.api.Compile;
+
 import aethereal.autobuy.BatchProcessor;
 import aethereal.config.BaseProcessor;
 import aethereal.core.Delta;
@@ -19,7 +19,7 @@ import org.joml.Matrix4f;
 
 public class Draw3DProcessor extends BaseProcessor implements Interface {
     @Override
-    @Compile
+    
     public void setup() {
     }
 
@@ -30,22 +30,22 @@ public class Draw3DProcessor extends BaseProcessor implements Interface {
     @EventTarget(a = 4)
     public void a(DrawEvent event) {
         if (event.c()) {
-            Delta.h().d().l().b();
+            Delta.getInstance().getModuleProcessor().l().b();
         } else if (event.b()) {
-            Delta.h().d().l().a();
+            Delta.getInstance().getModuleProcessor().l().a();
         }
     }
 
     public void a(MatrixStack matrices, Box box, int color, float width) {
-        Delta.h().d().l().a(BatchProcessor.b.a(matrices, box, color, width));
+        Delta.getInstance().getModuleProcessor().l().a(BatchProcessor.b.a(matrices, box, color, width));
     }
 
     public void a(Matrix4f matrix, float minX, float minY, float maxX, float maxY, int color, boolean corners, boolean healthBar, float healthPercent, int healthColor) {
-        Delta.h().d().l().a(new BatchProcessor.a(matrix, minX, minY, maxX, maxY, color, corners, healthBar, healthPercent, healthColor));
+        Delta.getInstance().getModuleProcessor().l().a(new BatchProcessor.a(matrix, minX, minY, maxX, maxY, color, corners, healthBar, healthPercent, healthColor));
     }
 
     public void a(MatrixStack matrices, Vec3d start, Vec3d end, Vec3d control, int color, float width) {
-        Delta.h().d().l().a(BatchProcessor.b.a(matrices, start, end, control, color, width));
+        Delta.getInstance().getModuleProcessor().l().a(BatchProcessor.b.a(matrices, start, end, control, color, width));
     }
 
     public void a(DrawContext context, ItemStack stack, float x, float y, int z, float alpha, float scale, boolean overlay) {
@@ -67,7 +67,7 @@ public class Draw3DProcessor extends BaseProcessor implements Interface {
         context.getMatrices().push();
         context.getMatrices().translate(x, y, z);
         context.getMatrices().scale(scale, scale, 1.0f);
-        context.drawSpriteStretched(RenderLayer::getGuiTextured, sprite, 0, 0, 18, 18, ColorUtil.a(-1, alpha));
+        context.drawSpriteStretched(RenderLayer::getGuiTextured, sprite, 0, 0, 18, 18, ColorUtil.applyAlphaToColor(-1, alpha));
         context.getMatrices().pop();
     }
 }

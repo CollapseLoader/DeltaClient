@@ -1,7 +1,7 @@
 package aethereal.ui.element;
 
 
-import aethereal.api.Compile;
+
 import aethereal.event.DrawEvent;
 import aethereal.render.AnimationUtil;
 import aethereal.render.ColorUtil;
@@ -22,32 +22,32 @@ public class Element_2<SettingType extends Setting<?>> {
         this.b = setting;
     }
 
-    @Compile
+    
     public boolean a(double mouseX, double mouseY, int button) {
         return false;
     }
 
-    @Compile
+    
     public boolean b(double mouseX, double mouseY, int button) {
         return false;
     }
 
-    @Compile
+    
     public boolean a(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         return false;
     }
 
-    @Compile
+    
     public boolean a(double mouseX, double mouseY, double amount) {
         return false;
     }
 
-    @Compile
+    
     public boolean a(char chr, int modifiers) {
         return false;
     }
 
-    @Compile
+    
     public boolean a(int keyCode, int scanCode, int modifiers) {
         return false;
     }
@@ -84,7 +84,7 @@ public class Element_2<SettingType extends Setting<?>> {
     }
 
     protected void a(MatrixStack matrixStack, Font font, String text, float x, float y, float height, float size, int color, float maxWidth, boolean hovered, float extend, float delta) {
-        this.c = font.a(matrixStack, text, x, (y + ((height - font.a(size)) / 2.0f)) - 0.5f, size, ColorUtil.a(color, extend), maxWidth, hovered, this.c, delta);
+        this.c = font.a(matrixStack, text, x, (y + ((height - font.a(size)) / 2.0f)) - 0.5f, size, ColorUtil.applyAlphaToColor(color, extend), maxWidth, hovered, this.c, delta);
     }
 
     public void a(DrawContext context, double mouseX, double mouseY, float delta) {

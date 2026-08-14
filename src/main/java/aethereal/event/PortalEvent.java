@@ -1,10 +1,10 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
 
 
-public class PortalEvent extends Event implements IEvent {
+
+public class PortalEvent extends Event {
     private boolean a;
 
     public PortalEvent(boolean inPortal) {

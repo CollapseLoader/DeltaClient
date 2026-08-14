@@ -1,26 +1,16 @@
 package aethereal.core;
 
-import aethereal.api.Compile;
 import aethereal.lib.log4j.LoggerFactory;
 import aethereal.lib.log4j.Logger_2;
 import aethereal.lib.websocket.ServerHandshake;
 import aethereal.lib.websocket.WebSocketClient;
 import aethereal.network.PacketSecurity;
 
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-@Compile
 public class Client extends WebSocketClient {
 
     private static Logger_2 b;
@@ -33,9 +23,9 @@ public class Client extends WebSocketClient {
 
     public Client(boolean dev) {
         super(URI.create(dev ? "ws://localhost:2002/" : "wss://deltaclient.xyz/ws/"),
-                Map.of("Sec-WebSocket-Protocol", Delta.h().g().token() + "-minecraft"));
+                Map.of("Sec-WebSocket-Protocol", Delta.getInstance().g().token() + "-minecraft"));
         ScheduledExecutorService c = Executors.newSingleThreadScheduledExecutor();
-        List<Packet> d = new ArrayList();
+        List<Packet> d = new ArrayList<>();
         this.e = new PacketSecurity();
     }
 
@@ -54,47 +44,6 @@ public class Client extends WebSocketClient {
         b = LoggerFactory.a(Client.class);
     }
 
-    private SSLSocketFactory C() throws Exception {
-        X509TrustManager x509TrustManager = new X509TrustManager() {
-            @Override
-            public void checkClientTrusted(X509Certificate[] chain, String authType) {
-            }
-
-            @Override
-            public void checkServerTrusted(X509Certificate[] chain, String authType) {
-                if (chain == null || chain.length == 0) {
-                    throw new a();
-                }
-                try {
-                    String pin = java.util.Base64.getEncoder().encodeToString(
-                            MessageDigest.getInstance("SHA-256")
-                                    .digest(chain[0].getPublicKey().getEncoded()));
-                    boolean matched = Set.of(
-                            "tjzKnQqXiG8qfKkHSOtckEHsKNtsONSU9NN+d8vZ1XQ="
-                    ).stream().anyMatch(expected ->
-                            MessageDigest.isEqual(
-                                    pin.getBytes(StandardCharsets.UTF_8),
-                                    expected.getBytes(StandardCharsets.UTF_8)));
-                    if (!matched) {
-                        throw new a();
-                    }
-                } catch (a e) {
-                    throw e;
-                } catch (Exception e2) {
-                    throw new a();
-                }
-            }
-
-            @Override
-            public X509Certificate[] getAcceptedIssuers() {
-                return new X509Certificate[0];
-            }
-        };
-        SSLContext sSLContext = SSLContext.getInstance("TLS");
-        sSLContext.init(null, new TrustManager[]{x509TrustManager}, new SecureRandom());
-        return sSLContext.getSocketFactory();
-    }
-
     @Override
     public void a(ServerHandshake handshake) {
         if (b != null) {
@@ -111,7 +60,8 @@ public class Client extends WebSocketClient {
             }
             aethereal.network.PacketSecurity.PacketData data = unpacked.get();
             Packet packet = new Packet(data.id(), data.payload(), this.e);
-            aethereal.core.EventManager.a(new aethereal.event.BackendEvent(packet, aethereal.event.BackendEvent.Phase.RECEIVE));
+            aethereal.core.EventManager
+                    .a(new aethereal.event.BackendEvent(packet, aethereal.event.BackendEvent.Phase.RECEIVE));
         } catch (Exception ex) {
             if (b != null) {
                 b.a("Error processing message: " + ex.getMessage());

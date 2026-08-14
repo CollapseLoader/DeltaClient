@@ -43,7 +43,7 @@ public class Nuker extends Module {
 
     @EventTarget
     public void a(TickEvent event) {
-        MineAssistant assistant = Delta.h().d().t().ak();
+        MineAssistant assistant = Delta.getInstance().getModuleProcessor().t().ak();
         this.f = null;
         ItemStack tool = mc.player.getMainHandStack();
         if (tool.isDamageable() && tool.getMaxDamage() - tool.getDamage() < 50) {
@@ -80,7 +80,7 @@ public class Nuker extends Module {
         }
         if (this.f != null) {
             Rotation base = Rotation.a(eye, this.f.toCenterPos());
-            Delta.h().d().k().a(new Rotation(MathHelper.wrapDegrees(base.c() + MathUtil.a(-3.0f, 3.0f)), MathHelper.clamp(base.d() + MathUtil.a(-3.0f, 3.0f), -90.0f, 90.0f)), 180.0f, 1, 1);
+            Delta.getInstance().getModuleProcessor().k().a(new Rotation(MathHelper.wrapDegrees(base.c() + MathUtil.a(-3.0f, 3.0f)), MathHelper.clamp(base.d() + MathUtil.a(-3.0f, 3.0f), -90.0f, 90.0f)), 180.0f, 1, 1);
             if (Rotation.b().a(base) <= 20.0d) {
                 for (int i = 0; i < this.d.h().intValue(); i++) {
                     mc.interactionManager.updateBlockBreakingProgress(this.f, face);
@@ -100,7 +100,7 @@ public class Nuker extends Module {
     @EventTarget
     public void a(DrawEvent event) {
         if (event.c() && this.f != null) {
-            event.e().a(event.h(), new Box(this.f), ColorUtil.a(255, 0, 0, InterfaceC0020Opcode.aN), 2.0f);
+            event.e().a(event.h(), new Box(this.f), ColorUtil.convertToARGB(255, 0, 0, InterfaceC0020Opcode.aN), 2.0f);
         }
     }
 

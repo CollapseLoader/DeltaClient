@@ -9,9 +9,9 @@ import net.minecraft.item.Items;
 import net.minecraft.util.hit.EntityHitResult;
 
 @ModuleRegister(name = "Click Action", description = "Выполняет действие, привязанное к выбранной клавише", category = Category.Player)
-public class ClickAction extends Module implements Interface {
+public class ClickAction extends Module {
     private final BindSetting b = new BindSetting("Эндер-жемчуг", -1).a(() -> {
-        Delta.h().d().v().b().a(Items.ENDER_PEARL.getDefaultStack());
+        Delta.getInstance().getModuleProcessor().v().b().a(Items.ENDER_PEARL.getDefaultStack());
     });
     private final BindSetting c = new BindSetting("Добавление друга", -1).a(() -> {
         EntityHitResult hit = mc.crosshairTarget instanceof EntityHitResult ehr ? ehr : null;
@@ -19,13 +19,13 @@ public class ClickAction extends Module implements Interface {
             if (hit.getEntity() instanceof AbstractClientPlayerEntity targetPlayer) {
                 if (targetPlayer != mc.player) {
                     String name = targetPlayer.getName().getString();
-                    if (Delta.h().d().e().d(name)) {
-                        Delta.h().d().e().c(name);
-                        Delta.h().d().e().unSetup();
+                    if (Delta.getInstance().getModuleProcessor().e().d(name)) {
+                        Delta.getInstance().getModuleProcessor().e().c(name);
+                        Delta.getInstance().getModuleProcessor().e().unSetup();
                         ChatUtil.sendMessage("Товарищ " + name + " был успешно удален из списка друзей.");
                     } else {
-                        Delta.h().d().e().b(name);
-                        Delta.h().d().e().unSetup();
+                        Delta.getInstance().getModuleProcessor().e().b(name);
+                        Delta.getInstance().getModuleProcessor().e().unSetup();
                         ChatUtil.sendMessage("Товарищ " + name + " был успешно добавлен в список друзей.");
                     }
                 }

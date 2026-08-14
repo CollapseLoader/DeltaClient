@@ -62,7 +62,7 @@ public class HeldItemRendererMixin {
 
     @ModifyExpressionValue(method = {"renderFirstPersonItem"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/network/AbstractClientPlayerEntity;isInvisible()Z")})
     private boolean renderFirstPersonItem(boolean original) {
-        if (Delta.h().d().t().T().m()) {
+        if (Delta.getInstance().getModuleProcessor().t().T().m()) {
             return false;
         }
         return original;

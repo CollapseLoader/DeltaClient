@@ -25,13 +25,13 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-@ModuleRegister(name = "Captcha Solver", description = "Автоматически решает капчу при входе на сервер FunTime", category = Category.Player)
+@ModuleRegister(name = "Captcha Solver", description = "!! ЭТОТ МОДУЛЬ НЕ РАБОТАЕТ, ТАК КАК ОН ЗАВЯЗАН С БЭКЕНДОМ !!", category = Category.Player)
 public class CaptchaSolver extends Module {
     private byte[] b;
 
     @EventTarget
     public void a(TickEvent event) {
-        if (ServerUtil.a.c() && Delta.h().f().g()) {
+        if (ServerUtil.a.c() && Delta.getInstance().f().g()) {
             if (mc.crosshairTarget instanceof BlockHitResult hit) {
                 mc.world.getEntitiesByClass(ItemFrameEntity.class, new Box(hit.getBlockPos()).expand(0.5d), frame -> {
                     return frame.getHeldItemStack().getItem() instanceof FilledMapItem;
@@ -114,7 +114,7 @@ public class CaptchaSolver extends Module {
             byte[] bytes = stream.toByteArray();
             if (!Arrays.equals(bytes, this.b)) {
                 this.b = bytes;
-                Delta.h().f().a(false, "captcha", "bytes", java.util.Base64.getEncoder().encodeToString(bytes));
+                Delta.getInstance().f().a(false, "captcha", "bytes", java.util.Base64.getEncoder().encodeToString(bytes));
             }
         } catch (Exception e) {
         }

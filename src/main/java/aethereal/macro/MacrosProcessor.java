@@ -1,6 +1,6 @@
 package aethereal.macro;
 
-import aethereal.api.Compile;
+
 import aethereal.config.ConfigProcessor;
 import aethereal.core.Delta;
 import aethereal.core.EventTarget;
@@ -14,10 +14,10 @@ import java.util.List;
 
 public class MacrosProcessor extends ConfigProcessor<MacrosConstructor> {
     @Override
-    @Compile
+    
     protected List<MacrosConstructor> a(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
-        ArrayList arrayList = new ArrayList();
+        ArrayList arrayList = new ArrayList<>();
         for (int i = 0; i < jSONArray.a(); i++) {
             JSONObject jSONObjectJ = jSONArray.j(i);
             arrayList.add(new MacrosConstructor(jSONObjectJ.l("key"), jSONObjectJ.l("command")));
@@ -26,7 +26,7 @@ public class MacrosProcessor extends ConfigProcessor<MacrosConstructor> {
     }
 
     @Override
-    @Compile
+    
     protected String a(List<MacrosConstructor> data) throws Exception {
         JSONArray jSONArray = new JSONArray();
         for (MacrosConstructor macrosConstructor : data) {
@@ -50,8 +50,8 @@ public class MacrosProcessor extends ConfigProcessor<MacrosConstructor> {
     @EventTarget
     public void a(KeyEvent event) {
         if (event.getAction() == 1 && mc.currentScreen == null) {
-            for (MacrosConstructor constructor : Delta.h().d().d().e()) {
-                if (KeyUtil.a(event.b()) == KeyUtil.a(constructor.a())) {
+            for (MacrosConstructor constructor : Delta.getInstance().getModuleProcessor().d().e()) {
+                if (KeyUtil.a(event.getKey()) == KeyUtil.a(constructor.a())) {
                     mc.player.networkHandler.sendChatMessage(constructor.b());
                 }
             }
@@ -59,7 +59,7 @@ public class MacrosProcessor extends ConfigProcessor<MacrosConstructor> {
     }
 
     public List<MacrosConstructor> a() {
-        return new ArrayList(this.d);
+        return new ArrayList<>(this.d);
     }
 
     public void a(String str, String str2) {

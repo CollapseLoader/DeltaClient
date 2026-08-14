@@ -9,7 +9,7 @@ public class ColorSetting extends Setting<Integer> {
     }
 
     @Override
-    public Element_2<?> d() {
+    public Element_2<?> createBooleanElement() {
         return new ColorElement(this);
     }
 }

@@ -1,6 +1,6 @@
 package aethereal.ui.element;
 
-import aethereal.api.Compile;
+
 import aethereal.config.ThemeInfo;
 import aethereal.config.ThemeProcessor;
 import aethereal.core.Delta;
@@ -21,7 +21,7 @@ public class ButtonElement extends Element_2<ButtonSetting> {
     }
 
     @Override
-    @Compile
+    
     public boolean a(double mouseX, double mouseY, int button) {
         if (button != 0) {
             return false;
@@ -41,14 +41,14 @@ public class ButtonElement extends Element_2<ButtonSetting> {
     @Override
     public void a(DrawContext context, double mouseX, double mouseY, float delta, float extend) {
         MatrixStack matrices = context.getMatrices();
-        Draw2DProcessor draw = Delta.h().d().i();
-        ThemeProcessor theme = Delta.h().d().o();
+        Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
+        ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
         b().a(MathUtil.a(mouseX, mouseY, this.a.x, this.a.y, this.a.z, this.a.w) && extend >= 1.0f);
         b().a(0.0f, 1.0f, 0.3f, EasingList.i, delta);
         float hover = b().c();
-        int text = ColorUtil.a(255, 255, 255, 255);
-        draw.a(matrices, this.a.x, this.a.y, this.a.z, this.a.w, 4.0f, ColorUtil.a(theme.a(ThemeInfo.PRIMARY).a(), ((10.0f + (20.0f * hover)) / 255.0f) * extend));
-        draw.a(matrices, this.a.x, this.a.y, this.a.z, this.a.w, 4.0f, 0.5f, ColorUtil.a(theme.a(ThemeInfo.OUTLINE_MEDIUM).a(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * extend));
-        Fonts.c.b(matrices, this.b.i(), this.a.x + (this.a.z / 2.0f), (this.a.y + ((this.a.w - Fonts.c.a(7.0f)) / 2.0f)) - 0.5f, 7.0f, ColorUtil.a(text, extend));
+        int text = ColorUtil.convertToARGB(255, 255, 255, 255);
+        draw.a(matrices, this.a.x, this.a.y, this.a.z, this.a.w, 4.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), ((10.0f + (20.0f * hover)) / 255.0f) * extend));
+        draw.a(matrices, this.a.x, this.a.y, this.a.z, this.a.w, 4.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * extend));
+        Fonts.c.b(matrices, this.b.i(), this.a.x + (this.a.z / 2.0f), (this.a.y + ((this.a.w - Fonts.c.a(7.0f)) / 2.0f)) - 0.5f, 7.0f, ColorUtil.applyAlphaToColor(text, extend));
     }
 }

@@ -18,7 +18,7 @@ import java.awt.*;
 import java.util.List;
 
 @ModuleRegister(name = "Mine Assistant", description = "Помощник, упрощающий добычу ресурсов в шахте под FunTime/SpookyTime", category = Category.Misc)
-public class MineAssistant extends Module implements Interface {
+public class MineAssistant extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Выберите подсвечиваемые руды", new BooleanSetting("Алмазная", true), new BooleanSetting("Редстоуновая", false), new BooleanSetting("Железная", false), new BooleanSetting("Лазуритовая", false), new BooleanSetting("Золотая", true), new BooleanSetting("Древние", true), new BooleanSetting("Угольная", false));
     private final List<a> c = java.util.Arrays.asList(new a(Blocks.DIAMOND_ORE, Color.CYAN.getRGB(), "Алмазная"), new a(Blocks.DEEPSLATE_DIAMOND_ORE, Color.CYAN.getRGB(), "Алмазная"), new a(Blocks.REDSTONE_ORE, Color.RED.getRGB(), "Редстоуновая"), new a(Blocks.DEEPSLATE_REDSTONE_ORE, Color.RED.getRGB(), "Редстоуновая"), new a(Blocks.IRON_ORE, Color.LIGHT_GRAY.getRGB(), "Железная"), new a(Blocks.DEEPSLATE_IRON_ORE, Color.LIGHT_GRAY.getRGB(), "Железная"), new a(Blocks.LAPIS_ORE, Color.BLUE.getRGB(), "Лазуритовая"), new a(Blocks.DEEPSLATE_LAPIS_ORE, Color.BLUE.getRGB(), "Лазуритовая"), new a(Blocks.GOLD_ORE, Color.YELLOW.getRGB(), "Золотая"), new a(Blocks.DEEPSLATE_GOLD_ORE, Color.YELLOW.getRGB(), "Золотая"), new a(Blocks.ANCIENT_DEBRIS, new Color(InterfaceC0020Opcode.aJ, 51, 0).getRGB(), "Древние"), new a(Blocks.COAL_ORE, Color.DARK_GRAY.getRGB(), "Угольная"), new a(Blocks.DEEPSLATE_COAL_ORE, Color.DARK_GRAY.getRGB(), "Угольная"), new a(Blocks.AIR, -1, null), new a(Blocks.STONE, -1, null), new a(Blocks.GRANITE, -1, null), new a(Blocks.COBBLESTONE, -1, null));
     private Box d;
@@ -79,7 +79,7 @@ public class MineAssistant extends Module implements Interface {
                         BlockPos pos = new BlockPos(x, y, z);
                         a info = a(mc.world.getBlockState(pos).getBlock());
                         if (info != null && info.b() != -1 && this.b.a(info.c()).c().booleanValue()) {
-                            event.e().a(event.h(), new Box(pos), ColorUtil.a(info.b(), InterfaceC0020Opcode.ap), 1.0f);
+                            event.e().a(event.h(), new Box(pos), ColorUtil.combineColorWithAlpha(info.b(), InterfaceC0020Opcode.ap), 1.0f);
                         }
                     }
                 }

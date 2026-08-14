@@ -1,10 +1,10 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
 
 
-public class ScrollEvent extends Event implements IEvent {
+
+public class ScrollEvent extends Event {
     private final double a;
     private final double b;
 

@@ -70,7 +70,7 @@ public class AncientFarmer extends Module {
         a missing = Arrays.stream(a.values()).filter(requirement -> {
             return !requirement.a();
         }).findFirst().orElse(null);
-        XRay xray = Delta.h().d().t().E();
+        XRay xray = Delta.getInstance().getModuleProcessor().t().E();
         boolean work = missing == AncientFarmer.a.TNT && this.e != Phase.SEARCH;
         ServerUtil.a.d();
         if (missing != null && !work) {
@@ -78,7 +78,7 @@ public class AncientFarmer extends Module {
             a();
             return;
         }
-        InteractHandler eat = Delta.h().d().v().k();
+        InteractHandler eat = Delta.getInstance().getModuleProcessor().v().k();
         int foodSlot = IntStream.range(0, 9).filter(slot -> {
             return mc.player.getInventory().getStack(slot).contains(DataComponentTypes.FOOD);
         }).findFirst().orElse(-1);
@@ -156,7 +156,7 @@ public class AncientFarmer extends Module {
                             return Double.compare(eye.squaredDistanceTo(a2), eye.squaredDistanceTo(b2));
                         }).orElse(null);
                         if (aim != null) {
-                            Delta.h().d().k().a(Rotation.a(eye, aim), 180.0f, 0, 1);
+                            Delta.getInstance().getModuleProcessor().k().a(Rotation.a(eye, aim), 180.0f, 0, 1);
                             if (new Rotation(mc.player).a(Rotation.b()) < 1.0d && mc.player.age % 5 == 0) {
                                 mc.player.getInventory().selectedSlot = flint;
                                 if (mc.crosshairTarget instanceof BlockHitResult hit) {
@@ -193,7 +193,7 @@ public class AncientFarmer extends Module {
                     if (target != null) {
                         if (slot3 != -1) {
                             BlockPos support = target.down();
-                            Delta.h().d().k().a(Rotation.a(eye2, new Vec3d(((double) support.getX()) + 0.5d, support.getY() + 1, ((double) support.getZ()) + 0.5d)), 180.0f, 0, 1);
+                            Delta.getInstance().getModuleProcessor().k().a(Rotation.a(eye2, new Vec3d(((double) support.getX()) + 0.5d, support.getY() + 1, ((double) support.getZ()) + 0.5d)), 180.0f, 0, 1);
                             if (new Rotation(mc.player).a(Rotation.b()) < 1.0d && mc.player.age % 5 == 0) {
                                 if (mc.player.getInventory().selectedSlot != slot3) {
                                     mc.player.getInventory().selectedSlot = slot3;
@@ -255,7 +255,7 @@ public class AncientFarmer extends Module {
                     if (!xray.s().isEmpty()) {
                         if (!baritone.getMineProcess().isActive()) {
                             baritone.getMineProcess().minePositions(Items.ANCIENT_DEBRIS, xray.s());
-                            Delta.h().f().a(false, "telegram", "message", "⛏️ AncientFarmer — Найдены древние обломки!\n\n📍 Позиций для добычи: %s\n".formatted(Integer.valueOf(xray.s().size())));
+                            Delta.getInstance().f().a(false, "telegram", "message", "⛏️ AncientFarmer — Найдены древние обломки!\n\n📍 Позиций для добычи: %s\n".formatted(Integer.valueOf(xray.s().size())));
                         }
                     } else if (!baritone.getMineProcess().isActive()) {
                         this.e = Phase.SEARCH;
@@ -268,7 +268,7 @@ public class AncientFarmer extends Module {
     @EventTarget
     public void a(DrawEvent draw) {
         if (draw.c() && this.f != null) {
-            draw.e().a(draw.h(), new Box(this.f), ColorUtil.a(230, 90, 70, InterfaceC0020Opcode.ap), 1.0f);
+            draw.e().a(draw.h(), new Box(this.f), ColorUtil.convertToARGB(230, 90, 70, InterfaceC0020Opcode.ap), 1.0f);
         }
     }
 

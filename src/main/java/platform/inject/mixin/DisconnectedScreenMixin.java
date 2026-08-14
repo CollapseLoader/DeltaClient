@@ -30,7 +30,7 @@ public abstract class DisconnectedScreenMixin extends Screen {
 
     @Inject(method = {"init"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/DisconnectedScreen;refreshWidgetPositions()V", shift = At.Shift.BEFORE)})
     private void init(CallbackInfo ci) {
-        ServerInfo server = Delta.h().d().v().h().a();
+        ServerInfo server = Delta.getInstance().getModuleProcessor().v().h().a();
         if (server != null) {
             this.buttonWidget = addDrawableChild(ButtonWidget.builder(Text.literal("Переподключиться"), btn -> {
                 ConnectScreen.connect(new MultiplayerScreen(null), Interface.mc, ServerAddress.parse(server.address), server, false, null);

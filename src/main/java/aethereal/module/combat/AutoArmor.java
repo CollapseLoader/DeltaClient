@@ -18,7 +18,7 @@ import net.minecraft.network.packet.c2s.play.BundleItemSelectedC2SPacket;
 import net.minecraft.registry.RegistryKeys;
 
 @ModuleRegister(name = "Auto Armor", description = "Автоматически надевает лучшую броню из инвентаря и мешков", category = Category.Combat)
-public class AutoArmor extends Module implements Interface {
+public class AutoArmor extends Module {
     private final BooleanSetting b = new BooleanSetting("Не в движении", true);
     private final EquipmentSlot[] c = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
     private int d;
@@ -41,7 +41,7 @@ public class AutoArmor extends Module implements Interface {
 
     @EventTarget
     public void a(TickEvent event) {
-        if (!Delta.h().d().v().a().a().isEmpty()) {
+        if (!Delta.getInstance().getModuleProcessor().v().a().a().isEmpty()) {
             return;
         }
         this.d++;
@@ -95,7 +95,7 @@ public class AutoArmor extends Module implements Interface {
         if (bestBundle != -1) {
             mc.player.networkHandler.sendPacket(new BundleItemSelectedC2SPacket(bestSlot < 9 ? 36 + bestSlot : bestSlot, bestBundle));
         }
-        Delta.h().d().v().a().b(bestSlot, armorIndex, 1);
+        Delta.getInstance().getModuleProcessor().v().a().b(bestSlot, armorIndex, 1);
         return true;
     }
 

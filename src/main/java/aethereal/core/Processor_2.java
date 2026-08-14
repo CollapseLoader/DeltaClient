@@ -1,6 +1,5 @@
 package aethereal.core;
 
-import aethereal.api.Compile;
 import aethereal.autobuy.AutoBuyProcessor;
 import aethereal.autobuy.BatchProcessor;
 import aethereal.autobuy.CollectorProcessor;
@@ -32,10 +31,8 @@ import java.util.function.Function;
 
 public class Processor_2 implements Interface {
 
-    private static final Logger_2 b;
-
     static {
-        b = LoggerFactory.a(Processor_2.class);
+        LoggerFactory.a(Processor_2.class);
     }
 
     private final List<BaseProcessor> c;
@@ -60,8 +57,8 @@ public class Processor_2 implements Interface {
     private final HandlerProcessor v;
 
     public Processor_2() {
-        Delta.h().a(this);
-        this.c = new ArrayList();
+        Delta.getInstance().a(this);
+        this.c = new ArrayList<>();
         this.d = new MacrosProcessor();
         this.e = new FriendProcessor();
         this.f = new StaffProcessor();
@@ -83,19 +80,19 @@ public class Processor_2 implements Interface {
         this.v = new HandlerProcessor();
     }
 
-    @Compile
     public void a() {
-        Collections.addAll(this.c, this.d, this.p, this.q, this.r, this.e, this.m, this.n, this.f, this.o, this.h, this.t, this.k, this.g, this.i, this.s, this.j, this.u, this.l, this.v);
-        this.c.forEach(new Consumer() {
+        Collections.addAll(this.c, this.d, this.p, this.q, this.r, this.e, this.m, this.n, this.f, this.o, this.h,
+                this.t, this.k, this.g, this.i, this.s, this.j, this.u, this.l, this.v);
+        this.c.forEach(new Consumer<BaseProcessor>() {
             @Override
-            public void accept(Object obj) {
-                ((BaseProcessor) obj).setup();
+            public void accept(BaseProcessor obj) {
+                obj.setup();
             }
         });
-        System.out.println("setup - ".concat(String.valueOf(this.c.stream().map(new Function() {
+        System.out.println("setup - ".concat(String.valueOf(this.c.stream().map(new Function<BaseProcessor, String>() {
             @Override
-            public Object apply(Object obj) {
-                return ((BaseProcessor) obj).getClass().getSimpleName();
+            public String apply(BaseProcessor obj) {
+                return obj.getClass().getSimpleName();
             }
         }).toList())));
     }

@@ -1,12 +1,12 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Box;
 
-public class BoundingBoxEvent extends Event implements IEvent {
+public class BoundingBoxEvent extends Event {
     public Box a;
     public Entity b;
 

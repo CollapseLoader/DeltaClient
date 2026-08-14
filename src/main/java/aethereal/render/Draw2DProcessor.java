@@ -1,6 +1,6 @@
 package aethereal.render;
 
-import aethereal.api.Compile;
+
 import aethereal.config.BaseProcessor;
 import aethereal.core.Interface;
 import aethereal.ui.shader.*;
@@ -24,7 +24,7 @@ public class Draw2DProcessor extends BaseProcessor implements Interface {
     private float b = 1.0f;
 
     @Override
-    @Compile
+    
     public void setup() {
     }
 
@@ -138,7 +138,7 @@ public class Draw2DProcessor extends BaseProcessor implements Interface {
         if (skin == null) {
             return;
         }
-        int color = ColorUtil.a(255, 255, 255, (int) (alpha * 255.0f));
+        int color = ColorUtil.convertToARGB(255, 255, 255, (int) (alpha * 255.0f));
         int textureId = mc.getTextureManager().getTexture(skin).getGlId();
         a(matrices, x, y, width, height, radius, color, 0.125f, 0.125f, 0.125f, 0.125f, textureId);
         a(matrices, x, y, width, height, radius, color, 0.625f, 0.125f, 0.125f, 0.125f, textureId);

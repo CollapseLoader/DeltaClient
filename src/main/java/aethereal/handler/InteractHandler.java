@@ -14,14 +14,14 @@ import java.util.List;
 
 @Handler_2
 public class InteractHandler extends BaseHandler implements Interface {
-    private final List<a> b = new ArrayList();
+    private final List<a> b = new ArrayList<>();
 
     public List<a> b() {
         return this.b;
     }
 
     public void a(int slot) {
-        if (this.b.isEmpty() && Delta.h().d().v().a().a().isEmpty()) {
+        if (this.b.isEmpty() && Delta.getInstance().getModuleProcessor().v().a().a().isEmpty()) {
             this.b.add(new a(slot));
         }
     }
@@ -33,7 +33,7 @@ public class InteractHandler extends BaseHandler implements Interface {
     @EventTarget
     public void a(TickEvent event) {
         if (!this.b.isEmpty() && mc.player.age > 40) {
-            InventoryHandler inventoryHandler = Delta.h().d().v().a();
+            InventoryHandler inventoryHandler = Delta.getInstance().getModuleProcessor().v().a();
             a task = this.b.getFirst();
             boolean inventory = task.b() > 8;
             task.a(task.d() + 1);

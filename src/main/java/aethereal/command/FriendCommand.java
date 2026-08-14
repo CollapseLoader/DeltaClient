@@ -14,7 +14,7 @@ import java.util.Objects;
 public class FriendCommand extends BaseCommand {
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
-        FriendProcessor processor = Delta.h().d().e();
+        FriendProcessor processor = Delta.getInstance().getModuleProcessor().e();
         LiteralArgumentBuilder literalArgumentBuilderThen = builder.then(a("add").executes(context -> {
             ChatUtil.sendMessage("Использование: .friend add <ник>");
             return 1;

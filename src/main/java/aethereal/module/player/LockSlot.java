@@ -12,7 +12,10 @@ import aethereal.util.ServerUtil;
 
 @ModuleRegister(name = "Lock Slot", description = "Запрещает выбрасывать предметы из выбранных слотов", category = Category.Player)
 public class LockSlot extends Module {
-    private final MultiModeSetting b = new MultiModeSetting("Заблокированные слоты", new BooleanSetting("1", false), new BooleanSetting("2", false), new BooleanSetting("3", false), new BooleanSetting("4", false), new BooleanSetting("5", false), new BooleanSetting("6", false), new BooleanSetting("7", false), new BooleanSetting("8", false), new BooleanSetting("9", false));
+    private final MultiModeSetting b = new MultiModeSetting("Заблокированные слоты", new BooleanSetting("1", false),
+            new BooleanSetting("2", false), new BooleanSetting("3", false), new BooleanSetting("4", false),
+            new BooleanSetting("5", false), new BooleanSetting("6", false), new BooleanSetting("7", false),
+            new BooleanSetting("8", false), new BooleanSetting("9", false));
     private final BooleanSetting c = new BooleanSetting("Блокировать только в PVP", true);
 
     public LockSlot() {

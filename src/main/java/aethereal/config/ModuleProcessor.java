@@ -1,7 +1,7 @@
 package aethereal.config;
 
 import aethereal.ambience.Ambience;
-import aethereal.api.Compile;
+
 import aethereal.autobuy.AutoBuyEntry;
 import aethereal.command.CommandProcessor;
 import aethereal.command.LayoutCommand;
@@ -142,7 +142,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
     private final AutoBuy ba = new AutoBuy();
     private final AutoLeave bb = new AutoLeave();
     private final Velocity bc = new Velocity();
-    private Interface_2 bd;
+    private Interface bd;
 
     public static void a(JSONObject obj, Module module) {
         module.a(obj.a("activated", false));
@@ -158,15 +158,23 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
     }
 
     @Override
-    @Compile
+    
     public void setup() {
-        this.bd = new Interface_2();
-        a(this.f, this.aA, this.az, this.bc, this.aY, this.aL, this.aD, this.Z, this.J, this.aK, this.U, this.S, this.aJ, this.N, this.aH, this.aT, this.s, this.av, this.i, this.aE, this.ao, this.m, this.Q, this.ag, this.aC, this.n, this.am, this.I, this.h, this.aQ, this.aR, this.aS, this.aI, this.al, this.aq, this.x, this.ar, this.g, this.aM, this.aG, this.aF, this.z, this.ax, this.aw, this.r, this.u, this.y, this.an, this.aj, this.ak, this.A, this.t, this.ah, this.V, this.W, this.as, this.q, this.P, this.ap, this.k, this.l, this.F, this.G, this.H, this.B, this.C, this.R, this.D, this.X, this.j, this.M, this.ay, this.L, this.K, this.o, this.E, this.ae, this.v, this.ac, this.af, this.T, this.ai, this.ab, this.aa, this.O, this.p, this.w, this.bd, this.at, this.au, this.aB, this.aO, this.e, this.aN, this.aP, this.aU, this.aV, this.aW, this.aX, this.aZ, this.ba, this.bb, this.Y);
+        this.bd = new Interface();
+        a(this.f, this.aA, this.az, this.bc, this.aY, this.aL, this.aD, this.Z, this.J, this.aK, this.U, this.S,
+                this.aJ, this.N, this.aH, this.aT, this.s, this.av, this.i, this.aE, this.ao, this.m, this.Q, this.ag,
+                this.aC, this.n, this.am, this.I, this.h, this.aQ, this.aR, this.aS, this.aI, this.al, this.aq, this.x,
+                this.ar, this.g, this.aM, this.aG, this.aF, this.z, this.ax, this.aw, this.r, this.u, this.y, this.an,
+                this.aj, this.ak, this.A, this.t, this.ah, this.V, this.W, this.as, this.q, this.P, this.ap, this.k,
+                this.l, this.F, this.G, this.H, this.B, this.C, this.R, this.D, this.X, this.j, this.M, this.ay, this.L,
+                this.K, this.o, this.E, this.ae, this.v, this.ac, this.af, this.T, this.ai, this.ab, this.aa, this.O,
+                this.p, this.w, this.bd, this.at, this.au, this.aB, this.aO, this.e, this.aN, this.aP, this.aU, this.aV,
+                this.aW, this.aX, this.aZ, this.ba, this.bb, this.Y);
         super.setup();
     }
 
     @Override
-    @Compile
+    
     protected List<Module> a(String json) {
         PotionThrower potionThrower = this.aZ;
         if (json == null || json.isBlank() || json.trim().startsWith("[")) {
@@ -205,11 +213,11 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
         }
         JSONArray jSONArrayY = jSONObject.y("layouts");
         if (jSONArrayY != null) {
-            Delta deltaH = Delta.h();
+            Delta deltaH = Delta.getInstance();
             if (deltaH == null) {
                 throw new NullPointerException();
             }
-            Processor_2 processor_2D = deltaH.d();
+            Processor_2 processor_2D = deltaH.getModuleProcessor();
             if (processor_2D == null) {
                 throw new NullPointerException();
             }
@@ -243,7 +251,8 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
                 }
                 Item class_1792Var2 = (Item) objMethod_63535;
                 if (class_1792Var2 != class_1792Var) {
-                    listC.add(new LayoutCommand.a(jSONObjectJ2.l("name"), new ItemStack(class_1792Var2), jSONObjectJ2.h("slot")));
+                    listC.add(new LayoutCommand.a(jSONObjectJ2.l("name"), new ItemStack(class_1792Var2),
+                            jSONObjectJ2.h("slot")));
                 }
             }
         }
@@ -278,11 +287,11 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
                 optionalFindFirst2.ifPresent(consumer2);
             }
         }
-        return new ArrayList(e());
+        return new ArrayList<>(e());
     }
 
     @Override
-    @Compile
+    
     protected String a(List<Module> data) {
         PotionThrower potionThrower = this.aZ;
         JSONArray jSONArray = new JSONArray();
@@ -332,11 +341,11 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
             jSONArray.a(jSONObject);
         }
         JSONArray jSONArray2 = new JSONArray();
-        Delta deltaH = Delta.h();
+        Delta deltaH = Delta.getInstance();
         if (deltaH == null) {
             throw new NullPointerException();
         }
-        Processor_2 processor_2D = deltaH.d();
+        Processor_2 processor_2D = deltaH.getModuleProcessor();
         if (processor_2D == null) {
             throw new NullPointerException();
         }
@@ -842,7 +851,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
         return this.bc;
     }
 
-    public Interface_2 bd() {
+    public Interface bd() {
         return this.bd;
     }
 
@@ -863,8 +872,8 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
 
     @EventTarget
     public void a(KeyEvent event) {
-        int action = event.d();
-        int key = event.b();
+        int action = event.getAction();
+        int key = event.getKey();
         for (Module module : e()) {
             if (module.p() != -1 && module.p() == key && action == 1) {
                 module.a();

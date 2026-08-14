@@ -31,8 +31,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ClientPlayNetworkHandlerMixin implements Interface {
     @Inject(method = {"sendChatMessage"}, at = {@At("HEAD")}, cancellable = true)
     private void sendChatMessage(String content, CallbackInfo ci) {
-        if (!Delta.h().d().t().am().m()) {
-            Delta.h().d().u().a(content, ci);
+        if (!Delta.getInstance().getModuleProcessor().t().am().m()) {
+            Delta.getInstance().getModuleProcessor().u().a(content, ci);
         }
     }
 

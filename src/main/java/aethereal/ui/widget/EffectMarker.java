@@ -53,7 +53,7 @@ public class EffectMarker {
             float progress = MathUtil.b(this.a.c(), 0.0f, 1.0f);
             float scale = this.e ? progress : a(progress);
             float length = 4.0f * Math.max(1.0E-4f, scale);
-            int color = ColorUtil.a(255, 255, 255, Math.round(250.0f * progress));
+            int color = ColorUtil.convertToARGB(255, 255, 255, Math.round(250.0f * progress));
             matrices.push();
             matrices.translate(this.c, this.d, 0.0f);
             for (int i = 0; i < 4; i++) {
@@ -67,7 +67,7 @@ public class EffectMarker {
             matrices.push();
             matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(angleDeg));
             matrices.translate(offset, 0.0f, 0.0f);
-            Delta.h().d().i().a(matrices, (-length) / 2.0f, -0.25f, length, 0.5f, 0.0f, color);
+            Delta.getInstance().getModuleProcessor().i().a(matrices, (-length) / 2.0f, -0.25f, length, 0.5f, 0.0f, color);
             matrices.pop();
         }
 

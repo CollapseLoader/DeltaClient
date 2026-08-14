@@ -28,7 +28,7 @@ public class AutoAccept extends Module {
         if (event.c()) {
             if (event.d() instanceof GameMessageS2CPacket packet) {
                 String chat = packet.content().getString().toLowerCase();
-                if (this.c.c().booleanValue() && Delta.h().d().e().a().stream().noneMatch(friend -> {
+                if (this.c.c().booleanValue() && Delta.getInstance().getModuleProcessor().e().a().stream().noneMatch(friend -> {
                     return chat.contains(friend.a().toLowerCase());
                 })) {
                     return;

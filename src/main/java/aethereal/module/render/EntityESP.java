@@ -43,7 +43,7 @@ import org.joml.Vector2f;
 @ModuleRegister(name = "Entity ESP", description = "Отображает информацию о сущностях над их головой", category = Category.Render)
 public class EntityESP extends Module {
     private final MultiModeSetting trackedEntities = new MultiModeSetting("Отслеживаемые сущности", new BooleanSetting("Игроки", true), new BooleanSetting("Животные", false), new BooleanSetting("Мобы", false), new BooleanSetting("Предметы", false));
-    private final List<Tracker> trackers = new ArrayList();
+    private final List<Tracker> trackers = new ArrayList<>();
 
     public List<Tracker> getTrackers() {
         return this.trackers;
@@ -70,7 +70,7 @@ public class EntityESP extends Module {
                     }
                     String key = str;
                     if (key != null && this.trackedEntities.a(key).c().booleanValue()) {
-                        int color = ((entity instanceof PlayerEntity) && Delta.h().d().e().d(entity.getName().getString())) ? ColorUtil.a(0, 100, 0, InterfaceC0020Opcode.bN) : ColorUtil.a(0, 0, 0, 80);
+                        int color = ((entity instanceof PlayerEntity) && Delta.getInstance().getModuleProcessor().e().d(entity.getName().getString())) ? ColorUtil.convertToARGB(0, 100, 0, InterfaceC0020Opcode.bN) : ColorUtil.convertToARGB(0, 0, 0, 80);
                         Vec3d interpolated = MathUtil.a((Entity) entity, event.g());
                         Vec3d entityPos = interpolated.add(0.0d, entity.getHeight() + 0.25f, 0.0d);
                         Vector2f screenPos = ProjectUtil.project(entityPos.getX(), entityPos.getY(), entityPos.getZ());
@@ -89,7 +89,7 @@ public class EntityESP extends Module {
     }
 
     private void drawNameTag(Entity entity, DrawEvent event, Vector2f screenPos, float fontSize, float padding, int color) {
-        StreamerMode streamerMode = Delta.h().d().t().aE();
+        StreamerMode streamerMode = Delta.getInstance().getModuleProcessor().t().aE();
         Text name = entity.getName();
         if (streamerMode.m() && streamerMode.r().c().booleanValue()) {
             name = Text.literal(streamerMode.a(name.getString())).setStyle(name.getStyle());
@@ -192,7 +192,7 @@ public class EntityESP extends Module {
             for (StatusEffectInstance effect2 : effects) {
                 String duration = effect2.getDuration() > 1000000 ? " ∞" : " - " + ((effect2.getDuration() / 20) / 60) + ":" + String.format("%02d", Integer.valueOf((effect2.getDuration() / 20) % 60));
                 String line = Text.translatable(((StatusEffect) effect2.getEffectType().value()).getTranslationKey()).getString() + " " + MathUtil.a(effect2.getAmplifier()) + duration;
-                Fonts.e.a(event.i().getMatrices(), line, screenPos.x() - (Fonts.e.a(line, fontSize) / 2.0f), lineY, fontSize, ColorUtil.a(((StatusEffect) effect2.getEffectType().value()).getColor(), 1.0f), 0.0f);
+                Fonts.e.a(event.i().getMatrices(), line, screenPos.x() - (Fonts.e.a(line, fontSize) / 2.0f), lineY, fontSize, ColorUtil.applyAlphaToColor(((StatusEffect) effect2.getEffectType().value()).getColor(), 1.0f), 0.0f);
                 lineY += lineHeight;
             }
         }

@@ -41,7 +41,7 @@ public class DistributionHandler extends BaseHandler implements Interface {
                     float x = (screen.getX() + screen.getBackgroundWidth()) - 17;
                     float y = screen.getY() + 5;
                     this.b = MathUtil.a(event.f(), event.g(), x, y, 10.0f, 10.0f);
-                    Delta.h().d().i().a(event.d().getMatrices(), Identifier.of("delta", this.b ? "pictures/minecraft/distribution_button_hovered.png" : "pictures/minecraft/distribution_button.png"), x, y, 10.0f, 10.0f, 0.0f, -1);
+                    Delta.getInstance().getModuleProcessor().i().a(event.d().getMatrices(), Identifier.of("delta", this.b ? "pictures/minecraft/distribution_button_hovered.png" : "pictures/minecraft/distribution_button.png"), x, y, 10.0f, 10.0f, 0.0f, -1);
                     if (this.b) {
                         event.d().drawTooltip(event.b().getTextRenderer(), List.of(Text.of("Отсортировать предметы")), event.f(), event.g());
                     }

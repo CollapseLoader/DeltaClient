@@ -1,6 +1,6 @@
 package aethereal.autobuy;
 
-import aethereal.api.Compile;
+
 import aethereal.config.ConfigProcessor;
 import aethereal.lib.json.JSONArray;
 import aethereal.lib.json.JSONObject;
@@ -15,7 +15,7 @@ public class AutoBuyProcessor extends ConfigProcessor<AutoBuyEntry> {
     }
 
     @Override
-    @Compile
+    
     protected List<AutoBuyEntry> a(String str) {
         if (this.d.isEmpty()) {
             this.d.addAll(Arrays.asList(AutoBuyEntry.values()));
@@ -38,11 +38,11 @@ public class AutoBuyProcessor extends ConfigProcessor<AutoBuyEntry> {
                 }
             }
         }
-        return new ArrayList(this.d);
+        return new ArrayList<>(this.d);
     }
 
     @Override
-    @Compile
+    
     protected String a(List<AutoBuyEntry> data) {
         JSONArray jSONArray = new JSONArray();
         for (AutoBuyEntry aVar : data) {

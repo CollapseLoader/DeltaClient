@@ -12,7 +12,7 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 
 @ModuleRegister(name = "Chest Stealer", description = "Автоматически забирает предметы из открытого сундука", category = Category.Player)
-public class ChestStealer extends Module implements Interface {
+public class ChestStealer extends Module {
     private final BooleanSetting b = new BooleanSetting("Игнорировать сущностей", true);
     private final BooleanSetting c = new BooleanSetting("Авто-закрытие сундука", true);
     private final CounterUtil d = new CounterUtil();

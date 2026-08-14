@@ -1,11 +1,11 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 
 import net.minecraft.item.ItemStack;
 
-public class ConsumeEvent extends Event implements IEvent {
+public class ConsumeEvent extends Event {
     private final ItemStack a;
 
     public ConsumeEvent(ItemStack stack) {

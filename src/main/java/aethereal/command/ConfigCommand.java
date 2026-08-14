@@ -21,7 +21,7 @@ public class ConfigCommand extends BaseCommand {
 
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
-        ModuleProcessor processor = Delta.h().d().t();
+        ModuleProcessor processor = Delta.getInstance().getModuleProcessor().t();
         builder.then(a("save").executes(context -> {
             ChatUtil.sendMessage("Использование: .cfg save <имя>");
             return 1;
@@ -92,7 +92,7 @@ public class ConfigCommand extends BaseCommand {
 
     private SuggestionProvider<CommandSource> c() {
         return (context, builder) -> {
-            ModuleProcessor processor = Delta.h().d().t();
+            ModuleProcessor processor = Delta.getInstance().getModuleProcessor().t();
             File configDir = processor.d();
             File[] configFiles = configDir.exists() ? configDir.listFiles((dir, name) -> name.endsWith(".json")) : null;
             if (configFiles != null) {

@@ -1,11 +1,11 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 
 import net.minecraft.item.Item;
 
-public class CooldownEvent extends Event implements IEvent {
+public class CooldownEvent extends Event {
     private final Item a;
     private final int b;
 

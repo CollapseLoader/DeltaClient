@@ -1,11 +1,11 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 
 import net.minecraft.client.gui.DrawContext;
 
-public class CrosshairEvent extends Event implements IEvent {
+public class CrosshairEvent extends Event {
     private final DrawContext a;
     private final float b;
 

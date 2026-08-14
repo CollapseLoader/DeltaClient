@@ -1,13 +1,13 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.model.ModelWithHead;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 
-public class HeadFeatureEvent extends Event implements IEvent {
+public class HeadFeatureEvent extends Event {
     private MatrixStack a;
     private VertexConsumerProvider b;
     private PlayerEntity c;

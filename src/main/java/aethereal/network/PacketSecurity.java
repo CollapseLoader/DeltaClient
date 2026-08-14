@@ -1,6 +1,6 @@
 package aethereal.network;
 
-import aethereal.api.Compile;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.*;
 
@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Compile
+
 public class PacketSecurity {
 
     private Gson gson;

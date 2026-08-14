@@ -1,11 +1,11 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 
 import net.minecraft.network.packet.Packet;
 
-public class PacketEvent extends Event implements IEvent {
+public class PacketEvent extends Event {
     private final Packet<?> packet;
     private final Type type;
 

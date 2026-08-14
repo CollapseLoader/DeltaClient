@@ -32,7 +32,7 @@ public class DebugHudMixin implements Interface {
 
     @Unique
     private List<String> replaceText(List<String> lines, boolean hasXyz) {
-        if (Delta.h().d().t().h().m()) {
+        if (Delta.getInstance().getModuleProcessor().t().h().m()) {
             Vec3d rayEnd = mc.getEntityRenderDispatcher().camera.getPos().add(Vec3d.fromPolar(mc.getEntityRenderDispatcher().camera.getPitch(), mc.getEntityRenderDispatcher().camera.getYaw()).multiply(20.0d));
             BlockHitResult class_3965VarMethod_17742 = Objects.requireNonNull(mc.world).raycast(new RaycastContext(mc.getEntityRenderDispatcher().camera.getPos(), rayEnd, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player));
             String cameraXYZ = String.format(Locale.ROOT, "%.3f / %.5f / %.3f", Double.valueOf(mc.getEntityRenderDispatcher().camera.getPos().x), Double.valueOf(mc.getEntityRenderDispatcher().camera.getPos().y), Double.valueOf(mc.getEntityRenderDispatcher().camera.getPos().z));

@@ -35,7 +35,7 @@ public class ClanUpgrader extends Module {
         }
         float randomPitch = ((float) (Math.sin(System.currentTimeMillis() / 1220.0d) * ((double) (Math.abs(90.0f - mc.player.getPitch()) / 8.0f)))) + MathUtil.a(-0.1f, 0.1f);
         Rotation rotation = new Rotation(Look.b() + MathUtil.a(-1.0f, 1.0f), MathUtil.b(88.0f + randomPitch, -90.0f, 90.0f));
-        Delta.h().d().k().a(rotation, 90.0f, 1, 1);
+        Delta.getInstance().getModuleProcessor().k().a(rotation, 90.0f, 1, 1);
         if (this.b == -1) {
             this.b = mc.player.getInventory().selectedSlot;
         }

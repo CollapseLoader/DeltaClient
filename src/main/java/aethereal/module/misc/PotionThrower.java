@@ -10,7 +10,7 @@ import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 
 @ModuleRegister(name = "Potion Thrower", description = "Быстрое метание бафов через колесо или по клавише", category = Category.Misc)
-public class PotionThrower extends Module implements Interface {
+public class PotionThrower extends Module {
     private final ModeSetting b = new ModeSetting("Способ использования зелий", "Колесо выбора", "Колесо выбора", "Клавиша");
     private final AssistantScreen c = new AssistantScreen(Text.literal("Potion Thrower"));
 
@@ -31,7 +31,7 @@ public class PotionThrower extends Module implements Interface {
         for (AutoBuyEntry potion : AutoBuyEntry.values()) {
             if (potion.d() == Items.SPLASH_POTION) {
                 a(new BindSetting(potion.b(), -1).a(() -> {
-                    Delta.h().d().v().b().a(potion.a());
+                    Delta.getInstance().getModuleProcessor().v().b().a(potion.a());
                 }).a(() -> {
                     return Boolean.valueOf(this.b.l("Клавиша"));
                 }));

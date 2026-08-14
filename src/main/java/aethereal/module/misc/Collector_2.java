@@ -36,8 +36,8 @@ import java.util.stream.IntStream;
 
 @ModuleRegister(name = "Collector", description = "Автоматически собирает нужный инвентарь на FunTime", category = Category.Misc)
 public class Collector_2 extends Module {
-    private final List<b> d = Delta.h().d().p().e();
-    private final List<a> e = new ArrayList();
+    private final List<b> d = Delta.getInstance().getModuleProcessor().p().e();
+    private final List<a> e = new ArrayList<>();
     private final CounterUtil f = new CounterUtil();
     private final CounterUtil g = new CounterUtil();
     private b h;
@@ -246,7 +246,7 @@ public class Collector_2 extends Module {
                     a();
                     return;
                 } else if (message.contains("Данная команда недоступна в режиме AFK")) {
-                    Delta.h().d().v().g().a(10);
+                    Delta.getInstance().getModuleProcessor().v().g().a(10);
                 }
             }
             if ((event.d() instanceof OpenScreenS2CPacket) && !(mc.currentScreen instanceof GenericContainerScreen)) {
@@ -273,7 +273,7 @@ public class Collector_2 extends Module {
         if (this.h != null && (mc.currentScreen instanceof HandledScreen)) {
             event.a(true);
         }
-        if (event.b() == 256 && this.h != null) {
+        if (event.getKey() == 256 && this.h != null) {
             this.h = null;
             ChatUtil.sendMessage("Работа модуля была принудительно завершена");
         }

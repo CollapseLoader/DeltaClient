@@ -1,7 +1,7 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.screen.ScreenHandler;
@@ -10,7 +10,7 @@ import net.minecraft.text.Text;
 
 import java.util.List;
 
-public class ContainerEvent extends Event implements IEvent {
+public class ContainerEvent extends Event {
     private final HandledScreen<?> screen;
     private final ScreenHandler handler;
     private final DrawContext context;

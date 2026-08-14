@@ -49,7 +49,7 @@ public class Scaffold extends Module {
         if (s() != null) {
             MoveUtil.a(e, Look.b(), 1);
             if (this.b.c().booleanValue()) {
-                Delta.h().d().t().ah().b(e);
+                Delta.getInstance().getModuleProcessor().t().ah().b(e);
             }
         }
         if (a(mc.player.getMainHandStack()) || a(mc.player.getOffHandStack())) {
@@ -57,7 +57,7 @@ public class Scaffold extends Module {
         }
         int hotbarSlot = d(true);
         if (hotbarSlot != -1) {
-            if (mc.player.getInventory().selectedSlot != hotbarSlot && this.e[2] < 7 && Delta.h().d().v().a().a().isEmpty()) {
+            if (mc.player.getInventory().selectedSlot != hotbarSlot && this.e[2] < 7 && Delta.getInstance().getModuleProcessor().v().a().a().isEmpty()) {
                 mc.player.getInventory().selectedSlot = hotbarSlot;
                 this.e[2] = 9;
                 return;
@@ -65,14 +65,14 @@ public class Scaffold extends Module {
             return;
         }
         int invSlot = d(false);
-        if (this.e[2] < 5 && invSlot != -1 && Delta.h().d().v().a().a().isEmpty()) {
+        if (this.e[2] < 5 && invSlot != -1 && Delta.getInstance().getModuleProcessor().v().a().a().isEmpty()) {
             if (this.e[1] == -1) {
                 this.e[1] = invSlot;
             }
             if (mc.player.getInventory().selectedSlot != 5) {
                 mc.player.getInventory().selectedSlot = 5;
             }
-            Delta.h().d().v().a().a(invSlot, 5, 1);
+            Delta.getInstance().getModuleProcessor().v().a().a(invSlot, 5, 1);
             this.e[2] = 9;
         }
     }
@@ -122,8 +122,8 @@ public class Scaffold extends Module {
         Rotation rotation = b(this.c);
         rotation.a(rotation.c() + smoothYaw);
         rotation.b(rotation.d() + smoothPitch);
-        Delta.h().d().k().a(rotation, 100.0f, 7, 1);
-        if (u() && !v() && !Delta.h().d().v().c().a()) {
+        Delta.getInstance().getModuleProcessor().k().a(rotation, 100.0f, 7, 1);
+        if (u() && !v() && !Delta.getInstance().getModuleProcessor().v().c().a()) {
             ((platform.inject.invokers.MinecraftClientInvoker) mc).invokeDoItemUse();
             this.e[2] = 9;
             this.c = null;
@@ -174,7 +174,7 @@ public class Scaffold extends Module {
     }
 
     private boolean r() {
-        List<UseableHandler.a> tasks = Delta.h().d().v().b().a();
+        List<UseableHandler.a> tasks = Delta.getInstance().getModuleProcessor().v().b().a();
         return !tasks.isEmpty() && tasks.getFirst().d() <= 1;
     }
 
@@ -194,7 +194,7 @@ public class Scaffold extends Module {
         if (this.e[0] != -1 && mc.player != null) {
             mc.player.getInventory().selectedSlot = this.e[0];
             if (this.e[1] != -1) {
-                Delta.h().d().v().a().a(this.e[1], 5, 1);
+                Delta.getInstance().getModuleProcessor().v().a().a(this.e[1], 5, 1);
             }
         }
         this.e[0] = -1;

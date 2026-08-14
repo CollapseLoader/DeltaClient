@@ -9,7 +9,7 @@ import aethereal.setting.SliderSetting;
 import aethereal.util.CounterUtil;
 
 @ModuleRegister(name = "Tape Mouse", description = "Автоматически кликает выбранной кнопкой мыши через заданные промежутки времени", category = Category.Combat)
-public class TapeMouse extends Module implements Interface {
+public class TapeMouse extends Module {
     private final SliderSetting b = new SliderSetting("Задержка между кликами", 1000.0f, 10.0f, 5000.0f, 10.0f);
     private final BooleanSetting c = new BooleanSetting("Не кликать во время еды", true);
     private final ModeSetting d = new ModeSetting("Кнопка мыши", "Правая", "Правая", "Левая");

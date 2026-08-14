@@ -115,7 +115,7 @@ public class TriggerBot extends Module {
             return;
         }
         boolean skip = false;
-        if ((Delta.h().d().t().H().e || (mc.player.fallDistance > 2.0f && Delta.h().d().t().H().c.c().booleanValue())) && InventoryUtil.b(Items.MACE) != -1) {
+        if ((Delta.getInstance().getModuleProcessor().t().H().e || (mc.player.fallDistance > 2.0f && Delta.getInstance().getModuleProcessor().t().H().c.c().booleanValue())) && InventoryUtil.b(Items.MACE) != -1) {
             if (mc.player.fallDistance < 1.5f) {
                 return;
             }
@@ -123,7 +123,7 @@ public class TriggerBot extends Module {
                 return Double.valueOf(pos.distanceTo(this.o.getPos()));
             }).orElse(Double.valueOf(33.0d)).doubleValue();
             boolean hitNow = landDist > 2.0d;
-            if ((!this.c && !MaceUtil.b() && Delta.h().d().t().H().b.c().booleanValue() && !hitNow) || !MaceUtil.a() || mc.player.isGliding()) {
+            if ((!this.c && !MaceUtil.b() && Delta.getInstance().getModuleProcessor().t().H().b.c().booleanValue() && !hitNow) || !MaceUtil.a() || mc.player.isGliding()) {
                 return;
             } else {
                 skip = true;
@@ -161,10 +161,10 @@ public class TriggerBot extends Module {
     }
 
     private boolean b(LivingEntity entity) {
-        if (Delta.h().d().t().G().m() && mc.player.isGliding()) {
+        if (Delta.getInstance().getModuleProcessor().t().G().m() && mc.player.isGliding()) {
             return true;
         }
-        return AuraUtil.a((Entity) entity, 4.0d + (mc.player.getVelocity().length() * 3.0d) + ((double) ((InventoryUtil.b(Items.MACE) == -1 || ((double) mc.player.fallDistance) <= 1.5d) ? 0.0f : 1.5f)) + ((double) ((Delta.h().d().t().H().m() && InventoryUtil.b(Items.MACE) != -1 && MaceUtil.a(mc.player, mc.world).map(p -> {
+        return AuraUtil.a((Entity) entity, 4.0d + (mc.player.getVelocity().length() * 3.0d) + ((double) ((InventoryUtil.b(Items.MACE) == -1 || ((double) mc.player.fallDistance) <= 1.5d) ? 0.0f : 1.5f)) + ((double) ((Delta.getInstance().getModuleProcessor().t().H().m() && InventoryUtil.b(Items.MACE) != -1 && MaceUtil.a(mc.player, mc.world).map(p -> {
             return Boolean.valueOf(mc.player.getY() - p.getY() > 2.0d);
         }).orElse(false).booleanValue()) ? 10 : 0)));
     }
@@ -198,7 +198,7 @@ public class TriggerBot extends Module {
         if ((this.h.a("Открыт контейнер") != null && this.h.a("Открыт контейнер").c().booleanValue() && mc.currentScreen != null && !(mc.currentScreen instanceof GUIScreen) && !(mc.currentScreen instanceof AssistantScreen)) || !AuraUtil.a(this.o, 3.0d)) {
             return false;
         }
-        if (Delta.h().d().t().H().e) {
+        if (Delta.getInstance().getModuleProcessor().t().H().e) {
             if (mc.player.getItemCooldownManager().isCoolingDown(mc.player.getMainHandStack())) {
                 return false;
             }
@@ -265,7 +265,7 @@ public class TriggerBot extends Module {
 
     private boolean d(LivingEntity e) {
         if (e instanceof PlayerEntity p) {
-            return this.f.a("Игроки").c().booleanValue() && (this.f.a("Друзья").c().booleanValue() || !Delta.h().d().e().d(p.getName().getString()));
+            return this.f.a("Игроки").c().booleanValue() && (this.f.a("Друзья").c().booleanValue() || !Delta.getInstance().getModuleProcessor().e().d(p.getName().getString()));
         }
         if (e instanceof MobEntity) {
             return this.f.a("Мобы").c().booleanValue();

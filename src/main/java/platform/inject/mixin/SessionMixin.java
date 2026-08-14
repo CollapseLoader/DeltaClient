@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.injection.At;
 public class SessionMixin {
     @ModifyReturnValue(method = {"getUsername"}, at = {@At("RETURN")})
     private String username(String original) {
-        return (Delta.h() == null || Delta.h().d().h().a() == null) ? original : Delta.h().d().h().a().b();
+        return (Delta.getInstance() == null || Delta.getInstance().getModuleProcessor().h().a() == null) ? original : Delta.getInstance().getModuleProcessor().h().a().b();
     }
 }

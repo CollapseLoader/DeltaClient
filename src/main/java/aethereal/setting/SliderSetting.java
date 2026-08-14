@@ -24,7 +24,7 @@ public class SliderSetting extends Setting<Float> {
     }
 
     @Override
-    public Element_2<?> d() {
+    public Element_2<?> createBooleanElement() {
         return new SliderElement(this);
     }
 }

@@ -1,6 +1,6 @@
 package aethereal.ui.element;
 
-import aethereal.api.Compile;
+
 import aethereal.config.ConfigProcessor;
 import aethereal.config.ConverterUtil;
 import aethereal.core.EventTarget;
@@ -27,7 +27,7 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
     private DragInfo g = null;
 
     @Override
-    @Compile
+    
     protected List<DragInfo> a(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
         for (int i = 0; i < jSONArray.a(); i++) {
@@ -60,11 +60,11 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
                 }
             }
         }
-        return new ArrayList(e());
+        return new ArrayList<>(e());
     }
 
     @Override
-    @Compile
+    
     protected String a(List<DragInfo> data) throws Exception {
         JSONArray jSONArray = new JSONArray();
         for (DragInfo dragInfo : data) {
@@ -244,10 +244,10 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
 
     private void b(DrawEvent event) {
         if (this.e.a()) {
-            event.d().a(event.i(), this.e.c().floatValue() - 0.5f, 0.0f, 0.5f, mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont()), ColorUtil.a(255, 255, 255, (int) (this.e.b().c() * 200.0f)));
+            event.d().a(event.i(), this.e.c().floatValue() - 0.5f, 0.0f, 0.5f, mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont()), ColorUtil.convertToARGB(255, 255, 255, (int) (this.e.b().c() * 200.0f)));
         }
         if (this.f.a()) {
-            event.d().a(event.i(), 0.0f, this.f.c().floatValue() - 0.5f, mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont()), 0.5f, ColorUtil.a(255, 255, 255, (int) (this.f.b().c() * 200.0f)));
+            event.d().a(event.i(), 0.0f, this.f.c().floatValue() - 0.5f, mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont()), 0.5f, ColorUtil.convertToARGB(255, 255, 255, (int) (this.f.b().c() * 200.0f)));
         }
     }
 

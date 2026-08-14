@@ -17,7 +17,7 @@ public class NoDelay extends Module {
 
     @EventTarget
     public void a(TickEvent event) {
-        if (this.b.a("Поставку блоков").c().booleanValue() && (mc.player.getMainHandStack().getItem() instanceof BlockItem) && !Delta.h().d().t().aS().m()) {
+        if (this.b.a("Поставку блоков").c().booleanValue() && (mc.player.getMainHandStack().getItem() instanceof BlockItem) && !Delta.getInstance().getModuleProcessor().t().aS().m()) {
             ((platform.inject.accessors.MinecraftClientAccessor) mc).setItemUseCooldown(0);
         }
         if (this.b.a("Прыжки").c().booleanValue()) {

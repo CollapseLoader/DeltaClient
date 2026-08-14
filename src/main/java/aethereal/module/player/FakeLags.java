@@ -19,7 +19,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @ModuleRegister(name = "Fake Lags", description = "Задерживает отправку пакетов, имитируя лаги на сервере", category = Category.Player)
-public class FakeLags extends Module implements Interface {
+public class FakeLags extends Module {
     private final SliderSetting b = new SliderSetting("Задержка симуляции", 20.0f, 1.0f, 40.0f, 1.0f);
     private final BooleanSetting c = new BooleanSetting("Отображать серв-позицию", false);
     private final Queue<Packet<?>> d = new ConcurrentLinkedQueue();
@@ -94,7 +94,7 @@ public class FakeLags extends Module implements Interface {
     @EventTarget
     public void a(DrawEvent event) {
         if (event.c() && this.c.c().booleanValue() && this.g != null) {
-            event.e().a(event.h(), mc.player.getBoundingBox().offset(this.g.subtract(mc.player.getPos())), ColorUtil.a(255, 255, 255, InterfaceC0020Opcode.aN), 0.75f);
+            event.e().a(event.h(), mc.player.getBoundingBox().offset(this.g.subtract(mc.player.getPos())), ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.aN), 0.75f);
         }
     }
 

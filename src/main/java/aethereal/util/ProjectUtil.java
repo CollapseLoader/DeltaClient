@@ -26,7 +26,7 @@ public class ProjectUtil implements Interface {
             return new Vector2f(Float.MAX_VALUE, Float.MAX_VALUE);
         }
         float realAspect = (float) mc.getWindow().getFramebufferWidth() / (float) mc.getWindow().getFramebufferHeight();
-        float modifiedAspect = Delta.h().d().t().aB().m() ? Delta.h().d().t().aB().q() : realAspect;
+        float modifiedAspect = Delta.getInstance().getModuleProcessor().t().aB().m() ? Delta.getInstance().getModuleProcessor().t().aB().q() : realAspect;
         double halfHeightAtDepth = (-result3f.z) * Math.tan(Math.toRadians(fov / 2.0d));
         double halfWidthAtDepth = halfHeightAtDepth * ((double) modifiedAspect);
         double ndcX = result3f.x / halfWidthAtDepth;

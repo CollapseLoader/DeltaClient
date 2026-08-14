@@ -22,7 +22,7 @@ public class CosmeticsRenderer extends FeatureRenderer<PlayerEntityRenderState, 
         if (entity != null) {
             UUID uuid = entity.getUuid();
             float tickDelta = mc.getRenderTickCounter().getTickDelta(false);
-            for (Cosmetic cosmetic : Delta.h().d().r().getCosmetics()) {
+            for (Cosmetic cosmetic : Delta.getInstance().getModuleProcessor().r().getCosmetics()) {
                 if (uuid.equals(cosmetic.getUuid()) && cosmetic.getType() == CosmeticsType.COSMETIC) {
                     matrices.push();
                     cosmetic.getCategory().transform(matrices, getContextModel(), cosmetic);

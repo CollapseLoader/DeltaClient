@@ -31,7 +31,7 @@ public class ArmorWidget extends Widget implements Interface {
             if (count > 0) {
                 ScaleUtil.b(event.i());
                 event.i().getMatrices().push();
-                event.i().getMatrices().translate(0.0f, (-16.0f) * Delta.h().d().t().Q().s().c(), 0.0f);
+                event.i().getMatrices().translate(0.0f, (-16.0f) * Delta.getInstance().getModuleProcessor().t().Q().s().c(), 0.0f);
                 int startX = ((mc.getWindow().getScaledWidth() / 2) - 91) + InterfaceC0020Opcode.bJ + 4;
                 int startY = mc.getWindow().getScaledHeight() - 22;
                 int epta = startX + ((mc.player.getMainArm() != Arm.LEFT || mc.player.getOffHandStack().isEmpty()) ? 0 : 30);

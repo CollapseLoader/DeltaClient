@@ -1,11 +1,11 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 
 import net.minecraft.util.math.Vec3d;
 
-public class CameraPositionEvent extends Event implements IEvent {
+public class CameraPositionEvent extends Event {
     private Vec3d a;
 
     public CameraPositionEvent(Vec3d position) {

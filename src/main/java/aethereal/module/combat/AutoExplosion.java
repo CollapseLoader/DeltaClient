@@ -95,7 +95,7 @@ public class AutoExplosion extends Module {
 
     private void a(Vec3d point) {
         Rotation r = Rotation.a(mc.player.getEyePos(), point);
-        Delta.h().d().k().a(new Rotation(r.c() + MathUtil.a(-3.0f, 3.0f), r.d() + MathUtil.a(-3.0f, 3.0f)), 120.0f, 1, 2);
+        Delta.getInstance().getModuleProcessor().k().a(new Rotation(r.c() + MathUtil.a(-3.0f, 3.0f), r.d() + MathUtil.a(-3.0f, 3.0f)), 120.0f, 1, 2);
     }
 
     private void q() {

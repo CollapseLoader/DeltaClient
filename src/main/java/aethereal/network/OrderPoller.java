@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class OrderPoller {
-    private final List<String> a = new ArrayList();
+    private final List<String> a = new ArrayList<>();
     private final FunPay c;
     private List<OrderModel> b;
 

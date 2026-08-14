@@ -33,7 +33,7 @@ public class AutoLeave extends Module {
             return;
         }
         PlayerEntity near = mc.world.getPlayers().stream().filter(player -> {
-            return player != mc.player && !(mc.player.squaredDistanceTo(player) > ((double) (this.d.c().floatValue() * this.d.c().floatValue()))) && !Delta.h().d().e().d(player.getName().getString());
+            return player != mc.player && !(mc.player.squaredDistanceTo(player) > ((double) (this.d.c().floatValue() * this.d.c().floatValue()))) && !Delta.getInstance().getModuleProcessor().e().d(player.getName().getString());
         }).findFirst().orElse(null);
         if (((this.b.a("Малое ХП").c().booleanValue() && mc.player.getHealth() <= this.c.c().floatValue()) || (this.b.a("Игроки рядом").c().booleanValue() && near != null)) && !ServerUtil.e()) {
             mc.player.networkHandler.sendChatCommand("hub");

@@ -42,7 +42,7 @@ public class EnvironmentWidget extends Widget implements Interface {
         super(new DragInfo("Окружение", 0.0f, 0.0f, 0.0f, 0.0f));
         this.f = new BooleanSetting("Показывать броню", true);
         this.g = new HashMap();
-        this.h = new ArrayList();
+        this.h = new ArrayList<>();
         this.i = new UUID[2];
         j().a(this);
         a(this.f);
@@ -129,8 +129,8 @@ public class EnvironmentWidget extends Widget implements Interface {
         float textY = (y + ((12.0f - Fonts.e.a(6.5f)) / 2.0f)) - 0.5f;
         String health = ((int) data.f) + "HP";
         a(event, x, y, width, 12.0f, 3.0f, animation, false);
-        event.d().a(event.h(), x + 2.0f, y + 2.0f, 8.0f, 8.0f, 1.5f, ColorUtil.a(-1, animation), 0.125f, 0.125f, 0.125f, 0.125f, mc.getTextureManager().getTexture(data.e).getGlId());
-        Fonts.e.a(event.h(), health, ((x + width) - 3.0f) - Fonts.e.a(health, 6.5f), textY, 6.5f, ColorUtil.a(-1, animation));
+        event.d().a(event.h(), x + 2.0f, y + 2.0f, 8.0f, 8.0f, 1.5f, ColorUtil.applyAlphaToColor(-1, animation), 0.125f, 0.125f, 0.125f, 0.125f, mc.getTextureManager().getTexture(data.e).getGlId());
+        Fonts.e.a(event.h(), health, ((x + width) - 3.0f) - Fonts.e.a(health, 6.5f), textY, 6.5f, ColorUtil.applyAlphaToColor(-1, animation));
         float right = ((x + width) - 4.0f) - Fonts.e.a(health, 6.5f);
         if (this.f.c().booleanValue()) {
             for (int i = 3; i >= 0; i--) {
@@ -140,7 +140,7 @@ public class EnvironmentWidget extends Widget implements Interface {
                 }
             }
         }
-        Fonts.e.c(event.h(), data.d, x + 12.5f, textY, 6.5f, ColorUtil.a(-1, animation), (right - 16.5f) - x);
+        Fonts.e.c(event.h(), data.d, x + 12.5f, textY, 6.5f, ColorUtil.applyAlphaToColor(-1, animation), (right - 16.5f) - x);
         if (data.b.isEmpty()) {
             return 14.0f;
         }
@@ -162,7 +162,7 @@ public class EnvironmentWidget extends Widget implements Interface {
                 float badgeY = itemY - 4.0f;
                 float textX = badgeX + (((badge - textWidth) - 0.3f) / 2.0f);
                 float textY2 = badgeY + ((8.0f - Fonts.e.a(6.5f)) / 2.0f) + 1.0f;
-                int color = ColorUtil.a(ColorUtil.a(255, 60, 60, 255), animation);
+                int color = ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(255, 60, 60, 255), animation);
                 a(event, badgeX + 1.5f, badgeY + 1.0f, badge - 3.0f, 8.0f, 2.0f, animation, false);
                 Fonts.e.a(event.h(), text, textX, textY2, 6.5f, color);
                 Fonts.e.a(event.h(), text, textX + 0.3f, textY2, 6.5f, color);
@@ -172,21 +172,21 @@ public class EnvironmentWidget extends Widget implements Interface {
     }
 
     private void a(DrawEvent event, float x, float y, float width, float height, float radius, float animation, boolean empty) {
-        ThemeProcessor theme = Delta.h().d().o();
-        int background = ColorUtil.a(theme.a(ThemeInfo.BACKGROUND_HUD).a(), theme.a(ThemeInfo.PRIMARY).a(), theme.a(ThemeInfo.PRIMARY).b() / 6.0f);
-        event.d().b(event.h(), x, y, width, height, radius, ColorUtil.a(empty ? ColorUtil.a(background, ColorUtil.a(255, 60, 60, 255), 0.35f) : background, theme.a(ThemeInfo.BACKGROUND_HUD).b() * animation), animation);
+        ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
+        int background = ColorUtil.lerpColor(theme.a(ThemeInfo.BACKGROUND_HUD).toIntColor(), theme.a(ThemeInfo.PRIMARY).toIntColor(), theme.a(ThemeInfo.PRIMARY).b() / 6.0f);
+        event.d().b(event.h(), x, y, width, height, radius, ColorUtil.applyAlphaToColor(empty ? ColorUtil.lerpColor(background, ColorUtil.convertToARGB(255, 60, 60, 255), 0.35f) : background, theme.a(ThemeInfo.BACKGROUND_HUD).b() * animation), animation);
     }
 
     @Override
     public void a(GlobalEvent event) {
         PlayerEntity class_1657Var;
         if (mc.world != null && mc.player != null) {
-            PlayerEntity class_1657VarS = (PlayerEntity) Delta.h().d().t().B().s();
+            PlayerEntity class_1657VarS = (PlayerEntity) Delta.getInstance().getModuleProcessor().t().B().s();
             if (class_1657VarS instanceof PlayerEntity) {
                 PlayerEntity aura = class_1657VarS;
                 class_1657Var = aura;
             } else {
-                PlayerEntity class_1657VarS2 = (PlayerEntity) Delta.h().d().t().X().s();
+                PlayerEntity class_1657VarS2 = (PlayerEntity) Delta.getInstance().getModuleProcessor().t().X().s();
                 if (class_1657VarS2 instanceof PlayerEntity) {
                     PlayerEntity trigger = class_1657VarS2;
                     class_1657Var = trigger;
@@ -201,7 +201,7 @@ public class EnvironmentWidget extends Widget implements Interface {
             }
             long now = System.currentTimeMillis();
             List<? extends PlayerEntity> nearby = mc.world.getPlayers().stream().filter(player -> {
-                return player != mc.player && player.isAlive() && !Delta.h().d().e().d(player.getName().getString());
+                return player != mc.player && player.isAlive() && !Delta.getInstance().getModuleProcessor().e().d(player.getName().getString());
             }).sorted(Comparator.comparingInt((PlayerEntity player2) -> {
                 if (player2.getUuid().equals(this.i[0])) {
                     return 0;
@@ -265,7 +265,7 @@ public class EnvironmentWidget extends Widget implements Interface {
 
         void a(PlayerEntity player, long now) {
             Identifier class_2960VarComp_1626;
-            StreamerMode streamer = Delta.h().d().t().aE();
+            StreamerMode streamer = Delta.getInstance().getModuleProcessor().t().aE();
             this.d = (streamer.m() && streamer.r().c().booleanValue()) ? streamer.a(player.getName().getString()) : player.getName().getString();
             if (player instanceof AbstractClientPlayerEntity client) {
                 class_2960VarComp_1626 = client.getSkinTextures().texture();

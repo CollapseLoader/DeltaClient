@@ -1,6 +1,6 @@
 package aethereal.ui.element;
 
-import aethereal.api.Compile;
+
 import aethereal.config.ThemeInfo;
 import aethereal.config.ThemeProcessor;
 import aethereal.core.Delta;
@@ -41,7 +41,7 @@ public class ColorElement extends Element_2<ColorSetting> {
     }
 
     @Override
-    @Compile
+    
     public boolean a(double mouseX, double mouseY, int button) {
         Vector4f vector4f = this.a;
         Vector4f vector4f2 = this.e;
@@ -73,7 +73,7 @@ public class ColorElement extends Element_2<ColorSetting> {
     }
 
     @Override
-    @Compile
+    
     public boolean b(double mouseX, double mouseY, int button) {
         this.l = DragMode.NONE;
         return false;
@@ -82,8 +82,8 @@ public class ColorElement extends Element_2<ColorSetting> {
     @Override
     public void a(DrawContext context, double mouseX, double mouseY, float delta, float extend) {
         MatrixStack matrices = context.getMatrices();
-        Draw2DProcessor draw = Delta.h().d().i();
-        ThemeProcessor theme = Delta.h().d().o();
+        Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
+        ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
         float centerY = this.a.y + (this.a.w / 2.0f) + 0.5f;
         float boxX = (this.a.x + this.a.z) - 11.0f;
         float boxY = centerY - 5.5f;
@@ -95,11 +95,11 @@ public class ColorElement extends Element_2<ColorSetting> {
         if (extend < 1.0f) {
             this.m = false;
         }
-        a(matrices, Fonts.c, this.b.i(), this.a.x, this.a.y, this.a.w, 6.5f, theme.a(ThemeInfo.TEXT).a(), (boxX - this.a.x) - 4.0f, hovered, extend, delta);
-        draw.a(matrices, boxX, boxY, 11.0f, 11.0f, 2.0f, ColorUtil.a(theme.a(ThemeInfo.PRIMARY).a(), 0.039215688f * extend));
-        draw.a(matrices, boxX, boxY, 11.0f, 11.0f, 2.0f, 0.5f, ColorUtil.a(theme.a(ThemeInfo.OUTLINE_MEDIUM).a(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * extend));
-        Fonts.a.a(matrices, "J", boxX + ((11.0f - Fonts.a.b("J", 6.5f)) / 2.0f), Fonts.a.a("J", 6.5f, centerY), 6.5f, ColorUtil.a(theme.a(ThemeInfo.PRIMARY).a(), extend));
-        draw.a(matrices, ((boxX + 11.0f) - 3.0f) - 1.25f, ((boxY + 11.0f) - 3.0f) - 1.25f, 3.0f, 3.0f, 0.5f, ColorUtil.a(this.b.c().intValue(), extend));
+        a(matrices, Fonts.c, this.b.i(), this.a.x, this.a.y, this.a.w, 6.5f, theme.a(ThemeInfo.TEXT).toIntColor(), (boxX - this.a.x) - 4.0f, hovered, extend, delta);
+        draw.a(matrices, boxX, boxY, 11.0f, 11.0f, 2.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.039215688f * extend));
+        draw.a(matrices, boxX, boxY, 11.0f, 11.0f, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * extend));
+        Fonts.a.a(matrices, "J", boxX + ((11.0f - Fonts.a.b("J", 6.5f)) / 2.0f), Fonts.a.a("J", 6.5f, centerY), 6.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), extend));
+        draw.a(matrices, ((boxX + 11.0f) - 3.0f) - 1.25f, ((boxY + 11.0f) - 3.0f) - 1.25f, 3.0f, 3.0f, 0.5f, ColorUtil.applyAlphaToColor(this.b.c().intValue(), extend));
     }
 
     @Override
@@ -109,13 +109,13 @@ public class ColorElement extends Element_2<ColorSetting> {
         float anim = EasingList.p.ease(b().c());
         if (anim > 0.0f) {
             MatrixStack matrices = context.getMatrices();
-            Draw2DProcessor draw = Delta.h().d().i();
-            ThemeProcessor theme = Delta.h().d().o();
+            Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
+            ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
             a(mouseX, mouseY);
             int hueColor = Color.HSBtoRGB(this.h, 1.0f, 1.0f);
             int rgb = this.b.c().intValue() & 16777215;
-            int handle = ColorUtil.a(16777215, anim);
-            int background = ColorUtil.a(ColorUtil.a(theme.a(ThemeInfo.BACKGROUND_GUI).a(), theme.a(ThemeInfo.PRIMARY).a(), 0.05f), 0.8235294f * anim);
+            int handle = ColorUtil.applyAlphaToColor(16777215, anim);
+            int background = ColorUtil.applyAlphaToColor(ColorUtil.lerpColor(theme.a(ThemeInfo.BACKGROUND_GUI).toIntColor(), theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.05f), 0.8235294f * anim);
             float scale = 0.85f + (0.15f * EasingList.s.ease(b().c()));
             float centerX = this.d.x + (this.d.z / 2.0f);
             float centerY = this.d.y + (this.d.w / 2.0f);
@@ -124,17 +124,17 @@ public class ColorElement extends Element_2<ColorSetting> {
             matrices.scale(scale, scale, 1.0f);
             matrices.translate(-centerX, -centerY, 0.0f);
             draw.b(matrices, this.d.x, this.d.y, this.d.z, this.d.w, 4.0f, background, anim);
-            draw.a(matrices, this.d.x, this.d.y, this.d.z, this.d.w, 4.0f, 0.5f, ColorUtil.a(theme.a(ThemeInfo.OUTLINE_MEDIUM).a(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * anim));
-            draw.a(matrices, this.e.x, this.e.y, this.e.z, this.e.w, 2.0f, ColorUtil.a(16777215, anim), ColorUtil.a(hueColor, anim), ColorUtil.a(0, anim), ColorUtil.a(0, anim));
-            draw.a(matrices, this.e.x, this.e.y, this.e.z, this.e.w, 2.0f, 0.5f, ColorUtil.a(theme.a(ThemeInfo.OUTLINE_SMALL).a(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * anim));
+            draw.a(matrices, this.d.x, this.d.y, this.d.z, this.d.w, 4.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * anim));
+            draw.a(matrices, this.e.x, this.e.y, this.e.z, this.e.w, 2.0f, ColorUtil.applyAlphaToColor(16777215, anim), ColorUtil.applyAlphaToColor(hueColor, anim), ColorUtil.applyAlphaToColor(0, anim), ColorUtil.applyAlphaToColor(0, anim));
+            draw.a(matrices, this.e.x, this.e.y, this.e.z, this.e.w, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * anim));
             float cursorX = MathUtil.b(this.e.x + (this.i * this.e.z), this.e.x + 2.0f, (this.e.x + this.e.z) - 2.0f);
             float cursorY = MathUtil.b(this.e.y + ((1.0f - this.j) * this.e.w), this.e.y + 2.0f, (this.e.y + this.e.w) - 2.0f);
             draw.a(matrices, cursorX - 2.0f, cursorY - 2.0f, 4.0f, 4.0f, 1.0f, 0.5f, handle);
             float knob = this.f.z + 2.0f;
-            draw.a(matrices, Identifier.of("delta", "pictures/color.png"), this.f.x, this.f.y, this.f.z, this.f.w, this.f.z / 4.0f, ColorUtil.a(16777215, anim));
+            draw.a(matrices, Identifier.of("delta", "pictures/color.png"), this.f.x, this.f.y, this.f.z, this.f.w, this.f.z / 4.0f, ColorUtil.applyAlphaToColor(16777215, anim));
             draw.a(context, this.f.x - 1.0f, (this.f.y + (this.h * this.f.w)) - 0.5f, knob, 1.0f, handle);
-            draw.a(matrices, Identifier.of("delta", "pictures/opacity.png"), this.g.x, this.g.y, this.g.z, this.g.w, this.g.z / 4.0f, ColorUtil.a(16777215, 0.019607844f * anim));
-            draw.a(matrices, this.g.x, this.g.y, this.g.z, this.g.w, this.g.z / 4.0f, ColorUtil.a(rgb, anim), ColorUtil.a(rgb, anim), ColorUtil.a(rgb, 0.0f), ColorUtil.a(rgb, 0.0f));
+            draw.a(matrices, Identifier.of("delta", "pictures/opacity.png"), this.g.x, this.g.y, this.g.z, this.g.w, this.g.z / 4.0f, ColorUtil.applyAlphaToColor(16777215, 0.019607844f * anim));
+            draw.a(matrices, this.g.x, this.g.y, this.g.z, this.g.w, this.g.z / 4.0f, ColorUtil.applyAlphaToColor(rgb, anim), ColorUtil.applyAlphaToColor(rgb, anim), ColorUtil.applyAlphaToColor(rgb, 0.0f), ColorUtil.applyAlphaToColor(rgb, 0.0f));
             draw.a(context, this.g.x - 1.0f, (this.g.y + ((1.0f - this.k) * this.g.w)) - 0.5f, knob, 1.0f, handle);
             matrices.pop();
         }
@@ -155,7 +155,7 @@ public class ColorElement extends Element_2<ColorSetting> {
                 this.k = 1.0f - MathUtil.b(((float) (mouseY - ((double) this.g.y))) / this.g.w, 0.0f, 1.0f);
                 break;
         }
-        this.b.a(Integer.valueOf(ColorUtil.a(Color.HSBtoRGB(this.h, this.i, this.j), this.k)));
+        this.b.a(Integer.valueOf(ColorUtil.applyAlphaToColor(Color.HSBtoRGB(this.h, this.i, this.j), this.k)));
     }
 
     private void g() {

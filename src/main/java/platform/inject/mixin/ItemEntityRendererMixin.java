@@ -29,7 +29,7 @@ public class ItemEntityRendererMixin {
 
     @Redirect(method = {"render(Lnet/minecraft/client/render/entity/state/ItemEntityRenderState;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V"))
     private void translate(MatrixStack matrices, float x, float y, float z) {
-        if (Delta.h().d().t().ag().m()) {
+        if (Delta.getInstance().getModuleProcessor().t().ag().m()) {
             y = 0.0f;
         }
         matrices.translate(x, y, z);
@@ -37,14 +37,14 @@ public class ItemEntityRendererMixin {
 
     @Redirect(method = {"render(Lnet/minecraft/client/render/entity/state/ItemEntityRenderState;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/util/math/MatrixStack;multiply(Lorg/joml/Quaternionf;)V"))
     private void cancelHover(MatrixStack matrices, Quaternionf quaternion) {
-        if (!Delta.h().d().t().ag().m()) {
+        if (!Delta.getInstance().getModuleProcessor().t().ag().m()) {
             matrices.multiply(quaternion);
         }
     }
 
     @Inject(method = {"render(Lnet/minecraft/client/render/entity/state/ItemEntityRenderState;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/ItemEntityRenderer;renderStack(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/client/render/entity/state/ItemStackEntityRenderState;Lnet/minecraft/util/math/random/Random;)V", shift = At.Shift.BEFORE)})
     private void applyPhysics(ItemEntityRenderState state, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, CallbackInfo ci) {
-        ItemPhysic itemPhysic = Delta.h().d().t().ag();
+        ItemPhysic itemPhysic = Delta.getInstance().getModuleProcessor().t().ag();
         if (itemPhysic.m()) {
             if (itemPhysic.q().c().booleanValue()) {
                 matrices.scale(0.5f, 0.5f, 0.5f);

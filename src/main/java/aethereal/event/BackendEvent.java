@@ -1,11 +1,11 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 
 import aethereal.core.Packet;
 
-public class BackendEvent extends Event implements IEvent {
+public class BackendEvent extends Event {
     private final Packet packet;
     private final Phase phase;
 

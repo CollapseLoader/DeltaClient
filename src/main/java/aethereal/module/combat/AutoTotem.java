@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
 @ModuleRegister(name = "Auto Totem", description = "Берёт тотем бессмертия в руку при падении здоровья ниже заданного значения", category = Category.Combat)
-public class AutoTotem extends Module implements Interface {
+public class AutoTotem extends Module {
     private final SliderSetting c = new SliderSetting("Порог здоровья", 6.0f, 1.0f, 20.0f, 0.5f);
     private final MultiModeSetting d = new MultiModeSetting("Дополнительные опции", new BooleanSetting("Возвращать предмет", true), new BooleanSetting("Сначала обычные тотемы", true), new BooleanSetting("Не во время еды", false));
     private final BooleanSetting e = new BooleanSetting("Умное перемещение", true);
@@ -77,14 +77,14 @@ public class AutoTotem extends Module implements Interface {
         if (this.d.a("Возвращать предмет").c().booleanValue() && this.h == -1 && !offhand.isEmpty()) {
             this.h = slot;
         }
-        Delta.h().d().v().a().a(slot, 40, 1);
+        Delta.getInstance().getModuleProcessor().v().a().a(slot, 40, 1);
         return true;
     }
 
     private boolean r() {
         ItemStack offhand = mc.player.getOffHandStack();
         if (this.d.a("Возвращать предмет").c().booleanValue() && this.h != -1 && (offhand.isEmpty() || a(offhand))) {
-            Delta.h().d().v().a().a(this.h, 40, 1);
+            Delta.getInstance().getModuleProcessor().v().a().a(this.h, 40, 1);
         }
         this.h = -1;
         return false;

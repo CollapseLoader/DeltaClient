@@ -86,8 +86,8 @@ public class PotionWidget extends Widget implements Interface {
                 a(event, x + offsetX, drawY, width, 11.5f, false, animation);
                 a(event, x + offsetX + 15.0f, drawY, 11.5f, animation);
                 event.e().a(event.i(), mc.getStatusEffectSpriteManager().getSprite(iStatusEffectInstance2.getEffectType()), x + offsetX + 5.0f, drawY + 2.0f, 0.0f, 0.4f, animation);
-                Fonts.e.a(event.h(), name2, x + offsetX + 19.0f, textY, 6.5f, ColorUtil.a(iStatusEffectInstance2.getEffectType().value().getCategory() == StatusEffectCategory.HARMFUL ? ColorUtil.a(255, InterfaceC0020Opcode.cG, InterfaceC0020Opcode.cG, 255) : -1, animation));
-                Fonts.e.a(event.h(), duration, ((((x + offsetX) + width) - 5.0f) - durationWidth) - 1.0f, textY, 6.5f, ColorUtil.a(-1, 0.55f * animation));
+                Fonts.e.a(event.h(), name2, x + offsetX + 19.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(iStatusEffectInstance2.getEffectType().value().getCategory() == StatusEffectCategory.HARMFUL ? ColorUtil.convertToARGB(255, InterfaceC0020Opcode.cG, InterfaceC0020Opcode.cG, 255) : -1, animation));
+                Fonts.e.a(event.h(), duration, ((((x + offsetX) + width) - 5.0f) - durationWidth) - 1.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(-1, 0.55f * animation));
                 contentY += 13.5f * animation;
             }
         }
@@ -96,7 +96,7 @@ public class PotionWidget extends Widget implements Interface {
     }
 
     private void d(DrawEvent event) {
-        int primary = Delta.h().d().o().a(ThemeInfo.PRIMARY).a();
+        int primary = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor();
         int visibleCount = 0;
         Iterator<StatusEffectInstance> it = k().iterator();
         while (it.hasNext()) {
@@ -122,13 +122,13 @@ public class PotionWidget extends Widget implements Interface {
                 float textX = drawX + 13.5f + 6.0f;
                 a(event, drawX, contentY, width, 24.0f, true, animation);
                 event.e().a(event.i(), mc.getStatusEffectSpriteManager().getSprite(iStatusEffectInstance.getEffectType()), drawX + 3.5f, contentY + 5.75f, 0.0f, 0.6944444f, animation);
-                Fonts.e.a(event.h(), name, textX, contentY + 3.5f, 7.0f, ColorUtil.a(harmful ? ColorUtil.a(215, 76, 76, 255) : -1, animation));
-                Fonts.e.a(event.h(), duration, textX, contentY + 13.0f, 6.0f, ColorUtil.a(-1, 0.55f * animation));
+                Fonts.e.a(event.h(), name, textX, contentY + 3.5f, 7.0f, ColorUtil.applyAlphaToColor(harmful ? ColorUtil.convertToARGB(215, 76, 76, 255) : -1, animation));
+                Fonts.e.a(event.h(), duration, textX, contentY + 13.0f, 6.0f, ColorUtil.applyAlphaToColor(-1, 0.55f * animation));
                 int initialDuration = iStatusEffectInstance.getInitialDuration();
                 float progress = initialDuration <= 0 ? 1.0f : Math.min(1.0f, iStatusEffectInstance.getDuration() / initialDuration);
-                int accent = harmful ? ColorUtil.a(215, 76, 76, 255) : primary;
-                event.d().a(event.h(), drawX + 2.0f, (contentY + 24.0f) - 1.5f, width - 4.0f, 1.5f, new Vector4f(0.0f, 0.0f, 1.0f, 1.0f), ColorUtil.a(accent, 0.15f * animation));
-                event.d().a(event.h(), drawX + 2.0f, (contentY + 24.0f) - 1.5f, (width - 4.0f) * progress, 1.5f, new Vector4f(0.0f, 0.0f, 1.0f, 1.0f), ColorUtil.a(accent, animation));
+                int accent = harmful ? ColorUtil.convertToARGB(215, 76, 76, 255) : primary;
+                event.d().a(event.h(), drawX + 2.0f, (contentY + 24.0f) - 1.5f, width - 4.0f, 1.5f, new Vector4f(0.0f, 0.0f, 1.0f, 1.0f), ColorUtil.applyAlphaToColor(accent, 0.15f * animation));
+                event.d().a(event.h(), drawX + 2.0f, (contentY + 24.0f) - 1.5f, (width - 4.0f) * progress, 1.5f, new Vector4f(0.0f, 0.0f, 1.0f, 1.0f), ColorUtil.applyAlphaToColor(accent, animation));
                 maxWidth = Math.max(maxWidth, width);
                 contentY += 28.0f * animation;
             }
@@ -150,8 +150,8 @@ public class PotionWidget extends Widget implements Interface {
                     visible = true;
                 }
                 if (effect != this.g && effect.getDuration() == 100 && (effect.getEffectType().equals(StatusEffects.STRENGTH) || effect.getEffectType().equals(StatusEffects.SPEED) || effect.getEffectType().equals(StatusEffects.HEALTH_BOOST) || effect.getEffectType().equals(StatusEffects.INVISIBILITY))) {
-                    Delta.h().d().m().a(new Notification("E", Text.literal("Эффект ").append(Text.translatable(effect.getEffectType().value().getTranslationKey()).append(" " + (effect.getAmplifier() + 1)).styled(style -> {
-                        return style.withColor(Delta.h().d().o().a(ThemeInfo.PRIMARY).a());
+                    Delta.getInstance().getModuleProcessor().m().a(new Notification("E", Text.literal("Эффект ").append(Text.translatable(effect.getEffectType().value().getTranslationKey()).append(" " + (effect.getAmplifier() + 1)).styled(style -> {
+                        return style.withColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor());
                     })).append(Text.literal(" заканчивается")), 2500));
                 }
             }

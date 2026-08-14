@@ -13,7 +13,7 @@ import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
 import net.minecraft.util.math.Vec3d;
 
 @ModuleRegister(name = "Air Stuck", description = "Позволяет зависнуть в воздухе на месте", category = Category.Movement)
-public class AirStuck extends Module implements Interface {
+public class AirStuck extends Module {
     private final ModeSetting b = new ModeSetting("Режим зависания", "Обычный", "Обычный", "Удаляющий игрока");
     private Vec3d c;
 

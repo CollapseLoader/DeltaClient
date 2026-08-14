@@ -58,7 +58,7 @@ public class PvEHandler extends BaseHandler implements Interface {
         if (class_7439VarD instanceof GameMessageS2CPacket) {
             GameMessageS2CPacket gameMsg = class_7439VarD;
             if (gameMsg.content().getString().equals("Данная команда недоступна в режиме AFK")) {
-                Delta.h().d().v().g().a(7);
+                Delta.getInstance().getModuleProcessor().v().g().a(7);
             }
         }
     }
@@ -110,7 +110,7 @@ public class PvEHandler extends BaseHandler implements Interface {
 
         @Override
         public boolean a() {
-            InventoryHandler handler = Delta.h().d().v().a();
+            InventoryHandler handler = Delta.getInstance().getModuleProcessor().v().a();
             ItemStack offHand = mc.player.getOffHandStack();
             ItemStack mainHand = mc.player.getMainHandStack();
             switch (this.f) {
@@ -146,7 +146,7 @@ public class PvEHandler extends BaseHandler implements Interface {
                         this.f = 2;
                         return false;
                     }
-                    Delta.h().d().v().i().a().addFirst(new a(Items.EXPERIENCE_BOTTLE, 128, 2000));
+                    Delta.getInstance().getModuleProcessor().v().i().a().addFirst(new a(Items.EXPERIENCE_BOTTLE, 128, 2000));
                     return false;
                 case 2:
                     if (!handler.a().isEmpty() || offHand.getItem() != this.b) {
@@ -166,7 +166,7 @@ public class PvEHandler extends BaseHandler implements Interface {
                         mc.player.getInventory().selectedSlot = bar != -1 ? bar : this.d;
                         return false;
                     }
-                    Delta.h().d().k().a(new Rotation(mc.player.getYaw(), 90.0f), 360.0f, 1, 1);
+                    Delta.getInstance().getModuleProcessor().k().a(new Rotation(mc.player.getYaw(), 90.0f), 360.0f, 1, 1);
                     mc.interactionManager.interactItem(mc.player, Hand.MAIN_HAND);
                     return false;
                 case 3:

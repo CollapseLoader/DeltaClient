@@ -23,7 +23,7 @@ import java.util.List;
 
 @Command(name = "ah")
 public class AHCommand extends BaseCommand implements Interface {
-    private final List<a> c = new ArrayList();
+    private final List<a> c = new ArrayList<>();
     private TranslationStorage d;
     private String e;
     private b f;
@@ -92,7 +92,7 @@ public class AHCommand extends BaseCommand implements Interface {
 
     private void a(float percent) {
         ItemStack stack = mc.player.getMainHandStack();
-        AutoBuyEntry item = Delta.h().d().q().e().stream().filter(info -> {
+        AutoBuyEntry item = Delta.getInstance().getModuleProcessor().q().e().stream().filter(info -> {
             return info.a(stack);
         }).findFirst().orElse(null);
         if (item == null) {
@@ -120,7 +120,7 @@ public class AHCommand extends BaseCommand implements Interface {
 
     private String a(ItemStack stack) {
         this.d = this.d == null ? TranslationStorage.load(mc.getResourceManager(), List.of("ru_ru"), false) : this.d;
-        String name = Delta.h().d().q().e().stream().filter(item -> {
+        String name = Delta.getInstance().getModuleProcessor().q().e().stream().filter(item -> {
             return item.a(stack);
         }).findFirst().map((v0) -> {
             return v0.b();

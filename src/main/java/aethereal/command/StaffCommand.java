@@ -14,7 +14,7 @@ import java.util.Objects;
 public class StaffCommand extends BaseCommand {
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
-        StaffProcessor processor = Delta.h().d().f();
+        StaffProcessor processor = Delta.getInstance().getModuleProcessor().f();
         LiteralArgumentBuilder literalArgumentBuilderThen = builder.then(a("add").executes(context -> {
             ChatUtil.sendMessage("Использование: .staff add <ник>");
             return 1;

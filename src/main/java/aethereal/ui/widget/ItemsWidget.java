@@ -30,7 +30,7 @@ public class ItemsWidget extends Widget implements Interface {
     @Override
     public void a(DrawEvent event) {
         d().a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
-        ServerAssistant assistant = Delta.h().d().t().aj();
+        ServerAssistant assistant = Delta.getInstance().getModuleProcessor().t().aj();
         List<ServerAssistant.b> providers = assistant.q();
         boolean active = false;
         for (ServerAssistant.b provider : providers) {
@@ -54,9 +54,9 @@ public class ItemsWidget extends Widget implements Interface {
                 float width = 19.5f + Fonts.e.a(label, 6.5f) + 5.0f;
                 float textY = (y + ((this.d - Fonts.e.a(6.5f)) / 2.0f)) - 0.5f;
                 a(event, contentX, y, width, this.d, true, animation);
-                Delta.h().d().j().a(event.i(), provider2.c().getDefaultStack(), contentX + 3.0f, y + ((this.d - 16.0f) / 2.0f) + 3.0f, InterfaceC0020Opcode.aN, animation, 0.6f, false);
+                Delta.getInstance().getModuleProcessor().j().a(event.i(), provider2.c().getDefaultStack(), contentX + 3.0f, y + ((this.d - 16.0f) / 2.0f) + 3.0f, InterfaceC0020Opcode.aN, animation, 0.6f, false);
                 a(event, contentX + 15.5f, y, this.d, animation);
-                Fonts.e.a(event.h(), label, contentX + 19.5f, textY, 6.5f, ColorUtil.a(-1, animation));
+                Fonts.e.a(event.h(), label, contentX + 19.5f, textY, 6.5f, ColorUtil.applyAlphaToColor(-1, animation));
                 contentX += (width + 2.0f) * animation;
             }
             i++;
@@ -68,7 +68,7 @@ public class ItemsWidget extends Widget implements Interface {
 
     @Override
     public void a(GlobalEvent event) {
-        ServerAssistant assistant = Delta.h().d().t().aj();
+        ServerAssistant assistant = Delta.getInstance().getModuleProcessor().t().aj();
         boolean visible = mc.currentScreen instanceof ChatScreen;
         for (ServerAssistant.b provider : assistant.q()) {
             provider.a().a(assistant.m() && provider.b().c().intValue() != -1 && provider.b().e().get().booleanValue() && InventoryUtil.b(provider.c()) != -1);

@@ -119,7 +119,7 @@ public class Predictions extends Module {
         anim.a(true);
         anim.a(0.0f, 1.0f, 0.25f, EasingList.s, event.g());
         float alpha = anim.c();
-        int primaryColor = Delta.h().d().o().a(ThemeInfo.PRIMARY).a();
+        int primaryColor = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor();
         float hueBase = (entity.getUuid().getLeastSignificantBits() & 65535) / 65535.0f;
         int segCount = path.size() - 1;
         for (int i = 0; i < segCount; i++) {
@@ -153,9 +153,9 @@ public class Predictions extends Module {
             matrices.translate(screen.x(), screen.y(), 0.0f);
             matrices.scale(0.8f + (alpha * 0.2f), 0.8f + (alpha * 0.2f), 1.0f);
             matrices.translate(-screen.x(), -screen.y(), 0.0f);
-            event.d().a(matrices, x, y, width + 1.0f, height, 2.0f, ColorUtil.a(0, 0, 0, (int) (130.0f * alpha)));
+            event.d().a(matrices, x, y, width + 1.0f, height, 2.0f, ColorUtil.convertToARGB(0, 0, 0, (int) (130.0f * alpha)));
             event.e().a(event.i(), info.c(), x + 2.0f, (y + 2.0f) - 0.25f, 0, alpha, iconSize / 16.0f, false);
-            Fonts.e.a(matrices, format, x + (2.0f * 2.0f) + iconSize, y + 2.0f, 7.25f, ColorUtil.a(-1, alpha), 0.0f);
+            Fonts.e.a(matrices, format, x + (2.0f * 2.0f) + iconSize, y + 2.0f, 7.25f, ColorUtil.applyAlphaToColor(-1, alpha), 0.0f);
             matrices.pop();
         }
     }
@@ -220,9 +220,9 @@ public class Predictions extends Module {
             a result = a(speed, isThrowable, potion ? -20.0f : 0.0f, potion ? 0.05000000070627959d : 0.030000000582077163d, viewSpreadDegrees, event.g());
             if (result.a().size() >= 2) {
                 if (result.c() != null) {
-                    event.e().a(event.h(), result.c().getBoundingBox(), ColorUtil.a(255, 100, 100, InterfaceC0020Opcode.aN), 1.0f);
+                    event.e().a(event.h(), result.c().getBoundingBox(), ColorUtil.convertToARGB(255, 100, 100, InterfaceC0020Opcode.aN), 1.0f);
                 } else if (result.b() != null && result.d() != null) {
-                    a(event, result.a().getLast(), 0.33f, ColorUtil.a(255, 255, 255, InterfaceC0020Opcode.aN), result.d());
+                    a(event, result.a().getLast(), 0.33f, ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.aN), result.d());
                 }
             }
         }

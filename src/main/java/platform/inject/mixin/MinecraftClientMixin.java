@@ -92,7 +92,7 @@ public abstract class MinecraftClientMixin implements Interface {
 
     @Redirect(method = {"handleInputEvents"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;stopUsingItem(Lnet/minecraft/entity/player/PlayerEntity;)V"))
     private void handleInputEvents(ClientPlayerInteractionManager manager, PlayerEntity player) {
-        if (Delta.h().d().v().k().a()) {
+        if (Delta.getInstance().getModuleProcessor().v().k().a()) {
             return;
         }
         if (player.isUsingItem()) {
@@ -126,7 +126,7 @@ public abstract class MinecraftClientMixin implements Interface {
 
     @Redirect(method = {"doItemUse"}, at = @At(value = "FIELD", target = "Lnet/minecraft/client/MinecraftClient;crosshairTarget:Lnet/minecraft/util/hit/HitResult;", opcode = InterfaceC0020Opcode.aK))
     private HitResult doItemUse(MinecraftClient instance) {
-        OpenWalls openWalls = Delta.h().d().t().a();
+        OpenWalls openWalls = Delta.getInstance().getModuleProcessor().t().a();
         if (!openWalls.m()) {
             return instance.crosshairTarget;
         }

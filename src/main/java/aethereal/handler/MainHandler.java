@@ -153,7 +153,7 @@ public class MainHandler extends BaseHandler implements Interface {
                 }
                 this.c = trimmed;
                 ChatUtil.sendMessage("&cВы находитесь в PvP режиме! &7Чтобы отправить эту команду, повторите её");
-                Delta.h().d().u().f().d();
+                Delta.getInstance().getModuleProcessor().u().f().d();
                 event.a(true);
             }
         }
@@ -196,7 +196,7 @@ public class MainHandler extends BaseHandler implements Interface {
     public void a(GlobalEvent globalEvent) {
         String str;
         if (mc.player != null || (mc.currentScreen instanceof MultiplayerScreen)) {
-            Client clientF = Delta.h().f();
+            Client clientF = Delta.getInstance().f();
             Object[] objArr = new Object[6];
             objArr[0] = "uuid";
             objArr[1] = mc.player != null ? mc.player.getUuid() : null;

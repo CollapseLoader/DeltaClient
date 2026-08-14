@@ -1,6 +1,6 @@
 package aethereal.ui.element;
 
-import aethereal.api.Compile;
+
 import aethereal.config.ThemeInfo;
 import aethereal.config.ThemeProcessor;
 import aethereal.core.Delta;
@@ -23,7 +23,7 @@ public class ModeElement extends Element_2<ModeSetting> {
     }
 
     @Override
-    @Compile
+    
     public boolean a(double mouseX, double mouseY, int button) {
         Vector4f vector4f = this.a;
         var setting = this.b;
@@ -65,9 +65,9 @@ public class ModeElement extends Element_2<ModeSetting> {
     @Override
     public void a(DrawContext context, double mouseX, double mouseY, float delta, float extend) {
         MatrixStack matrices = context.getMatrices();
-        Draw2DProcessor draw = Delta.h().d().i();
-        ThemeProcessor theme = Delta.h().d().o();
-        Fonts.c.a(matrices, this.b.i(), this.a.x, this.a.y, 6.5f, ColorUtil.a(theme.a(ThemeInfo.TEXT).a(), extend));
+        Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
+        ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
+        Fonts.c.a(matrices, this.b.i(), this.a.x, this.a.y, 6.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT).toIntColor(), extend));
         float x = this.a.x;
         float y = this.a.y + Fonts.c.a(6.5f) + 5.0f;
         int i = 0;
@@ -80,10 +80,10 @@ public class ModeElement extends Element_2<ModeSetting> {
             this.d[i].a(this.b.l(mode));
             this.d[i].a(0.0f, 1.0f, 0.3f, EasingList.i, delta);
             float value = this.d[i].c();
-            draw.a(matrices, x, y, width, 9.0f, 2.0f, ColorUtil.a(theme.a(ThemeInfo.PRIMARY).a(), ((5.0f + (65.0f * value)) / 255.0f) * extend));
-            draw.a(matrices, x, y, width, 9.0f, 2.0f, 0.5f, ColorUtil.a(theme.a(ThemeInfo.OUTLINE_SMALL).a(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * extend));
-            int color = ColorUtil.a(theme.a(ThemeInfo.TEXT_DISABLED).a(), theme.a(ThemeInfo.TEXT).a(), value);
-            Fonts.c.b(matrices, mode, x + (width / 2.0f), (y + ((9.0f - Fonts.c.a(6.25f)) / 2.0f)) - 0.75f, 6.25f, ColorUtil.a(color, extend));
+            draw.a(matrices, x, y, width, 9.0f, 2.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), ((5.0f + (65.0f * value)) / 255.0f) * extend));
+            draw.a(matrices, x, y, width, 9.0f, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * extend));
+            int color = ColorUtil.lerpColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), theme.a(ThemeInfo.TEXT).toIntColor(), value);
+            Fonts.c.b(matrices, mode, x + (width / 2.0f), (y + ((9.0f - Fonts.c.a(6.25f)) / 2.0f)) - 0.75f, 6.25f, ColorUtil.applyAlphaToColor(color, extend));
             x += width + 3.0f;
             i++;
         }

@@ -1,10 +1,10 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
 
 
-public class RatioEvent extends Event implements IEvent {
+
+public class RatioEvent extends Event {
     private float a;
 
     public RatioEvent(float ratio) {

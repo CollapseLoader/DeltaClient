@@ -164,7 +164,7 @@ public final class Activity {
     }
 
     public static final class a {
-        private final List<ActivityButton> i = new ArrayList();
+        private final List<ActivityButton> i = new ArrayList<>();
         private String b;
         private String c;
         private String d;

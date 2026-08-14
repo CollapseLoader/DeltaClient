@@ -33,9 +33,9 @@ import java.util.List;
 import java.util.Locale;
 
 @ModuleRegister(name = "Communication", description = "Связывает вас с другими игроками через групповые и глобальные сообщения (party, IRC и др.)", category = Category.Misc)
-public class Communication extends Module implements Interface {
+public class Communication extends Module {
     private final BooleanSetting c = new BooleanSetting("Клиентский чат", false);
-    private final List<a> d = new ArrayList();
+    private final List<a> d = new ArrayList<>();
 
     public Communication() {
         BindSetting b = new BindSetting("Отправление метки друзьям", -1).a(() -> {
@@ -43,7 +43,7 @@ public class Communication extends Module implements Interface {
             posObject.addProperty("x", Double.valueOf(mc.player.getPos().x));
             posObject.addProperty("y", Double.valueOf(mc.player.getPos().y));
             posObject.addProperty("z", Double.valueOf(mc.player.getPos().z));
-            Delta.h().f().a(false, "friend", "type", "mark", "pos", posObject);
+            Delta.getInstance().f().a(false, "friend", "type", "mark", "pos", posObject);
         });
         a(b, this.c);
     }
@@ -62,7 +62,7 @@ public class Communication extends Module implements Interface {
             if (packet instanceof ChatMessageC2SPacket) {
                 String content = packet.chatMessage();
                 if (content.startsWith("@")) {
-                    Delta.h().f().a(false, "irc", "message", content.substring(1));
+                    Delta.getInstance().f().a(false, "irc", "message", content.substring(1));
                     event.a(true);
                 }
             }
@@ -86,9 +86,9 @@ public class Communication extends Module implements Interface {
         Vec3d position = new Vec3d(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]), Double.parseDouble(parts[2]));
         Vector2f screen = ProjectUtil.project(position.x, position.y, position.z);
         if (ProjectUtil.isOnScreen(screen)) {
-            ThemeProcessor theme = Delta.h().d().o();
-            int primary = theme.a(ThemeInfo.PRIMARY).a();
-            int background = ColorUtil.a(theme.a(ThemeInfo.BACKGROUND_HUD).a(), theme.a(ThemeInfo.BACKGROUND_HUD).b());
+            ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
+            int primary = theme.a(ThemeInfo.PRIMARY).toIntColor();
+            int background = ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.BACKGROUND_HUD).toIntColor(), theme.a(ThemeInfo.BACKGROUND_HUD).b());
             Text text = Text.literal(mark.b().toUpperCase(Locale.ROOT)).append(Text.literal(" /  ").setStyle(Style.EMPTY.withColor(primary))).append(Text.literal(String.format(Locale.US, "%.1fм", Double.valueOf(eyes.distanceTo(position)))));
             float width = (3.0f * 2.0f) + 8.0f + 2.5f + Fonts.e.a(text, 6.25f);
             float height = (8.0f + (3.0f * 2.0f)) - 2.0f;

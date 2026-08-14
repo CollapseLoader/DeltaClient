@@ -15,7 +15,7 @@ import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import java.util.Objects;
 
 @ModuleRegister(name = "Elytra Helper", description = "Выполняет действия с элитрой по нажатию назначенной клавиши", category = Category.Player)
-public class ElytraHelper extends Module implements Interface {
+public class ElytraHelper extends Module {
     private final BooleanSetting b = new BooleanSetting("Автостарт после свапа", false);
     private final BooleanSetting c;
     private final BooleanSetting d;
@@ -39,7 +39,7 @@ public class ElytraHelper extends Module implements Interface {
         });
         this.f = new BindSetting("Кнопка переключения", -1).a(() -> {
             int slot = mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Items.ELYTRA ? InventoryUtil.a() : InventoryUtil.b(Items.ELYTRA);
-            Delta.h().d().v().a().b(slot, 1, 1);
+            Delta.getInstance().getModuleProcessor().v().a().b(slot, 1, 1);
             if (this.b.c().booleanValue() && InventoryUtil.b(Items.ELYTRA) == slot) {
                 this.i = mc.player.age;
                 this.g = true;
@@ -137,7 +137,7 @@ public class ElytraHelper extends Module implements Interface {
 
     private void z() {
         if (mc.player.isGliding()) {
-            Delta.h().d().v().b().a(Items.FIREWORK_ROCKET.getDefaultStack());
+            Delta.getInstance().getModuleProcessor().v().b().a(Items.FIREWORK_ROCKET.getDefaultStack());
         }
     }
 

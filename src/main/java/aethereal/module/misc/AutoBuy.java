@@ -37,9 +37,9 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 @ModuleRegister(name = "Auto Buy", description = "Автоматически скупает выбранные предметы по заданной цене", category = Category.Misc)
-public class AutoBuy extends Module implements Interface {
+public class AutoBuy extends Module {
     private final BooleanSetting b = new BooleanSetting("Авто-перевыставление вещей", false);
-    private final List<ItemStack> d = new ArrayList();
+    private final List<ItemStack> d = new ArrayList<>();
     private final CounterUtil e = new CounterUtil();
     private int f;
     private int g;
@@ -91,7 +91,7 @@ public class AutoBuy extends Module implements Interface {
                     for (Slot slot : handler.slots.subList(0, Math.min(45, handler.slots.size()))) {
                         ItemStack stack = slot.getStack();
                         ContainerComponent shulker = stack.get(DataComponentTypes.CONTAINER);
-                        AutoBuyEntry find = Delta.h().d().q().e().stream().filter(item -> {
+                        AutoBuyEntry find = Delta.getInstance().getModuleProcessor().q().e().stream().filter(item -> {
                             if (item.l()) {
                                 if (item.a(stack)) {
                                     return ServerUtil.a.a(stack) > item.k() && ((long) ServerUtil.a.a(stack)) * ((long) Math.max(stack.getCount(), 1)) <= ServerUtil.a.e();
@@ -162,7 +162,7 @@ public class AutoBuy extends Module implements Interface {
                 if (messagePacket instanceof GameMessageS2CPacket) {
                     if (this.i != null && messagePacket.content().getString().contains("Вы успешно купили")) {
                         if (this.d.isEmpty() || !ItemStack.areEqual(this.d.getFirst(), this.i)) {
-                            Client clientF = Delta.h().f();
+                            Client clientF = Delta.getInstance().f();
                             Object[] objArr = new Object[2];
                             objArr[0] = "message";
                             Object[] objArr2 = new Object[3];
@@ -215,7 +215,7 @@ public class AutoBuy extends Module implements Interface {
                     context.drawGuiTexture(RenderLayer::getGuiTextured, Identifier.ofVanilla("container/slot"), x, slotY, 18, 18);
                     if (i < this.d.size()) {
                         ItemStack stack = this.d.get(i);
-                        Delta.h().d().j().a(context, stack, x + 1, slotY + 1, 0, 1.0f, 1.0f, true);
+                        Delta.getInstance().getModuleProcessor().j().a(context, stack, x + 1, slotY + 1, 0, 1.0f, 1.0f, true);
                         if (MathUtil.a(event.f(), event.g(), x + 1, slotY + 1, 16.0f, 16.0f)) {
                             context.fillGradient(RenderLayer.getGuiOverlay(), x + 1, slotY + 1, x + 17, slotY + 17, -2130706433, -2130706433, 0);
                             context.drawItemTooltip(mc.textRenderer, stack, event.f(), event.g());

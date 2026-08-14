@@ -156,8 +156,8 @@ public class Aura extends Module {
             mc.player.getInventory().selectedSlot = this.e[0];
             this.e[0] = -1;
         }
-        if (this.e[1] != -1 && Delta.h().d().v().a().a().isEmpty()) {
-            Delta.h().d().v().a().a(mc.player.getInventory().selectedSlot, this.e[1], 1);
+        if (this.e[1] != -1 && Delta.getInstance().getModuleProcessor().v().a().a().isEmpty()) {
+            Delta.getInstance().getModuleProcessor().v().a().a(mc.player.getInventory().selectedSlot, this.e[1], 1);
             this.e[1] = -1;
         }
     }
@@ -181,15 +181,15 @@ public class Aura extends Module {
                 }
             } else {
                 int inventory = a(9, 36);
-                if (inventory != -1 && this.e[1] == -1 && Delta.h().d().v().a().a().isEmpty()) {
+                if (inventory != -1 && this.e[1] == -1 && Delta.getInstance().getModuleProcessor().v().a().a().isEmpty()) {
                     this.e[1] = inventory;
-                    Delta.h().d().v().a().a(inventory, mc.player.getInventory().selectedSlot, 1);
+                    Delta.getInstance().getModuleProcessor().v().a().a(inventory, mc.player.getInventory().selectedSlot, 1);
                 }
             }
         }
         if (q()) {
             boolean skip = false;
-            if ((Delta.h().d().t().H().e || (mc.player.fallDistance > 2.0f && Delta.h().d().t().H().c.c().booleanValue())) && InventoryUtil.b(Items.MACE) != -1) {
+            if ((Delta.getInstance().getModuleProcessor().t().H().e || (mc.player.fallDistance > 2.0f && Delta.getInstance().getModuleProcessor().t().H().c.c().booleanValue())) && InventoryUtil.b(Items.MACE) != -1) {
                 if (mc.player.fallDistance < 1.5f) {
                     return;
                 }
@@ -197,7 +197,7 @@ public class Aura extends Module {
                     return Double.valueOf(pos.distanceTo(this.t.getPos()));
                 }).orElse(Double.valueOf(33.0d)).doubleValue();
                 boolean hitNow = landDist > 2.0d;
-                if ((!this.d && !MaceUtil.b() && Delta.h().d().t().H().b.c().booleanValue() && !hitNow) || !MaceUtil.a() || mc.player.isGliding()) {
+                if ((!this.d && !MaceUtil.b() && Delta.getInstance().getModuleProcessor().t().H().b.c().booleanValue() && !hitNow) || !MaceUtil.a() || mc.player.isGliding()) {
                     return;
                 } else {
                     skip = true;
@@ -240,7 +240,7 @@ public class Aura extends Module {
         if ((this.n.a("Открыт контейнер") != null && this.n.a("Открыт контейнер").c().booleanValue() && mc.currentScreen != null && !(mc.currentScreen instanceof GUIScreen) && !(mc.currentScreen instanceof AssistantScreen)) || !AuraUtil.a(this.t, this.j.c().floatValue())) {
             return false;
         }
-        if (Delta.h().d().t().H().e) {
+        if (Delta.getInstance().getModuleProcessor().t().H().e) {
             if (mc.player.getItemCooldownManager().isCoolingDown(mc.player.getMainHandStack())) {
                 return false;
             }
@@ -259,10 +259,10 @@ public class Aura extends Module {
     }
 
     private boolean a(LivingEntity entity) {
-        if (Delta.h().d().t().G().m() && mc.player.isGliding()) {
+        if (Delta.getInstance().getModuleProcessor().t().G().m() && mc.player.isGliding()) {
             return true;
         }
-        return AuraUtil.a((Entity) entity, ((double) (this.j.c().floatValue() + this.k.c().floatValue())) + (mc.player.getVelocity().length() * 3.0d) + ((double) ((InventoryUtil.b(Items.MACE) == -1 || ((double) mc.player.fallDistance) <= 1.5d) ? 0.0f : 1.5f)) + ((double) ((Delta.h().d().t().H().m() && InventoryUtil.b(Items.MACE) != -1 && MaceUtil.a(mc.player, mc.world).map(p -> {
+        return AuraUtil.a((Entity) entity, ((double) (this.j.c().floatValue() + this.k.c().floatValue())) + (mc.player.getVelocity().length() * 3.0d) + ((double) ((InventoryUtil.b(Items.MACE) == -1 || ((double) mc.player.fallDistance) <= 1.5d) ? 0.0f : 1.5f)) + ((double) ((Delta.getInstance().getModuleProcessor().t().H().m() && InventoryUtil.b(Items.MACE) != -1 && MaceUtil.a(mc.player, mc.world).map(p -> {
             return Boolean.valueOf(mc.player.getY() - p.getY() > 2.0d);
         }).orElse(false).booleanValue()) ? 10 : 0)));
     }
@@ -326,7 +326,7 @@ public class Aura extends Module {
             return false;
         }
         if (entity instanceof PlayerEntity) {
-            boolean isFriend = Delta.h().d().e().d(entity.getName().getString());
+            boolean isFriend = Delta.getInstance().getModuleProcessor().e().d(entity.getName().getString());
             boolean naked = Stream.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET).noneMatch(slot -> {
                 return entity.getEquippedStack(slot).getItem() instanceof ArmorItem;
             });
@@ -382,17 +382,17 @@ public class Aura extends Module {
                 this.c[0] = 1.0f;
             }
         }
-        if (Delta.h().d().t().F().m() && q() && AuraUtil.a(this.t, 3.0d) && mc.player.isGliding()) {
-            Delta.h().d().k().a(new Rotation(yawToTarget, pitchToTarget), 180.0f, 0, 3);
+        if (Delta.getInstance().getModuleProcessor().t().F().m() && q() && AuraUtil.a(this.t, 3.0d) && mc.player.isGliding()) {
+            Delta.getInstance().getModuleProcessor().k().a(new Rotation(yawToTarget, pitchToTarget), 180.0f, 0, 3);
         }
-        if (!this.h.c().contains("ФанТайм") && (InventoryUtil.b(Items.MACE) != -1 || (Delta.h().d().t().H().e && mc.player.fallDistance > 3.0f && MaceUtil.a(mc.player, mc.world).map(pos -> {
+        if (!this.h.c().contains("ФанТайм") && (InventoryUtil.b(Items.MACE) != -1 || (Delta.getInstance().getModuleProcessor().t().H().e && mc.player.fallDistance > 3.0f && MaceUtil.a(mc.player, mc.world).map(pos -> {
             return Double.valueOf(pos.distanceTo(mc.player.getPos()));
         }).orElse(Double.valueOf(0.0d)).doubleValue() > 2.0d && AuraUtil.a(this.t, 4.0d + (mc.player.getVelocity().length() * 3.0d))))) {
             float time = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
             float smoothW = ((float) ((((Math.sin(time * 0.31f) * 0.5d) + (Math.sin((time * 0.73f) + 1.1f) * 0.3000000314327426d)) + (Math.sin((time * 1.7f) + 2.6f) * 0.2000000098386085d)) * 8.0d)) / 8.0f;
             float finalYaw = AuraUtil.a(mc.player.getYaw(), yawToTarget, 0.8f);
             float finalPitch = AuraUtil.a(mc.player.getPitch(), pitchToTarget, 0.8f);
-            Delta.h().d().k().a(new Rotation(finalYaw + smoothW, finalPitch + smoothW), 180.0f, 1, 2);
+            Delta.getInstance().getModuleProcessor().k().a(new Rotation(finalYaw + smoothW, finalPitch + smoothW), 180.0f, 1, 2);
         }
         switch (this.h.c()) {
             case "ФанТайм":
@@ -433,7 +433,7 @@ public class Aura extends Module {
         if (this.b <= 4 && this.c[2] % 2.0f == 0.0f) {
             finalYaw = mc.player.getYaw();
         }
-        Delta.h().d().k().a(new Rotation(finalYaw + smoothW, (this.h.c().equals("ФанТайм") ? finalPitch : Look.c()) + smoothH), 220.0f, 1, 1);
+        Delta.getInstance().getModuleProcessor().k().a(new Rotation(finalYaw + smoothW, (this.h.c().equals("ФанТайм") ? finalPitch : Look.c()) + smoothH), 220.0f, 1, 1);
     }
 
     private void b(float yawToTarget, float pitchToTarget, Vec3d vec3d) {
@@ -461,6 +461,6 @@ public class Aura extends Module {
                 finalPitch = AuraUtil.a(mc.player.getPitch(), -pitchToTarget, 0.05f);
             }
         }
-        Delta.h().d().k().a(new Rotation(finalYaw + smoothW, finalPitch + smoothH), 180.0f, 1, 1);
+        Delta.getInstance().getModuleProcessor().k().a(new Rotation(finalYaw + smoothW, finalPitch + smoothH), 180.0f, 1, 1);
     }
 }

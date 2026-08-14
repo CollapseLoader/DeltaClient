@@ -1,11 +1,11 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Hand;
 
-public class HandAnimationEvent extends Event implements IEvent {
+public class HandAnimationEvent extends Event {
     private final MatrixStack a;
     private final Hand b;
     private final float c;

@@ -45,16 +45,16 @@ public class AuraHandler extends BaseHandler implements Interface {
         if (event.c() && this.f != null) {
             float anim = this.e.c();
             if (anim > 0.0f) {
-                int themeColor = Delta.h().d().o().a(ThemeInfo.PRIMARY).a();
+                int themeColor = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor();
                 Vec3d renderPos = a(this.f);
                 float ringWidth = this.f.getWidth() * 1.5f;
                 float ringScale = 1.25f - (0.5f * anim);
                 b();
-                if (Delta.h().d().t().B().r().l("Круг")) {
-                    a(event.h(), renderPos, ColorUtil.a(themeColor, anim));
+                if (Delta.getInstance().getModuleProcessor().t().B().r().l("Круг")) {
+                    a(event.h(), renderPos, ColorUtil.applyAlphaToColor(themeColor, anim));
                 } else {
-                    a(event.h(), renderPos, ringWidth, ringScale, moving, ColorUtil.a(themeColor, anim));
-                    a(event.h(), renderPos, ringWidth, ringScale, moving, ColorUtil.a(themeColor, anim * 0.2f), anim);
+                    a(event.h(), renderPos, ringWidth, ringScale, moving, ColorUtil.applyAlphaToColor(themeColor, anim));
+                    a(event.h(), renderPos, ringWidth, ringScale, moving, ColorUtil.applyAlphaToColor(themeColor, anim * 0.2f), anim);
                 }
                 c();
             }
@@ -64,14 +64,14 @@ public class AuraHandler extends BaseHandler implements Interface {
     @EventTarget
     public void a(GlobalEvent event) {
         if (mc.player != null) {
-            Delta.h().d().t().B().b++;
+            Delta.getInstance().getModuleProcessor().t().B().b++;
         }
     }
 
     @EventTarget
     public void a(TickEvent event) {
-        Aura aura = Delta.h().d().t().B();
-        LivingEntity current = aura.s() != null ? aura.s() : Delta.h().d().t().X().s();
+        Aura aura = Delta.getInstance().getModuleProcessor().t().B();
+        LivingEntity current = aura.s() != null ? aura.s() : Delta.getInstance().getModuleProcessor().t().X().s();
         boolean changed = current != null && this.f != null && current != this.f;
         boolean visible = current != null && !changed;
         if (visible) {

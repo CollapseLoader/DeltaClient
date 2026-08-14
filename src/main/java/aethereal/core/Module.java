@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Module implements Interface {
-    private final List<Element_2<?>> b = new ArrayList();
-    private final List<Setting<?>> c = new ObjectArrayList();
+    private final List<Element_2<?>> b = new ArrayList<>();
+    private final List<Setting<?>> c = new ObjectArrayList<>();
     private final AnimationUtil d = new AnimationUtil();
     private final AnimationUtil e = new AnimationUtil();
     private final AnimationUtil f = new AnimationUtil();
@@ -103,13 +103,13 @@ public class Module implements Interface {
         } else {
             c();
         }
-        Delta.h().d().t().at().d(this.k);
+        Delta.getInstance().getModuleProcessor().t().at().d(this.k);
     }
 
     public final void a(Setting<?>... settings) {
         for (Setting<?> setting : settings) {
             this.c.add(setting);
-            Element_2<?> element = setting.d();
+            Element_2<?> element = setting.createBooleanElement();
             if (element != null) {
                 this.b.add(element);
             }
@@ -118,13 +118,13 @@ public class Module implements Interface {
 
     public void b() {
         EventManager.a(this);
-        Delta.h().d().m().a(new Notification("Q",
-                ColorUtil.a(InterfaceC0020Opcode.bW, 220, InterfaceC0020Opcode.bv, 255), j() + " активирован", 1500));
+        Delta.getInstance().getModuleProcessor().m().a(new Notification("Q",
+                ColorUtil.convertToARGB(InterfaceC0020Opcode.bW, 220, InterfaceC0020Opcode.bv, 255), j() + " активирован", 1500));
     }
 
     public void c() {
         EventManager.b(this);
-        Delta.h().d().m().a(new Notification("Q",
-                ColorUtil.a(230, InterfaceC0020Opcode.bW, InterfaceC0020Opcode.bW, 255), j() + " деактивирован", 1500));
+        Delta.getInstance().getModuleProcessor().m().a(new Notification("Q",
+                ColorUtil.convertToARGB(230, InterfaceC0020Opcode.bW, InterfaceC0020Opcode.bW, 255), j() + " деактивирован", 1500));
     }
 }

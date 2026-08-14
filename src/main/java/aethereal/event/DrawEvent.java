@@ -2,16 +2,16 @@ package aethereal.event;
 
 import aethereal.core.Delta;
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 import aethereal.core.Interface;
 import aethereal.render.Draw2DProcessor;
 import aethereal.render.Draw3DProcessor;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 
-public class DrawEvent extends Event implements Interface, IEvent {
-    private final Draw2DProcessor b = Delta.h().d().i();
-    private final Draw3DProcessor c = Delta.h().d().j();
+public class DrawEvent extends Event implements Interface {
+    private final Draw2DProcessor b = Delta.getInstance().getModuleProcessor().i();
+    private final Draw3DProcessor c = Delta.getInstance().getModuleProcessor().j();
     private final a d;
     private final float e;
     private final MatrixStack f;

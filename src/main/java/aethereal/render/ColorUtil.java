@@ -1,7 +1,5 @@
 package aethereal.render;
 
-
-
 import java.awt.*;
 
 public class ColorUtil {
@@ -10,19 +8,21 @@ public class ColorUtil {
     }
 
     public static float[] a(Color color) {
-        return new float[]{color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, color.getAlpha() / 255.0f};
+        return new float[] { color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f,
+                color.getAlpha() / 255.0f };
     }
 
     public static float[] a(int color) {
         int[] components = b(color);
-        return new float[]{components[0] / 255.0f, components[1] / 255.0f, components[2] / 255.0f, components[3] / 255.0f};
+        return new float[] { components[0] / 255.0f, components[1] / 255.0f, components[2] / 255.0f,
+                components[3] / 255.0f };
     }
 
     public static int[] b(int color) {
-        return new int[]{(color >> 16) & 255, (color >> 8) & 255, color & 255, (color >> 24) & 255};
+        return new int[] { (color >> 16) & 255, (color >> 8) & 255, color & 255, (color >> 24) & 255 };
     }
 
-    public static int a(int color1, int color2, float position, float totalWidth, float time, float offset) {
+    public static int makeGradient(int color1, int color2, float position, float totalWidth, float time, float offset) {
         float gradientLength = 18.0f / offset;
         float wavePosition = (time + (position / (totalWidth * gradientLength))) % 1.0f;
         float factor = (((float) Math.sin(((double) wavePosition) * 3.1415938456874706d * 2.0d)) * 0.5f) + 0.5f;
@@ -41,15 +41,15 @@ public class ColorUtil {
         return (a << 24) | (r << 16) | (g << 8) | b;
     }
 
-    public static int a(int color, float alpha) {
+    public static int applyAlphaToColor(int color, float alpha) {
         return (color & 16777215) | (Math.round(alpha * 255.0f) << 24);
     }
 
-    public static int a(int color, int alpha) {
+    public static int combineColorWithAlpha(int color, int alpha) {
         return (color & 16777215) | (alpha << 24);
     }
 
-    public static int a(int r, int g, int b, int a) {
+    public static int convertToARGB(int r, int g, int b, int a) {
         return (a << 24) | (r << 16) | (g << 8) | b;
     }
 
@@ -57,10 +57,11 @@ public class ColorUtil {
         return (-16777216) | (r << 16) | (g << 8) | b;
     }
 
-    public static int a(int from, int to, float t) {
+    public static int lerpColor(int from, int to, float t) {
         int[] f = b(from);
         int[] tArr = b(to);
-        return a((int) (f[0] + ((tArr[0] - f[0]) * t)), (int) (f[1] + ((tArr[1] - f[1]) * t)), (int) (f[2] + ((tArr[2] - f[2]) * t)), (int) (f[3] + ((tArr[3] - f[3]) * t)));
+        return convertToARGB((int) (f[0] + ((tArr[0] - f[0]) * t)), (int) (f[1] + ((tArr[1] - f[1]) * t)),
+                (int) (f[2] + ((tArr[2] - f[2]) * t)), (int) (f[3] + ((tArr[3] - f[3]) * t)));
     }
 
     public static int b(int color, float factor) {
@@ -69,10 +70,10 @@ public class ColorUtil {
         hsb[2] = hsb[2] * factor;
         hsb[2] = Math.max(0.0f, Math.min(1.0f, hsb[2]));
         int darkenedRGB = Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
-        return a(darkenedRGB, (int) (rgb[3] * 255.0f));
+        return combineColorWithAlpha(darkenedRGB, (int) (rgb[3] * 255.0f));
     }
 
-    public static int b(int start, int end, float value) {
-        return a(start, end, value);
+    public static int lerpColorValue(int start, int end, float value) {
+        return lerpColor(start, end, value);
     }
 }

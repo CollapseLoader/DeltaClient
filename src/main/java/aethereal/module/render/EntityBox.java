@@ -27,7 +27,7 @@ public class EntityBox extends Module {
     private final ModeSetting healthBarMode = (ModeSetting) new ModeSetting("Бар здоровья", "Отключен", "Отключен", "Стандартный").a(() -> {
         return Boolean.valueOf(this.visualMode.l("Квадрат") || this.visualMode.l("Углы"));
     });
-    private final ColorSetting colorSetting = (ColorSetting) new ColorSetting("Цвет визуализации", Integer.valueOf(ColorUtil.a(255, 255, 255, 255))).a(() -> {
+    private final ColorSetting colorSetting = (ColorSetting) new ColorSetting("Цвет визуализации", Integer.valueOf(ColorUtil.convertToARGB(255, 255, 255, 255))).a(() -> {
         return Boolean.valueOf(this.colorSource.l("Статичный"));
     });
 
@@ -41,7 +41,7 @@ public class EntityBox extends Module {
             if (event.c()) {
                 for (Entity entity : mc.world.getEntities()) {
                     if (shouldRender(entity)) {
-                        event.e().a(event.h(), entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())), this.colorSource.l("Статичный") ? this.colorSetting.c().intValue() : Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), 0.75f);
+                        event.e().a(event.h(), entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())), this.colorSource.l("Статичный") ? this.colorSetting.c().intValue() : Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), 0.75f);
                     }
                 }
                 return;
@@ -58,8 +58,8 @@ public class EntityBox extends Module {
                         LivingEntity living = entity instanceof LivingEntity ? (LivingEntity) entity : null;
                         boolean healthBar = !this.healthBarMode.l("Отключен") && living != null;
                         float percent = healthBar ? Math.min(Math.max(0.0f, ServerUtil.a.a(living)) / Math.max(1.0f, living.getMaxHealth()), 1.0f) : 0.0f;
-                        int healthColor = ColorUtil.b(ColorUtil.a(255, 0, 0, 255), ColorUtil.a(0, 255, 0, 255), percent);
-                        int color = this.colorSource.l("Статичный") ? this.colorSetting.c().intValue() : ColorUtil.a(Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), 255);
+                        int healthColor = ColorUtil.lerpColorValue(ColorUtil.convertToARGB(255, 0, 0, 255), ColorUtil.convertToARGB(0, 255, 0, 255), percent);
+                        int color = this.colorSource.l("Статичный") ? this.colorSetting.c().intValue() : ColorUtil.combineColorWithAlpha(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), 255);
                         drawBox(draw, event, bounds[0], bounds[1], bounds[2], bounds[3], color, this.visualMode.l("Углы"), healthBar, percent, healthColor);
                     }
                 }
@@ -75,7 +75,7 @@ public class EntityBox extends Module {
         }
         float line = 0.75f;
         float outline = 1.75f;
-        int outlineColor = ColorUtil.a(0, 0, 0, 255);
+        int outlineColor = ColorUtil.convertToARGB(0, 0, 0, 255);
         if (corners) {
             float length = Math.min(width, height) * 0.25f;
             drawLine(draw, event, minX, minY, length, 0.0f, line, outline, color, outlineColor);

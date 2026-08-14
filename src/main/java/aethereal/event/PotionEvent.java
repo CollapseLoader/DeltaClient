@@ -1,11 +1,11 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 
 import net.minecraft.util.math.BlockPos;
 
-public class PotionEvent extends Event implements IEvent {
+public class PotionEvent extends Event {
     private final a a;
     private final int b;
     private final BlockPos c;

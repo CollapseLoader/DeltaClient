@@ -73,7 +73,7 @@ public class WatermarkWidget extends Widget implements Interface {
         j().b(y);
         j().c(topWidth);
         j().d(bottomSections.length > 0 ? this.d + 3.0f + this.d : this.d);
-        int primaryColor = ColorUtil.a(Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), 1.0f);
+        int primaryColor = ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), 1.0f);
         a(event, x, y, topWidth, topSections, true, primaryColor, iconSize, logoSize, 5.0f, sectionGap, 3.0f, 4.0f, -0.5f);
         if (bottomSections.length > 0) {
             a(event, bottomX, y + this.d + 3.0f, bottomWidth, bottomSections, false, primaryColor, iconSize, logoSize, 5.0f, sectionGap, 3.0f, 4.0f, -0.5f);
@@ -153,7 +153,7 @@ public class WatermarkWidget extends Widget implements Interface {
     private String[][] k() {
         List<String[]> sections = new ArrayList<>();
         if (this.l.c().booleanValue()) {
-            sections.add(new String[]{"L", Delta.h().g().username()});
+            sections.add(new String[]{"L", Delta.getInstance().g().username()});
         }
         if (this.i.c().booleanValue()) {
             sections.add(new String[]{"q", ((int) this.f) + " FPS"});
@@ -173,7 +173,7 @@ public class WatermarkWidget extends Widget implements Interface {
             sections.add(new String[]{"b", "x " + ((int) mc.player.getX()) + " y " + ((int) mc.player.getY()) + " z " + ((int) mc.player.getZ())});
         }
         if (this.n.c().booleanValue()) {
-            sections.add(new String[]{"g", String.format("%.1f TPS", Float.valueOf(Delta.h().d().v().j().a()))});
+            sections.add(new String[]{"g", String.format("%.1f TPS", Float.valueOf(Delta.getInstance().getModuleProcessor().v().j().a()))});
         }
         if (this.o.c().booleanValue()) {
             sections.add(new String[]{"e", String.format("%.2f BPS", Double.valueOf(ServerUtil.c()))});

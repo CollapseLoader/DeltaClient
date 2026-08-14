@@ -12,7 +12,7 @@ public class MultiModeSetting extends Setting<List<BooleanSetting>> {
     }
 
     @Override
-    public Element_2<?> d() {
+    public Element_2<?> createBooleanElement() {
         return new MultiModeElement(this);
     }
 

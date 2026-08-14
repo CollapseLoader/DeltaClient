@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @ModuleRegister(name = "Anti Bot", description = "Скрывает фальшивых игроков, появляющихся в мире", category = Category.Combat)
 public class AntiBot extends Module {
-    private final List<UUID> b = new ArrayList();
+    private final List<UUID> b = new ArrayList<>();
 
     @Override
     public void b() {

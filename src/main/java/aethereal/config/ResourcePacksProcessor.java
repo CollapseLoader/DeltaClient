@@ -1,6 +1,6 @@
 package aethereal.config;
 
-import aethereal.api.Compile;
+
 import aethereal.core.EventTarget;
 import aethereal.event.BackendEvent;
 import aethereal.network.PacketSecurity;
@@ -12,7 +12,7 @@ import java.nio.file.Files;
 
 public class ResourcePacksProcessor extends BaseProcessor {
     @Override
-    @Compile
+    
     public void setup() {
     }
 

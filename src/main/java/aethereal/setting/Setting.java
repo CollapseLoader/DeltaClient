@@ -22,7 +22,7 @@ public abstract class Setting<Value> {
         this.d = defaultValue;
     }
 
-    public abstract Element_2<?> d();
+    public abstract Element_2<?> createBooleanElement();
 
     public java.util.function.Supplier<Boolean> e() {
         return this.a;

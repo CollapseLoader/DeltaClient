@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AttributeProcessor implements ItemFilter {
-    private final List<AttributeCondition> a = new ArrayList();
+    private final List<AttributeCondition> a = new ArrayList<>();
 
     public AttributeProcessor a(AttributeCondition condition) {
         this.a.add(condition);

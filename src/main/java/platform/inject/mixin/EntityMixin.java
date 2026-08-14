@@ -44,7 +44,7 @@ public abstract class EntityMixin {
     @Inject(method = {"onBubbleColumnSurfaceCollision"}, at = {@At("HEAD")}, cancellable = true)
     private void onBubbleColumnSurfaceCollision(boolean drag, CallbackInfo ci) {
         Entity self = (Entity) (Object) this;
-        if ((self instanceof ClientPlayerEntity) && Delta.h().d().t().aq().m()) {
+        if ((self instanceof ClientPlayerEntity) && Delta.getInstance().getModuleProcessor().t().aq().m()) {
             self.setVelocity(self.getVelocity().x, Math.min(1.8d, self.getVelocity().y + 9.99999999E8d), self.getVelocity().z);
             ci.cancel();
         }

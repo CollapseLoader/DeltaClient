@@ -19,7 +19,7 @@ public class ButtonSetting extends Setting<Boolean> {
     }
 
     @Override
-    public Element_2<?> d() {
+    public Element_2<?> createBooleanElement() {
         return new ButtonElement(this);
     }
 }

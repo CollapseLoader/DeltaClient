@@ -39,8 +39,8 @@ public class AppleFarmer extends Module {
             }
             return;
         }
-        Delta.h().d().t().aV().b(19);
-        if (Delta.h().d().v().k().a() || !Delta.h().d().v().i().a(mc.player.getMainHandStack(), 10.0d, 98.0d)) {
+        Delta.getInstance().getModuleProcessor().t().aV().b(19);
+        if (Delta.getInstance().getModuleProcessor().v().k().a() || !Delta.getInstance().getModuleProcessor().v().i().a(mc.player.getMainHandStack(), 10.0d, 98.0d)) {
             return;
         }
         BlockPos leaf = a(5.0d, s -> {
@@ -226,7 +226,7 @@ public class AppleFarmer extends Module {
         int target = IntStream.range(0, 9).filter(i2 -> {
             return mc.player.getInventory().getStack(i2).isEmpty();
         }).findFirst().orElse(mc.player.getInventory().selectedSlot);
-        Delta.h().d().v().a().a(slot, target, 1);
+        Delta.getInstance().getModuleProcessor().v().a().a(slot, target, 1);
         mc.player.getInventory().selectedSlot = target;
     }
 
@@ -238,7 +238,7 @@ public class AppleFarmer extends Module {
     }
 
     private void a(Rotation rotation) {
-        Delta.h().d().k().a(rotation, 180.0f, 1, 1);
+        Delta.getInstance().getModuleProcessor().k().a(rotation, 180.0f, 1, 1);
     }
 
     private float t() {

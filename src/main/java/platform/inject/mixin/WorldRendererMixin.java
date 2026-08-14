@@ -28,6 +28,6 @@ public class WorldRendererMixin implements Interface {
 
     @ModifyVariable(method = {"setupTerrain(Lnet/minecraft/client/render/Camera;Lnet/minecraft/client/render/Frustum;ZZ)V"}, at = @At("HEAD"), argsOnly = true, index = 4)
     private boolean onSetupTerrain(boolean spectator) {
-        return Delta.h().d().t().h().m() || spectator;
+        return Delta.getInstance().getModuleProcessor().t().h().m() || spectator;
     }
 }

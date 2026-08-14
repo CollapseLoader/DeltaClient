@@ -1,6 +1,6 @@
 package aethereal.ui.screen;
 
-import aethereal.api.Compile;
+
 import aethereal.config.ThemeInfo;
 import aethereal.config.ThemeProcessor;
 import aethereal.core.Category;
@@ -30,7 +30,7 @@ public class GUIPanel {
         this.d = category;
     }
 
-    @Compile
+    
     public boolean a(final double mouseX, final double mouseY, final int button) {
         for (Module module : this.e) {
             if (module.n()) {
@@ -56,17 +56,17 @@ public class GUIPanel {
         return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.a(mouseX, mouseY, button));
     }
 
-    @Compile
+    
     public boolean b(final double mouseX, final double mouseY, final int button) {
         return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.b(mouseX, mouseY, button));
     }
 
-    @Compile
+    
     public boolean a(final double mouseX, final double mouseY, final int button, final double deltaX, final double deltaY) {
         return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.a(mouseX, mouseY, button, deltaX, deltaY));
     }
 
-    @Compile
+    
     public boolean a(final int keyCode, final int scanCode, final int modifiers) {
         for (Module module : this.e) {
             if (module.n()) {
@@ -78,12 +78,12 @@ public class GUIPanel {
         return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.a(keyCode, scanCode, modifiers));
     }
 
-    @Compile
+    
     public boolean a(final char chr, final int modifiers) {
         return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.a(chr, modifiers));
     }
 
-    @Compile
+    
     public boolean a(final double mouseX, final double mouseY, final double amount) {
         if (!MathUtil.a(mouseX, mouseY, this.a.x, this.a.y, this.a.z, this.a.w)) {
             return false;
@@ -129,16 +129,16 @@ public class GUIPanel {
 
     public void a(DrawContext context, int mouseX, int mouseY, float delta) {
         MatrixStack matrices = context.getMatrices();
-        Draw2DProcessor draw = Delta.h().d().i();
-        ThemeProcessor theme = Delta.h().d().o();
+        Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
+        ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
         float scale = 0.8f + (0.2f * EasingList.s.ease(this.c.c()));
         matrices.push();
         matrices.translate(this.a.x + (this.a.z / 2.0f), this.a.y + (this.a.w / 2.0f) + ((1.0f - EasingList.p.ease(this.c.c())) * 14.0f), 0.0f);
         matrices.scale(scale, scale, 1.0f);
         matrices.translate(-(this.a.x + (this.a.z / 2.0f)), -(this.a.y + (this.a.w / 2.0f)), 0.0f);
-        int background = ColorUtil.a(ColorUtil.a(theme.a(ThemeInfo.BACKGROUND_GUI).a(), theme.a(ThemeInfo.PRIMARY).a(), theme.a(ThemeInfo.PRIMARY).b() / 4.0f), InterfaceC0020Opcode.aN);
+        int background = ColorUtil.combineColorWithAlpha(ColorUtil.lerpColor(theme.a(ThemeInfo.BACKGROUND_GUI).toIntColor(), theme.a(ThemeInfo.PRIMARY).toIntColor(), theme.a(ThemeInfo.PRIMARY).b() / 4.0f), InterfaceC0020Opcode.aN);
         draw.a(matrices, this.a.x, this.a.y, this.a.z, this.a.w, 8.0f, background, 1.0f, background, 16.0f);
-        draw.a(matrices, this.a.x, this.a.y, this.a.z, this.a.w, 8.0f, 0.5f, theme.a(ThemeInfo.OUTLINE_MEDIUM).a());
+        draw.a(matrices, this.a.x, this.a.y, this.a.z, this.a.w, 8.0f, 0.5f, theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor());
         a(matrices, theme, 24.0f);
         a(context, mouseX, mouseY, this.a.y + 24.0f + 4.0f, delta);
         matrices.pop();
@@ -149,15 +149,15 @@ public class GUIPanel {
         float titleX = this.a.x + 6.0f + 4.0f;
         float iconWidth = Fonts.a.b(this.d.a(), 9.0f);
         float iconX = (((this.a.x + this.a.z) - 6.0f) - 4.0f) - iconWidth;
-        int color = ColorUtil.a(ColorUtil.a(255, 255, 255, 255), ColorUtil.a(theme.a(ThemeInfo.PRIMARY).a(), 1.0f), 0.25f);
+        int color = ColorUtil.lerpColor(ColorUtil.convertToARGB(255, 255, 255, 255), ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 1.0f), 0.25f);
         Fonts.c.a(matrices, this.d.name(), titleX, Fonts.c.a(this.d.name(), 9.0f, headerCenter), 9.0f, color);
         Fonts.a.a(matrices, this.d.a(), iconX, Fonts.a.a(this.d.a(), 9.0f, headerCenter), 9.0f, color);
     }
 
     private void a(DrawContext context, int mouseX, int mouseY, float y, float delta) {
         MatrixStack matrices = context.getMatrices();
-        Draw2DProcessor draw = Delta.h().d().i();
-        ThemeProcessor theme = Delta.h().d().o();
+        Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
+        ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
         float view = (((this.a.y + this.a.w) - 6.0f) - y) + 4.0f;
         float content = 0.0f;
         Iterator<Module> it = this.e.iterator();
@@ -184,10 +184,10 @@ public class GUIPanel {
             module.i().a(module == this.f);
             float total = b(module);
             if (y2 + total > y && y2 < bottom) {
-                draw.a(matrices, this.a.x + 6.0f, y2, this.a.z - 12.0f, total, 4.0f, ColorUtil.a(theme.a(ThemeInfo.PRIMARY).a(), 0.039215688f * activation * fade));
-                draw.a(matrices, this.a.x + 6.0f, y2, this.a.z - 12.0f, total, 4.0f, ColorUtil.a(ColorUtil.a(255, 255, 255, 255), 0.023529412f * module.i().c() * fade));
-                draw.a(matrices, this.a.x + 6.0f, y2, this.a.z - 12.0f, total, 4.0f, 0.5f, ColorUtil.a(theme.a(ThemeInfo.OUTLINE_SMALL).a(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * activation * fade));
-                Fonts.c.a(matrices, module.j(), this.a.x + 6.0f + 4.0f, (center - (Fonts.c.a(7.25f) / 2.0f)) - 0.5f, 7.25f, ColorUtil.a(theme.a(ThemeInfo.TEXT).a(), fade));
+                draw.a(matrices, this.a.x + 6.0f, y2, this.a.z - 12.0f, total, 4.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.039215688f * activation * fade));
+                draw.a(matrices, this.a.x + 6.0f, y2, this.a.z - 12.0f, total, 4.0f, ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(255, 255, 255, 255), 0.023529412f * module.i().c() * fade));
+                draw.a(matrices, this.a.x + 6.0f, y2, this.a.z - 12.0f, total, 4.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * activation * fade));
+                Fonts.c.a(matrices, module.j(), this.a.x + 6.0f + 4.0f, (center - (Fonts.c.a(7.25f) / 2.0f)) - 0.5f, 7.25f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT).toIntColor(), fade));
                 if (module.g().c() > 0.0f) {
                     float bind = module.g().c();
                     String bindText = module.n() ? "?" : KeyUtil.b(module.p());
@@ -195,22 +195,22 @@ public class GUIPanel {
                     float boxWidth = 4.0f + iconWidth + 2.5f + Fonts.c.a(bindText, 6.0f) + 4.0f;
                     float boxX = this.a.x + 6.0f + 4.0f + Fonts.c.a(module.j(), 7.25f) + 4.0f;
                     float boxY = center - 4.5f;
-                    draw.a(matrices, boxX, boxY, boxWidth, 9.0f, 2.0f, ColorUtil.a(theme.a(ThemeInfo.PRIMARY).a(), 0.15686275f * bind));
-                    draw.a(matrices, boxX, boxY, boxWidth, 9.0f, 2.0f, 0.5f, ColorUtil.a(theme.a(ThemeInfo.OUTLINE_MEDIUM).a(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * bind));
-                    Fonts.a.a(matrices, "C", boxX + 4.0f, Fonts.a.a("C", 6.0f, center), 6.0f, ColorUtil.a(theme.a(ThemeInfo.TEXT).a(), bind));
-                    Fonts.c.a(matrices, bindText, boxX + 4.0f + iconWidth + 2.5f, Fonts.c.a(bindText, 6.0f, center), 6.0f, ColorUtil.a(theme.a(ThemeInfo.TEXT).a(), bind));
+                    draw.a(matrices, boxX, boxY, boxWidth, 9.0f, 2.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.15686275f * bind));
+                    draw.a(matrices, boxX, boxY, boxWidth, 9.0f, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * bind));
+                    Fonts.a.a(matrices, "C", boxX + 4.0f, Fonts.a.a("C", 6.0f, center), 6.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT).toIntColor(), bind));
+                    Fonts.c.a(matrices, bindText, boxX + 4.0f + iconWidth + 2.5f, Fonts.c.a(bindText, 6.0f, center), 6.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT).toIntColor(), bind));
                 }
                 if (module.d().stream().anyMatch((v0) -> {
                     return v0.a();
                 })) {
-                    Fonts.c.a(matrices, "...", ((((this.a.x + this.a.z) - 6.0f) - 4.0f) - Fonts.c.a("...", 10.0f)) - (activation > 0.0f ? 18.0f : 0.0f), Fonts.c.a("...", 10.0f, center), 10.0f, ColorUtil.a(theme.a(ThemeInfo.TEXT_DISABLED).a(), fade));
+                    Fonts.c.a(matrices, "...", ((((this.a.x + this.a.z) - 6.0f) - 4.0f) - Fonts.c.a("...", 10.0f)) - (activation > 0.0f ? 18.0f : 0.0f), Fonts.c.a("...", 10.0f, center), 10.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), fade));
                 }
                 if (activation > 0.0f) {
                     float toggleX = (((this.a.x + this.a.z) - 6.0f) - 4.0f) - 14.0f;
                     float toggleY = center - 4.25f;
-                    draw.a(matrices, toggleX, toggleY, 14.0f, 8.5f, 3.25f, ColorUtil.a(theme.a(ThemeInfo.PRIMARY).a(), 0.49019608f * activation * fade));
-                    draw.a(matrices, toggleX, toggleY, 14.0f, 8.5f, 3.25f, 0.3f, ColorUtil.a(theme.a(ThemeInfo.OUTLINE_SMALL).a(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * activation * fade));
-                    draw.a(matrices, toggleX + 1.5f + (5.5f * activation), toggleY + 1.5f, 5.5f, 5.5f, 1.75f, ColorUtil.a(ColorUtil.a(ColorUtil.a(InterfaceC0020Opcode.ap, InterfaceC0020Opcode.ap, InterfaceC0020Opcode.bk, 255), ColorUtil.a(255, 255, 255, 255), activation), activation * fade));
+                    draw.a(matrices, toggleX, toggleY, 14.0f, 8.5f, 3.25f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.49019608f * activation * fade));
+                    draw.a(matrices, toggleX, toggleY, 14.0f, 8.5f, 3.25f, 0.3f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * activation * fade));
+                    draw.a(matrices, toggleX + 1.5f + (5.5f * activation), toggleY + 1.5f, 5.5f, 5.5f, 1.75f, ColorUtil.applyAlphaToColor(ColorUtil.lerpColor(ColorUtil.convertToARGB(InterfaceC0020Opcode.ap, InterfaceC0020Opcode.ap, InterfaceC0020Opcode.bk, 255), ColorUtil.convertToARGB(255, 255, 255, 255), activation), activation * fade));
                 }
                 float extend = module.h().c();
                 if (extend > 0.0f) {

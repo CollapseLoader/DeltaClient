@@ -1,11 +1,11 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 
 import net.minecraft.item.ItemStack;
 
-public class SyncEvent extends Event implements IEvent {
+public class SyncEvent extends Event {
     private final int a;
     private ItemStack b;
 

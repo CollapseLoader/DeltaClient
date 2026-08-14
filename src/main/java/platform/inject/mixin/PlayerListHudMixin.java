@@ -27,13 +27,13 @@ public abstract class PlayerListHudMixin {
     @ModifyArgs(method = {"render"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;fill(IIIII)V", ordinal = 2), require = 0)
     private void render(Args args, @Local(name = {"list"}) List<PlayerListEntry> list, @Local(name = {"w"}) int w) {
         if (Interface.mc.player != null && w < list.size() && Interface.mc.player.getUuid().equals(list.get(w).getProfile().getId())) {
-            args.set(4, Integer.valueOf(ColorUtil.a(60, InterfaceC0020Opcode.al, 255, 128)));
+            args.set(4, Integer.valueOf(ColorUtil.convertToARGB(60, InterfaceC0020Opcode.al, 255, 128)));
         }
     }
 
     @Inject(method = {"setVisible"}, at = {@At("HEAD")})
     private void setVisible(boolean visible, CallbackInfo ci) {
-        Animations animations = Delta.h().d().t().Q();
+        Animations animations = Delta.getInstance().getModuleProcessor().t().Q();
         if (animations.m() && animations.q().a("TAB").c().booleanValue()) {
             animations.r().a(visible);
         }
@@ -41,7 +41,7 @@ public abstract class PlayerListHudMixin {
 
     @Inject(method = {"render"}, at = {@At("HEAD")})
     private void headRender(DrawContext context, int scaledWindowWidth, Scoreboard scoreboard, @Nullable ScoreboardObjective objective, CallbackInfo ci) {
-        Animations animations = Delta.h().d().t().Q();
+        Animations animations = Delta.getInstance().getModuleProcessor().t().Q();
         if (animations.m() && animations.q().a("TAB").c().booleanValue()) {
             context.getMatrices().push();
             context.getMatrices().translate(0.0f, (-200.0f) * (1.0f - animations.r().c()), 0.0f);
@@ -50,7 +50,7 @@ public abstract class PlayerListHudMixin {
 
     @Inject(method = {"render"}, at = {@At("RETURN")})
     private void render(DrawContext context, int scaledWindowWidth, Scoreboard scoreboard, @Nullable ScoreboardObjective objective, CallbackInfo ci) {
-        Animations animations = Delta.h().d().t().Q();
+        Animations animations = Delta.getInstance().getModuleProcessor().t().Q();
         if (animations.m() && animations.q().a("TAB").c().booleanValue()) {
             context.getMatrices().pop();
         }

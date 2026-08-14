@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ModuleRegister(name = "X Ray", description = "Подсвечивает найденные древние обломки при взрыве динамита", category = Category.Misc)
-public class XRay extends Module implements Interface {
-    private final List<BlockPos> b = new ArrayList();
+public class XRay extends Module {
+    private final List<BlockPos> b = new ArrayList<>();
     private final CounterUtil c = new CounterUtil();
     private boolean d;
 
@@ -57,7 +57,7 @@ public class XRay extends Module implements Interface {
                 return mc.world.getBlockState(blockPos).getBlock().equals(Blocks.AIR) || blockPos.getSquaredDistance(mc.player.getPos()) >= 6400.0d || !mc.world.getChunkManager().isChunkLoaded(blockPos.getX() >> 4, blockPos.getZ() >> 4);
             });
             this.b.forEach(pos -> {
-                draw.e().a(draw.h(), new Box(pos), ColorUtil.a(255, InterfaceC0020Opcode.bo, 0, InterfaceC0020Opcode.ap), 1.0f);
+                draw.e().a(draw.h(), new Box(pos), ColorUtil.convertToARGB(255, InterfaceC0020Opcode.bo, 0, InterfaceC0020Opcode.ap), 1.0f);
             });
         }
     }

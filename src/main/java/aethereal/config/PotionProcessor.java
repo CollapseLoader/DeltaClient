@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PotionProcessor implements ItemFilter {
-    private final List<PotionCondition> a = new ArrayList();
+    private final List<PotionCondition> a = new ArrayList<>();
 
     public List<PotionCondition> a() {
         return this.a;

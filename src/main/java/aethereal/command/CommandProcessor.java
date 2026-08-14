@@ -1,6 +1,6 @@
 package aethereal.command;
 
-import aethereal.api.Compile;
+
 import aethereal.config.BaseProcessor;
 import aethereal.lib.log4j.LoggerFactory;
 import aethereal.lib.log4j.Logger_2;
@@ -28,7 +28,7 @@ public class CommandProcessor extends BaseProcessor {
         b = LoggerFactory.a(CommandProcessor.class);
     }
 
-    private final List<BaseCommand> d = new ArrayList();
+    private final List<BaseCommand> d = new ArrayList<>();
     private final WayCommand e = new WayCommand();
     private final GPSCommand f = new GPSCommand();
     private final LayoutCommand g = new LayoutCommand();
@@ -43,7 +43,7 @@ public class CommandProcessor extends BaseProcessor {
     }
 
     @Override
-    @Compile
+    
     public void setup() {
         a(this.e, this.f, this.g, this.h, this.i, new AHCommand(), new MacrosCommand(), new FriendCommand(), new StaffCommand(), new WardenCommand(), new ConfigCommand(), new BindCommand(), new VClipCommand(), new HClipCommand(), new CCCommand());
     }

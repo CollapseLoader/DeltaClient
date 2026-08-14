@@ -48,7 +48,7 @@ public class SwingAnimation extends Module {
 
     @EventTarget
     public void a(HandAnimationEvent event) {
-        if ((!this.b.c().booleanValue() || Delta.h().d().t().B().s() != null) && event.c() == Hand.MAIN_HAND) {
+        if ((!this.b.c().booleanValue() || Delta.getInstance().getModuleProcessor().t().B().s() != null) && event.c() == Hand.MAIN_HAND) {
             MatrixStack matrices = event.b();
             float anim = (float) Math.sin(((double) event.d()) * 3.1415936112270124d);
             float power = this.f.c().floatValue() * 10.0f;

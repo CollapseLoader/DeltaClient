@@ -1,10 +1,10 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
 
 
-public class GammaEvent extends Event implements IEvent {
+
+public class GammaEvent extends Event {
     private double a;
 
     public GammaEvent(double gamma) {

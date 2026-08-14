@@ -1,11 +1,11 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 
 import net.minecraft.entity.Entity;
 
-public class AttackEvent extends Event implements IEvent {
+public class AttackEvent extends Event {
     private final Entity a;
 
     public AttackEvent(Entity entity) {

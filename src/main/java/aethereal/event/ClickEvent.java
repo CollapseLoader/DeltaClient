@@ -1,10 +1,10 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
 
 
-public class ClickEvent extends Event implements IEvent {
+
+public class ClickEvent extends Event {
     private final a type;
     private final double b;
     private final double c;

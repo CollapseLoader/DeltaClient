@@ -1,6 +1,6 @@
 package aethereal.friend;
 
-import aethereal.api.Compile;
+
 import aethereal.config.ConfigProcessor;
 import aethereal.core.EventTarget;
 import aethereal.event.BackendEvent;
@@ -12,10 +12,10 @@ import java.util.List;
 
 public class FriendProcessor extends ConfigProcessor<FriendConstructor> {
     @Override
-    @Compile
+    
     protected List<FriendConstructor> a(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
-        ArrayList arrayList = new ArrayList();
+        ArrayList arrayList = new ArrayList<>();
         for (int i = 0; i < jSONArray.a(); i++) {
             arrayList.add(new FriendConstructor(jSONArray.j(i).l("name")));
         }
@@ -23,7 +23,7 @@ public class FriendProcessor extends ConfigProcessor<FriendConstructor> {
     }
 
     @Override
-    @Compile
+    
     protected String a(List<FriendConstructor> data) throws Exception {
         JSONArray jSONArray = new JSONArray();
         for (FriendConstructor friendConstructor : data) {
@@ -52,7 +52,7 @@ public class FriendProcessor extends ConfigProcessor<FriendConstructor> {
     }
 
     public List<FriendConstructor> a() {
-        return new ArrayList(this.d);
+        return new ArrayList<>(this.d);
     }
 
     public void b(String str) {

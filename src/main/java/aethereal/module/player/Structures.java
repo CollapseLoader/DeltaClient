@@ -29,9 +29,13 @@ import java.util.*;
 
 @ModuleRegister(name = "Structures", description = "Отображает время до исчезновения структур трапки и пласта", category = Category.Player)
 public class Structures extends Module {
-    private final List<Block> allowedBlocks = java.util.Arrays.asList(Blocks.QUARTZ_BLOCK, Blocks.DEAD_TUBE_CORAL_BLOCK, Blocks.INFESTED_MOSSY_STONE_BRICKS, Blocks.PURPUR_PILLAR, Blocks.END_STONE_BRICKS, Blocks.NETHER_BRICKS, Blocks.GILDED_BLACKSTONE, Blocks.PRISMARINE_BRICKS, Blocks.ICE, Blocks.NETHER_WART_BLOCK, Blocks.RESPAWN_ANCHOR, Blocks.NETHERITE_BLOCK, Blocks.WHITE_STAINED_GLASS, Blocks.BLACK_CONCRETE, Blocks.POLISHED_BASALT);
-    private final List<a> c = new ObjectArrayList();
-    private final Set<BlockPos> d = new ObjectOpenHashSet();
+    private final List<Block> allowedBlocks = java.util.Arrays.asList(Blocks.QUARTZ_BLOCK, Blocks.DEAD_TUBE_CORAL_BLOCK,
+            Blocks.INFESTED_MOSSY_STONE_BRICKS, Blocks.PURPUR_PILLAR, Blocks.END_STONE_BRICKS, Blocks.NETHER_BRICKS,
+            Blocks.GILDED_BLACKSTONE, Blocks.PRISMARINE_BRICKS, Blocks.ICE, Blocks.NETHER_WART_BLOCK,
+            Blocks.RESPAWN_ANCHOR, Blocks.NETHERITE_BLOCK, Blocks.WHITE_STAINED_GLASS, Blocks.BLACK_CONCRETE,
+            Blocks.POLISHED_BASALT);
+    private final List<a> c = new ObjectArrayList<>();
+    private final Set<BlockPos> d = new ObjectOpenHashSet<>();
     private int e;
 
     @EventTarget
@@ -82,10 +86,12 @@ public class Structures extends Module {
     public void a(DrawEvent event) {
         if (event.b()) {
             for (a structure : this.c) {
-                String text = String.format(Locale.US, "%.1f", Float.valueOf(Math.max(0.0f, (structure.d().d() - structure.c().c()) / 1000.0f)));
+                String text = String.format(Locale.US, "%.1f",
+                        Float.valueOf(Math.max(0.0f, (structure.d().d() - structure.c().c()) / 1000.0f)));
                 structure.b().a(0.0f, 1.0f, 0.35f, EasingList.i, event.g());
                 BlockPos center = structure.e().getCenter();
-                Vector2f project = ProjectUtil.project(((double) center.getX()) + 0.5d, ((double) center.getY()) + 0.5d, ((double) center.getZ()) + 0.5d);
+                Vector2f project = ProjectUtil.project(((double) center.getX()) + 0.5d, ((double) center.getY()) + 0.5d,
+                        ((double) center.getZ()) + 0.5d);
                 float textWidth = Fonts.d.a(Text.literal(text), 7.5f);
                 float textHeight = Fonts.d.d().lineHeight() * 7.5f;
                 float totalTextWidth = textWidth + 4.0f;
@@ -93,11 +99,16 @@ public class Structures extends Module {
                 float iconBoxX = project.x() - (totalWidth / 2.0f);
                 float iconBoxY = project.y() - 6.0f;
                 int rectAlpha = (int) (120.0f * structure.b().c());
-                event.d().a(event.i().getMatrices(), iconBoxX, iconBoxY, 12.0f, 12.0f, 0.0f, ColorUtil.a(0, 0, 0, rectAlpha));
-                event.e().a(event.i(), structure.d().e().getDefaultStack(), iconBoxX + 1.5f, iconBoxY + 1.5f, 0, structure.b().c(), 0.55f, false);
+                event.d().a(event.i().getMatrices(), iconBoxX, iconBoxY, 12.0f, 12.0f, 0.0f,
+                        ColorUtil.convertToARGB(0, 0, 0, rectAlpha));
+                event.e().a(event.i(), structure.d().e().getDefaultStack(), iconBoxX + 1.5f, iconBoxY + 1.5f, 0,
+                        structure.b().c(), 0.55f, false);
                 float textBoxX = iconBoxX + 12.0f + 2.0f;
-                event.d().a(event.i().getMatrices(), textBoxX, iconBoxY, totalTextWidth, 12.0f, 0.0f, ColorUtil.a(0, 0, 0, rectAlpha));
-                Fonts.d.a(event.i().getMatrices(), text, textBoxX + ((totalTextWidth - textWidth) / 2.0f), iconBoxY + ((12.0f - textHeight) / 2.0f) + 0.5f, 7.5f, ColorUtil.a(-1, structure.b().c()));
+                event.d().a(event.i().getMatrices(), textBoxX, iconBoxY, totalTextWidth, 12.0f, 0.0f,
+                        ColorUtil.convertToARGB(0, 0, 0, rectAlpha));
+                Fonts.d.a(event.i().getMatrices(), text, textBoxX + ((totalTextWidth - textWidth) / 2.0f),
+                        iconBoxY + ((12.0f - textHeight) / 2.0f) + 0.5f, 7.5f,
+                        ColorUtil.applyAlphaToColor(-1, structure.b().c()));
             }
         }
     }
@@ -114,11 +125,17 @@ public class Structures extends Module {
     }
 
     public enum b {
-        DRAGON_TRAPKA("Драконья трапка", new int[][]{new int[]{7, 7, 7}, new int[]{7, 7, 6}}, true, 30000, Items.NETHERITE_SCRAP),
-        TRAPKA("Трапка", new int[][]{new int[]{5, 5, 5}, new int[]{5, 5, 4}, new int[]{5, 6, 5}, new int[]{5, 6, 4}}, true, 15000, Items.NETHERITE_SCRAP),
-        DRAGON_PLAST("Драконий пласт", new int[][]{new int[]{7, 7, 2}, new int[]{7, 7, 1}}, true, 20000, Items.DRIED_KELP),
-        PLAST("Пласт", new int[][]{new int[]{5, 5, 2}, new int[]{5, 5, 1}}, true, 20000, Items.DRIED_KELP),
-        GARMOSHKA("Пласт", new int[][]{new int[]{5, 5, 5}, new int[]{5, 6, 5}}, false, 20000, Items.DRIED_KELP);
+        DRAGON_TRAPKA("Драконья трапка", new int[][] { new int[] { 7, 7, 7 }, new int[] { 7, 7, 6 } }, true, 30000,
+                Items.NETHERITE_SCRAP),
+        TRAPKA("Трапка",
+                new int[][] { new int[] { 5, 5, 5 }, new int[] { 5, 5, 4 }, new int[] { 5, 6, 5 },
+                        new int[] { 5, 6, 4 } },
+                true, 15000, Items.NETHERITE_SCRAP),
+        DRAGON_PLAST("Драконий пласт", new int[][] { new int[] { 7, 7, 2 }, new int[] { 7, 7, 1 } }, true, 20000,
+                Items.DRIED_KELP),
+        PLAST("Пласт", new int[][] { new int[] { 5, 5, 2 }, new int[] { 5, 5, 1 } }, true, 20000, Items.DRIED_KELP),
+        GARMOSHKA("Пласт", new int[][] { new int[] { 5, 5, 5 }, new int[] { 5, 6, 5 } }, false, 20000,
+                Items.DRIED_KELP);
 
         private final String f;
         private final int[][] g;
@@ -126,7 +143,8 @@ public class Structures extends Module {
         private final long i;
         private final Item j;
 
-        b(final String displayName, final int[][] dimensions, final boolean hollow, final long cooldown, final Item item) {
+        b(final String displayName, final int[][] dimensions, final boolean hollow, final long cooldown,
+                final Item item) {
             this.f = displayName;
             this.g = dimensions;
             this.h = hollow;
@@ -155,14 +173,16 @@ public class Structures extends Module {
         }
 
         public boolean a(BlockBox box, Set<BlockPos> positions) {
-            int[] size = {box.getBlockCountX(), box.getBlockCountY(), box.getBlockCountZ()};
+            int[] size = { box.getBlockCountX(), box.getBlockCountY(), box.getBlockCountZ() };
             Arrays.sort(size);
             for (int[] dimension : this.g) {
                 int[] sorted = dimension.clone();
                 Arrays.sort(sorted);
                 if (Arrays.equals(size, sorted)) {
                     return this.h == positions.stream().noneMatch(pos -> {
-                        return pos.getX() > box.getMinX() && pos.getX() < box.getMaxX() && pos.getY() > box.getMinY() && pos.getY() < box.getMaxY() && pos.getZ() > box.getMinZ() && pos.getZ() < box.getMaxZ();
+                        return pos.getX() > box.getMinX() && pos.getX() < box.getMaxX() && pos.getY() > box.getMinY()
+                                && pos.getY() < box.getMaxY() && pos.getZ() > box.getMinZ()
+                                && pos.getZ() < box.getMaxZ();
                     });
                 }
             }
@@ -204,10 +224,13 @@ public class Structures extends Module {
         }
 
         public void a(float progress, float remaining) {
-            MutableText barText = Text.literal(String.format(Locale.US, "%s — %.1f сек", this.d.a(), Float.valueOf(remaining)));
+            MutableText barText = Text
+                    .literal(String.format(Locale.US, "%s — %.1f сек", this.d.a(), Float.valueOf(remaining)));
             if (this.f == null) {
-                this.f = new ClientBossBar(UUID.randomUUID(), barText, progress, BossBar.Color.WHITE, BossBar.Style.PROGRESS, false, false, false);
-                ((platform.inject.accessors.BossBarHudAccessor) mc.inGameHud.getBossBarHud()).getBossBars().put(this.f.getUuid(), this.f);
+                this.f = new ClientBossBar(UUID.randomUUID(), barText, progress, BossBar.Color.WHITE,
+                        BossBar.Style.PROGRESS, false, false, false);
+                ((platform.inject.accessors.BossBarHudAccessor) mc.inGameHud.getBossBarHud()).getBossBars()
+                        .put(this.f.getUuid(), this.f);
             } else {
                 this.f.setName(barText);
                 this.f.setPercent(progress);
@@ -216,7 +239,8 @@ public class Structures extends Module {
 
         public void a() {
             if (this.f != null) {
-                ((platform.inject.accessors.BossBarHudAccessor) mc.inGameHud.getBossBarHud()).getBossBars().remove(this.f.getUuid());
+                ((platform.inject.accessors.BossBarHudAccessor) mc.inGameHud.getBossBarHud()).getBossBars()
+                        .remove(this.f.getUuid());
                 this.f = null;
             }
         }

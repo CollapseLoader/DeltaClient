@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnchantmentProcessor implements ItemFilter {
-    private final List<EnchantmentCondition> a = new ArrayList();
+    private final List<EnchantmentCondition> a = new ArrayList<>();
 
     public List<EnchantmentCondition> b() {
         return this.a;

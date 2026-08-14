@@ -35,22 +35,22 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
     @Inject(method = {"updateRenderState*"}, at = {@At("TAIL")})
     private void updateRenderState(T entity, S state, float f, CallbackInfo ci) {
         if (entity == Interface.mc.player) {
-            this.pitch = Delta.h().d().k().a().a() ? MathHelper.lerp(0.5f, this.pitch, state.pitch) : state.pitch;
+            this.pitch = Delta.getInstance().getModuleProcessor().k().a().a() ? MathHelper.lerp(0.5f, this.pitch, state.pitch) : state.pitch;
             state.pitch = this.pitch;
         }
     }
 
     @Inject(method = {"isVisible"}, at = {@At("HEAD")}, cancellable = true)
     private void onIsVisible(S state, CallbackInfoReturnable<Boolean> cir) {
-        if (Delta.h().d().t().T().m() && state.invisible && (this.currentEntity instanceof PlayerEntity)) {
+        if (Delta.getInstance().getModuleProcessor().t().T().m() && state.invisible && (this.currentEntity instanceof PlayerEntity)) {
             cir.setReturnValue(true);
         }
     }
 
     @ModifyReturnValue(method = {"getMixColor"}, at = {@At("RETURN")})
     private int modifyMixColor(int original, S state) {
-        if (Delta.h().d().t().T().m() && state.invisible && (this.currentEntity instanceof PlayerEntity)) {
-            return ColorUtil.a(original, Delta.h().d().t().T().q());
+        if (Delta.getInstance().getModuleProcessor().t().T().m() && state.invisible && (this.currentEntity instanceof PlayerEntity)) {
+            return ColorUtil.applyAlphaToColor(original, Delta.getInstance().getModuleProcessor().t().T().q());
         }
         return original;
     }

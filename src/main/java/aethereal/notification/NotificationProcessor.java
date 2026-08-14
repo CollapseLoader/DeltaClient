@@ -1,6 +1,6 @@
 package aethereal.notification;
 
-import aethereal.api.Compile;
+
 import aethereal.config.BaseProcessor;
 import aethereal.core.EventTarget;
 import aethereal.core.Interface;
@@ -17,7 +17,7 @@ public class NotificationProcessor extends BaseProcessor implements Interface {
     private final List<Notification> c = new ArrayList<>();
 
     @Override
-    @Compile
+    
     public void setup() {
     }
 

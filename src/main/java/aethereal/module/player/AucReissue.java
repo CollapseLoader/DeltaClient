@@ -15,7 +15,7 @@ import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.screen.slot.SlotActionType;
 
 @ModuleRegister(name = "Auc Reissue", description = "Автоматически перевыставляет предметы на аукционе", category = Category.Player)
-public class AucReissue extends Module implements Interface {
+public class AucReissue extends Module {
     private boolean b;
 
     @Override
@@ -32,15 +32,25 @@ public class AucReissue extends Module implements Interface {
 
     @EventTarget
     public void a(TickEvent event) {
-        if (!ServerUtil.e() && ((ServerUtil.a.d() != -1 || ServerUtil.d.b() != -1) && mc.player.age >= 220 && !Delta.h().d().v().g().a() && !mc.player.getItemCooldownManager().isCoolingDown(Items.CLOCK.getDefaultStack()))) {
+        if (!ServerUtil.e() && ((ServerUtil.a.d() != -1 || ServerUtil.d.b() != -1) && mc.player.age >= 220
+                && !Delta.getInstance().getModuleProcessor().v().g().a()
+                && !mc.player.getItemCooldownManager().isCoolingDown(Items.CLOCK.getDefaultStack()))) {
             if (mc.currentScreen instanceof HandledScreen<?> handledScreen) {
                 if (handledScreen instanceof GenericContainerScreen) {
                     String title = handledScreen.getTitle().getString();
                     if (mc.player.age % 5 == 0) {
                         if (title.matches(".*А.*у.*к.*ц.*и.*о.*н.*")) {
-                            mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handledScreen.getScreenHandler().syncId, handledScreen.getScreenHandler().getRevision(), 46, 1, SlotActionType.PICKUP, handledScreen.getScreenHandler().getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
+                            mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(
+                                    handledScreen.getScreenHandler().syncId,
+                                    handledScreen.getScreenHandler().getRevision(), 46, 1, SlotActionType.PICKUP,
+                                    handledScreen.getScreenHandler().getCursorStack().copy(),
+                                    Int2ObjectMaps.emptyMap()));
                         } else if (title.matches(".*Х.*р.*а.*н.*и.*л.*и.*щ.*е.*")) {
-                            mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handledScreen.getScreenHandler().syncId, handledScreen.getScreenHandler().getRevision(), 52, 1, SlotActionType.PICKUP, handledScreen.getScreenHandler().getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
+                            mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(
+                                    handledScreen.getScreenHandler().syncId,
+                                    handledScreen.getScreenHandler().getRevision(), 52, 1, SlotActionType.PICKUP,
+                                    handledScreen.getScreenHandler().getCursorStack().copy(),
+                                    Int2ObjectMaps.emptyMap()));
                         }
                     }
                 } else if (mc.player.age % 20 == 0) {
@@ -63,13 +73,14 @@ public class AucReissue extends Module implements Interface {
                 if (eventPacket.d() instanceof GameMessageS2CPacket packet) {
                     String msg = packet.content().getString();
                     if (msg.equals("Данная команда недоступна в режиме AFK")) {
-                        Delta.h().d().v().g().a(10);
+                        Delta.getInstance().getModuleProcessor().v().g().a(10);
                     }
                     if (msg.equals("[☃] В хранилище отсутствуют предметы для перевыставления.")) {
                         ChatUtil.sendMessage("Авто-выключение: в хранилище отсутствуют предметы для перевыставления");
                         a();
                     }
-                    if (msg.contains("[☃] Предметы успешно перевыставлены ") || msg.contains("[✔] Предметы успешно перевыставлены!")) {
+                    if (msg.contains("[☃] Предметы успешно перевыставлены ")
+                            || msg.contains("[✔] Предметы успешно перевыставлены!")) {
                         mc.player.getItemCooldownManager().set(Items.CLOCK.getDefaultStack(), 1200);
                         this.b = true;
                     }

@@ -20,7 +20,7 @@ import java.util.List;
 
 @Handler_2
 public class UseableHandler extends BaseHandler implements Interface {
-    private final List<a> b = new ArrayList();
+    private final List<a> b = new ArrayList<>();
 
     public List<a> a() {
         return this.b;
@@ -30,7 +30,7 @@ public class UseableHandler extends BaseHandler implements Interface {
     public void a(TickEvent event) {
         if (!this.b.isEmpty()) {
             a task = this.b.getFirst();
-            WindHop windHop = Delta.h().d().t().aW();
+            WindHop windHop = Delta.getInstance().getModuleProcessor().t().aW();
             int hotbar = task.a().getItem() == Items.SPLASH_POTION ? InventoryUtil.b(task.a(), true) : InventoryUtil.a(task.a().getItem(), true);
             int inventory = task.a().getItem() == Items.SPLASH_POTION ? InventoryUtil.b(task.a(), false) : InventoryUtil.a(task.a().getItem(), false);
             if (task.d() == -1 && hotbar == -1 && inventory == -1) {
@@ -54,7 +54,7 @@ public class UseableHandler extends BaseHandler implements Interface {
                         mc.player.networkHandler.sendPacket(new BundleItemSelectedC2SPacket(inventory < 9 ? 36 + inventory : inventory, bundle));
                     }
                     task.b((bundle == -1 || !mc.player.getMainHandStack().isEmpty()) ? inventory : task.b());
-                    Delta.h().d().v().a().a(inventory, mc.player.getInventory().selectedSlot, 1);
+                    Delta.getInstance().getModuleProcessor().v().a().a(inventory, mc.player.getInventory().selectedSlot, 1);
                     return;
                 }
                 return;
@@ -63,14 +63,14 @@ public class UseableHandler extends BaseHandler implements Interface {
                 if (task.a().getItem() == Items.WIND_CHARGE && windHop.m() && windHop.q().c().booleanValue()) {
                     float t = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
                     float silent = (float) ((Math.sin(t * 0.31f) * 6.600001001477404d) + (Math.sin((t * 0.73f) + 1.1f) * 0.3000001491338646d));
-                    Delta.h().d().k().a(new Rotation(Look.b() + silent, 90.0f + (silent / 2.0f)), 180.0f, 1, 3);
+                    Delta.getInstance().getModuleProcessor().k().a(new Rotation(Look.b() + silent, 90.0f + (silent / 2.0f)), 180.0f, 1, 3);
                 }
                 a(task);
                 if (mc.player.getInventory().getStack(task.c()).contains(DataComponentTypes.BUNDLE_CONTENTS)) {
                     mc.player.getInventory().setStack(task.b(), ItemStack.EMPTY);
-                    Delta.h().d().v().a().a(task.c(), 36 + task.b(), 1);
+                    Delta.getInstance().getModuleProcessor().v().a().a(task.c(), 36 + task.b(), 1);
                 } else if (task.c() > 8) {
-                    Delta.h().d().v().a().a(task.b(), task.c(), 1);
+                    Delta.getInstance().getModuleProcessor().v().a().a(task.b(), task.c(), 1);
                 } else if (task.b() != mc.player.getInventory().selectedSlot) {
                     a(task.b());
                 }

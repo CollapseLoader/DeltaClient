@@ -23,7 +23,7 @@ public class ModeSetting extends Setting<String> {
     }
 
     @Override
-    public Element_2<?> d() {
+    public Element_2<?> createBooleanElement() {
         return new ModeElement(this);
     }
 }

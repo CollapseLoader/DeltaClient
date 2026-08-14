@@ -1,6 +1,6 @@
 package aethereal.ui.screen;
 
-import aethereal.api.Compile;
+
 import aethereal.autobuy.AutoBuySection;
 import aethereal.autobuy.CollectorSection;
 import aethereal.config.ThemeInfo;
@@ -38,7 +38,7 @@ public class StationScreen extends Screen {
 
     public StationScreen(Text title, int selected) {
         super(title);
-        this.a = new ArrayList();
+        this.a = new ArrayList<>();
         this.b = new Vector4f(0.0f, 0.0f, 425.0f, 235.0f);
         this.c = new Vector4f(0.0f, 0.0f, 0.0f, 16.0f);
         this.d = new Vector4f(0.0f, 0.0f, 0.0f, 0.0f);
@@ -49,7 +49,7 @@ public class StationScreen extends Screen {
         this.g = selected;
     }
 
-    @Compile
+    
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
         Vector4f vector4f = this.b;
@@ -71,24 +71,24 @@ public class StationScreen extends Screen {
         class_4587VarMethod_51448.translate(f5, ((1.0f - EasingList.p.ease(this.f.c())) * 14.0f) + f6, 0.0f);
         class_4587VarMethod_51448.scale(fEase, fEase, 1.0f);
         class_4587VarMethod_51448.translate(-f5, -f6, 0.0f);
-        Draw2DProcessor draw2DProcessorI = Delta.h().d().i();
-        ThemeProcessor themeProcessorO = Delta.h().d().o();
-        int iA = themeProcessorO.a(ThemeInfo.BACKGROUND_GUI).a();
+        Draw2DProcessor draw2DProcessorI = Delta.getInstance().getModuleProcessor().i();
+        ThemeProcessor themeProcessorO = Delta.getInstance().getModuleProcessor().o();
+        int iA = themeProcessorO.a(ThemeInfo.BACKGROUND_GUI).toIntColor();
         ThemeInfo themeInfo = ThemeInfo.PRIMARY;
-        int iA2 = ColorUtil.a(ColorUtil.a(iA, themeProcessorO.a(themeInfo).a(), themeProcessorO.a(themeInfo).b() * 0.25f), 220);
+        int iA2 = ColorUtil.combineColorWithAlpha(ColorUtil.lerpColor(iA, themeProcessorO.a(themeInfo).toIntColor(), themeProcessorO.a(themeInfo).b() * 0.25f), 220);
         draw2DProcessorI.a(context.getMatrices(), vector4f2.x, vector4f2.y, vector4f2.z, vector4f2.w, 8.0f, iA2, 1.0f, iA2, 16.0f);
-        draw2DProcessorI.a(context.getMatrices(), vector4f2.x, vector4f2.y, vector4f2.z, vector4f2.w, 8.0f, 0.5f, themeProcessorO.a(ThemeInfo.OUTLINE_MEDIUM).a());
+        draw2DProcessorI.a(context.getMatrices(), vector4f2.x, vector4f2.y, vector4f2.z, vector4f2.w, 8.0f, 0.5f, themeProcessorO.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor());
         a(context, delta, iA2);
         this.d.set(vector4f2.x, this.c.y + this.c.w + 8.0f, vector4f2.z, ((vector4f2.y + vector4f2.w) - 8.0f) - ((this.c.y + this.c.w) + 12.0f));
         b().a(context, this.d, mouseX, mouseY, this.e.a(), delta);
-        Draw2DProcessor draw2DProcessorI2 = Delta.h().d().i();
+        Draw2DProcessor draw2DProcessorI2 = Delta.getInstance().getModuleProcessor().i();
         float f7 = this.h;
-        draw2DProcessorI2.a(context, f7 - 3.0f, this.c.y + this.c.w, 6.0f, 0.5f, Delta.h().d().o().a(ThemeInfo.PRIMARY).a());
+        draw2DProcessorI2.a(context, f7 - 3.0f, this.c.y + this.c.w, 6.0f, 0.5f, Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor());
         class_4587VarMethod_51448.pop();
         this.e.a(Math.min(0.0f, this.d.w - b().a(this.d)), 0.0f, 1.0f);
     }
 
-    @Compile
+    
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
         if (b().a(mouseX, mouseY, verticalAmount)) {
             return true;
@@ -97,7 +97,7 @@ public class StationScreen extends Screen {
         return true;
     }
 
-    @Compile
+    
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         Vector4f vector4f = this.c;
         List<Section> list = this.a;
@@ -119,7 +119,7 @@ public class StationScreen extends Screen {
         return true;
     }
 
-    @Compile
+    
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         if (b().b(mouseX, mouseY, button)) {
             return true;
@@ -127,7 +127,7 @@ public class StationScreen extends Screen {
         return super.mouseReleased(mouseX, mouseY, button);
     }
 
-    @Compile
+    
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         if (b().a(mouseX, mouseY, button, deltaX, deltaY)) {
             return true;
@@ -135,7 +135,7 @@ public class StationScreen extends Screen {
         return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
     }
 
-    @Compile
+    
     public boolean charTyped(char character, int modifiers) {
         if (b().a(character, modifiers)) {
             return true;
@@ -143,7 +143,7 @@ public class StationScreen extends Screen {
         return super.charTyped(character, modifiers);
     }
 
-    @Compile
+    
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         Section sectionB = b();
         if (sectionB == null) {
@@ -172,8 +172,8 @@ public class StationScreen extends Screen {
     }
 
     private void a(DrawContext context, float delta, int background) {
-        Draw2DProcessor draw = Delta.h().d().i();
-        ThemeProcessor theme = Delta.h().d().o();
+        Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
+        ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
         float iconsWidth = 12.0f * (this.a.size() - 1);
         Iterator<Section> it = this.a.iterator();
         while (it.hasNext()) {
@@ -182,17 +182,17 @@ public class StationScreen extends Screen {
         this.c.z = iconsWidth + 24.0f;
         this.c.x = this.b.x + ((this.b.z - this.c.z) / 2.0f);
         this.c.y = this.b.y + 8.0f;
-        draw.a(context.getMatrices(), this.c.x, this.c.y, this.c.z, this.c.w, 6.0f, 0.5f, ColorUtil.a(255, 255, 255, 4));
-        Fonts.a.a(context.getMatrices(), "a", this.b.x + 8.0f, this.c.y + ((this.c.w - Fonts.a.a(12.0f)) / 2.0f), 12.0f, ColorUtil.a(theme.a(ThemeInfo.PRIMARY).a(), 0.75f));
+        draw.a(context.getMatrices(), this.c.x, this.c.y, this.c.z, this.c.w, 6.0f, 0.5f, ColorUtil.convertToARGB(255, 255, 255, 4));
+        Fonts.a.a(context.getMatrices(), "a", this.b.x + 8.0f, this.c.y + ((this.c.w - Fonts.a.a(12.0f)) / 2.0f), 12.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.75f));
         float separatorX = this.b.x + 8.0f + Fonts.a.a("a", 12.0f) + 8.0f;
-        draw.a(context.getMatrices(), separatorX, this.c.y + ((this.c.w - 8.0f) / 2.0f), 0.75f, 8.0f, 0.0f, ColorUtil.a(255, 255, 255, 25));
-        Fonts.c.a(context.getMatrices(), "deltaclient.xyz", separatorX + 8.0f, (this.c.y + ((this.c.w - Fonts.c.a(6.75f)) / 2.0f)) - 0.5f, 6.75f, theme.a(ThemeInfo.TEXT_DISABLED).a());
+        draw.a(context.getMatrices(), separatorX, this.c.y + ((this.c.w - 8.0f) / 2.0f), 0.75f, 8.0f, 0.0f, ColorUtil.convertToARGB(255, 255, 255, 25));
+        Fonts.c.a(context.getMatrices(), "deltaclient.xyz", separatorX + 8.0f, (this.c.y + ((this.c.w - Fonts.c.a(6.75f)) / 2.0f)) - 0.5f, 6.75f, theme.a(ThemeInfo.TEXT_DISABLED).toIntColor());
         float avatarX = ((this.b.x + this.b.z) - 12.0f) - 8.0f;
         draw.a(context.getMatrices(), Identifier.of("delta", "icon.png"), avatarX, this.c.y + ((this.c.w - 12.0f) / 2.0f), 12.0f, 12.0f, 5.0f, -1);
         String sectionName = b().c();
         float separatorX2 = avatarX - 8.0f;
-        draw.a(context.getMatrices(), separatorX2, this.c.y + ((this.c.w - 8.0f) / 2.0f), 0.75f, 8.0f, 0.0f, ColorUtil.a(255, 255, 255, 25));
-        Fonts.c.a(context.getMatrices(), sectionName, (separatorX2 - 8.0f) - Fonts.c.a(sectionName, 6.75f), (this.c.y + ((this.c.w - Fonts.c.a(6.75f)) / 2.0f)) - 0.5f, 6.75f, theme.a(ThemeInfo.TEXT_DISABLED).a());
+        draw.a(context.getMatrices(), separatorX2, this.c.y + ((this.c.w - 8.0f) / 2.0f), 0.75f, 8.0f, 0.0f, ColorUtil.convertToARGB(255, 255, 255, 25));
+        Fonts.c.a(context.getMatrices(), sectionName, (separatorX2 - 8.0f) - Fonts.c.a(sectionName, 6.75f), (this.c.y + ((this.c.w - Fonts.c.a(6.75f)) / 2.0f)) - 0.5f, 6.75f, theme.a(ThemeInfo.TEXT_DISABLED).toIntColor());
         float x = this.c.x + 12.0f;
         float y = this.c.y + ((this.c.w - Fonts.a.a(8.5f)) / 2.0f);
         float target = this.h;
@@ -202,7 +202,7 @@ public class StationScreen extends Screen {
             float iconWidth = Fonts.a.b(section.b(), 8.5f);
             section.a().a(i == this.g);
             section.a().a(0.0f, 1.0f, 0.3f, EasingList.i, delta);
-            Fonts.a.a(context.getMatrices(), section.b(), x, y, 8.5f, ColorUtil.a(theme.a(ThemeInfo.TEXT_DISABLED).a(), ColorUtil.a(theme.a(ThemeInfo.PRIMARY).a(), 1.0f), section.a().c()));
+            Fonts.a.a(context.getMatrices(), section.b(), x, y, 8.5f, ColorUtil.lerpColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 1.0f), section.a().c()));
             if (i == this.g) {
                 target = x + (iconWidth / 2.0f);
             }

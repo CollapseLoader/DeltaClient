@@ -53,7 +53,7 @@ public class ChatUtil implements Interface {
     }
 
     private static MutableText sendMessage(String prefix) {
-        int primary = Delta.h().d().o().a(ThemeInfo.PRIMARY).a();
+        int primary = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor();
         return GradientUtil.a(prefix + " » ", primary, ColorUtil.b(primary, 0.5f), 1, 5.0f);
     }
 }

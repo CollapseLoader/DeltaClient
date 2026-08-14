@@ -44,7 +44,7 @@ public abstract class InventoryScreenMixin extends HandledScreen<PlayerScreenHan
 
     @Inject(method = {"render"}, at = {@At("HEAD")})
     private void headRender(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        Animations animations = Delta.h().d().t().Q();
+        Animations animations = Delta.getInstance().getModuleProcessor().t().Q();
         if (animations.m() && animations.q().a("Открытие инвентаря").c().booleanValue()) {
             float value = animations.t().c();
             context.getMatrices().push();
@@ -59,7 +59,7 @@ public abstract class InventoryScreenMixin extends HandledScreen<PlayerScreenHan
 
     @Inject(method = {"render"}, at = {@At("RETURN")})
     private void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        Animations animations = Delta.h().d().t().Q();
+        Animations animations = Delta.getInstance().getModuleProcessor().t().Q();
         if (animations.m() && animations.q().a("Открытие инвентаря").c().booleanValue()) {
             context.getMatrices().pop();
         }

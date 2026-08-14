@@ -19,8 +19,8 @@ import java.util.List;
 
 @Command(name = "layout")
 public class LayoutCommand extends BaseCommand {
-    private final List<a> c = new ArrayList();
-    private final List<a> d = new ArrayList();
+    private final List<a> c = new ArrayList<>();
+    private final List<a> d = new ArrayList<>();
     private int e;
 
     public List<a> c() {
@@ -28,7 +28,7 @@ public class LayoutCommand extends BaseCommand {
     }
 
     private void d() {
-        Delta.h().d().t().b("default");
+        Delta.getInstance().getModuleProcessor().t().b("default");
     }
 
     private void a(List<a> layout) {

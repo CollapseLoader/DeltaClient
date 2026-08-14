@@ -1,7 +1,5 @@
 package aethereal.core;
 
-import aethereal.api.Compile;
-import aethereal.api.Ultra;
 import aethereal.event.DrawEvent;
 import aethereal.event.KeyEvent;
 import aethereal.render.EasingList;
@@ -20,7 +18,6 @@ public class Delta {
     private GUIScreen currentScreen;
     private Client networkClient;
     private User currentUser;
-
 
     public Delta() {
         initialize();
@@ -41,12 +38,6 @@ public class Delta {
         return instance;
     }
 
-    public static Delta h() {
-        return instance;
-    }
-
-    @Compile
-    @Ultra
     protected void initialize() {
         this.currentUser = new User("1", "CollapseLoader", "Owner", "Owner", "01.01.2099 00:00", "");
         instance = this;
@@ -62,19 +53,15 @@ public class Delta {
         this.moduleProcessor.a();
     }
 
-    @Compile
-    @Ultra
     protected void shutdown() {
         this.moduleProcessor.b();
     }
 
-    @Compile
-    @Ultra
     public String getDeveloperName() {
         return null;
     }
 
-    public Processor_2 d() {
+    public Processor_2 getModuleProcessor() {
         return this.moduleProcessor;
     }
 
@@ -98,8 +85,6 @@ public class Delta {
         return this.currentUser;
     }
 
-    @Compile
-    @Ultra
     public String c() {
         return getDeveloperName();
     }
@@ -144,7 +129,7 @@ public class Delta {
     public void a(DrawEvent event) {
         if (event.b()) {
             ScaleUtil.a(event.i(), 2);
-            for (Module module : h().d().t().e()) {
+            for (Module module : getInstance().getModuleProcessor().t().e()) {
                 module.f().a(0.0f, 1.0f, 0.3f, EasingList.i, event.g());
                 module.f().a(module.m());
                 module.g().a(0.0f, 1.0f, 0.3f, EasingList.i, event.g());

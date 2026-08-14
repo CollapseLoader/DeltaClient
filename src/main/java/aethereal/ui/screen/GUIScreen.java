@@ -1,6 +1,6 @@
 package aethereal.ui.screen;
 
-import aethereal.api.Compile;
+
 import aethereal.core.Category;
 import aethereal.core.Delta;
 import aethereal.core.Interface;
@@ -33,7 +33,7 @@ public class GUIScreen extends Screen {
         super(title);
         this.a = new TextField(TextField.a.GUI);
         this.b = new AnimationUtil();
-        this.c = new ArrayList();
+        this.c = new ArrayList<>();
         for (Category category : Category.values()) {
             this.c.add(new GUIPanel(category));
         }
@@ -64,7 +64,7 @@ public class GUIScreen extends Screen {
         return panel.d() != null;
     }
 
-    @Compile
+    
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
         double dA = MathUtil.scale(mouseX, 2);
@@ -85,7 +85,7 @@ public class GUIScreen extends Screen {
         float f4 = 0.0f;
         for (final GUIPanel gUIPanel : this.c) {
             Vector4f vector4fF = gUIPanel.f();
-            gUIPanel.a(Delta.h().d().t().e().stream().filter(obj -> this.a(gUIPanel, obj)).sorted(Comparator.comparing(new Function() {
+            gUIPanel.a(Delta.getInstance().getModuleProcessor().t().e().stream().filter(obj -> this.a(gUIPanel, obj)).sorted(Comparator.comparing(new Function() {
                 @Override
                 public Object apply(Object obj) {
                     return ((Module) obj).j();
@@ -121,7 +121,7 @@ public class GUIScreen extends Screen {
         ScaleUtil.a(context);
     }
 
-    @Compile
+    
     public boolean mouseClicked(final double mouseX, final double mouseY, final int button) {
         TextField textField = this.a;
         List<GUIPanel> list = this.c;
@@ -132,7 +132,7 @@ public class GUIScreen extends Screen {
         return super.mouseClicked(mouseX, mouseY, button);
     }
 
-    @Compile
+    
     public boolean mouseReleased(final double mouseX, final double mouseY, final int button) {
         if (this.c.stream().filter(obj -> GUIScreen.e(obj)).anyMatch(obj -> obj.b(MathUtil.scale(mouseX, 2), MathUtil.scale(mouseY, 2), button))) {
             return true;
@@ -140,7 +140,7 @@ public class GUIScreen extends Screen {
         return super.mouseReleased(mouseX, mouseY, button);
     }
 
-    @Compile
+    
     public boolean mouseDragged(final double mouseX, final double mouseY, final int button, final double deltaX, final double deltaY) {
         TextField textField = this.a;
         List<GUIPanel> list = this.c;
@@ -151,7 +151,7 @@ public class GUIScreen extends Screen {
         return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
     }
 
-    @Compile
+    
     public boolean mouseScrolled(final double mouseX, final double mouseY, double horizontalAmount, final double verticalAmount) {
         double scaledX = MathUtil.scale(mouseX, 2);
         double scaledY = MathUtil.scale(mouseY, 2);
@@ -167,7 +167,7 @@ public class GUIScreen extends Screen {
         return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
     }
 
-    @Compile
+    
     public boolean keyPressed(final int keyCode, final int scanCode, final int modifiers) {
         TextField textField = this.a;
         List<GUIPanel> list = this.c;
@@ -185,7 +185,7 @@ public class GUIScreen extends Screen {
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
-    @Compile
+    
     public boolean charTyped(final char character, final int modifiers) {
         TextField textField = this.a;
         List<GUIPanel> list = this.c;
@@ -236,7 +236,7 @@ public class GUIScreen extends Screen {
     }
 
     private void a(MatrixStack matrices, float centerX, float panelTop, float delta) {
-        Delta.h().d().o();
+        Delta.getInstance().getModuleProcessor().o();
         Module hovered = this.c.stream().map((v0) -> {
             return v0.e();
         }).filter(module -> {
@@ -252,8 +252,8 @@ public class GUIScreen extends Screen {
         if (fade > 0.0f && this.d != null) {
             float x = centerX - (Fonts.c.a(this.d, 10.0f) / 2.0f);
             float y = ((panelTop - Fonts.c.a(10.0f)) - 8.0f) + ((1.0f - fade) * 4.0f);
-            Fonts.c.a(matrices, this.d, x + 0.5f, y + 0.5f, 10.0f, ColorUtil.a(ColorUtil.a(0, 0, 0, 255), 0.5f * fade));
-            Fonts.c.a(matrices, this.d, x, y, 10.0f, ColorUtil.a(ColorUtil.a(255, 255, 255, 255), fade));
+            Fonts.c.a(matrices, this.d, x + 0.5f, y + 0.5f, 10.0f, ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(0, 0, 0, 255), 0.5f * fade));
+            Fonts.c.a(matrices, this.d, x, y, 10.0f, ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(255, 255, 255, 255), fade));
         }
     }
 }

@@ -1,13 +1,13 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 
 import java.util.List;
 
-public class TooltipEvent extends Event implements IEvent {
+public class TooltipEvent extends Event {
     private final ItemStack a;
     private final List<Text> b;
 

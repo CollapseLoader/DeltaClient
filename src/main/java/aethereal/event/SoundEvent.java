@@ -1,11 +1,11 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 
 import net.minecraft.client.sound.SoundInstance;
 
-public class SoundEvent extends Event implements IEvent {
+public class SoundEvent extends Event {
     private final SoundInstance a;
     private float b;
 

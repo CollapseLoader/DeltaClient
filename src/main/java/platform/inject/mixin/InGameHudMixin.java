@@ -71,25 +71,25 @@ public class InGameHudMixin {
             case 1:
             case 2:
             case 3:
-                return ColorUtil.a(80, 220, 100, 255);
+                return ColorUtil.convertToARGB(80, 220, 100, 255);
             case 4:
             case 5:
             case 6:
-                return ColorUtil.a(255, InterfaceC0020Opcode.aN, 60, 255);
+                return ColorUtil.convertToARGB(255, InterfaceC0020Opcode.aN, 60, 255);
             default:
-                return ColorUtil.a(255, 70, 70, 255);
+                return ColorUtil.convertToARGB(255, 70, 70, 255);
         }
     }
 
     @Inject(method = {"render"}, at = {@At("HEAD")})
     public void headRender(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        Delta.h().d().i().e().a(context.getMatrices());
+        Delta.getInstance().getModuleProcessor().i().e().a(context.getMatrices());
         EventManager.a(new DrawEvent(context, tickCounter.getTickDelta(false), DrawEvent.a.D2D));
     }
 
     @Inject(method = {"render"}, at = {@At("TAIL")})
     private void render(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        Animations animations = Delta.h().d().t().Q();
+        Animations animations = Delta.getInstance().getModuleProcessor().t().Q();
         if (animations.m() && animations.q().a("TAB").c().booleanValue() && animations.r().c() > 0.0f && !Interface.mc.options.playerListKey.isPressed()) {
             this.playerListHud.render(context, Interface.mc.getWindow().getScaledWidth(), Interface.mc.world.getScoreboard(), Interface.mc.world.getScoreboard().getObjectiveForSlot(ScoreboardDisplaySlot.LIST));
         }
@@ -97,7 +97,7 @@ public class InGameHudMixin {
 
     @Inject(method = {"renderMainHud"}, at = {@At("HEAD")})
     private void headRenderMainHud(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        Animations animations = Delta.h().d().t().Q();
+        Animations animations = Delta.getInstance().getModuleProcessor().t().Q();
         if (animations.m() && animations.q().a("Поднятие хотбара").c().booleanValue()) {
             context.getMatrices().push();
             context.getMatrices().translate(0.0f, (-16.0f) * animations.s().c(), 0.0f);
@@ -106,7 +106,7 @@ public class InGameHudMixin {
 
     @Inject(method = {"renderMainHud"}, at = {@At("RETURN")})
     private void renderMainHud(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        Animations animations = Delta.h().d().t().Q();
+        Animations animations = Delta.getInstance().getModuleProcessor().t().Q();
         if (animations.m() && animations.q().a("Поднятие хотбара").c().booleanValue()) {
             context.getMatrices().pop();
         }
@@ -114,7 +114,7 @@ public class InGameHudMixin {
 
     @ModifyArg(method = {"renderHotbar"}, index = 2, at = @At(value = "INVOKE", ordinal = 1, target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Ljava/util/function/Function;Lnet/minecraft/util/Identifier;IIII)V"))
     private int hotbarSelectionSlot(int x) {
-        Animations animations = Delta.h().d().t().Q();
+        Animations animations = Delta.getInstance().getModuleProcessor().t().Q();
         if (animations.m() && animations.q().a("Слот хотбара").c().booleanValue() && Interface.mc.player != null) {
             return Math.round((x - (Interface.mc.player.getInventory().selectedSlot * 20)) + (animations.v() * 20.0f));
         }
@@ -123,7 +123,7 @@ public class InGameHudMixin {
 
     @Inject(method = {"renderExperienceLevel"}, at = {@At("HEAD")})
     private void headRenderExperienceLevel(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        Animations animations = Delta.h().d().t().Q();
+        Animations animations = Delta.getInstance().getModuleProcessor().t().Q();
         if (animations.m() && animations.q().a("Поднятие хотбара").c().booleanValue()) {
             context.getMatrices().push();
             context.getMatrices().translate(0.0f, (-16.0f) * animations.s().c(), 0.0f);
@@ -132,7 +132,7 @@ public class InGameHudMixin {
 
     @Inject(method = {"renderExperienceLevel"}, at = {@At("RETURN")})
     private void renderExperienceLevel(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        Animations animations = Delta.h().d().t().Q();
+        Animations animations = Delta.getInstance().getModuleProcessor().t().Q();
         if (animations.m() && animations.q().a("Поднятие хотбара").c().booleanValue()) {
             context.getMatrices().pop();
         }

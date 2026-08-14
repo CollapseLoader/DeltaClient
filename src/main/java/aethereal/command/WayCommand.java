@@ -30,8 +30,8 @@ import java.util.regex.Pattern;
 
 @Command(name = "way")
 public class WayCommand extends BaseCommand {
-    private final List<b> c = new ArrayList();
-    private final List<String> d = new ArrayList();
+    private final List<b> c = new ArrayList<>();
+    private final List<String> d = new ArrayList<>();
     private a e = a.NONE;
 
     public List<b> c() {
@@ -136,7 +136,7 @@ public class WayCommand extends BaseCommand {
                             }
                             Vec3d pos = new Vec3d(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(3)));
                             if (this.e == a.GPS) {
-                                Delta.h().d().u().d().a(pos);
+                                Delta.getInstance().getModuleProcessor().u().d().a(pos);
                             } else {
                                 a("Ивент", pos);
                             }
@@ -161,7 +161,7 @@ public class WayCommand extends BaseCommand {
             for (b way : this.c) {
                 a(event, way, mc.player.getEyePos());
             }
-            Vec3d gps = Delta.h().d().u().d().c();
+            Vec3d gps = Delta.getInstance().getModuleProcessor().u().d().c();
             if (gps != null) {
                 a(event, gps, mc.player.getEyePos());
             }
@@ -190,13 +190,13 @@ public class WayCommand extends BaseCommand {
     private void a(DrawEvent event, b way, Vec3d eyes) {
         Vector2f screen = ProjectUtil.project(way.b().x, way.b().y, way.b().z);
         if (ProjectUtil.isOnScreen(screen)) {
-            int primary = Delta.h().d().o().a(ThemeInfo.PRIMARY).a();
-            int background = Delta.h().d().o().a(ThemeInfo.BACKGROUND_HUD).a();
+            int primary = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor();
+            int background = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).toIntColor();
             Text text = Text.literal(way.a().toUpperCase(Locale.ROOT)).append(Text.literal("  /  ").setStyle(Style.EMPTY.withColor(primary))).append(Text.literal(String.format(Locale.US, "%.1fм", Double.valueOf(eyes.distanceTo(way.b())))));
             float width = 14.0f + Fonts.e.a(text, 6.25f);
             float x = screen.x() - (width / 2.0f);
             float y = screen.y() - 5.75f;
-            event.d().a(event.h(), x, y, width, 11.5f, 3.5f, ColorUtil.a(background, Delta.h().d().o().a(ThemeInfo.BACKGROUND_HUD).b()), 1.0f, ColorUtil.a(background, Delta.h().d().o().a(ThemeInfo.BACKGROUND_HUD).b()), 6.0f);
+            event.d().a(event.h(), x, y, width, 11.5f, 3.5f, ColorUtil.applyAlphaToColor(background, Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).b()), 1.0f, ColorUtil.applyAlphaToColor(background, Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).b()), 6.0f);
             Fonts.a.a(event.h(), "F", x + 3.0f, y + 3.0f, 5.5f, primary);
             Fonts.e.a(event.h(), text, x + 3.0f + 5.5f + 2.5f, (y + ((11.5f - Fonts.e.a(6.25f)) / 2.0f)) - 0.25f, 6.25f);
         }
@@ -204,7 +204,7 @@ public class WayCommand extends BaseCommand {
 
     private void a(DrawEvent event, Vec3d gps, Vec3d eyes) {
         MatrixStack matrices = event.h();
-        int primary = Delta.h().d().o().a(ThemeInfo.PRIMARY).a();
+        int primary = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor();
         double dx = gps.x - mc.player.getX();
         double dz = gps.z - mc.player.getZ();
         float targetYaw = (float) Math.toDegrees(Math.atan2(-dx, dz));

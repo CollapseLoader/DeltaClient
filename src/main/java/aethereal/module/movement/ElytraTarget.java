@@ -21,11 +21,11 @@ public class ElytraTarget extends Module {
 
     @EventTarget
     public void a(TickEvent event) {
-        Aura aura = Delta.h().d().t().B();
+        Aura aura = Delta.getInstance().getModuleProcessor().t().B();
         if (aura.m() && mc.player.isGliding()) {
-            if (mc.player.getOffHandStack().getItem() != Items.FIREWORK_ROCKET && !Delta.h().d().t().V().b) {
-                if (Delta.h().d().v().a().a().isEmpty()) {
-                    Delta.h().d().v().a().a(Items.FIREWORK_ROCKET, 45, 1);
+            if (mc.player.getOffHandStack().getItem() != Items.FIREWORK_ROCKET && !Delta.getInstance().getModuleProcessor().t().V().b) {
+                if (Delta.getInstance().getModuleProcessor().v().a().a().isEmpty()) {
+                    Delta.getInstance().getModuleProcessor().v().a().a(Items.FIREWORK_ROCKET, 45, 1);
                 }
             } else if ((this.b.a(150L) && mc.player.getVelocity().length() < 1.5d) || aura.b == 1) {
                 mc.interactionManager.interactItem(mc.player, Hand.OFF_HAND);
@@ -47,7 +47,7 @@ public class ElytraTarget extends Module {
             Rotation aimRotation = Rotation.a(eye, aim);
             float Yaw = AuraUtil.a(mc.player.getYaw(), aimRotation.c(), 1.0f);
             float Pitch = AuraUtil.a(mc.player.getPitch(), aura.b <= 3 ? 0.0f : aimRotation.d(), aura.b <= 3 ? 1.0f : Math.clamp(aura.b / 10.0f, 0.0f, 1.0f));
-            Delta.h().d().k().a(new Rotation(Yaw, Pitch), 180.0f, 1, 1);
+            Delta.getInstance().getModuleProcessor().k().a(new Rotation(Yaw, Pitch), 180.0f, 1, 1);
         }
     }
 

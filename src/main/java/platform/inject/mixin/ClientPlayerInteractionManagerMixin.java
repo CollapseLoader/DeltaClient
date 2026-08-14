@@ -26,10 +26,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class ClientPlayerInteractionManagerMixin implements Interface {
     @Inject(method = {"interactBlock"}, at = {@At("HEAD")}, cancellable = true)
     private void interactBlock(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
-        NoInteract noInteract = Delta.h().d().t().s();
+        NoInteract noInteract = Delta.getInstance().getModuleProcessor().t().s();
         Block block = mc.world.getBlockState(hitResult.getBlockPos()).getBlock();
         if (noInteract.m()) {
-            if (noInteract.q().c().booleanValue() && !Delta.h().d().t().B().m()) {
+            if (noInteract.q().c().booleanValue() && !Delta.getInstance().getModuleProcessor().t().B().m()) {
                 return;
             }
             if (block == Blocks.CHEST || block == Blocks.TRAPPED_CHEST || block == Blocks.FURNACE || block == Blocks.ANVIL || block == Blocks.CRAFTING_TABLE || block == Blocks.HOPPER || block == Blocks.JUKEBOX || block == Blocks.NOTE_BLOCK || block == Blocks.ENDER_CHEST || block == Blocks.DISPENSER || block == Blocks.DROPPER || (block instanceof ShulkerBoxBlock) || (block instanceof FenceBlock) || (block instanceof FenceGateBlock) || (block instanceof TrapdoorBlock)) {
@@ -40,9 +40,9 @@ public class ClientPlayerInteractionManagerMixin implements Interface {
 
     @Inject(method = {"interactEntity"}, at = {@At("HEAD")}, cancellable = true)
     private void interactEntity(PlayerEntity player, Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        NoInteract noInteract = Delta.h().d().t().s();
+        NoInteract noInteract = Delta.getInstance().getModuleProcessor().t().s();
         if (noInteract.m()) {
-            if (noInteract.q().c().booleanValue() && !Delta.h().d().t().B().m()) {
+            if (noInteract.q().c().booleanValue() && !Delta.getInstance().getModuleProcessor().t().B().m()) {
                 return;
             }
             if ((entity instanceof MinecartEntity) || (entity instanceof FurnaceMinecartEntity)) {

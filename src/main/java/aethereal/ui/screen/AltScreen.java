@@ -1,6 +1,6 @@
 package aethereal.ui.screen;
 
-import aethereal.api.Compile;
+
 import aethereal.config.ThemeInfo;
 import aethereal.core.Delta;
 import aethereal.core.Interface;
@@ -46,14 +46,14 @@ public class AltScreen extends Screen {
         this.a = new AnimationUtil();
         this.b = new AnimationUtil();
         this.c = new TextField(TextField.a.ALT_MANAGER);
-        this.d = new ArrayList();
+        this.d = new ArrayList<>();
         this.c.a("Никнейм");
         a().forEach(account -> {
             this.d.add(new a(account));
         });
     }
 
-    @Compile
+    
     public void render(DrawContext context, int mx, int my, float delta) {
         Window class_1041VarMethod_22683;
         Window class_1041VarMethod_22684;
@@ -86,8 +86,8 @@ public class AltScreen extends Screen {
                                 EasingList.a aVar = EasingList.s;
                                 if (aVar != null) {
                                     MainScreen.a(context, iMethod_4486, iMethod_4502, (int) dA, (int) dA2, (aVar.ease(fMin) * 0.2f) + 1.05f);
-                                    Delta deltaH = Delta.h();
-                                    if (deltaH != null && (processor_2D = deltaH.d()) != null && (draw2DProcessorI = processor_2D.i()) != null && (blurShaderE = draw2DProcessorI.e()) != null && context != null) {
+                                    Delta deltaH = Delta.getInstance();
+                                    if (deltaH != null && (processor_2D = deltaH.getModuleProcessor()) != null && (draw2DProcessorI = processor_2D.i()) != null && (blurShaderE = draw2DProcessorI.e()) != null && context != null) {
                                         blurShaderE.a(context.getMatrices());
                                         EasingList.a aVar2 = EasingList.s;
                                         if (aVar2 != null) {
@@ -119,7 +119,7 @@ public class AltScreen extends Screen {
         throw new NullPointerException();
     }
 
-    @Compile
+    
     public boolean mouseClicked(double rawX, double rawY, int button) {
         double dA = MathUtil.scale(rawX, 2);
         double dA2 = MathUtil.scale(rawY, 2);
@@ -165,7 +165,7 @@ public class AltScreen extends Screen {
         return true;
     }
 
-    @Compile
+    
     public boolean mouseDragged(double mx, double my, int button, double dx, double dy) {
         this.c.b(MathUtil.scale(mx, 2), MathUtil.scale(my, 2), button);
         if (this.f == null) {
@@ -183,7 +183,7 @@ public class AltScreen extends Screen {
         return true;
     }
 
-    @Compile
+    
     public boolean mouseReleased(double rawX, double rawY, int button) {
         AccountConstructor accountConstructor;
         if (this.f == null) {
@@ -218,13 +218,13 @@ public class AltScreen extends Screen {
         return true;
     }
 
-    @Compile
+    
     public boolean mouseScrolled(double mx, double my, double dx, double dy) {
         this.b.a(((float) dy) * 29.0f);
         return true;
     }
 
-    @Compile
+    
     public boolean charTyped(char chr, int modifiers) {
         if (!this.c.j()) {
             return super.charTyped(chr, modifiers);
@@ -233,7 +233,7 @@ public class AltScreen extends Screen {
         return true;
     }
 
-    @Compile
+    
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         TextField textField = this.c;
         if ((modifiers & 2) != 0 && keyCode == 86) {
@@ -259,18 +259,18 @@ public class AltScreen extends Screen {
     }
 
     private void a(MatrixStack matrices, int w, float px, float py, float open) {
-        Draw2DProcessor draw = Delta.h().d().i();
-        AccountConstructor selected = Delta.h().d().h().a();
+        Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
+        AccountConstructor selected = Delta.getInstance().getModuleProcessor().h().a();
         Fonts.e.a(matrices, GradientUtil.a("Менеджер Аккаунтов", a(open), 5.0f, 0.5f), (w - Fonts.e.a("Менеджер Аккаунтов", 11.0f)) / 2.0f, py - 28.0f, 11.0f, 0.0f, open);
         String info = (selected != null ? selected.b() : "Не выбран") + "  |  " + a().size() + " аккаунтов";
-        Fonts.b.a(matrices, info, (w - Fonts.b.a(info, 7.0f)) / 2.0f, py - 13.5f, 7.0f, ColorUtil.a(255, 255, 255, (int) (255.0f * open)));
-        draw.b(matrices, px, py, 190.0f, 250.0f, 8.0f, ColorUtil.a(11, 11, 13, InterfaceC0020Opcode.bN), open);
-        draw.a(matrices, px, py, 190.0f, 250.0f, 8.0f, 0.5f, ColorUtil.a(255, 255, 255, (int) (15.0f * open)));
+        Fonts.b.a(matrices, info, (w - Fonts.b.a(info, 7.0f)) / 2.0f, py - 13.5f, 7.0f, ColorUtil.convertToARGB(255, 255, 255, (int) (255.0f * open)));
+        draw.b(matrices, px, py, 190.0f, 250.0f, 8.0f, ColorUtil.convertToARGB(11, 11, 13, InterfaceC0020Opcode.bN), open);
+        draw.a(matrices, px, py, 190.0f, 250.0f, 8.0f, 0.5f, ColorUtil.convertToARGB(255, 255, 255, (int) (15.0f * open)));
     }
 
     private void a(MatrixStack matrices, int w, int h, float scale, float px, float py, int mx, int my, float open) {
-        Draw2DProcessor draw = Delta.h().d().i();
-        AccountConstructor selected = Delta.h().d().h().a();
+        Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
+        AccountConstructor selected = Delta.getInstance().getModuleProcessor().h().a();
         int accent = a(open);
         float listTop = py + 10.0f;
         float listBottom = py + 218.0f;
@@ -320,15 +320,15 @@ public class AltScreen extends Screen {
         }
         float content = Math.max(listHeight, this.d.size() * 29.0f);
         float thumb = (listHeight * listHeight) / content;
-        draw.a(matrices, px + 182.5f, listTop, 1.5f, listHeight, 0.75f, ColorUtil.a(255, 255, 255, (int) (20.0f * open)));
+        draw.a(matrices, px + 182.5f, listTop, 1.5f, listHeight, 0.75f, ColorUtil.convertToARGB(255, 255, 255, (int) (20.0f * open)));
         draw.a(matrices, px + 182.5f, listTop - ((offset / Math.max(1.0f, content - listHeight)) * (listHeight - thumb)), 1.5f, thumb, 0.75f, accent);
     }
 
     private void a(DrawContext context, float px, float py, int mx, int my, float delta, float open) {
         MatrixStack matrices = context.getMatrices();
-        Draw2DProcessor draw = Delta.h().d().i();
+        Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
         a(open);
-        int white = ColorUtil.a(222, 222, 222, (int) (222.0f * open));
+        int white = ColorUtil.convertToARGB(222, 222, 222, (int) (222.0f * open));
         float fieldY = py + 224.0f;
         float randomWidth = Fonts.a.a("H", 8.0f) + 3.0f + Fonts.d.a("Случайный", 7.0f) + 14.0f;
         float fieldWidth = 146.0f - randomWidth;
@@ -336,13 +336,13 @@ public class AltScreen extends Screen {
         this.c.a(new Vector2f(px + 7.0f, fieldY));
         this.c.b(new Vector2f(fieldWidth, 18.0f));
         this.c.a(context, mx, my, delta, open);
-        a(matrices, draw, right + 0.5f, fieldY, 18.0f, 18.0f, new Vector4f(1.0f, 5.0f, 1.0f, 5.0f), null, "m", ColorUtil.a(255, 255, 255, 10), white, open, mx, my);
-        a(matrices, draw, right + 27.0f, fieldY, randomWidth, 18.0f, new Vector4f(6.0f, 6.0f, 6.0f, 6.0f), "Случайный", "", ColorUtil.a(255, 255, 255, 10), white, open, mx, my);
-        a(matrices, draw, px + 15.0f, py + 257.0f, 160.0f, 20.0f, new Vector4f(6.0f, 6.0f, 6.0f, 6.0f), "Удалить все аккаунты", null, ColorUtil.a(220, 80, 80, 20), ColorUtil.a(220, 80, 80, (int) (255.0f * open)), open, mx, my);
+        a(matrices, draw, right + 0.5f, fieldY, 18.0f, 18.0f, new Vector4f(1.0f, 5.0f, 1.0f, 5.0f), null, "m", ColorUtil.convertToARGB(255, 255, 255, 10), white, open, mx, my);
+        a(matrices, draw, right + 27.0f, fieldY, randomWidth, 18.0f, new Vector4f(6.0f, 6.0f, 6.0f, 6.0f), "Случайный", "", ColorUtil.convertToARGB(255, 255, 255, 10), white, open, mx, my);
+        a(matrices, draw, px + 15.0f, py + 257.0f, 160.0f, 20.0f, new Vector4f(6.0f, 6.0f, 6.0f, 6.0f), "Удалить все аккаунты", null, ColorUtil.convertToARGB(220, 80, 80, 20), ColorUtil.convertToARGB(220, 80, 80, (int) (255.0f * open)), open, mx, my);
     }
 
     private int a(float open) {
-        int rgba = Delta.h().d().o().a(ThemeInfo.PRIMARY).a();
+        int rgba = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor();
         return (rgba & 16777215) | (((int) (((rgba >>> 24) & 255) * open)) << 24);
     }
 
@@ -350,7 +350,7 @@ public class AltScreen extends Screen {
         float fA;
         boolean hover = MathUtil.a(mx, my, x, y, width, height);
         draw.a(matrices, x, y, width, height, radius, background);
-        draw.a(matrices, x, y, width, height, radius, 0.25f, ColorUtil.a(255, 255, 255, (int) ((hover ? 25 : 12) * open)));
+        draw.a(matrices, x, y, width, height, radius, 0.25f, ColorUtil.convertToARGB(255, 255, 255, (int) ((hover ? 25 : 12) * open)));
         if (icon != null) {
             fA = Fonts.a.a(icon, 8.0f) + (text != null ? 3.0f : 0.0f);
         } else {
@@ -367,7 +367,7 @@ public class AltScreen extends Screen {
     }
 
     private List<AccountConstructor> a() {
-        return Delta.h().d().h().e();
+        return Delta.getInstance().getModuleProcessor().h().e();
     }
 
     private void a(AccountConstructor account) {
@@ -515,15 +515,15 @@ public class AltScreen extends Screen {
                 return;
             }
             if (select > 0.01f) {
-                draw.a(matrices, px + 7.0f, this.e, 168.0f, 25.0f, 6.0f, ColorUtil.a(accent, 0.1f * select * a));
+                draw.a(matrices, px + 7.0f, this.e, 168.0f, 25.0f, 6.0f, ColorUtil.applyAlphaToColor(accent, 0.1f * select * a));
             } else if (hover > 0.01f) {
-                draw.a(matrices, px + 7.0f, this.e, 168.0f, 25.0f, 6.0f, ColorUtil.a(255, 255, 255, (int) (6.0f * hover * a)));
+                draw.a(matrices, px + 7.0f, this.e, 168.0f, 25.0f, 6.0f, ColorUtil.convertToARGB(255, 255, 255, (int) (6.0f * hover * a)));
             }
-            draw.a(matrices, px + 7.0f, this.e, 168.0f, 25.0f, 6.0f, 0.5f, ColorUtil.a(ColorUtil.a(255, 255, 255, (int) (8.0f * a)), ColorUtil.a(255, 205, 60, (int) (30.0f * a)), fav));
+            draw.a(matrices, px + 7.0f, this.e, 168.0f, 25.0f, 6.0f, 0.5f, ColorUtil.lerpColor(ColorUtil.convertToARGB(255, 255, 255, (int) (8.0f * a)), ColorUtil.convertToARGB(255, 205, 60, (int) (30.0f * a)), fav));
             draw.a(matrices, this.b.a(), null, px + 11.5f, this.e + 4.0f, 16.5f, 16.5f, 3.0f, a);
-            Fonts.d.a(matrices, this.b.b(), px + 34.0f, this.e + 7.5f, 8.0f, ColorUtil.a(255, 255, 255, (int) (255.0f * a)));
+            Fonts.d.a(matrices, this.b.b(), px + 34.0f, this.e + 7.5f, 8.0f, ColorUtil.convertToARGB(255, 255, 255, (int) (255.0f * a)));
             if (fav > 0.01f || hover > 0.01f) {
-                Fonts.a.a(matrices, "\\", px + 159.0f, this.e + 8.0f, 9.0f, ColorUtil.a(ColorUtil.a(255, 255, 255, (int) ((this.f ? InterfaceC0020Opcode.bW : 45) * hover * a)), ColorUtil.a(255, 205, 60, (int) (255.0f * a)), fav));
+                Fonts.a.a(matrices, "\\", px + 159.0f, this.e + 8.0f, 9.0f, ColorUtil.lerpColor(ColorUtil.convertToARGB(255, 255, 255, (int) ((this.f ? InterfaceC0020Opcode.bW : 45) * hover * a)), ColorUtil.convertToARGB(255, 205, 60, (int) (255.0f * a)), fav));
             }
         }
     }

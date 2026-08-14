@@ -48,7 +48,7 @@ public class ANFindHandler extends BaseHandler implements Interface {
                 float x = (screen.getX() + screen.getBackgroundWidth()) - 17;
                 float y = screen.getY() + 5;
                 this.c = MathUtil.a(event.f(), event.g(), x, y, 10.0f, 10.0f);
-                Delta.h().d().i().a(event.d().getMatrices(), Identifier.of("delta", this.c ? "pictures/minecraft/join_button_hovered.png" : "pictures/minecraft/join_button.png"), x, y, 10.0f, 10.0f, 0.0f, -1);
+                Delta.getInstance().getModuleProcessor().i().a(event.d().getMatrices(), Identifier.of("delta", this.c ? "pictures/minecraft/join_button_hovered.png" : "pictures/minecraft/join_button.png"), x, y, 10.0f, 10.0f, 0.0f, -1);
                 if (this.c) {
                     event.d().drawTooltip(event.b().getTextRenderer(), List.of(Text.of("Авто-поиск анархии с наименьшим онлайном")), event.f(), event.g());
                 }

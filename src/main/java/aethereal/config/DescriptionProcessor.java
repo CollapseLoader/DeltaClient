@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DescriptionProcessor implements ItemFilter {
-    private final List<DescriptionCondition> a = new ArrayList();
+    private final List<DescriptionCondition> a = new ArrayList<>();
 
     public List<DescriptionCondition> b() {
         return this.a;

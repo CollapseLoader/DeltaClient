@@ -1,6 +1,6 @@
 package aethereal.ui.element;
 
-import aethereal.api.Compile;
+
 import aethereal.config.ThemeInfo;
 import aethereal.config.ThemeProcessor;
 import aethereal.core.Delta;
@@ -22,7 +22,7 @@ public class SliderElement extends Element_2<SliderSetting> {
     }
 
     @Override
-    @Compile
+    
     public boolean a(double mouseX, double mouseY, int button) {
         Vector4f vector4f = this.a;
         var setting = this.b;
@@ -45,14 +45,14 @@ public class SliderElement extends Element_2<SliderSetting> {
     }
 
     @Override
-    @Compile
+    
     public boolean b(double mouseX, double mouseY, int button) {
         this.d = false;
         return false;
     }
 
     @Override
-    @Compile
+    
     public boolean a(double mouseX, double mouseY, double amount) {
         var setting = this.b;
         Vector4f vector4f = this.a;
@@ -74,8 +74,8 @@ public class SliderElement extends Element_2<SliderSetting> {
     @Override
     public void a(DrawContext context, double mouseX, double mouseY, float delta, float extend) {
         MatrixStack matrices = context.getMatrices();
-        Draw2DProcessor draw = Delta.h().d().i();
-        ThemeProcessor theme = Delta.h().d().o();
+        Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
+        ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
         this.a.w = 18.0f;
         if (this.d) {
             a(mouseX);
@@ -88,14 +88,14 @@ public class SliderElement extends Element_2<SliderSetting> {
         float boxWidth = Fonts.c.a(value, 6.25f) + 6.0f;
         float boxHeight = Fonts.c.a(6.25f) + 2.0f;
         float boxX = (this.a.x + this.a.z) - boxWidth;
-        a(matrices, Fonts.c, this.b.i(), this.a.x, this.a.y + 0.5f, Fonts.c.a(6.5f), 6.5f, theme.a(ThemeInfo.TEXT).a(), (boxX - this.a.x) - 4.0f, hovered, extend, delta);
-        draw.a(matrices, boxX, this.a.y, boxWidth, boxHeight, 2.0f, ColorUtil.a(theme.a(ThemeInfo.PRIMARY).a(), 0.03137255f * extend));
-        draw.a(matrices, boxX, this.a.y, boxWidth, boxHeight, 2.0f, 0.5f, ColorUtil.a(theme.a(ThemeInfo.OUTLINE_SMALL).a(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * extend));
-        Fonts.c.b(matrices, value, boxX + (boxWidth / 2.0f), (this.a.y + ((boxHeight - Fonts.c.a(6.25f)) / 2.0f)) - 0.5f, 6.25f, ColorUtil.a(theme.a(ThemeInfo.TEXT).a(), extend));
+        a(matrices, Fonts.c, this.b.i(), this.a.x, this.a.y + 0.5f, Fonts.c.a(6.5f), 6.5f, theme.a(ThemeInfo.TEXT).toIntColor(), (boxX - this.a.x) - 4.0f, hovered, extend, delta);
+        draw.a(matrices, boxX, this.a.y, boxWidth, boxHeight, 2.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.03137255f * extend));
+        draw.a(matrices, boxX, this.a.y, boxWidth, boxHeight, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * extend));
+        Fonts.c.b(matrices, value, boxX + (boxWidth / 2.0f), (this.a.y + ((boxHeight - Fonts.c.a(6.25f)) / 2.0f)) - 0.5f, 6.25f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT).toIntColor(), extend));
         float trackY = this.a.y + Fonts.c.a(6.5f) + 6.5f;
-        draw.a(matrices, this.a.x, trackY, this.a.z, 3.0f, 0.75f, ColorUtil.a(ColorUtil.a(50, 52, 60, 255), extend * 0.35f));
-        draw.a(matrices, this.a.x, trackY, this.a.z * progress, 3.0f, 0.75f, ColorUtil.a(theme.a(ThemeInfo.PRIMARY).a(), extend));
-        draw.a(matrices, this.a.x + ((this.a.z - 6.0f) * progress), (trackY + 1.5f) - 3.0f, 6.0f, 6.0f, 2.0f, ColorUtil.a(ColorUtil.a(255, 255, 255, 255), extend));
+        draw.a(matrices, this.a.x, trackY, this.a.z, 3.0f, 0.75f, ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(50, 52, 60, 255), extend * 0.35f));
+        draw.a(matrices, this.a.x, trackY, this.a.z * progress, 3.0f, 0.75f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), extend));
+        draw.a(matrices, this.a.x + ((this.a.z - 6.0f) * progress), (trackY + 1.5f) - 3.0f, 6.0f, 6.0f, 2.0f, ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(255, 255, 255, 255), extend));
     }
 
     private void a(double mouseX) {

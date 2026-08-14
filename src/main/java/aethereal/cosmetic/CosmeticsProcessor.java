@@ -1,6 +1,6 @@
 package aethereal.cosmetic;
 
-import aethereal.api.Compile;
+
 import aethereal.config.BaseProcessor;
 import aethereal.core.EventTarget;
 import aethereal.event.BackendEvent;
@@ -43,7 +43,7 @@ public class CosmeticsProcessor extends BaseProcessor {
     }
 
     @Override
-    @Compile
+    
     public void setup() {
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register(new LivingEntityFeatureRendererRegistrationCallback() {
             public void registerRenderers(EntityType class_1299Var, LivingEntityRenderer class_922Var, LivingEntityFeatureRendererRegistrationCallback.RegistrationHelper registrationHelper, EntityRendererFactory.Context class_5618Var) {

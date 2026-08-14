@@ -45,7 +45,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @ModuleRegister(name = "Server Assistant", description = "Помощник, упрощающий работу с сервером и игровыми механиками", category = Category.Misc)
-public class ServerAssistant extends Module implements Interface {
+public class ServerAssistant extends Module {
     final MultiModeSetting d = new MultiModeSetting("Фильтр брони по", new BooleanSetting("Защите", false), new BooleanSetting("Аншип", true), new BooleanSetting("Починке", true), new BooleanSetting("Подводной ходьбе", true)).a(() -> {
         return Boolean.valueOf(this.c.a("Аукционный ассистент").c().booleanValue() && (this.b.l("FunTime") || this.b.l("SpookyTime")));
     });
@@ -97,7 +97,7 @@ public class ServerAssistant extends Module implements Interface {
                     return effect.getEffectType() == StatusEffects.WEAKNESS && effect.getAmplifier() >= 1 && ((double) effect.getDuration()) / 20.0d >= 15.0d;
                 });
                 if (InventoryUtil.b(Items.PHANTOM_MEMBRANE) != -1 && hasBadEffect && !mc.player.getItemCooldownManager().isCoolingDown(Items.PHANTOM_MEMBRANE.getDefaultStack()) && this.v.a(5000L) && mc.player.getAbsorptionAmount() <= 3.0f) {
-                    Delta.h().d().v().b().a(Items.PHANTOM_MEMBRANE.getDefaultStack());
+                    Delta.getInstance().getModuleProcessor().v().b().a(Items.PHANTOM_MEMBRANE.getDefaultStack());
                     this.v.b();
                 }
             }
@@ -174,7 +174,7 @@ public class ServerAssistant extends Module implements Interface {
                     }
                     HandledScreenAccessor accessor = handledScreenAccessor;
                     float pulse = (float) ((Math.sin(((System.currentTimeMillis() % 100000) / 1000.0f) * 10.0f) + 1.0d) * 0.5d);
-                    Delta.h().d().i().a(event.d(), accessor.getX() + this.x.x, accessor.getY() + this.x.y, 16.0f, 16.0f, ColorUtil.a(0, 255, 0, (int) (25.0f + (175.0f * pulse))));
+                    Delta.getInstance().getModuleProcessor().i().a(event.d(), accessor.getX() + this.x.x, accessor.getY() + this.x.y, 16.0f, 16.0f, ColorUtil.convertToARGB(0, 255, 0, (int) (25.0f + (175.0f * pulse))));
                 }
             }
         }
@@ -260,7 +260,7 @@ public class ServerAssistant extends Module implements Interface {
             if (InventoryUtil.b(item) == -1) {
                 ChatUtil.sendMessage("&c" + name + "&7 - нет в инвентаре");
             } else {
-                Delta.h().d().v().b().a(item.getDefaultStack());
+                Delta.getInstance().getModuleProcessor().v().b().a(item.getDefaultStack());
             }
         }).a(() -> {
             Stream stream = Arrays.stream(servers);
@@ -269,7 +269,7 @@ public class ServerAssistant extends Module implements Interface {
             return Boolean.valueOf(Arrays.stream(servers).anyMatch(server -> modeSetting.l(server)));
         });
         if (this.w == null) {
-            this.w = new ArrayList();
+            this.w = new ArrayList<>();
         }
         this.w.add(new b(new AnimationUtil(), setting, item));
         return setting;

@@ -1,6 +1,6 @@
 package aethereal.handler;
 
-import aethereal.api.Compile;
+
 import aethereal.config.BaseProcessor;
 import aethereal.lib.jsoup.ParserHandler;
 import aethereal.lib.log4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class HandlerProcessor extends BaseProcessor {
     private final DistributionHandler o = new DistributionHandler();
 
     @Override
-    @Compile
+    
     public void setup() {
     }
 

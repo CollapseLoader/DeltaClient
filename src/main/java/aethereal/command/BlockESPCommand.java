@@ -106,7 +106,7 @@ public class BlockESPCommand extends BaseCommand {
 
     private String a(int color) {
         for (EspColor espColor : EspColor.values()) {
-            if (ColorUtil.a(espColor.t, espColor.u, espColor.v, InterfaceC0020Opcode.al) == color) {
+            if (ColorUtil.convertToARGB(espColor.t, espColor.u, espColor.v, InterfaceC0020Opcode.al) == color) {
                 return espColor.name().toLowerCase();
             }
         }
@@ -147,7 +147,7 @@ public class BlockESPCommand extends BaseCommand {
         static int a(String name) {
             try {
                 EspColor espColor = valueOf(name.toUpperCase());
-                return ColorUtil.a(espColor.t, espColor.u, espColor.v, InterfaceC0020Opcode.al);
+                return ColorUtil.convertToARGB(espColor.t, espColor.u, espColor.v, InterfaceC0020Opcode.al);
             } catch (IllegalArgumentException e) {
                 return -1;
             }

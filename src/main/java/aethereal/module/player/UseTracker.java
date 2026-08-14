@@ -60,12 +60,12 @@ public class UseTracker extends Module {
                         if (player.getItemUseTimeLeft() == 1) {
                             String color = active.getItem() instanceof PotionItem ? "&a" : "&c";
                             if (active.isOf(Items.MILK_BUCKET)) {
-                                Delta.h().d().t().aa().getTrackers().removeIf(info -> {
+                                Delta.getInstance().getModuleProcessor().t().aa().getTrackers().removeIf(info -> {
                                     return info.getEntityId() == player.getId();
                                 });
                             }
                             ChatUtil.sendMessage("[" + j() + "]", player.getName().getString() + " использовал \"" + color + active.getItem().getName().getString() + "&7\"");
-                            Delta.h().d().m().a(new Notification(active.copy(), player.getName().getString() + " использовал " + active.getItem().getName().getString(), 1500));
+                            Delta.getInstance().getModuleProcessor().m().a(new Notification(active.copy(), player.getName().getString() + " использовал " + active.getItem().getName().getString(), 1500));
                         }
                     }
                 }
@@ -96,12 +96,12 @@ public class UseTracker extends Module {
                                 }
                                 if (player == mc.player) {
                                     notificationText = Text.literal("Вы получили эффекты от ").styled(style -> {
-                                        return style.withColor(Delta.h().d().o().a(ThemeInfo.PRIMARY).a());
+                                        return style.withColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor());
                                     }).append(type.a()).append(ChatUtil.b(" &7(" + ((int) (factor * 100.0d)) + "%)"));
                                 } else {
                                     notificationText = ChatUtil.b(player.getName().getString() + " получил эффекты от ").append(type.a()).append(ChatUtil.b(" &7(" + ((int) (factor * 100.0d)) + "%)"));
                                 }
-                                Delta.h().d().m().a(new Notification("o", notificationText, 2000));
+                                Delta.getInstance().getModuleProcessor().m().a(new Notification("o", notificationText, 2000));
                                 for (Map.Entry<RegistryEntry<StatusEffect>, int[]> entry : type.b()) {
                                     int duration = Math.max(0, MathHelper.floor((((double) entry.getValue()[0]) * factor) + 0.5d));
                                     int amplifier = entry.getValue()[1];
@@ -116,7 +116,7 @@ public class UseTracker extends Module {
                                     }
                                 }
                                 if (!effects.isEmpty()) {
-                                    Delta.h().d().t().aa().getTrackers().add(new EntityESP.Tracker(List.copyOf(effects), player.getId(), player.age));
+                                    Delta.getInstance().getModuleProcessor().t().aa().getTrackers().add(new EntityESP.Tracker(List.copyOf(effects), player.getId(), player.age));
                                 }
                             }
                         }
@@ -135,7 +135,7 @@ public class UseTracker extends Module {
                     if (entry.attribute().getKey().toString().contains("minecraft:movement_speed")) {
                         for (EntityAttributeModifier modifier : entry.modifiers()) {
                             if ((mc.world.getEntityById(packet.getEntityId()) instanceof PlayerEntity) && modifier.id().toString().equals("minecraft:effect.speed") && modifier.value() <= 0.40000001199465773d && modifier.operation() == EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
-                                Delta.h().d().t().aa().getTrackers().removeIf(info -> {
+                                Delta.getInstance().getModuleProcessor().t().aa().getTrackers().removeIf(info -> {
                                     return info.getEntityId() == packet.getEntityId();
                                 });
                             }
@@ -147,7 +147,7 @@ public class UseTracker extends Module {
                 ClientPlayerEntity entity = (ClientPlayerEntity) statusPacket.getEntity(mc.world);
                 if (entity instanceof LivingEntity) {
                     if (statusPacket.getStatus() == 35) {
-                        Delta.h().d().t().aa().getTrackers().removeIf(info2 -> {
+                        Delta.getInstance().getModuleProcessor().t().aa().getTrackers().removeIf(info2 -> {
                             return info2.getEntityId() == entity.getId();
                         });
                         if (this.b.a("Тотема").c().booleanValue()) {

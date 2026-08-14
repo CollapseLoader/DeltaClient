@@ -1,6 +1,6 @@
 package aethereal.core;
 
-public class Event implements IEvent, Cancellable {
+public class Event implements Cancellable {
     private boolean cancelled;
 
     protected Event() {

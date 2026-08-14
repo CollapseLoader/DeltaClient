@@ -89,23 +89,23 @@ public class AutoDodge extends Module {
             if (matched != null) {
                 boolean trace = a(potionEntity, playerHitboxExpanded);
                 int rgba = (-16777216) | (matched.a & 16777215);
-                if (!trace || Delta.h().d().e().d(matched.b)) {
+                if (!trace || Delta.getInstance().getModuleProcessor().e().d(matched.b)) {
                     return;
                 }
                 if ((rgba == -13447886 || rgba == -16776961) && mc.player.distanceTo(potionEntity) > 2.300000381469741d && this.b >= 0) {
                     ItemStack kelp = Items.DRIED_KELP.getDefaultStack();
                     if (!mc.player.getItemCooldownManager().isCoolingDown(kelp) && InventoryUtil.b(Items.DRIED_KELP) != -1) {
-                        if (Delta.h().d().v().b().a().isEmpty()) {
+                        if (Delta.getInstance().getModuleProcessor().v().b().a().isEmpty()) {
                             if (Rotation.b().a(new Rotation(mc.player.getYaw(), mc.player.getPitch())) < 20.0d) {
                                 this.b++;
                             }
                             if (this.b >= 2) {
                                 this.b = 5;
-                                Delta.h().d().v().b().a(Items.DRIED_KELP.getDefaultStack());
+                                Delta.getInstance().getModuleProcessor().v().b().a(Items.DRIED_KELP.getDefaultStack());
                             }
                         }
                         Rotation aimRotation = Rotation.a(mc.player.getEyePos(), potionEntity.getEyePos());
-                        Delta.h().d().k().a(new Rotation(aimRotation.c() + MathUtil.a(-3.0f, 3.0f), aimRotation.d() + MathUtil.a(-3.0f, 3.0f)), 180.0f, 1, 1);
+                        Delta.getInstance().getModuleProcessor().k().a(new Rotation(aimRotation.c() + MathUtil.a(-3.0f, 3.0f), aimRotation.d() + MathUtil.a(-3.0f, 3.0f)), 180.0f, 1, 1);
                         break;
                     }
                 } else {

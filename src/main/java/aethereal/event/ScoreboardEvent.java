@@ -1,11 +1,11 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
+
 
 import net.minecraft.text.Text;
 
-public class ScoreboardEvent extends Event implements IEvent {
+public class ScoreboardEvent extends Event {
     private Text a;
 
     public ScoreboardEvent(Text title) {

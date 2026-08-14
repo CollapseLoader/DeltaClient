@@ -16,7 +16,7 @@ import java.util.List;
 
 @Handler_2
 public class InventoryHandler extends BaseHandler implements Interface {
-    private final List<a> b = new ArrayList();
+    private final List<a> b = new ArrayList<>();
 
     public List<a> a() {
         return this.b;
@@ -26,32 +26,42 @@ public class InventoryHandler extends BaseHandler implements Interface {
     public void a(TickEvent event) {
         if (!this.b.isEmpty()) {
             a task = this.b.getFirst();
-            StopHandler stopHandler = Delta.h().d().v().c();
+            StopHandler stopHandler = Delta.getInstance().getModuleProcessor().v().c();
             if (stopHandler.c() < task.c()) {
                 int from = a(task.a());
                 int to = task.d() ? task.b() : a(task.b());
-                if (mc.player.playerScreenHandler.getSlot(from).getStack().contains(DataComponentTypes.BUNDLE_CONTENTS)) {
-                    mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, 1, SlotActionType.PICKUP, mc.player);
-                    mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, to, 0, SlotActionType.PICKUP, mc.player);
+                if (mc.player.playerScreenHandler.getSlot(from).getStack()
+                        .contains(DataComponentTypes.BUNDLE_CONTENTS)) {
+                    mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, 1,
+                            SlotActionType.PICKUP, mc.player);
+                    mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, to, 0, SlotActionType.PICKUP,
+                            mc.player);
                     if (!mc.player.playerScreenHandler.getCursorStack().isEmpty()) {
-                        mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, 0, SlotActionType.PICKUP, mc.player);
+                        mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, 0,
+                                SlotActionType.PICKUP, mc.player);
                     }
                 } else {
                     int swapButton = a(task.b(), to);
                     if (swapButton != -1) {
-                        mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, swapButton, SlotActionType.SWAP, mc.player);
+                        mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, swapButton,
+                                SlotActionType.SWAP, mc.player);
                     } else {
                         int swapButton2 = a(task.a(), from);
                         if (swapButton2 != -1) {
-                            mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, to, swapButton2, SlotActionType.SWAP, mc.player);
+                            mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, to, swapButton2,
+                                    SlotActionType.SWAP, mc.player);
                         } else if (from != to) {
-                            mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, 0, SlotActionType.SWAP, mc.player);
-                            mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, to, 0, SlotActionType.SWAP, mc.player);
-                            mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, 0, SlotActionType.SWAP, mc.player);
+                            mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, 0,
+                                    SlotActionType.SWAP, mc.player);
+                            mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, to, 0,
+                                    SlotActionType.SWAP, mc.player);
+                            mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, 0,
+                                    SlotActionType.SWAP, mc.player);
                         }
                     }
                 }
-                mc.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(mc.player.currentScreenHandler.syncId));
+                mc.player.networkHandler
+                        .sendPacket(new CloseHandledScreenC2SPacket(mc.player.currentScreenHandler.syncId));
                 this.b.remove(task);
                 if (!this.b.isEmpty()) {
                     stopHandler.a(this.b.getFirst().c());
@@ -85,7 +95,7 @@ public class InventoryHandler extends BaseHandler implements Interface {
     private void a(a task) {
         if (task.a() != -1 && task.b() != -1) {
             if (this.b.isEmpty() && task.c > 0) {
-                Delta.h().d().v().c().a(task.c);
+                Delta.getInstance().getModuleProcessor().v().c().a(task.c);
             }
             this.b.add(task);
         }
@@ -108,23 +118,23 @@ public class InventoryHandler extends BaseHandler implements Interface {
     record a(int a, int b, int c, boolean d) {
 
         @Override
-            public int a() {
-                return this.a;
-            }
-
-            @Override
-            public int b() {
-                return this.b;
-            }
-
-            @Override
-            public int c() {
-                return this.c;
-            }
-
-            @Override
-            public boolean d() {
-                return this.d;
-            }
+        public int a() {
+            return this.a;
         }
+
+        @Override
+        public int b() {
+            return this.b;
+        }
+
+        @Override
+        public int c() {
+            return this.c;
+        }
+
+        @Override
+        public boolean d() {
+            return this.d;
+        }
+    }
 }

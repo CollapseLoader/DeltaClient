@@ -1,6 +1,6 @@
 package aethereal.handler;
 
-import aethereal.api.Compile;
+
 import aethereal.config.BaseProcessor;
 import aethereal.core.Delta;
 import aethereal.core.EventTarget;
@@ -42,7 +42,7 @@ public class RotationProcessor extends BaseProcessor implements Interface {
     }
 
     private static boolean e() {
-        List<UseableHandler.a> tasks = Delta.h().d().v().b().a();
+        List<UseableHandler.a> tasks = Delta.getInstance().getModuleProcessor().v().b().a();
         if (tasks.isEmpty() || tasks.getFirst().d() >= 1) {
             return false;
         }
@@ -85,7 +85,7 @@ public class RotationProcessor extends BaseProcessor implements Interface {
                 float basePitch2 = AuraUtil.a(mc.player.getPitch(), Look.c(), MathUtil.a(0.1f, 0.45f));
                 return new Rotation(baseYaw2 + sw, MathHelper.clamp(basePitch2 + sw, -90.0f, 90.0f));
             case 7:
-                if (!Delta.h().d().t().aS().m()) {
+                if (!Delta.getInstance().getModuleProcessor().t().aS().m()) {
                     idleTicks = 25;
                 }
                 if (idleTicks <= 20) {
@@ -106,7 +106,7 @@ public class RotationProcessor extends BaseProcessor implements Interface {
     }
 
     @Override
-    @Compile
+    
     public void setup() {
     }
 

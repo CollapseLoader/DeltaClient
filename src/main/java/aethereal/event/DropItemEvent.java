@@ -1,10 +1,10 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
 
 
-public class DropItemEvent extends Event implements IEvent {
+
+public class DropItemEvent extends Event {
     private final int a;
 
     public DropItemEvent(int slot) {

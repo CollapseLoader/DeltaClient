@@ -1,6 +1,6 @@
 package aethereal.ui.element;
 
-import aethereal.api.Compile;
+
 import aethereal.setting.StringSetting;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.Vector2f;
@@ -14,7 +14,7 @@ public class StringElement extends Element_2<StringSetting> {
     }
 
     @Override
-    @Compile
+    
     public boolean a(double mouseX, double mouseY, int button) {
         TextField textFieldG = g();
         if (textFieldG != null) {
@@ -28,7 +28,7 @@ public class StringElement extends Element_2<StringSetting> {
     }
 
     @Override
-    @Compile
+    
     public boolean a(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         if (this.d == null) {
             return false;
@@ -38,7 +38,7 @@ public class StringElement extends Element_2<StringSetting> {
     }
 
     @Override
-    @Compile
+    
     public boolean a(int keyCode, int scanCode, int modifiers) {
         if (this.d == null || !this.d.j()) {
             return false;
@@ -48,7 +48,7 @@ public class StringElement extends Element_2<StringSetting> {
     }
 
     @Override
-    @Compile
+    
     public boolean a(char chr, int modifiers) {
         if (this.d == null) {
             return false;

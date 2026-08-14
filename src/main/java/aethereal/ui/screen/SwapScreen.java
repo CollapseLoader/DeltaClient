@@ -38,7 +38,7 @@ public class SwapScreen extends Screen implements Interface {
             mc.setScreen(new InventoryScreen(mc.player));
             a(true);
         } else {
-            Delta.h().d().v().a().a(stack, 45, 1);
+            Delta.getInstance().getModuleProcessor().v().a().a(stack, 45, 1);
             mc.player.closeScreen();
         }
     }

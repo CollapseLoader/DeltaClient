@@ -1,10 +1,10 @@
 package aethereal.event;
 
 import aethereal.core.Event;
-import aethereal.core.IEvent;
 
 
-public class RemovalsEvent extends Event implements IEvent {
+
+public class RemovalsEvent extends Event {
     private final a a;
 
     public RemovalsEvent(a type) {

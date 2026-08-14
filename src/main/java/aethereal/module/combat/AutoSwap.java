@@ -11,7 +11,7 @@ import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 
 @ModuleRegister(name = "Auto Swap", description = "Мгновенно перекладывает выбранные предметы во вторую руку по нажатию клавиши", category = Category.Combat)
-public class AutoSwap extends Module implements Interface {
+public class AutoSwap extends Module {
     private final ModeSetting b = new ModeSetting("Режим перемещения", "Двойной", "Двойной", "Тройной");
     private final ModeSetting c = new ModeSetting("Первый предмет", "Сфера", "Сфера", "Тотем", "Золотое яблоко", "Щит").a(() -> {
         return Boolean.valueOf(this.b.l("Двойной"));
@@ -23,11 +23,11 @@ public class AutoSwap extends Module implements Interface {
 
     public AutoSwap() {
         BindSetting f = new BindSetting("Кнопка перемещения", 86, 0).a(() -> {
-            if (Delta.h().d().t().V().b) {
+            if (Delta.getInstance().getModuleProcessor().t().V().b) {
                 return;
             }
             if (this.b.l("Двойной")) {
-                Delta.h().d().v().a().a(InventoryUtil.c(mc.player.getOffHandStack().getItem() == a(this.c) ? a(this.d) : a(this.c)), 45, 1);
+                Delta.getInstance().getModuleProcessor().v().a().a(InventoryUtil.c(mc.player.getOffHandStack().getItem() == a(this.c) ? a(this.d) : a(this.c)), 45, 1);
             } else if (this.b.l("Тройной")) {
                 mc.setScreen(this.e);
             }

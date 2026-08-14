@@ -45,7 +45,7 @@ public class Pointers extends Module {
                 if (!(entity instanceof PlayerEntity target)) continue;
                 if (target != mc.player && target.isAlive()) {
                     Vec3d pos = MathUtil.a(target, event.g()).add(0.0d, target.getHeight() / 2.0f, 0.0d);
-                    boolean isFriend = Delta.h().d().e().d(target.getName().getString());
+                    boolean isFriend = Delta.getInstance().getModuleProcessor().e().d(target.getName().getString());
                     if (!this.b.a("Фильтр по друзьям").c().booleanValue() || isFriend) {
                         buffer.vertex(matrix, (float) (start.getX() - cam.x), (float) (start.getY() - cam.y), (float) (start.getZ() - cam.z)).color(isFriend ? 0.0f : 1.0f, 1.0f, isFriend ? 0.0f : 1.0f, 1.0f);
                         buffer.vertex(matrix, (float) (pos.getX() - cam.x), (float) (pos.getY() - cam.y), (float) (pos.getZ() - cam.z)).color(isFriend ? 0.0f : 1.0f, 1.0f, isFriend ? 0.0f : 1.0f, 1.0f);
@@ -60,7 +60,7 @@ public class Pointers extends Module {
             for (Entity entity : mc.world.getEntities()) {
                 if (!(entity instanceof PlayerEntity target)) continue;
                 if (target != mc.player && target.isAlive()) {
-                    boolean isFriend = Delta.h().d().e().d(target.getName().getString());
+                    boolean isFriend = Delta.getInstance().getModuleProcessor().e().d(target.getName().getString());
                     if (!this.b.a("Фильтр по друзьям").c().booleanValue() || isFriend) {
                         Vec3d pos = MathUtil.a(target, event.g());
                         Vec3d eye = MathUtil.a(mc.player, event.g());
@@ -70,7 +70,7 @@ public class Pointers extends Module {
                         stack.push();
                         stack.translate((mc.getWindow().getScaledWidth() / 2.0f) + (((float) Math.sin(radians)) * this.d.c().floatValue()), (mc.getWindow().getScaledHeight() / 2.0f) - (((float) Math.cos(radians)) * this.d.c().floatValue()), 0.0f);
                         stack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(angle));
-                        event.d().a(stack, Identifier.of("delta", "pictures/pointer.png"), (-this.c.c().floatValue()) / 2.0f, (-this.c.c().floatValue()) / 2.0f, this.c.c().floatValue(), this.c.c().floatValue(), 0.0f, isFriend ? ColorUtil.a(85, 255, 85, InterfaceC0020Opcode.aL) : ColorUtil.a(255, 255, 255, InterfaceC0020Opcode.aL));
+                        event.d().a(stack, Identifier.of("delta", "pictures/pointer.png"), (-this.c.c().floatValue()) / 2.0f, (-this.c.c().floatValue()) / 2.0f, this.c.c().floatValue(), this.c.c().floatValue(), 0.0f, isFriend ? ColorUtil.convertToARGB(85, 255, 85, InterfaceC0020Opcode.aL) : ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.aL));
                         stack.pop();
                     }
                 }

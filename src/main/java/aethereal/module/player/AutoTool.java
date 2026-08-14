@@ -15,13 +15,13 @@ import java.util.Comparator;
 import java.util.stream.IntStream;
 
 @ModuleRegister(name = "Auto Tool", description = "Автоматически выбирает подходящий инструмент для блока", category = Category.Player)
-public class AutoTool extends Module implements Interface {
+public class AutoTool extends Module {
     private final int[] b = {-1, -1};
 
     @EventTarget
     public void a(TickEvent event) {
         int bestSlot;
-        InventoryHandler handler = Delta.h().d().v().a();
+        InventoryHandler handler = Delta.getInstance().getModuleProcessor().v().a();
         if (handler.a().isEmpty()) {
             if (mc.crosshairTarget instanceof BlockHitResult hit) {
                 if (mc.options.attackKey.isPressed()) {

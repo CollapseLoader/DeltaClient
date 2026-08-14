@@ -30,7 +30,7 @@ public class ScreenMixin {
     @Inject(method = {"render"}, at = {@At("HEAD")}, cancellable = true)
     private void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         Screen self = (Screen) (Object) this;
-        if (((self instanceof ReconfiguringScreen) || (self instanceof DownloadingTerrainScreen)) && Delta.h().d().t().aN().m()) {
+        if (((self instanceof ReconfiguringScreen) || (self instanceof DownloadingTerrainScreen)) && Delta.getInstance().getModuleProcessor().t().aN().m()) {
             if (self instanceof DownloadingTerrainScreen) {
                 Interface.mc.setScreen(null);
             }

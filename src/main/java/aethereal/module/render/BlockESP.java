@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @ModuleRegister(name = "Block ESP", description = "Подсвечивает добавленные вами блоки через .blockesp", category = Category.Render)
 public class BlockESP extends Module {
-    private final List<BlockPos> b = new CopyOnWriteArrayList();
+    private final List<BlockPos> b = new CopyOnWriteArrayList<>();
     private ExecutorService c;
     private int d;
 
@@ -49,7 +49,7 @@ public class BlockESP extends Module {
         int i = this.d + 1;
         this.d = i;
         if (i % 12 == 0) {
-            List<BlockESPCommand.a> list = Delta.h().d().u().g().c();
+            List<BlockESPCommand.a> list = Delta.getInstance().getModuleProcessor().u().g().c();
             if (list.isEmpty()) {
                 this.b.clear();
             } else {
@@ -65,7 +65,7 @@ public class BlockESP extends Module {
     @EventTarget
     public void a(DrawEvent event) {
         if (event.c()) {
-            List<BlockESPCommand.a> entries = Delta.h().d().u().g().c();
+            List<BlockESPCommand.a> entries = Delta.getInstance().getModuleProcessor().u().g().c();
             if (!entries.isEmpty()) {
                 Map<Block, Integer> colors = entries.stream().collect(Collectors.toMap((v0) -> {
                     return v0.a();
@@ -91,7 +91,9 @@ public class BlockESP extends Module {
         Integer color = colors.get(mc.world.getBlockState(pos).getBlock());
         if (color != null) {
             event.e().a(event.h(), new Box(pos), color.intValue() != -1 ? color.intValue()
-                    : ColorUtil.a(Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), InterfaceC0020Opcode.al), 1.5f);
+                    : ColorUtil.combineColorWithAlpha(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(),
+                            InterfaceC0020Opcode.al),
+                    1.5f);
         }
     }
 
