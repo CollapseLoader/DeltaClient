@@ -32,28 +32,28 @@ public class InventoryHandler extends BaseHandler implements Interface {
             if (stopHandler.c() < task.c()) {
                 int from = a(task.a());
                 int to = task.d() ? task.b() : a(task.b());
-                if (aM_.player.playerScreenHandler.getSlot(from).getStack().contains(DataComponentTypes.BUNDLE_CONTENTS)) {
-                    aM_.interactionManager.clickSlot(aM_.player.playerScreenHandler.syncId, from, 1, SlotActionType.PICKUP, aM_.player);
-                    aM_.interactionManager.clickSlot(aM_.player.playerScreenHandler.syncId, to, 0, SlotActionType.PICKUP, aM_.player);
-                    if (!aM_.player.playerScreenHandler.getCursorStack().isEmpty()) {
-                        aM_.interactionManager.clickSlot(aM_.player.playerScreenHandler.syncId, from, 0, SlotActionType.PICKUP, aM_.player);
+                if (mc.player.playerScreenHandler.getSlot(from).getStack().contains(DataComponentTypes.BUNDLE_CONTENTS)) {
+                    mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, 1, SlotActionType.PICKUP, mc.player);
+                    mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, to, 0, SlotActionType.PICKUP, mc.player);
+                    if (!mc.player.playerScreenHandler.getCursorStack().isEmpty()) {
+                        mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, 0, SlotActionType.PICKUP, mc.player);
                     }
                 } else {
                     int swapButton = a(task.b(), to);
                     if (swapButton != -1) {
-                        aM_.interactionManager.clickSlot(aM_.player.playerScreenHandler.syncId, from, swapButton, SlotActionType.SWAP, aM_.player);
+                        mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, swapButton, SlotActionType.SWAP, mc.player);
                     } else {
                         int swapButton2 = a(task.a(), from);
                         if (swapButton2 != -1) {
-                            aM_.interactionManager.clickSlot(aM_.player.playerScreenHandler.syncId, to, swapButton2, SlotActionType.SWAP, aM_.player);
+                            mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, to, swapButton2, SlotActionType.SWAP, mc.player);
                         } else if (from != to) {
-                            aM_.interactionManager.clickSlot(aM_.player.playerScreenHandler.syncId, from, 0, SlotActionType.SWAP, aM_.player);
-                            aM_.interactionManager.clickSlot(aM_.player.playerScreenHandler.syncId, to, 0, SlotActionType.SWAP, aM_.player);
-                            aM_.interactionManager.clickSlot(aM_.player.playerScreenHandler.syncId, from, 0, SlotActionType.SWAP, aM_.player);
+                            mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, 0, SlotActionType.SWAP, mc.player);
+                            mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, to, 0, SlotActionType.SWAP, mc.player);
+                            mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, 0, SlotActionType.SWAP, mc.player);
                         }
                     }
                 }
-                aM_.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(aM_.player.currentScreenHandler.syncId));
+                mc.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(mc.player.currentScreenHandler.syncId));
                 this.b.remove(task);
                 if (!this.b.isEmpty()) {
                     stopHandler.a(this.b.getFirst().c());

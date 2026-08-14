@@ -41,15 +41,15 @@ public class Velocity extends Module {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (!event.c() || aM_.player == null) {
+        if (!event.c() || mc.player == null) {
             return;
         }
         EntityDamageS2CPacket damage = (EntityDamageS2CPacket) event.d();
         if (damage instanceof EntityDamageS2CPacket) {
-            if (damage.entityId() == aM_.player.getId()) {
-                DamageSource source = damage.createDamageSource(aM_.world);
+            if (damage.entityId() == mc.player.getId()) {
+                DamageSource source = damage.createDamageSource(mc.world);
                 boolean player = source.getAttacker() instanceof PlayerEntity;
-                this.f = player ? aM_.player.age : 0;
+                this.f = player ? mc.player.age : 0;
                 if (!player) {
                     this.e = Vec3d.ZERO;
                 }
@@ -57,7 +57,7 @@ public class Velocity extends Module {
         }
         EntityVelocityUpdateS2CPacket packet = (EntityVelocityUpdateS2CPacket) event.d();
         if (packet instanceof EntityVelocityUpdateS2CPacket) {
-            if (packet.getEntityId() == aM_.player.getId()) {
+            if (packet.getEntityId() == mc.player.getId()) {
                 if (!this.b.l("Обычный")) {
                     this.e = new Vec3d(packet.getVelocityX(), 0.0d, packet.getVelocityZ());
                 } else {
@@ -71,15 +71,15 @@ public class Velocity extends Module {
     public void a(InputEvent event) {
         float forward;
         float strafe;
-        if (aM_.player.hurtTime <= 0) {
+        if (mc.player.hurtTime <= 0) {
             this.e = Vec3d.ZERO;
             return;
         }
-        if (!this.b.l("Легитный") || this.e.lengthSquared() == 0.0d || aM_.player.age - this.f > 10) {
+        if (!this.b.l("Легитный") || this.e.lengthSquared() == 0.0d || mc.player.age - this.f > 10) {
             return;
         }
         double angle = MathHelper.wrapDegrees((Math.toDegrees(Math.atan2(-this.e.z, -this.e.x)) - 90.0d) - ((double) Look.b()));
-        if (this.d.c().booleanValue() && aM_.options.forwardKey.isPressed() && Math.abs(angle) >= 140.0d) {
+        if (this.d.c().booleanValue() && mc.options.forwardKey.isPressed() && Math.abs(angle) >= 140.0d) {
             return;
         }
         if (angle <= -45.0d || angle >= 45.0d) {
@@ -94,6 +94,6 @@ public class Velocity extends Module {
             strafe = -1.0f;
         }
         event.b(strafe);
-        event.b(this.c.c().booleanValue() && aM_.player.isOnGround());
+        event.b(this.c.c().booleanValue() && mc.player.isOnGround());
     }
 }

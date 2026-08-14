@@ -81,17 +81,17 @@ public class AncientFarmer extends Module {
         }
         InteractHandler eat = Delta.h().d().v().k();
         int foodSlot = IntStream.range(0, 9).filter(slot -> {
-            return aM_.player.getInventory().getStack(slot).contains(DataComponentTypes.FOOD);
+            return mc.player.getInventory().getStack(slot).contains(DataComponentTypes.FOOD);
         }).findFirst().orElse(-1);
-        if (!eat.a() && aM_.player.getHungerManager().getFoodLevel() <= 17 && foodSlot != -1) {
+        if (!eat.a() && mc.player.getHungerManager().getFoodLevel() <= 17 && foodSlot != -1) {
             eat.a(foodSlot);
         }
         int potionSlot = IntStream.range(0, 9).filter(slot2 -> {
-            return StreamSupport.stream(aM_.player.getInventory().getStack(slot2).getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).getEffects().spliterator(), false).anyMatch(effect -> {
+            return StreamSupport.stream(mc.player.getInventory().getStack(slot2).getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).getEffects().spliterator(), false).anyMatch(effect -> {
                 return effect.getEffectType() == StatusEffects.FIRE_RESISTANCE;
             });
         }).findFirst().orElse(-1);
-        if (!eat.a() && potionSlot != -1 && (!aM_.player.hasStatusEffect(StatusEffects.FIRE_RESISTANCE) || aM_.player.getStatusEffect(StatusEffects.FIRE_RESISTANCE).getDuration() <= 100)) {
+        if (!eat.a() && potionSlot != -1 && (!mc.player.hasStatusEffect(StatusEffects.FIRE_RESISTANCE) || mc.player.getStatusEffect(StatusEffects.FIRE_RESISTANCE).getDuration() <= 100)) {
             eat.a(potionSlot);
         }
         if (eat.a()) {
@@ -103,8 +103,8 @@ public class AncientFarmer extends Module {
             return;
         }
         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
-        boolean near = this.g != null && aM_.player.getBlockPos().isWithinDistance(BlockPos.ofFloored(this.g.getCenter()), 2.5d);
-        boolean primed = !aM_.world.getEntitiesByClass(TntEntity.class, aM_.player.getBoundingBox().expand(8.0d), t -> {
+        boolean near = this.g != null && mc.player.getBlockPos().isWithinDistance(BlockPos.ofFloored(this.g.getCenter()), 2.5d);
+        boolean primed = !mc.world.getEntitiesByClass(TntEntity.class, mc.player.getBoundingBox().expand(8.0d), t -> {
             return true;
         }).isEmpty();
         this.f = null;
@@ -118,7 +118,7 @@ public class AncientFarmer extends Module {
                     this.e = Phase.MINE;
                 } else if (this.g == null) {
                     this.c.execute(() -> {
-                        if (this.g == null && aM_.player.age > 20) {
+                        if (this.g == null && mc.player.age > 20) {
                             ChatUtil.sendMessage("Переходим к поиску новой территории.");
                             this.g = q();
                         }
@@ -131,9 +131,9 @@ public class AncientFarmer extends Module {
                 }
                 break;
             case TNT:
-                double reach = aM_.player.getBlockInteractionRange();
-                BlockPos tnt = BlockPos.streamOutwards(aM_.player.getBlockPos(), (int) reach, (int) reach, (int) reach).filter(pos2 -> {
-                    return aM_.world.getBlockState(pos2).isOf(Blocks.TNT);
+                double reach = mc.player.getBlockInteractionRange();
+                BlockPos tnt = BlockPos.streamOutwards(mc.player.getBlockPos(), (int) reach, (int) reach, (int) reach).filter(pos2 -> {
+                    return mc.world.getBlockState(pos2).isOf(Blocks.TNT);
                 }).map((v0) -> {
                     return v0.toImmutable();
                 }).findFirst().orElse(null);
@@ -144,25 +144,25 @@ public class AncientFarmer extends Module {
                     this.f = tnt;
                     int flint = InventoryUtil.a(Items.FLINT_AND_STEEL, true);
                     if (flint != -1) {
-                        Vec3d eye = aM_.player.getEyePos();
+                        Vec3d eye = mc.player.getEyePos();
                         Vec3d center = Vec3d.ofCenter(tnt);
                         Vec3d aim = Arrays.stream(Direction.values()).map(side -> {
                             return center.add(((double) side.getOffsetX()) * 0.4499999185117763d, ((double) side.getOffsetY()) * 0.4499999185117763d, ((double) side.getOffsetZ()) * 0.4499999185117763d);
                         }).filter(point -> {
                             return eye.distanceTo(point) <= reach;
                         }).filter(point2 -> {
-                            BlockHitResult trace = aM_.world.raycast(new RaycastContext(eye, point2, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, aM_.player));
+                            BlockHitResult trace = mc.world.raycast(new RaycastContext(eye, point2, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player));
                             return trace.getType() == HitResult.Type.BLOCK && trace.getBlockPos().equals(tnt);
                         }).min((a2, b2) -> {
                             return Double.compare(eye.squaredDistanceTo(a2), eye.squaredDistanceTo(b2));
                         }).orElse(null);
                         if (aim != null) {
                             Delta.h().d().k().a(Rotation.a(eye, aim), 180.0f, 0, 1);
-                            if (new Rotation(aM_.player).a(Rotation.b()) < 1.0d && aM_.player.age % 5 == 0) {
-                                aM_.player.getInventory().selectedSlot = flint;
-                                if (aM_.crosshairTarget instanceof BlockHitResult hit) {
+                            if (new Rotation(mc.player).a(Rotation.b()) < 1.0d && mc.player.age % 5 == 0) {
+                                mc.player.getInventory().selectedSlot = flint;
+                                if (mc.crosshairTarget instanceof BlockHitResult hit) {
                                     if (hit.getType() == HitResult.Type.BLOCK && hit.getBlockPos().equals(tnt)) {
-                                        ((platform.inject.invokers.MinecraftClientInvoker) aM_).invokeDoItemUse();
+                                        ((platform.inject.invokers.MinecraftClientInvoker) mc).invokeDoItemUse();
                                         break;
                                     }
                                 }
@@ -170,19 +170,19 @@ public class AncientFarmer extends Module {
                         }
                     }
                 } else {
-                    Vec3d eye2 = aM_.player.getEyePos();
-                    BlockPos target = BlockPos.streamOutwards(aM_.player.getBlockPos(), (int) reach, (int) reach, (int) reach).filter(pos3 -> {
-                        return aM_.world.getBlockState(pos3).isReplaceable();
+                    Vec3d eye2 = mc.player.getEyePos();
+                    BlockPos target = BlockPos.streamOutwards(mc.player.getBlockPos(), (int) reach, (int) reach, (int) reach).filter(pos3 -> {
+                        return mc.world.getBlockState(pos3).isReplaceable();
                     }).filter(pos4 -> {
-                        return aM_.world.getBlockState(pos4.down()).isSolidBlock(aM_.world, pos4.down());
+                        return mc.world.getBlockState(pos4.down()).isSolidBlock(mc.world, pos4.down());
                     }).filter(pos5 -> {
-                        return !aM_.player.getBoundingBox().stretch(aM_.player.getVelocity()).expand(0.10000001882007822d).intersects(new Box(pos5));
+                        return !mc.player.getBoundingBox().stretch(mc.player.getVelocity()).expand(0.10000001882007822d).intersects(new Box(pos5));
                     }).filter(pos6 -> {
                         Vec3d hitVec = new Vec3d(((double) pos6.getX()) + 0.5d, pos6.getY(), ((double) pos6.getZ()) + 0.5d);
                         if (eye2.distanceTo(hitVec) > reach || eye2.subtract(hitVec).normalize().y <= 0.0d) {
                             return false;
                         }
-                        BlockHitResult hit2 = aM_.world.raycast(new RaycastContext(eye2, hitVec, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, aM_.player));
+                        BlockHitResult hit2 = mc.world.raycast(new RaycastContext(eye2, hitVec, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player));
                         return hit2.getType() != HitResult.Type.BLOCK || hit2.getBlockPos().equals(pos6.down());
                     }).map((v0) -> {
                         return v0.toImmutable();
@@ -195,13 +195,13 @@ public class AncientFarmer extends Module {
                         if (slot3 != -1) {
                             BlockPos support = target.down();
                             Delta.h().d().k().a(Rotation.a(eye2, new Vec3d(((double) support.getX()) + 0.5d, support.getY() + 1, ((double) support.getZ()) + 0.5d)), 180.0f, 0, 1);
-                            if (new Rotation(aM_.player).a(Rotation.b()) < 1.0d && aM_.player.age % 5 == 0) {
-                                if (aM_.player.getInventory().selectedSlot != slot3) {
-                                    aM_.player.getInventory().selectedSlot = slot3;
+                            if (new Rotation(mc.player).a(Rotation.b()) < 1.0d && mc.player.age % 5 == 0) {
+                                if (mc.player.getInventory().selectedSlot != slot3) {
+                                    mc.player.getInventory().selectedSlot = slot3;
                                 }
-                                if (aM_.crosshairTarget instanceof BlockHitResult hit2) {
+                                if (mc.crosshairTarget instanceof BlockHitResult hit2) {
                                     if (hit2.getType() == HitResult.Type.BLOCK && hit2.getBlockPos().equals(support) && hit2.getSide() == Direction.UP) {
-                                        ((platform.inject.invokers.MinecraftClientInvoker) aM_).invokeDoItemUse();
+                                        ((platform.inject.invokers.MinecraftClientInvoker) mc).invokeDoItemUse();
                                         break;
                                     }
                                 }
@@ -209,15 +209,15 @@ public class AncientFarmer extends Module {
                         }
                     } else {
                         if (!baritone.getPathingBehavior().hasPath()) {
-                            BlockPos feet = aM_.player.getBlockPos();
+                            BlockPos feet = mc.player.getBlockPos();
                             BlockPos stand = BlockPos.streamOutwards(feet, 16, 8, 16).filter(pos7 -> {
                                 return !pos7.equals(feet);
                             }).filter(pos8 -> {
-                                return aM_.world.getBlockState(pos8.down()).isSolidBlock(aM_.world, pos8.down());
+                                return mc.world.getBlockState(pos8.down()).isSolidBlock(mc.world, pos8.down());
                             }).filter(pos9 -> {
-                                return aM_.world.getBlockState(pos9).isReplaceable() && aM_.world.getBlockState(pos9.up()).isReplaceable();
+                                return mc.world.getBlockState(pos9).isReplaceable() && mc.world.getBlockState(pos9.up()).isReplaceable();
                             }).filter(pos10 -> {
-                                return aM_.world.getBlockState(pos10).getFluidState().isEmpty() && aM_.world.getBlockState(pos10.up()).getFluidState().isEmpty();
+                                return mc.world.getBlockState(pos10).getFluidState().isEmpty() && mc.world.getBlockState(pos10.up()).getFluidState().isEmpty();
                             }).map((v0) -> {
                                 return v0.toImmutable();
                             }).min((a4, b4) -> {
@@ -234,7 +234,7 @@ public class AncientFarmer extends Module {
                 }
                 break;
             case RETREAT:
-                List<TntEntity> burning = aM_.world.getEntitiesByClass(TntEntity.class, aM_.player.getBoundingBox().expand(32.0d), t2 -> {
+                List<TntEntity> burning = mc.world.getEntitiesByClass(TntEntity.class, mc.player.getBoundingBox().expand(32.0d), t2 -> {
                     return true;
                 });
                 if (burning.isEmpty()) {
@@ -275,9 +275,9 @@ public class AncientFarmer extends Module {
 
     private Box q() {
         BlockPos anchor;
-        int reach = ((int) ((Math.sqrt(aM_.world.getChunkManager().getLoadedChunkCount()) - 1.0d) / 2.0d)) * 16;
-        BlockPos feet = aM_.player.getBlockPos();
-        WorldBorder border = aM_.world.getWorldBorder();
+        int reach = ((int) ((Math.sqrt(mc.world.getChunkManager().getLoadedChunkCount()) - 1.0d) / 2.0d)) * 16;
+        BlockPos feet = mc.player.getBlockPos();
+        WorldBorder border = mc.world.getWorldBorder();
         int bottom = this.b.l("Поиск сверху") ? 90 : 20;
         int top = this.b.l("Поиск сверху") ? InterfaceC0020Opcode.bN : 60;
         Box best = null;
@@ -286,7 +286,7 @@ public class AncientFarmer extends Module {
         BlockPos.Mutable pos = new BlockPos.Mutable();
         for (int x = feet.getX() - reach; x <= feet.getX() + reach; x += 8) {
             for (int z = feet.getZ() - reach; z <= feet.getZ() + reach; z += 8) {
-                if (aM_.world.getChunkManager().isChunkLoaded(x >> 4, z >> 4) && border.contains(x - 20, z - 20) && border.contains(x + 20, z + 20)) {
+                if (mc.world.getChunkManager().isChunkLoaded(x >> 4, z >> 4) && border.contains(x - 20, z - 20) && border.contains(x + 20, z + 20)) {
                     for (int y = bottom; y <= top; y += 8) {
                         int solid = 0;
                         int total = 0;
@@ -295,12 +295,12 @@ public class AncientFarmer extends Module {
                             for (int dy = -20; dy <= 20 && !badBiome; dy += 4) {
                                 for (int dz = -20; dz <= 20; dz += 4) {
                                     pos.set(x + dx, y + dy, z + dz);
-                                    if (aM_.world.getBiome(pos).matchesKey(BiomeKeys.BASALT_DELTAS) || aM_.world.getBiome(pos).matchesKey(BiomeKeys.WARPED_FOREST)) {
+                                    if (mc.world.getBiome(pos).matchesKey(BiomeKeys.BASALT_DELTAS) || mc.world.getBiome(pos).matchesKey(BiomeKeys.WARPED_FOREST)) {
                                         badBiome = true;
                                         break;
                                     }
                                     total++;
-                                    if (!aM_.world.getBlockState(pos).isAir() && aM_.world.getBlockState(pos).getFluidState().isEmpty()) {
+                                    if (!mc.world.getBlockState(pos).isAir() && mc.world.getBlockState(pos).getFluidState().isEmpty()) {
                                         solid++;
                                     }
                                 }
@@ -309,7 +309,7 @@ public class AncientFarmer extends Module {
                         if (!badBiome && total > 0) {
                             double score = (((double) solid) / ((double) total)) - (feet.getSquaredDistance(x, y, z) * 9.99999555911002E-10d);
                             if (score > bestScore && (anchor = BlockPos.streamOutwards(new BlockPos(x, y, z), 20, 20, 20).filter(candidate -> {
-                                return !aM_.world.getBlockState(candidate).isAir() && aM_.world.getBlockState(candidate).getFluidState().isEmpty();
+                                return !mc.world.getBlockState(candidate).isAir() && mc.world.getBlockState(candidate).getFluidState().isEmpty();
                             }).map((v0) -> {
                                 return v0.toImmutable();
                             }).findFirst().orElse(null)) != null) {
@@ -351,10 +351,10 @@ public class AncientFarmer extends Module {
 
     enum a {
         FLY("необходимо включить режим полёта (/fly)", () -> {
-            return Interface.aM_.player.getAbilities().allowFlying;
+            return Interface.mc.player.getAbilities().allowFlying;
         }),
         NETHER("необходимо находиться в Незере", () -> {
-            return Interface.aM_.world.getRegistryKey() == World.NETHER;
+            return Interface.mc.world.getRegistryKey() == World.NETHER;
         }),
         FOOD("в хотбаре должна быть еда", stack -> {
             return stack.contains(DataComponentTypes.FOOD);
@@ -385,7 +385,7 @@ public class AncientFarmer extends Module {
         a(String description, Predicate<ItemStack> predicate) {
             this(description, () -> {
                 return IntStream.range(0, 9).anyMatch(slot -> {
-                    return predicate.test(Interface.aM_.player.getInventory().getStack(slot));
+                    return predicate.test(Interface.mc.player.getInventory().getStack(slot));
                 });
             });
         }

@@ -59,14 +59,14 @@ public class RCTCommand extends BaseCommand {
             }
             int anarchy = iB;
             if (anarchy == -1 && this.c > 0) {
-                if ((ServerUtil.a.a() || ServerUtil.d.a()) && aM_.player.age % 20 == 0) {
-                    aM_.player.networkHandler.sendChatCommand("an" + this.c);
+                if ((ServerUtil.a.a() || ServerUtil.d.a()) && mc.player.age % 20 == 0) {
+                    mc.player.networkHandler.sendChatCommand("an" + this.c);
                     d();
                     return;
                 }
                 return;
             }
-            if (aM_.player.age % 2 == 0) {
+            if (mc.player.age % 2 == 0) {
                 if (anarchy == -1) {
                     b(-1);
                     return;
@@ -74,7 +74,7 @@ public class RCTCommand extends BaseCommand {
                 if (this.c == 0) {
                     b(anarchy);
                 }
-                aM_.player.networkHandler.sendChatCommand("hub");
+                mc.player.networkHandler.sendChatCommand("hub");
             }
         }
     }

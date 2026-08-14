@@ -38,11 +38,11 @@ public class SwapScreen extends Screen implements Interface {
     private void c(int slot) {
         ItemStack stack = this.b.c(slot);
         if (stack.isEmpty()) {
-            aM_.setScreen(new InventoryScreen(aM_.player));
+            mc.setScreen(new InventoryScreen(mc.player));
             a(true);
         } else {
             Delta.h().d().v().a().a(stack, 45, 1);
-            aM_.player.closeScreen();
+            mc.player.closeScreen();
         }
     }
 

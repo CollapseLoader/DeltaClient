@@ -106,7 +106,7 @@ public class DescriptionCondition implements Condition {
         if (this.c == ItemType.OFF) {
             return true;
         }
-        String tooltip = stack.getTooltip(Item.TooltipContext.DEFAULT, Interface.aM_.player, TooltipType.BASIC).stream().skip(1L).map(line -> {
+        String tooltip = stack.getTooltip(Item.TooltipContext.DEFAULT, Interface.mc.player, TooltipType.BASIC).stream().skip(1L).map(line -> {
             return line.getString().replaceAll("§.", "").toLowerCase().replaceAll("\\s+", StringUtils.a).trim();
         }).collect(Collectors.joining(StringUtils.a));
         String needle = this.b.replaceAll("§.", "").toLowerCase().replaceAll("\\s+", StringUtils.a).trim();

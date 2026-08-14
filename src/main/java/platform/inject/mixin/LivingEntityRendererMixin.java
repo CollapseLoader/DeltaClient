@@ -34,7 +34,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
 
     @Inject(method = {"updateRenderState*"}, at = {@At("TAIL")})
     private void updateRenderState(T entity, S state, float f, CallbackInfo ci) {
-        if (entity == Interface.aM_.player) {
+        if (entity == Interface.mc.player) {
             this.pitch = Delta.h().d().k().a().a() ? MathHelper.lerp(0.5f, this.pitch, state.pitch) : state.pitch;
             state.pitch = this.pitch;
         }

@@ -99,7 +99,7 @@ public class Widget {
 
     public void a(DrawEvent event) {
         e().a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
-        this.c.a(this.h && (Interface.aM_.currentScreen instanceof ChatScreen));
+        this.c.a(this.h && (Interface.mc.currentScreen instanceof ChatScreen));
         this.c.a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
         if (this.c.c() > 0.0f) {
             b(event);
@@ -130,8 +130,8 @@ public class Widget {
             float anim = this.c.c() * a();
             float baseX = (this.i.b() - totalHeight) - 2.0f >= 0.0f ? (this.i.a() + (this.i.f() / 2.0f)) - (panelWidth / 2.0f) : this.i.a() + this.i.f() + 2.0f;
             float baseY = (this.i.b() - totalHeight) - 2.0f >= 0.0f ? (this.i.b() - totalHeight) - 2.0f : this.i.b();
-            float baseX2 = Math.min(Math.max(baseX, 0.0f), (Interface.aM_.getWindow().getScaledWidth() - panelWidth) - 2.0f);
-            float baseY2 = Math.min(Math.max(baseY, 0.0f), Interface.aM_.getWindow().getScaledHeight() - totalHeight);
+            float baseX2 = Math.min(Math.max(baseX, 0.0f), (Interface.mc.getWindow().getScaledWidth() - panelWidth) - 2.0f);
+            float baseY2 = Math.min(Math.max(baseY, 0.0f), Interface.mc.getWindow().getScaledHeight() - totalHeight);
             a(event, baseX2, baseY2, panelWidth, totalHeight, true, anim);
             float y = baseY2;
             for (Element_2<?> element : visible) {

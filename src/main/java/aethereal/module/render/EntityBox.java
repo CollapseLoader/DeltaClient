@@ -20,8 +20,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
 
-import static aethereal.core.Interface.aM_;
-
 @ModuleRegister(a = "Entity Box", b = "Отображает боксы вокруг сущностей", c = Category.Render)
 public class EntityBox extends Module {
     private final ModeSetting visualMode = new ModeSetting("Тип визуализации", "Квадрат", "Квадрат", "Углы", "Заливка", "Отключен");
@@ -41,7 +39,7 @@ public class EntityBox extends Module {
     public void onDraw(DrawEvent event) {
         if (this.visualMode.l("Заливка")) {
             if (event.c()) {
-                for (Entity entity : aM_.world.getEntities()) {
+                for (Entity entity : mc.world.getEntities()) {
                     if (shouldRender(entity)) {
                         event.e().a(event.h(), entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())), this.colorSource.l("Статичный") ? this.colorSetting.c().intValue() : Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), 0.75f);
                     }
@@ -53,7 +51,7 @@ public class EntityBox extends Module {
         if (event.b()) {
             if (this.visualMode.l("Квадрат") || this.visualMode.l("Углы")) {
                 Draw2DProcessor draw = event.d();
-                for (Entity entity : aM_.world.getEntities()) {
+                for (Entity entity : mc.world.getEntities()) {
                     Box box = shouldRender(entity) ? entity.getBoundingBox().offset(MathUtil.a(entity, event.g()).subtract(entity.getPos())) : null;
                     float[] bounds = box == null ? null : ProjectUtil.getBounds(box);
                     if (bounds != null) {
@@ -119,7 +117,7 @@ public class EntityBox extends Module {
 
     private boolean shouldRender(Entity entity) {
         if ((entity instanceof PlayerEntity) || (entity instanceof ItemEntity)) {
-            return (entity == aM_.player && aM_.options.getPerspective().isFirstPerson()) ? false : true;
+            return (entity == mc.player && mc.options.getPerspective().isFirstPerson()) ? false : true;
         }
         return false;
     }

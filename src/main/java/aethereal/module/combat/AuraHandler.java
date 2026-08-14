@@ -65,7 +65,7 @@ public class AuraHandler extends BaseHandler implements Interface {
 
     @EventTarget
     public void a(GlobalEvent event) {
-        if (aM_.player != null) {
+        if (mc.player != null) {
             Delta.h().d().t().B().b++;
         }
     }
@@ -89,7 +89,7 @@ public class AuraHandler extends BaseHandler implements Interface {
         RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         BufferBuilder buffer = Tessellator.getInstance().begin(VertexFormat.DrawMode.TRIANGLES, VertexFormats.POSITION_COLOR);
-        Vec3d cam = aM_.getEntityRenderDispatcher().camera.getPos();
+        Vec3d cam = mc.getEntityRenderDispatcher().camera.getPos();
         Vec3d targetCenter = this.f.getPos().add(0.0d, ((double) this.f.getHeight()) / 2.0d, 0.0d);
         for (int i = 0; i < 360; i += 20) {
             float angle = (float) Math.toRadians(i + (moving * 0.3f));
@@ -139,8 +139,8 @@ public class AuraHandler extends BaseHandler implements Interface {
 
     private void a(MatrixStack stack, Vec3d renderPos, float ringWidth, float ringScale, float moving, float size, int red, int green, int blue, int alpha) {
         BufferBuilder buffer = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
-        Quaternionf cameraRotation = aM_.gameRenderer.getCamera().getRotation();
-        Vec3d cam = aM_.getEntityRenderDispatcher().camera.getPos();
+        Quaternionf cameraRotation = mc.gameRenderer.getCamera().getRotation();
+        Vec3d cam = mc.getEntityRenderDispatcher().camera.getPos();
         float half = size / 2.0f;
         for (int i = 0; i < 360; i += 20) {
             float angle = (float) Math.toRadians(i + (moving * 0.3f));
@@ -164,7 +164,7 @@ public class AuraHandler extends BaseHandler implements Interface {
         RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         Matrix4f matrix = stack.peek().getPositionMatrix();
-        Vec3d cam = aM_.getEntityRenderDispatcher().camera.getPos();
+        Vec3d cam = mc.getEntityRenderDispatcher().camera.getPos();
         float height = this.f.getHeight() + 0.15f;
         float radius = this.f.getWidth() * 0.8f;
         double time = System.currentTimeMillis() % 1750.0d;

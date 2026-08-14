@@ -55,12 +55,12 @@ public class FakeLags extends Module implements Interface {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (aM_.player == null) {
+        if (mc.player == null) {
             return;
         }
         if (event.c()) {
             if (event.d() instanceof EntityVelocityUpdateS2CPacket velocity) {
-                if (velocity.getEntityId() == aM_.player.getId()) {
+                if (velocity.getEntityId() == mc.player.getId()) {
                     q();
                     return;
                 }
@@ -94,7 +94,7 @@ public class FakeLags extends Module implements Interface {
     @EventTarget
     public void a(DrawEvent event) {
         if (event.c() && this.c.c().booleanValue() && this.g != null) {
-            event.e().a(event.h(), aM_.player.getBoundingBox().offset(this.g.subtract(aM_.player.getPos())), ColorUtil.a(255, 255, 255, InterfaceC0020Opcode.aN), 0.75f);
+            event.e().a(event.h(), mc.player.getBoundingBox().offset(this.g.subtract(mc.player.getPos())), ColorUtil.a(255, 255, 255, InterfaceC0020Opcode.aN), 0.75f);
         }
     }
 
@@ -103,11 +103,11 @@ public class FakeLags extends Module implements Interface {
     }
 
     private void q() {
-        ClientConnectionAccessor connection = (ClientConnectionAccessor) aM_.player.networkHandler.getConnection();
+        ClientConnectionAccessor connection = (ClientConnectionAccessor) mc.player.networkHandler.getConnection();
         this.d.forEach(packet -> {
             connection.sendWithoutEvent(packet, null, true);
         });
         this.d.clear();
-        this.g = aM_.player.getPos();
+        this.g = mc.player.getPos();
     }
 }

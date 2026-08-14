@@ -28,7 +28,7 @@ public class ChinaHat extends Module {
     public void a(HeadFeatureEvent event) {
         if (event.e() instanceof BipedEntityModel<?> bipedModel) {
             boolean friend = Delta.h().d().e().d(event.d().getName().getString());
-            if (event.d() == aM_.player || friend) {
+            if (event.d() == mc.player || friend) {
                 PlayerEntity player = event.d();
                 MatrixStack matrices = event.b();
                 double radius = player.getBoundingBox().maxX - player.getBoundingBox().minX;
@@ -41,7 +41,7 @@ public class ChinaHat extends Module {
                 Matrix4f matrix = matrices.peek().getPositionMatrix();
                 VertexConsumer buffer = event.c().getBuffer(RenderLayer.getDebugQuads());
                 long time = System.currentTimeMillis();
-                int postColor = event.d() == aM_.player ? this.b.c().intValue() : friend ? ColorUtil.a(0, InterfaceC0020Opcode.bk, 0, 255) : 0;
+                int postColor = event.d() == mc.player ? this.b.c().intValue() : friend ? ColorUtil.a(0, InterfaceC0020Opcode.bk, 0, 255) : 0;
                 for (int i = 0; i < 360; i++) {
                     float angle1 = i * 0.06981317f;
                     float angle2 = (i + 1) * 0.06981317f;

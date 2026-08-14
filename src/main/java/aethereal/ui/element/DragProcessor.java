@@ -116,7 +116,7 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
 
     @EventTarget
     public void a(ClickEvent event) {
-        if (aM_.currentScreen instanceof ChatScreen) {
+        if (mc.currentScreen instanceof ChatScreen) {
             if (event.b() && event.h() == 0) {
                 for (DragInfo dragInfo : e()) {
                     if (dragInfo.k() != 2 && MathUtil.a(event.f(), event.g(), dragInfo.a(), dragInfo.b(), dragInfo.f(), dragInfo.g())) {
@@ -149,7 +149,7 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
     @EventTarget(a = 4)
     public void a(DrawEvent event) {
         if (event.b()) {
-            if (aM_.currentScreen instanceof ChatScreen) {
+            if (mc.currentScreen instanceof ChatScreen) {
                 if (this.g == null && !this.e.a() && !this.f.a()) {
                     h();
                 }
@@ -181,16 +181,16 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
         if (onlyY) {
             x = dragInfo.a();
         }
-        float x2 = MathUtil.b(x, 0.0f, (aM_.getWindow().getFramebufferWidth() / aM_.getWindow().calculateScaleFactor(2, aM_.forcesUnicodeFont())) - dragInfo.f());
-        float y2 = MathUtil.b(y, 0.0f, (aM_.getWindow().getFramebufferHeight() / aM_.getWindow().calculateScaleFactor(2, aM_.forcesUnicodeFont())) - dragInfo.g());
+        float x2 = MathUtil.b(x, 0.0f, (mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - dragInfo.f());
+        float y2 = MathUtil.b(y, 0.0f, (mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - dragInfo.g());
         if (!onlyY) {
             x2 = a(a.X, x2, dragInfo);
         } else {
             this.e.a(null);
         }
         float y3 = a(a.Y, y2, dragInfo);
-        dragInfo.a(MathUtil.b(x2, 0.0f, (aM_.getWindow().getFramebufferWidth() / aM_.getWindow().calculateScaleFactor(2, aM_.forcesUnicodeFont())) - dragInfo.f()));
-        dragInfo.b(MathUtil.b(y3, 0.0f, (aM_.getWindow().getFramebufferHeight() / aM_.getWindow().calculateScaleFactor(2, aM_.forcesUnicodeFont())) - dragInfo.g()));
+        dragInfo.a(MathUtil.b(x2, 0.0f, (mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - dragInfo.f()));
+        dragInfo.b(MathUtil.b(y3, 0.0f, (mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - dragInfo.g()));
     }
 
     private float a(a axis, float pos, DragInfo dragInfo) {
@@ -248,10 +248,10 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
 
     private void b(DrawEvent event) {
         if (this.e.a()) {
-            event.d().a(event.i(), this.e.c().floatValue() - 0.5f, 0.0f, 0.5f, aM_.getWindow().getFramebufferHeight() / aM_.getWindow().calculateScaleFactor(2, aM_.forcesUnicodeFont()), ColorUtil.a(255, 255, 255, (int) (this.e.b().c() * 200.0f)));
+            event.d().a(event.i(), this.e.c().floatValue() - 0.5f, 0.0f, 0.5f, mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont()), ColorUtil.a(255, 255, 255, (int) (this.e.b().c() * 200.0f)));
         }
         if (this.f.a()) {
-            event.d().a(event.i(), 0.0f, this.f.c().floatValue() - 0.5f, aM_.getWindow().getFramebufferWidth() / aM_.getWindow().calculateScaleFactor(2, aM_.forcesUnicodeFont()), 0.5f, ColorUtil.a(255, 255, 255, (int) (this.f.b().c() * 200.0f)));
+            event.d().a(event.i(), 0.0f, this.f.c().floatValue() - 0.5f, mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont()), 0.5f, ColorUtil.a(255, 255, 255, (int) (this.f.b().c() * 200.0f)));
         }
     }
 
@@ -267,7 +267,7 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
         Y;
 
         float a() {
-            return this == X ? Interface.aM_.getWindow().getFramebufferWidth() / Interface.aM_.getWindow().calculateScaleFactor(2, Interface.aM_.forcesUnicodeFont()) : Interface.aM_.getWindow().getFramebufferHeight() / Interface.aM_.getWindow().calculateScaleFactor(2, Interface.aM_.forcesUnicodeFont());
+            return this == X ? Interface.mc.getWindow().getFramebufferWidth() / Interface.mc.getWindow().calculateScaleFactor(2, Interface.mc.forcesUnicodeFont()) : Interface.mc.getWindow().getFramebufferHeight() / Interface.mc.getWindow().calculateScaleFactor(2, Interface.mc.forcesUnicodeFont());
         }
 
         float a(DragInfo info) {

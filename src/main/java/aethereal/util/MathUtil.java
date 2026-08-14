@@ -24,7 +24,7 @@ public class MathUtil implements Interface {
     }
 
     public static double scale(double coordinate, int factor) {
-        return (coordinate * aM_.getWindow().getScaleFactor()) / ((double) aM_.getWindow().calculateScaleFactor(factor, aM_.forcesUnicodeFont()));
+        return (coordinate * mc.getWindow().getScaleFactor()) / ((double) mc.getWindow().calculateScaleFactor(factor, mc.forcesUnicodeFont()));
     }
 
     public static float a(float value) {
@@ -70,7 +70,7 @@ public class MathUtil implements Interface {
     }
 
     public static float c(float current, float target, float speed) {
-        float delta = aM_.getRenderTickCounter().getLastFrameDuration();
+        float delta = mc.getRenderTickCounter().getLastFrameDuration();
         return current + ((target - current) * (1.0f - ((float) Math.exp((-speed) * delta))));
     }
 }

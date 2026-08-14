@@ -34,7 +34,7 @@ public class CooldownsWidget extends Widget implements Interface {
         float y = j().b();
         float targetWidth = 14.5f + Fonts.e.a("Cooldowns", this.e) + 5.0f + 2.0f;
         float contentY = y + this.d + 3.0f;
-        ItemCooldownManagerAccessor accessor = (ItemCooldownManagerAccessor) aM_.player.getItemCooldownManager();
+        ItemCooldownManagerAccessor accessor = (ItemCooldownManagerAccessor) mc.player.getItemCooldownManager();
         boolean active = false;
         for (Map.Entry<Identifier, Object> entry : accessor.getEntries().entrySet()) {
             IItemCooldownManager cooldown = (IItemCooldownManager) entry.getValue();
@@ -80,8 +80,8 @@ public class CooldownsWidget extends Widget implements Interface {
 
     @Override
     public void a(GlobalEvent event) {
-        boolean visible = aM_.currentScreen instanceof ChatScreen;
-        ItemCooldownManagerAccessor accessor = (ItemCooldownManagerAccessor) aM_.player.getItemCooldownManager();
+        boolean visible = mc.currentScreen instanceof ChatScreen;
+        ItemCooldownManagerAccessor accessor = (ItemCooldownManagerAccessor) mc.player.getItemCooldownManager();
         int tick = accessor.getTick();
         for (Map.Entry<Identifier, Object> entry : accessor.getEntries().entrySet()) {
             IItemCooldownManager cooldown = (IItemCooldownManager) entry.getValue();

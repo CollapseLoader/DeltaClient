@@ -50,10 +50,10 @@ public abstract class MinecraftClientMixin implements Interface {
     @Inject(method = {"setScreen"}, at = {@At("HEAD")})
     private void onSetScreen(Screen screen, CallbackInfo ci) {
         if (screen instanceof PackScreen) {
-            this.resourcePacks = aM_.getResourcePackManager().getEnabledProfiles().stream().map((v0) -> {
+            this.resourcePacks = mc.getResourcePackManager().getEnabledProfiles().stream().map((v0) -> {
                 return v0.getId();
             }).collect(Collectors.toCollection(HashSet::new));
-        } else if (this.resourcePacks != null && !(aM_.currentScreen instanceof PackScreen)) {
+        } else if (this.resourcePacks != null && !(mc.currentScreen instanceof PackScreen)) {
             this.resourcePacks = null;
         }
     }
@@ -61,7 +61,7 @@ public abstract class MinecraftClientMixin implements Interface {
     @Inject(method = {"reloadResources()Ljava/util/concurrent/CompletableFuture;"}, at = {@At("HEAD")}, cancellable = true)
     private void reloadResources(CallbackInfoReturnable<CompletableFuture<Void>> cir) {
         if (this.resourcePacks != null) {
-            Set<String> current = aM_.getResourcePackManager().getEnabledProfiles().stream().map((v0) -> {
+            Set<String> current = mc.getResourcePackManager().getEnabledProfiles().stream().map((v0) -> {
                 return v0.getId();
             }).collect(Collectors.toSet());
             if (this.resourcePacks.equals(current)) {
@@ -73,7 +73,7 @@ public abstract class MinecraftClientMixin implements Interface {
 
     @Inject(method = {"setScreen"}, at = {@At("HEAD")}, cancellable = true)
     private void setScreen(Screen screen, CallbackInfo ci) {
-        if (aM_.currentScreen instanceof GUIScreen) {
+        if (mc.currentScreen instanceof GUIScreen) {
             if (screen == null || (screen instanceof DownloadingTerrainScreen)) {
                 for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
                     if (element.getClassName().equals(Screen.class.getName()) || element.getClassName().equals(Keyboard.class.getName())) {
@@ -115,11 +115,11 @@ public abstract class MinecraftClientMixin implements Interface {
 
     @Inject(method = {"doItemUse"}, at = {@At("HEAD")}, cancellable = true)
     private void doItemUse(CallbackInfo ci) {
-        ItemStack stack = aM_.player.getStackInHand(Hand.MAIN_HAND);
-        if ((stack.getItem() instanceof PotionItem) && aM_.player.getItemCooldownManager().isCoolingDown(stack)) {
+        ItemStack stack = mc.player.getStackInHand(Hand.MAIN_HAND);
+        if ((stack.getItem() instanceof PotionItem) && mc.player.getItemCooldownManager().isCoolingDown(stack)) {
             ci.cancel();
         }
-        if ((stack.getItem() instanceof CrossbowItem) && CrossbowItem.isCharged(stack) && aM_.player.getItemCooldownManager().isCoolingDown(stack)) {
+        if ((stack.getItem() instanceof CrossbowItem) && CrossbowItem.isCharged(stack) && mc.player.getItemCooldownManager().isCoolingDown(stack)) {
             ci.cancel();
         }
     }

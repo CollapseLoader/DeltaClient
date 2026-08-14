@@ -27,7 +27,7 @@ public class ClientPlayerInteractionManagerMixin implements Interface {
     @Inject(method = {"interactBlock"}, at = {@At("HEAD")}, cancellable = true)
     private void interactBlock(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
         NoInteract noInteract = Delta.h().d().t().s();
-        Block block = aM_.world.getBlockState(hitResult.getBlockPos()).getBlock();
+        Block block = mc.world.getBlockState(hitResult.getBlockPos()).getBlock();
         if (noInteract.m()) {
             if (noInteract.q().c().booleanValue() && !Delta.h().d().t().B().m()) {
                 return;

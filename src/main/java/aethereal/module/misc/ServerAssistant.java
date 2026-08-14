@@ -95,10 +95,10 @@ public class ServerAssistant extends Module implements Interface {
     public void a(TickEvent event) {
         if (this.t.c().booleanValue()) {
             if (ServerUtil.a.a() || ServerUtil.d.a()) {
-                boolean hasBadEffect = aM_.player.getStatusEffects().stream().anyMatch(effect -> {
+                boolean hasBadEffect = mc.player.getStatusEffects().stream().anyMatch(effect -> {
                     return effect.getEffectType() == StatusEffects.WEAKNESS && effect.getAmplifier() >= 1 && ((double) effect.getDuration()) / 20.0d >= 15.0d;
                 });
-                if (InventoryUtil.b(Items.PHANTOM_MEMBRANE) != -1 && hasBadEffect && !aM_.player.getItemCooldownManager().isCoolingDown(Items.PHANTOM_MEMBRANE.getDefaultStack()) && this.v.a(5000L) && aM_.player.getAbsorptionAmount() <= 3.0f) {
+                if (InventoryUtil.b(Items.PHANTOM_MEMBRANE) != -1 && hasBadEffect && !mc.player.getItemCooldownManager().isCoolingDown(Items.PHANTOM_MEMBRANE.getDefaultStack()) && this.v.a(5000L) && mc.player.getAbsorptionAmount() <= 3.0f) {
                     Delta.h().d().v().b().a(Items.PHANTOM_MEMBRANE.getDefaultStack());
                     this.v.b();
                 }
@@ -225,7 +225,7 @@ public class ServerAssistant extends Module implements Interface {
             ScreenHandlerSlotUpdateS2CPacketAccessor screenHandlerSlotUpdateS2CPacketAccessorD = (ScreenHandlerSlotUpdateS2CPacketAccessor) event.d();
             if (screenHandlerSlotUpdateS2CPacketAccessorD instanceof ScreenHandlerSlotUpdateS2CPacket) {
                 ScreenHandlerSlotUpdateS2CPacketAccessor screenHandlerSlotUpdateS2CPacketAccessor = screenHandlerSlotUpdateS2CPacketAccessorD;
-                if (this.y != null && screenHandlerSlotUpdateS2CPacketAccessor.getSyncId() != 0 && screenHandlerSlotUpdateS2CPacketAccessor.getSyncId() == aM_.player.currentScreenHandler.syncId && screenHandlerSlotUpdateS2CPacketAccessor.getSlot() >= 0 && screenHandlerSlotUpdateS2CPacketAccessor.getSlot() < this.y.length) {
+                if (this.y != null && screenHandlerSlotUpdateS2CPacketAccessor.getSyncId() != 0 && screenHandlerSlotUpdateS2CPacketAccessor.getSyncId() == mc.player.currentScreenHandler.syncId && screenHandlerSlotUpdateS2CPacketAccessor.getSlot() >= 0 && screenHandlerSlotUpdateS2CPacketAccessor.getSlot() < this.y.length) {
                     for (int display2 = 0; display2 < this.y.length; display2++) {
                         if (this.y[display2] == screenHandlerSlotUpdateS2CPacketAccessor.getSlot()) {
                             screenHandlerSlotUpdateS2CPacketAccessor.setSlot(display2);
@@ -240,7 +240,7 @@ public class ServerAssistant extends Module implements Interface {
             ClickSlotC2SPacketAccessor clickSlotC2SPacketAccessorD = (ClickSlotC2SPacketAccessor) event.d();
             if (clickSlotC2SPacketAccessorD instanceof ClickSlotC2SPacket) {
                 ClickSlotC2SPacketAccessor clickSlotC2SPacketAccessor = clickSlotC2SPacketAccessorD;
-                if (this.y != null && clickSlotC2SPacketAccessor.getSyncId() != 0 && clickSlotC2SPacketAccessor.getSyncId() == aM_.player.currentScreenHandler.syncId && clickSlotC2SPacketAccessor.getSlot() >= 0 && clickSlotC2SPacketAccessor.getSlot() < this.y.length) {
+                if (this.y != null && clickSlotC2SPacketAccessor.getSyncId() != 0 && clickSlotC2SPacketAccessor.getSyncId() == mc.player.currentScreenHandler.syncId && clickSlotC2SPacketAccessor.getSlot() >= 0 && clickSlotC2SPacketAccessor.getSlot() < this.y.length) {
                     clickSlotC2SPacketAccessor.setSlot(this.y[clickSlotC2SPacketAccessor.getSlot()]);
                 }
             }
@@ -249,7 +249,7 @@ public class ServerAssistant extends Module implements Interface {
 
     private BindSetting a(String name, Item item, String... servers) {
         BindSetting setting = new BindSetting(name, -1).a(() -> {
-            ItemCooldownManagerAccessor itemCooldownManagerAccessorMethod_7357 = (ItemCooldownManagerAccessor) aM_.player.getItemCooldownManager();
+            ItemCooldownManagerAccessor itemCooldownManagerAccessorMethod_7357 = (ItemCooldownManagerAccessor) mc.player.getItemCooldownManager();
             if (((net.minecraft.entity.player.ItemCooldownManager) itemCooldownManagerAccessorMethod_7357).isCoolingDown(item.getDefaultStack())) {
                 ItemCooldownManagerAccessor accessor = itemCooldownManagerAccessorMethod_7357;
                 Object entry = accessor.getEntries().get(Registries.ITEM.getId(item));

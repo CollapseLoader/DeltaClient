@@ -38,12 +38,12 @@ public class AutoDodge extends Module {
     private static boolean a(PotionEntity potionEntity, Box expandedPlayer) {
         Vec3d velocity = potionEntity.getVelocity();
         Vec3d position = potionEntity.getPos();
-        for (int step = 0; step < 70 && velocity.lengthSquared() >= 9.99999773128142E-7d && position.y >= aM_.world.getBottomY() && position.y <= aM_.world.getBottomY() + aM_.world.getHeight(); step++) {
-            double drag = aM_.world.getFluidState(BlockPos.ofFloored(position)).isIn(FluidTags.WATER) ? 0.8000000016738433d : 0.9900000205305426d;
+        for (int step = 0; step < 70 && velocity.lengthSquared() >= 9.99999773128142E-7d && position.y >= mc.world.getBottomY() && position.y <= mc.world.getBottomY() + mc.world.getHeight(); step++) {
+            double drag = mc.world.getFluidState(BlockPos.ofFloored(position)).isIn(FluidTags.WATER) ? 0.8000000016738433d : 0.9900000205305426d;
             velocity = new Vec3d(velocity.x * drag, (velocity.y - 0.0500000024232657d) * drag, velocity.z * drag);
             Vec3d nextPosition = position.add(velocity);
             RaycastContext ctx = new RaycastContext(position, nextPosition, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, potionEntity);
-            BlockHitResult blockHit = aM_.world.raycast(ctx);
+            BlockHitResult blockHit = mc.world.raycast(ctx);
             if (blockHit.getType() == HitResult.Type.BLOCK) {
                 return a(expandedPlayer, position, blockHit.getPos());
             }
@@ -77,12 +77,12 @@ public class AutoDodge extends Module {
     public void a(TickEvent tickEvent) {
         Iterator<Map.Entry<Integer, b>> iterator = this.c.entrySet().iterator();
         while (iterator.hasNext()) {
-            if (aM_.world.getEntityById(iterator.next().getKey().intValue()) == null) {
+            if (mc.world.getEntityById(iterator.next().getKey().intValue()) == null) {
                 iterator.remove();
             }
         }
-        Box playerHitboxExpanded = aM_.player.getBoundingBox().expand(2.0d);
-        for (PotionEntity potionEntity : aM_.world.getEntitiesByClass(PotionEntity.class, aM_.player.getBoundingBox().expand(aM_.options.getViewDistance().getValue().intValue() * 16), p -> {
+        Box playerHitboxExpanded = mc.player.getBoundingBox().expand(2.0d);
+        for (PotionEntity potionEntity : mc.world.getEntitiesByClass(PotionEntity.class, mc.player.getBoundingBox().expand(mc.options.getViewDistance().getValue().intValue() * 16), p -> {
             return true;
         })) {
             b matched = this.c.get(Integer.valueOf(potionEntity.getId()));
@@ -92,11 +92,11 @@ public class AutoDodge extends Module {
                 if (!trace || Delta.h().d().e().d(matched.b)) {
                     return;
                 }
-                if ((rgba == -13447886 || rgba == -16776961) && aM_.player.distanceTo(potionEntity) > 2.300000381469741d && this.b >= 0) {
+                if ((rgba == -13447886 || rgba == -16776961) && mc.player.distanceTo(potionEntity) > 2.300000381469741d && this.b >= 0) {
                     ItemStack kelp = Items.DRIED_KELP.getDefaultStack();
-                    if (!aM_.player.getItemCooldownManager().isCoolingDown(kelp) && InventoryUtil.b(Items.DRIED_KELP) != -1) {
+                    if (!mc.player.getItemCooldownManager().isCoolingDown(kelp) && InventoryUtil.b(Items.DRIED_KELP) != -1) {
                         if (Delta.h().d().v().b().a().isEmpty()) {
-                            if (Rotation.b().a(new Rotation(aM_.player.getYaw(), aM_.player.getPitch())) < 20.0d) {
+                            if (Rotation.b().a(new Rotation(mc.player.getYaw(), mc.player.getPitch())) < 20.0d) {
                                 this.b++;
                             }
                             if (this.b >= 2) {
@@ -104,7 +104,7 @@ public class AutoDodge extends Module {
                                 Delta.h().d().v().b().a(Items.DRIED_KELP.getDefaultStack());
                             }
                         }
-                        Rotation aimRotation = Rotation.a(aM_.player.getEyePos(), potionEntity.getEyePos());
+                        Rotation aimRotation = Rotation.a(mc.player.getEyePos(), potionEntity.getEyePos());
                         Delta.h().d().k().a(new Rotation(aimRotation.c() + MathUtil.a(-3.0f, 3.0f), aimRotation.d() + MathUtil.a(-3.0f, 3.0f)), 180.0f, 1, 1);
                         break;
                     }
@@ -118,7 +118,7 @@ public class AutoDodge extends Module {
 
     @EventTarget
     public void a(PacketEvent packetEvent) {
-        if (!packetEvent.c() || aM_.player == null || aM_.world == null) {
+        if (!packetEvent.c() || mc.player == null || mc.world == null) {
             return;
         }
         a(packetEvent.d());
@@ -180,11 +180,11 @@ public class AutoDodge extends Module {
 
     private Map<String, a> q() {
         HashMap<String, a> result = new HashMap<>();
-        for (AbstractClientPlayerEntity player : aM_.world.getPlayers()) {
+        for (AbstractClientPlayerEntity player : mc.world.getPlayers()) {
             ItemStack mainHand = player.getMainHandStack();
             ItemStack offHand = player.getOffHandStack();
             int splashColor = mainHand.getItem() == Items.SPLASH_POTION ? a(mainHand) : offHand.getItem() == Items.SPLASH_POTION ? a(offHand) : -1;
-            if (splashColor >= 0 && player != aM_.player && aM_.player.squaredDistanceTo(player) <= 400.0d) {
+            if (splashColor >= 0 && player != mc.player && mc.player.squaredDistanceTo(player) <= 400.0d) {
                 result.put(player.getName().getString(), new a(splashColor, player.getPos(), player.getRotationVec(1.0f)));
             }
         }

@@ -40,8 +40,8 @@ public class ChatHelper extends Module {
             }
             if (this.d == -1) {
                 this.d = currentAnarchy;
-            } else if (currentAnarchy != this.d && aM_.player.age >= 5) {
-                aM_.player.networkHandler.sendChatCommand("event delay");
+            } else if (currentAnarchy != this.d && mc.player.age >= 5) {
+                mc.player.networkHandler.sendChatCommand("event delay");
                 this.d = currentAnarchy;
             }
         }

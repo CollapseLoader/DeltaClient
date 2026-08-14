@@ -13,8 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class TitleScreenMixin {
     @Inject(method = {"init"}, at = {@At("HEAD")}, cancellable = true)
     private void init(CallbackInfo ci) {
-        if (!(Interface.aM_.currentScreen instanceof MainScreen)) {
-            Interface.aM_.setScreen(new MainScreen());
+        if (!(Interface.mc.currentScreen instanceof MainScreen)) {
+            Interface.mc.setScreen(new MainScreen());
             ci.cancel();
         }
     }

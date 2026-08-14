@@ -36,14 +36,14 @@ public class Pointers extends Module {
     @EventTarget
     public void a(DrawEvent event) {
         if (event.c() && this.b.a("Трассировка до игрока").c().booleanValue()) {
-            Vec3d cam = aM_.getEntityRenderDispatcher().camera.getPos();
-            Vec3d start = new Vec3d(0.0d, 0.0d, 27.0d).rotateX((float) (-Math.toRadians(aM_.getEntityRenderDispatcher().camera.getPitch()))).rotateY((float) (-Math.toRadians(aM_.getEntityRenderDispatcher().camera.getYaw()))).add(cam);
+            Vec3d cam = mc.getEntityRenderDispatcher().camera.getPos();
+            Vec3d start = new Vec3d(0.0d, 0.0d, 27.0d).rotateX((float) (-Math.toRadians(mc.getEntityRenderDispatcher().camera.getPitch()))).rotateY((float) (-Math.toRadians(mc.getEntityRenderDispatcher().camera.getYaw()))).add(cam);
             Matrix4f matrix = event.h().peek().getPositionMatrix();
             BufferBuilder buffer = q();
             boolean any = false;
-            for (Entity entity : aM_.world.getEntities()) {
+            for (Entity entity : mc.world.getEntities()) {
                 if (!(entity instanceof PlayerEntity target)) continue;
-                if (target != aM_.player && target.isAlive()) {
+                if (target != mc.player && target.isAlive()) {
                     Vec3d pos = MathUtil.a(target, event.g()).add(0.0d, target.getHeight() / 2.0f, 0.0d);
                     boolean isFriend = Delta.h().d().e().d(target.getName().getString());
                     if (!this.b.a("Фильтр по друзьям").c().booleanValue() || isFriend) {
@@ -57,18 +57,18 @@ public class Pointers extends Module {
         }
         if (event.b() && this.b.a("Навигационная стрелка").c().booleanValue()) {
             this.e = MathUtil.c(this.e, this.e + MathHelper.wrapDegrees(Look.b() - this.e), 2.0f);
-            for (Entity entity : aM_.world.getEntities()) {
+            for (Entity entity : mc.world.getEntities()) {
                 if (!(entity instanceof PlayerEntity target)) continue;
-                if (target != aM_.player && target.isAlive()) {
+                if (target != mc.player && target.isAlive()) {
                     boolean isFriend = Delta.h().d().e().d(target.getName().getString());
                     if (!this.b.a("Фильтр по друзьям").c().booleanValue() || isFriend) {
                         Vec3d pos = MathUtil.a(target, event.g());
-                        Vec3d eye = MathUtil.a(aM_.player, event.g());
+                        Vec3d eye = MathUtil.a(mc.player, event.g());
                         float angle = MathHelper.wrapDegrees(((float) Math.toDegrees(Math.atan2(eye.x - pos.getX(), pos.getZ() - eye.z))) - this.e);
                         float radians = (float) Math.toRadians(angle);
                         MatrixStack stack = event.h();
                         stack.push();
-                        stack.translate((aM_.getWindow().getScaledWidth() / 2.0f) + (((float) Math.sin(radians)) * this.d.c().floatValue()), (aM_.getWindow().getScaledHeight() / 2.0f) - (((float) Math.cos(radians)) * this.d.c().floatValue()), 0.0f);
+                        stack.translate((mc.getWindow().getScaledWidth() / 2.0f) + (((float) Math.sin(radians)) * this.d.c().floatValue()), (mc.getWindow().getScaledHeight() / 2.0f) - (((float) Math.cos(radians)) * this.d.c().floatValue()), 0.0f);
                         stack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(angle));
                         event.d().a(stack, Identifier.of("delta", "pictures/pointer.png"), (-this.c.c().floatValue()) / 2.0f, (-this.c.c().floatValue()) / 2.0f, this.c.c().floatValue(), this.c.c().floatValue(), 0.0f, isFriend ? ColorUtil.a(85, 255, 85, InterfaceC0020Opcode.aL) : ColorUtil.a(255, 255, 255, InterfaceC0020Opcode.aL));
                         stack.pop();

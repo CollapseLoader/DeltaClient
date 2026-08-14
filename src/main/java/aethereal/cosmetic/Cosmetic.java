@@ -44,7 +44,7 @@ public class Cosmetic implements GeoAnimatable {
         this.bakedAnimations = bakedAnimations;
         this.image = Identifier.of("delta", "cosmetics/" + name);
         this.renderer = new GeoObjectRenderer<>(new CosmeticsGeoModel(this));
-        Interface.aM_.getTextureManager().registerTexture(this.image, new NativeImageBackedTexture(image));
+        Interface.mc.getTextureManager().registerTexture(this.image, new NativeImageBackedTexture(image));
     }
 
     public Cosmetic(String name, UUID uuid, BakedAnimations bakedAnimations) {

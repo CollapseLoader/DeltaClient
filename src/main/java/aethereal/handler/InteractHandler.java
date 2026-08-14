@@ -34,7 +34,7 @@ public class InteractHandler extends BaseHandler implements Interface {
 
     @EventTarget
     public void a(TickEvent event) {
-        if (!this.b.isEmpty() && aM_.player.age > 40) {
+        if (!this.b.isEmpty() && mc.player.age > 40) {
             InventoryHandler inventoryHandler = Delta.h().d().v().a();
             a task = this.b.getFirst();
             boolean inventory = task.b() > 8;
@@ -43,19 +43,19 @@ public class InteractHandler extends BaseHandler implements Interface {
                 if (inventory) {
                     inventoryHandler.a(task.b(), task.a(), 2);
                 } else {
-                    aM_.player.getInventory().selectedSlot = task.b();
+                    mc.player.getInventory().selectedSlot = task.b();
                 }
             } else if (!task.c() && task.d() > 0 && inventoryHandler.a().isEmpty()) {
-                if (aM_.player.isUsingItem()) {
+                if (mc.player.isUsingItem()) {
                     task.a(true);
                 } else {
-                    aM_.interactionManager.interactItem(aM_.player, Hand.MAIN_HAND);
+                    mc.interactionManager.interactItem(mc.player, Hand.MAIN_HAND);
                 }
-            } else if (task.c() && !aM_.player.isUsingItem() && inventoryHandler.a().isEmpty()) {
+            } else if (task.c() && !mc.player.isUsingItem() && inventoryHandler.a().isEmpty()) {
                 if (inventory) {
                     inventoryHandler.a(task.a(), task.b(), 2);
                 } else {
-                    aM_.player.getInventory().selectedSlot = task.a();
+                    mc.player.getInventory().selectedSlot = task.a();
                 }
                 this.b.remove(task);
             }
@@ -81,7 +81,7 @@ public class InteractHandler extends BaseHandler implements Interface {
     }
 
     public static final class a {
-        private final int a = Interface.aM_.player.getInventory().selectedSlot;
+        private final int a = Interface.mc.player.getInventory().selectedSlot;
         private final int b;
         private boolean c;
         private int d;

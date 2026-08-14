@@ -49,10 +49,10 @@ public class MacrosProcessor extends ConfigProcessor<MacrosConstructor> {
 
     @EventTarget
     public void a(KeyEvent event) {
-        if (event.d() == 1 && aM_.currentScreen == null) {
+        if (event.getAction() == 1 && mc.currentScreen == null) {
             for (MacrosConstructor constructor : Delta.h().d().d().e()) {
                 if (KeyUtil.a(event.b()) == KeyUtil.a(constructor.a())) {
-                    aM_.player.networkHandler.sendChatMessage(constructor.b());
+                    mc.player.networkHandler.sendChatMessage(constructor.b());
                 }
             }
         }

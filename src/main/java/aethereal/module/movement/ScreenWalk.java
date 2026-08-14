@@ -41,12 +41,12 @@ public class ScreenWalk extends Module {
         boolean isShulker;
         StopHandler stopHandler = Delta.h().d().v().c();
         if (event.b()) {
-            if (aM_.currentScreen instanceof InventoryScreen) {
+            if (mc.currentScreen instanceof InventoryScreen) {
                 ClickSlotC2SPacket click = (ClickSlotC2SPacket) event.d();
                 if (click instanceof ClickSlotC2SPacket) {
                     if (MoveUtil.a()) {
                         if (click.getButton() == 1) {
-                            if (aM_.player.currentScreenHandler.getCursorStack().getItem() instanceof BlockItem blockItem) {
+                            if (mc.player.currentScreenHandler.getCursorStack().getItem() instanceof BlockItem blockItem) {
                                 isShulker = blockItem.getBlock() instanceof ShulkerBoxBlock;
                             } else {
                                 isShulker = false;
@@ -64,7 +64,7 @@ public class ScreenWalk extends Module {
                 }
             }
             if (event.d() instanceof CloseHandledScreenC2SPacket) {
-                if (MoveUtil.a() && (aM_.currentScreen instanceof InventoryScreen)) {
+                if (MoveUtil.a() && (mc.currentScreen instanceof InventoryScreen)) {
                     event.a(true);
                     for (a packet : this.c) {
                         stopHandler.a(packet.b());
@@ -85,13 +85,13 @@ public class ScreenWalk extends Module {
 
     @EventTarget
     public void a(TickEvent event) {
-        if (!this.d && aM_.currentScreen != null && !(aM_.currentScreen instanceof ChatScreen) && !(aM_.currentScreen instanceof SignEditScreen) && !(aM_.currentScreen instanceof AnvilScreen) && !(aM_.currentScreen instanceof CreativeInventoryScreen)) {
-            for (KeyBinding keyBinding : new KeyBinding[]{aM_.options.forwardKey, aM_.options.backKey, aM_.options.leftKey, aM_.options.rightKey, aM_.options.jumpKey}) {
-                keyBinding.setPressed(InputUtil.isKeyPressed(aM_.getWindow().getHandle(), keyBinding.getDefaultKey().getCode()));
+        if (!this.d && mc.currentScreen != null && !(mc.currentScreen instanceof ChatScreen) && !(mc.currentScreen instanceof SignEditScreen) && !(mc.currentScreen instanceof AnvilScreen) && !(mc.currentScreen instanceof CreativeInventoryScreen)) {
+            for (KeyBinding keyBinding : new KeyBinding[]{mc.options.forwardKey, mc.options.backKey, mc.options.leftKey, mc.options.rightKey, mc.options.jumpKey}) {
+                keyBinding.setPressed(InputUtil.isKeyPressed(mc.getWindow().getHandle(), keyBinding.getDefaultKey().getCode()));
             }
         }
         if (!MoveUtil.a() && !this.c.isEmpty()) {
-            ClientConnectionAccessor connection = (ClientConnectionAccessor) aM_.player.networkHandler.getConnection();
+            ClientConnectionAccessor connection = (ClientConnectionAccessor) mc.player.networkHandler.getConnection();
             if (this.b.l("Медленный")) {
                 connection.sendWithoutEvent(this.c.removeFirst().a(), null, true);
             } else {
@@ -100,8 +100,8 @@ public class ScreenWalk extends Module {
                 });
                 this.c.clear();
             }
-            if (this.c.isEmpty() && aM_.currentScreen == null) {
-                connection.sendWithoutEvent(new CloseHandledScreenC2SPacket(aM_.player.currentScreenHandler.syncId), null, true);
+            if (this.c.isEmpty() && mc.currentScreen == null) {
+                connection.sendWithoutEvent(new CloseHandledScreenC2SPacket(mc.player.currentScreenHandler.syncId), null, true);
             }
         }
     }

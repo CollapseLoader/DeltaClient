@@ -48,7 +48,7 @@ public class InGameHudMixin {
             context.drawItem(charged.getProjectiles().getFirst(), 0, 0);
             context.getMatrices().pop();
         }
-        if (player == Interface.aM_.player && !stack.isEmpty()) {
+        if (player == Interface.mc.player && !stack.isEmpty()) {
             ItemCooldownManagerAccessor cooldowns = (ItemCooldownManagerAccessor) player.getItemCooldownManager();
             Object entry = cooldowns.getEntries().get(player.getItemCooldownManager().getGroup(stack));
             if (entry != null && ((platform.inject.accessors.ItemCooldownEntryAccessor) entry).getEndTick() - cooldowns.getTick() > 0) {
@@ -57,7 +57,7 @@ public class InGameHudMixin {
                 context.draw();
                 context.getMatrices().push();
                 context.getMatrices().translate(x, y, 300.0f);
-                context.drawText(Interface.aM_.textRenderer, seconds > 99 ? "99+" : String.valueOf(seconds), 0, 0, cooldownColor(remaining), true);
+                context.drawText(Interface.mc.textRenderer, seconds > 99 ? "99+" : String.valueOf(seconds), 0, 0, cooldownColor(remaining), true);
                 context.getMatrices().pop();
             }
         }
@@ -90,8 +90,8 @@ public class InGameHudMixin {
     @Inject(method = {"render"}, at = {@At("TAIL")})
     private void render(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         Animations animations = Delta.h().d().t().Q();
-        if (animations.m() && animations.q().a("TAB").c().booleanValue() && animations.r().c() > 0.0f && !Interface.aM_.options.playerListKey.isPressed()) {
-            this.playerListHud.render(context, Interface.aM_.getWindow().getScaledWidth(), Interface.aM_.world.getScoreboard(), Interface.aM_.world.getScoreboard().getObjectiveForSlot(ScoreboardDisplaySlot.LIST));
+        if (animations.m() && animations.q().a("TAB").c().booleanValue() && animations.r().c() > 0.0f && !Interface.mc.options.playerListKey.isPressed()) {
+            this.playerListHud.render(context, Interface.mc.getWindow().getScaledWidth(), Interface.mc.world.getScoreboard(), Interface.mc.world.getScoreboard().getObjectiveForSlot(ScoreboardDisplaySlot.LIST));
         }
     }
 
@@ -115,8 +115,8 @@ public class InGameHudMixin {
     @ModifyArg(method = {"renderHotbar"}, index = 2, at = @At(value = "INVOKE", ordinal = 1, target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Ljava/util/function/Function;Lnet/minecraft/util/Identifier;IIII)V"))
     private int hotbarSelectionSlot(int x) {
         Animations animations = Delta.h().d().t().Q();
-        if (animations.m() && animations.q().a("Слот хотбара").c().booleanValue() && Interface.aM_.player != null) {
-            return Math.round((x - (Interface.aM_.player.getInventory().selectedSlot * 20)) + (animations.v() * 20.0f));
+        if (animations.m() && animations.q().a("Слот хотбара").c().booleanValue() && Interface.mc.player != null) {
+            return Math.round((x - (Interface.mc.player.getInventory().selectedSlot * 20)) + (animations.v() * 20.0f));
         }
         return x;
     }

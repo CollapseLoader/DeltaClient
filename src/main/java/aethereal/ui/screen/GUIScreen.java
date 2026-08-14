@@ -78,7 +78,7 @@ public class GUIScreen extends Screen {
             }
         }).sum();
         float size = (this.c.size() - 1) * 8.0f;
-        MinecraftClient class_310Var = Interface.aM_;
+        MinecraftClient class_310Var = Interface.mc;
         int iMethod_4486 = class_310Var.getWindow().getScaledWidth();
         float f = size + ((float) dSum);
         float f2 = (iMethod_4486 - f) * 0.5f;

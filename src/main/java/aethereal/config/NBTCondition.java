@@ -16,7 +16,7 @@ public record NBTCondition(String a) {
     }
 
     public boolean a(ItemStack stack) {
-        NbtElement nbt = stack.toNbt(Interface.aM_.world.getRegistryManager());
+        NbtElement nbt = stack.toNbt(Interface.mc.world.getRegistryManager());
         return nbt != null && nbt.toString().replaceAll("§.", "").toLowerCase().replaceAll("\\s+", StringUtils.a).trim().contains(this.a.replaceAll("§.", "").toLowerCase().replaceAll("\\s+", StringUtils.a).trim());
     }
 }

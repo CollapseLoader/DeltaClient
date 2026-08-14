@@ -75,10 +75,10 @@ public abstract class BaseCommand implements Interface {
 
     protected SuggestionProvider<CommandSource> a() {
         return (context, builder) -> {
-            if (aM_.player.networkHandler == null) {
+            if (mc.player.networkHandler == null) {
                 return builder.buildFuture();
             }
-            Stream streamFilter = aM_.player.networkHandler.getPlayerList().stream().map(entry -> {
+            Stream streamFilter = mc.player.networkHandler.getPlayerList().stream().map(entry -> {
                 return entry.getProfile().getName();
             }).filter(name -> {
                 if (name != null) {

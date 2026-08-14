@@ -11,6 +11,6 @@ import net.minecraft.entity.effect.StatusEffects;
 public class Sprint extends Module {
     @EventTarget
     public void a(TickEvent event) {
-        aM_.player.setSprinting(aM_.player.input.movementForward > 0.0f && !aM_.player.hasStatusEffect(StatusEffects.BLINDNESS) && (aM_.player.getAbilities().invulnerable || aM_.player.getHungerManager().getFoodLevel() > 6));
+        mc.player.setSprinting(mc.player.input.movementForward > 0.0f && !mc.player.hasStatusEffect(StatusEffects.BLINDNESS) && (mc.player.getAbilities().invulnerable || mc.player.getHungerManager().getFoodLevel() > 6));
     }
 }

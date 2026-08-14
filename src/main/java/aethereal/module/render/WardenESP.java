@@ -32,10 +32,10 @@ public class WardenESP extends Module {
 
     @EventTarget
     public void a(DrawEvent event) {
-        if (aM_.world.getRegistryKey().getValue().toString().equals("minecraft:overworld")) {
+        if (mc.world.getRegistryKey().getValue().toString().equals("minecraft:overworld")) {
             List<BlockPos> chests = q();
             if (event.b()) {
-                for (ArmorStandEntity stand : aM_.world.getEntitiesByClass(ArmorStandEntity.class, aM_.player.getBoundingBox().expand(256.0), e -> true)) {
+                for (ArmorStandEntity stand : mc.world.getEntitiesByClass(ArmorStandEntity.class, mc.player.getBoundingBox().expand(256.0), e -> true)) {
                     Matcher matcher = b.matcher(stand.getName().getString());
                     if (matcher.find()) {
                         int minutes = Integer.parseInt(matcher.group(1));
@@ -111,7 +111,7 @@ public class WardenESP extends Module {
     }
 
     public long a(BlockPos pos) {
-        for (ArmorStandEntity stand : aM_.world.getEntitiesByClass(ArmorStandEntity.class, aM_.player.getBoundingBox().expand(256.0), e -> true)) {
+        for (ArmorStandEntity stand : mc.world.getEntitiesByClass(ArmorStandEntity.class, mc.player.getBoundingBox().expand(256.0), e -> true)) {
             if (stand.getBlockPos().getX() == pos.getX() && stand.getBlockPos().getZ() == pos.getZ()) {
                 Matcher matcher = b.matcher(stand.getName().getString());
                 if (matcher.find()) {
@@ -130,9 +130,9 @@ public class WardenESP extends Module {
         BlockEntity blockEntity;
         BlockEntityType<?> type;
         List<BlockPos> result = new ArrayList<>();
-        for (BlockEntityTickInvoker ticker : ((platform.inject.accessors.WorldAccessor) aM_.world).getBlockEntityTickers()) {
+        for (BlockEntityTickInvoker ticker : ((platform.inject.accessors.WorldAccessor) mc.world).getBlockEntityTickers()) {
             BlockPos pos = ticker.getPos();
-            if (!ticker.isRemoved() && pos.getY() >= -60 && pos.getY() <= -35 && pos.getX() >= -2070 && pos.getX() <= -1921 && pos.getZ() >= -2076 && pos.getZ() <= -1929 && (blockEntity = aM_.world.getBlockEntity(pos)) != null && ((type = blockEntity.getType()) == BlockEntityType.CHEST || type == BlockEntityType.TRAPPED_CHEST)) {
+            if (!ticker.isRemoved() && pos.getY() >= -60 && pos.getY() <= -35 && pos.getX() >= -2070 && pos.getX() <= -1921 && pos.getZ() >= -2076 && pos.getZ() <= -1929 && (blockEntity = mc.world.getBlockEntity(pos)) != null && ((type = blockEntity.getType()) == BlockEntityType.CHEST || type == BlockEntityType.TRAPPED_CHEST)) {
                 result.add(pos);
             }
         }

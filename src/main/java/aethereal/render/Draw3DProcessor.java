@@ -56,7 +56,7 @@ public class Draw3DProcessor extends BaseProcessor implements Interface {
             RenderSystem.setShaderColor(alpha, alpha, alpha, alpha);
             context.drawItem(stack, 0, 0);
             if (overlay) {
-                context.drawStackOverlay(aM_.textRenderer, stack, 0, 0);
+                context.drawStackOverlay(mc.textRenderer, stack, 0, 0);
             }
             RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
             context.getMatrices().pop();

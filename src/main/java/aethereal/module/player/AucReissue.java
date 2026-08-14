@@ -32,26 +32,26 @@ public class AucReissue extends Module implements Interface {
 
     @EventTarget
     public void a(TickEvent event) {
-        if (!ServerUtil.e() && ((ServerUtil.a.d() != -1 || ServerUtil.d.b() != -1) && aM_.player.age >= 220 && !Delta.h().d().v().g().a() && !aM_.player.getItemCooldownManager().isCoolingDown(Items.CLOCK.getDefaultStack()))) {
-            if (aM_.currentScreen instanceof HandledScreen<?> handledScreen) {
+        if (!ServerUtil.e() && ((ServerUtil.a.d() != -1 || ServerUtil.d.b() != -1) && mc.player.age >= 220 && !Delta.h().d().v().g().a() && !mc.player.getItemCooldownManager().isCoolingDown(Items.CLOCK.getDefaultStack()))) {
+            if (mc.currentScreen instanceof HandledScreen<?> handledScreen) {
                 if (handledScreen instanceof GenericContainerScreen) {
                     String title = handledScreen.getTitle().getString();
-                    if (aM_.player.age % 5 == 0) {
+                    if (mc.player.age % 5 == 0) {
                         if (title.matches(".*А.*у.*к.*ц.*и.*о.*н.*")) {
-                            aM_.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handledScreen.getScreenHandler().syncId, handledScreen.getScreenHandler().getRevision(), 46, 1, SlotActionType.PICKUP, handledScreen.getScreenHandler().getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
+                            mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handledScreen.getScreenHandler().syncId, handledScreen.getScreenHandler().getRevision(), 46, 1, SlotActionType.PICKUP, handledScreen.getScreenHandler().getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
                         } else if (title.matches(".*Х.*р.*а.*н.*и.*л.*и.*щ.*е.*")) {
-                            aM_.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handledScreen.getScreenHandler().syncId, handledScreen.getScreenHandler().getRevision(), 52, 1, SlotActionType.PICKUP, handledScreen.getScreenHandler().getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
+                            mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handledScreen.getScreenHandler().syncId, handledScreen.getScreenHandler().getRevision(), 52, 1, SlotActionType.PICKUP, handledScreen.getScreenHandler().getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
                         }
                     }
-                } else if (aM_.player.age % 20 == 0) {
-                    aM_.player.networkHandler.sendChatCommand("ah");
+                } else if (mc.player.age % 20 == 0) {
+                    mc.player.networkHandler.sendChatCommand("ah");
                 }
-            } else if (aM_.player.age % 20 == 0) {
-                aM_.player.networkHandler.sendChatCommand("ah");
+            } else if (mc.player.age % 20 == 0) {
+                mc.player.networkHandler.sendChatCommand("ah");
             }
         }
-        if (this.b && (aM_.currentScreen instanceof GenericContainerScreen)) {
-            aM_.player.closeHandledScreen();
+        if (this.b && (mc.currentScreen instanceof GenericContainerScreen)) {
+            mc.player.closeHandledScreen();
             this.b = false;
         }
     }
@@ -59,7 +59,7 @@ public class AucReissue extends Module implements Interface {
     @EventTarget
     public void a(PacketEvent eventPacket) {
         if (!ServerUtil.e()) {
-            if ((ServerUtil.a.d() != -1 || ServerUtil.d.b() != -1) && aM_.player.age >= 220 && eventPacket.c()) {
+            if ((ServerUtil.a.d() != -1 || ServerUtil.d.b() != -1) && mc.player.age >= 220 && eventPacket.c()) {
                 if (eventPacket.d() instanceof GameMessageS2CPacket packet) {
                     String msg = packet.content().getString();
                     if (msg.equals("Данная команда недоступна в режиме AFK")) {
@@ -70,12 +70,12 @@ public class AucReissue extends Module implements Interface {
                         a();
                     }
                     if (msg.contains("[☃] Предметы успешно перевыставлены ") || msg.contains("[✔] Предметы успешно перевыставлены!")) {
-                        aM_.player.getItemCooldownManager().set(Items.CLOCK.getDefaultStack(), 1200);
+                        mc.player.getItemCooldownManager().set(Items.CLOCK.getDefaultStack(), 1200);
                         this.b = true;
                     }
                     if (msg.contains("[☃] Вы можете переставлять предметы раз в минуту! Подождите ")) {
                         int seconds = Integer.parseInt(msg.replaceAll(".*Подождите (\\d+) сек\\..*", "$1"));
-                        aM_.player.getItemCooldownManager().set(Items.CLOCK.getDefaultStack(), (seconds * 20) + 20);
+                        mc.player.getItemCooldownManager().set(Items.CLOCK.getDefaultStack(), (seconds * 20) + 20);
                         this.b = true;
                     }
                 }

@@ -63,7 +63,7 @@ public class HotkeysWidget extends Widget implements Interface {
 
     @Override
     public void a(GlobalEvent event) {
-        boolean visible = aM_.currentScreen instanceof ChatScreen;
+        boolean visible = mc.currentScreen instanceof ChatScreen;
         for (Module module : Delta.h().d().t().e()) {
             if (module.p() != -1 && module.f().c() > 0.0f) {
                 visible = true;

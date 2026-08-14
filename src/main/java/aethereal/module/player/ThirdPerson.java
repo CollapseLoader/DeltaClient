@@ -35,7 +35,7 @@ public class ThirdPerson extends Module {
 
     @EventTarget
     public void a(KeyEvent event) {
-        if (this.c && event.b() == aM_.options.togglePerspectiveKey.getDefaultKey().getCode()) {
+        if (this.c && event.b() == mc.options.togglePerspectiveKey.getDefaultKey().getCode()) {
             event.a(true);
         }
     }
@@ -43,10 +43,10 @@ public class ThirdPerson extends Module {
     @EventTarget
     public void a(TickEvent event) {
         if (this.c) {
-            if (aM_.currentScreen != null) {
+            if (mc.currentScreen != null) {
                 d(false);
             } else {
-                Delta.h().d().k().a(new Rotation(aM_.player.getYaw(), MathUtil.b(aM_.player.getPitch(), -89.0f, 89.0f)), 360.0f, 0, 1);
+                Delta.h().d().k().a(new Rotation(mc.player.getYaw(), MathUtil.b(mc.player.getPitch(), -89.0f, 89.0f)), 360.0f, 0, 1);
             }
         }
     }
@@ -58,7 +58,7 @@ public class ThirdPerson extends Module {
             Look.a(this.e.c());
             Look.b(this.e.d());
         }
-        aM_.options.setPerspective(active ? Perspective.THIRD_PERSON_BACK : Perspective.FIRST_PERSON);
+        mc.options.setPerspective(active ? Perspective.THIRD_PERSON_BACK : Perspective.FIRST_PERSON);
         this.c = active;
     }
 }

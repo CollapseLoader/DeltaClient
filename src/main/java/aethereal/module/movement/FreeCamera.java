@@ -33,15 +33,15 @@ public class FreeCamera extends Module implements Interface {
     @Override
     public void b() {
         super.b();
-        if (aM_.player == null) {
+        if (mc.player == null) {
             d(true);
             a();
             return;
         }
-        this.f = aM_.player.getEyePos();
-        this.e = aM_.player.getEyePos();
+        this.f = mc.player.getEyePos();
+        this.e = mc.player.getEyePos();
         if (this.d.c().booleanValue()) {
-            this.g = aM_.player.getPos();
+            this.g = mc.player.getPos();
         }
         d(false);
     }
@@ -54,12 +54,12 @@ public class FreeCamera extends Module implements Interface {
 
     @EventTarget
     public void a(CameraPositionEvent event) {
-        if (this.e != null && aM_.player.isAlive()) {
-            if (aM_.options.getPerspective() != Perspective.FIRST_PERSON) {
-                aM_.options.setPerspective(Perspective.FIRST_PERSON);
+        if (this.e != null && mc.player.isAlive()) {
+            if (mc.options.getPerspective() != Perspective.FIRST_PERSON) {
+                mc.options.setPerspective(Perspective.FIRST_PERSON);
             }
             Vec3d basePrev = this.f != null ? this.f : this.e;
-            Vec3d interpolated = new Vec3d(basePrev.x + ((this.e.x - basePrev.x) * ((double) aM_.getRenderTickCounter().getTickDelta(false))), basePrev.y + ((this.e.y - basePrev.y) * ((double) aM_.getRenderTickCounter().getTickDelta(false))), basePrev.z + ((this.e.z - basePrev.z) * ((double) aM_.getRenderTickCounter().getTickDelta(false))));
+            Vec3d interpolated = new Vec3d(basePrev.x + ((this.e.x - basePrev.x) * ((double) mc.getRenderTickCounter().getTickDelta(false))), basePrev.y + ((this.e.y - basePrev.y) * ((double) mc.getRenderTickCounter().getTickDelta(false))), basePrev.z + ((this.e.z - basePrev.z) * ((double) mc.getRenderTickCounter().getTickDelta(false))));
             event.a(interpolated);
             event.a(true);
         }
@@ -67,8 +67,8 @@ public class FreeCamera extends Module implements Interface {
 
     @EventTarget
     public void a(CrosshairTargetEvent event) {
-        if (this.e != null && aM_.player.isAlive()) {
-            event.a(aM_.world.raycast(new RaycastContext(this.e, this.e.add(aM_.player.getRotationVec(event.b()).multiply(aM_.player.getBlockInteractionRange())), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, aM_.player)));
+        if (this.e != null && mc.player.isAlive()) {
+            event.a(mc.world.raycast(new RaycastContext(this.e, this.e.add(mc.player.getRotationVec(event.b()).multiply(mc.player.getBlockInteractionRange())), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player)));
             event.a(true);
         }
     }
@@ -77,29 +77,29 @@ public class FreeCamera extends Module implements Interface {
     public void a(TickEvent eventTick) {
         float f;
         float f2;
-        if (this.e != null && aM_.player.isAlive()) {
-            if (aM_.currentScreen == null) {
-                if (aM_.options.forwardKey.isPressed()) {
+        if (this.e != null && mc.player.isAlive()) {
+            if (mc.currentScreen == null) {
+                if (mc.options.forwardKey.isPressed()) {
                     f = 1.0f;
                 } else {
-                    f = aM_.options.backKey.isPressed() ? -1.0f : 0.0f;
+                    f = mc.options.backKey.isPressed() ? -1.0f : 0.0f;
                 }
                 this.h = f;
-                if (InputUtil.isKeyPressed(aM_.getWindow().getHandle(), 65)) {
+                if (InputUtil.isKeyPressed(mc.getWindow().getHandle(), 65)) {
                     f2 = 1.0f;
                 } else {
-                    f2 = InputUtil.isKeyPressed(aM_.getWindow().getHandle(), 68) ? -1.0f : 0.0f;
+                    f2 = InputUtil.isKeyPressed(mc.getWindow().getHandle(), 68) ? -1.0f : 0.0f;
                 }
                 this.i = f2;
-                this.j = aM_.options.jumpKey.isPressed();
-                this.k = aM_.options.sneakKey.isPressed();
+                this.j = mc.options.jumpKey.isPressed();
+                this.k = mc.options.sneakKey.isPressed();
             } else {
                 d(false);
             }
-            if (this.d.c().booleanValue() && !aM_.player.isOnGround()) {
-                aM_.player.setVelocity(0.0d, 0.0d, 0.0d);
+            if (this.d.c().booleanValue() && !mc.player.isOnGround()) {
+                mc.player.setVelocity(0.0d, 0.0d, 0.0d);
                 if (this.g != null) {
-                    aM_.player.setPosition(this.g.x, this.g.y, this.g.z);
+                    mc.player.setPosition(this.g.x, this.g.y, this.g.z);
                 }
             }
             this.f = this.e;
@@ -111,24 +111,24 @@ public class FreeCamera extends Module implements Interface {
     public void a(InputEvent event) {
         float f;
         float f2;
-        if (this.e != null && aM_.player.isAlive()) {
-            if (aM_.currentScreen != null) {
+        if (this.e != null && mc.player.isAlive()) {
+            if (mc.currentScreen != null) {
                 event.a(0.0f);
                 event.b(0.0f);
                 event.b(false);
                 event.c(false);
                 return;
             }
-            if (InputUtil.isKeyPressed(aM_.getWindow().getHandle(), 265)) {
+            if (InputUtil.isKeyPressed(mc.getWindow().getHandle(), 265)) {
                 f = 1.0f;
             } else {
-                f = InputUtil.isKeyPressed(aM_.getWindow().getHandle(), 264) ? -1.0f : 0.0f;
+                f = InputUtil.isKeyPressed(mc.getWindow().getHandle(), 264) ? -1.0f : 0.0f;
             }
             event.a(f);
-            if (InputUtil.isKeyPressed(aM_.getWindow().getHandle(), 262)) {
+            if (InputUtil.isKeyPressed(mc.getWindow().getHandle(), 262)) {
                 f2 = -1.0f;
             } else {
-                f2 = InputUtil.isKeyPressed(aM_.getWindow().getHandle(), 263) ? 1.0f : 0.0f;
+                f2 = InputUtil.isKeyPressed(mc.getWindow().getHandle(), 263) ? 1.0f : 0.0f;
             }
             event.b(f2);
             event.b(false);
@@ -138,7 +138,7 @@ public class FreeCamera extends Module implements Interface {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (event.b() && this.d.c().booleanValue() && this.e != null && !aM_.player.isOnGround() && aM_.player.isAlive()) {
+        if (event.b() && this.d.c().booleanValue() && this.e != null && !mc.player.isOnGround() && mc.player.isAlive()) {
             if ((event.d() instanceof PlayerInputC2SPacket) || (event.d() instanceof ClientCommandC2SPacket)) {
                 event.a(true);
             }

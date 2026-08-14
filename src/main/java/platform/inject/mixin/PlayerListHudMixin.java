@@ -26,7 +26,7 @@ import java.util.List;
 public abstract class PlayerListHudMixin {
     @ModifyArgs(method = {"render"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;fill(IIIII)V", ordinal = 2), require = 0)
     private void render(Args args, @Local(name = {"list"}) List<PlayerListEntry> list, @Local(name = {"w"}) int w) {
-        if (Interface.aM_.player != null && w < list.size() && Interface.aM_.player.getUuid().equals(list.get(w).getProfile().getId())) {
+        if (Interface.mc.player != null && w < list.size() && Interface.mc.player.getUuid().equals(list.get(w).getProfile().getId())) {
             args.set(4, Integer.valueOf(ColorUtil.a(60, InterfaceC0020Opcode.al, 255, 128)));
         }
     }

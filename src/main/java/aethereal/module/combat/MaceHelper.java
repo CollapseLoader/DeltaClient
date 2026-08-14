@@ -57,12 +57,12 @@ public class MaceHelper extends Module {
         Vec3d landing;
         this.d--;
         List<UseableHandler.a> tasks = Delta.h().d().v().b().a();
-        if ((this.d <= 198 && aM_.player.isOnGround()) || aM_.player.isTouchingWater() || aM_.player.age < 5) {
+        if ((this.d <= 198 && mc.player.isOnGround()) || mc.player.isTouchingWater() || mc.player.age < 5) {
             if (this.e && tasks.isEmpty()) {
                 if (this.f[1] > 8) {
                     Delta.h().d().v().a().a(this.f[0], this.f[1], 1);
                 } else {
-                    aM_.player.getInventory().selectedSlot = this.f[0];
+                    mc.player.getInventory().selectedSlot = this.f[0];
                 }
                 this.e = false;
                 this.f = new int[]{-1, -1};
@@ -78,28 +78,28 @@ public class MaceHelper extends Module {
             return;
         }
         if (!ServerUtil.a.a() || ServerUtil.e()) {
-            ItemCooldownManagerAccessor cooldowns = (ItemCooldownManagerAccessor) aM_.player.getItemCooldownManager();
-            Object entry = cooldowns.getEntries().get(aM_.player.getItemCooldownManager().getGroup(Items.MACE.getDefaultStack()));
+            ItemCooldownManagerAccessor cooldowns = (ItemCooldownManagerAccessor) mc.player.getItemCooldownManager();
+            Object entry = cooldowns.getEntries().get(mc.player.getItemCooldownManager().getGroup(Items.MACE.getDefaultStack()));
             if (entry == null || ((platform.inject.accessors.ItemCooldownEntryAccessor) entry).getEndTick() - cooldowns.getTick() <= 10) {
                 Aura aura = Delta.h().d().t().B();
                 TriggerBot triggerBot = Delta.h().d().t().X();
                 boolean fromAura = aura.s() != null;
                 LivingEntity target = fromAura ? aura.s() : triggerBot.s();
-                if (target == null || target.isBlocking() || aM_.player.isOnGround() || MaceUtil.a() || this.e || aM_.player.fallDistance <= 0.0f || !tasks.isEmpty() || !Delta.h().d().v().a().a().isEmpty() || Math.hypot(target.getPos().x - aM_.player.getPos().x, target.getPos().z - aM_.player.getPos().z) > 6.0d) {
+                if (target == null || target.isBlocking() || mc.player.isOnGround() || MaceUtil.a() || this.e || mc.player.fallDistance <= 0.0f || !tasks.isEmpty() || !Delta.h().d().v().a().a().isEmpty() || Math.hypot(target.getPos().x - mc.player.getPos().x, target.getPos().z - mc.player.getPos().z) > 6.0d) {
                     return;
                 }
-                if ((fromAura ? aura.b : triggerBot.d) <= 1 || (landing = MaceUtil.a(aM_.player, aM_.world).orElse(null)) == null || aM_.player.getY() + aM_.player.getVelocity().y <= landing.getY() || aM_.player.getY() - landing.getY() <= 3.5d) {
+                if ((fromAura ? aura.b : triggerBot.d) <= 1 || (landing = MaceUtil.a(mc.player, mc.world).orElse(null)) == null || mc.player.getY() + mc.player.getVelocity().y <= landing.getY() || mc.player.getY() - landing.getY() <= 3.5d) {
                     return;
                 }
                 this.e = true;
                 int[] iArr = new int[2];
-                iArr[0] = aM_.player.getInventory().selectedSlot;
+                iArr[0] = mc.player.getInventory().selectedSlot;
                 iArr[1] = hotbar != -1 ? hotbar : slotMace;
                 this.f = iArr;
                 if (hotbar == -1) {
-                    Delta.h().d().v().a().a(slotMace, aM_.player.getInventory().selectedSlot, 1);
+                    Delta.h().d().v().a().a(slotMace, mc.player.getInventory().selectedSlot, 1);
                 } else {
-                    aM_.player.getInventory().selectedSlot = hotbar;
+                    mc.player.getInventory().selectedSlot = hotbar;
                 }
             }
         }

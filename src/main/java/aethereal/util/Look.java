@@ -38,11 +38,11 @@ public class Look implements Interface {
     }
 
     private static void d() {
-        if (aM_.player != null) {
-            float py = aM_.player.getYaw();
+        if (mc.player != null) {
+            float py = mc.player.getYaw();
             float fy = c;
-            aM_.player.setYaw(py + MathHelper.wrapDegrees(fy - py));
-            aM_.player.setPitch(d);
+            mc.player.setYaw(py + MathHelper.wrapDegrees(fy - py));
+            mc.player.setPitch(d);
         }
     }
 

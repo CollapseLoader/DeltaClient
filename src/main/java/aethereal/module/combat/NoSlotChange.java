@@ -13,7 +13,7 @@ public class NoSlotChange extends Module {
     @EventTarget
     public void a(PacketEvent event) {
         if (event.c() && (event.d() instanceof UpdateSelectedSlotS2CPacket)) {
-            aM_.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(aM_.player.getInventory().selectedSlot));
+            mc.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(mc.player.getInventory().selectedSlot));
             event.a(true);
         }
     }

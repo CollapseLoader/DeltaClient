@@ -51,7 +51,7 @@ public class AutoBuy extends Module implements Interface {
 
     public AutoBuy() {
         ButtonSetting c = new ButtonSetting("Открыть редактор", () -> {
-            aM_.setScreen(new StationScreen(Text.literal(""), 1));
+            mc.setScreen(new StationScreen(Text.literal(""), 1));
         });
         a(c, this.b);
     }
@@ -78,18 +78,18 @@ public class AutoBuy extends Module implements Interface {
 
     @EventTarget
     public void a(TickEvent event) {
-        if (aM_.player.age >= 220 && this.k && !(aM_.currentScreen instanceof GenericContainerScreen) && this.j && aM_.player.age % 20 == 0) {
-            aM_.player.networkHandler.sendCommand("ah");
+        if (mc.player.age >= 220 && this.k && !(mc.currentScreen instanceof GenericContainerScreen) && this.j && mc.player.age % 20 == 0) {
+            mc.player.networkHandler.sendCommand("ah");
             this.k = false;
         }
         this.f++;
         this.g++;
-        GenericContainerScreen screen = (GenericContainerScreen) aM_.currentScreen;
+        GenericContainerScreen screen = (GenericContainerScreen) mc.currentScreen;
         if (screen instanceof GenericContainerScreen) {
             if (this.j) {
                 ScreenHandler handler = screen.getScreenHandler();
                 String title = screen.getTitle().getString().replaceAll("§.", "").toLowerCase().trim();
-                boolean buy = aM_.player.age % 2 == 0;
+                boolean buy = mc.player.age % 2 == 0;
                 boolean reissue = this.b.c().booleanValue() && this.e.a(DateUtils.b);
                 if (title.contains("аукцион")) {
                     boolean found = false;
@@ -125,11 +125,11 @@ public class AutoBuy extends Module implements Interface {
                     a(handler, 1, SlotActionType.QUICK_MOVE);
                 }
                 if (this.b.c().booleanValue() && reissue) {
-                    HandledScreen<?> handledScreen = (HandledScreen<?>) aM_.currentScreen;
+                    HandledScreen<?> handledScreen = (HandledScreen<?>) mc.currentScreen;
                     if (handledScreen instanceof HandledScreen) {
                         if ((handledScreen instanceof GenericContainerScreen) && !MoveUtil.a()) {
                             if (title.matches(".*а.*у.*к.*ц.*и.*о.*н.*")) {
-                                if (aM_.player.age % 10 == 0) {
+                                if (mc.player.age % 10 == 0) {
                                     a(handledScreen.getScreenHandler(), 46, SlotActionType.PICKUP);
                                     this.g = 0;
                                 }
@@ -157,7 +157,7 @@ public class AutoBuy extends Module implements Interface {
                 if (inventoryPacket instanceof InventoryS2CPacket) {
                     if (inventoryPacket.getContents().size() == 90 && this.f >= 7) {
                         int anarchy = (int) (MathUtil.a(0.0f, 100.0f) <= 50.0f ? MathUtil.a(205.0f, 231.0f) : MathUtil.a(305.0f, 325.0f));
-                        aM_.player.networkHandler.sendChatCommand("an" + anarchy);
+                        mc.player.networkHandler.sendChatCommand("an" + anarchy);
                         ChatUtil.sendMessage("Обнаружили замедление аукциона, переходим на " + anarchy + " анархию");
                         this.f = 0;
                         this.k = true;
@@ -185,7 +185,7 @@ public class AutoBuy extends Module implements Interface {
             }
             OpenScreenS2CPacket openScreenPacket = (OpenScreenS2CPacket) event.d();
             if (openScreenPacket instanceof OpenScreenS2CPacket) {
-                if (!(aM_.currentScreen instanceof GenericContainerScreen)) {
+                if (!(mc.currentScreen instanceof GenericContainerScreen)) {
                     this.f = 0;
                 }
                 this.h = openScreenPacket.getSyncId();
@@ -193,7 +193,7 @@ public class AutoBuy extends Module implements Interface {
             PlaySoundS2CPacket soundPacket = (PlaySoundS2CPacket) event.d();
             if (soundPacket instanceof PlaySoundS2CPacket) {
                 if (soundPacket.getSound().value().id().getPath().equals("block.note_block.basedrum")) {
-                    this.h = aM_.player.currentScreenHandler.syncId;
+                    this.h = mc.player.currentScreenHandler.syncId;
                     event.a(true);
                 }
             }
@@ -223,7 +223,7 @@ public class AutoBuy extends Module implements Interface {
                         Delta.h().d().j().a(context, stack, x + 1, slotY + 1, 0, 1.0f, 1.0f, true);
                         if (MathUtil.a(event.f(), event.g(), x + 1, slotY + 1, 16.0f, 16.0f)) {
                             context.fillGradient(RenderLayer.getGuiOverlay(), x + 1, slotY + 1, x + 17, slotY + 17, -2130706433, -2130706433, 0);
-                            context.drawItemTooltip(aM_.textRenderer, stack, event.f(), event.g());
+                            context.drawItemTooltip(mc.textRenderer, stack, event.f(), event.g());
                         }
                     }
                 }
@@ -232,7 +232,7 @@ public class AutoBuy extends Module implements Interface {
     }
 
     private void a(ScreenHandler handler, int slot, SlotActionType action) {
-        aM_.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handler.syncId, handler.getRevision(), slot, 0, action, handler.getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
+        mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handler.syncId, handler.getRevision(), slot, 0, action, handler.getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
         this.f = 0;
     }
 }

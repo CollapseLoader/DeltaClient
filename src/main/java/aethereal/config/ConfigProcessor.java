@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ConfigProcessor<T> extends BaseProcessor {
-    protected final File b = new File(aM_.runDirectory, "configs");
-    protected final File c = new File(new File(aM_.runDirectory, "configs"), "general");
+    protected final File b = new File(mc.runDirectory, "configs");
+    protected final File c = new File(new File(mc.runDirectory, "configs"), "general");
     protected final List<T> d = new ArrayList();
 
     protected abstract String b();

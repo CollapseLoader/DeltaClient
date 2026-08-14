@@ -32,15 +32,15 @@ import java.util.stream.IntStream;
 public class AppleFarmer extends Module {
     @EventTarget
     public void a(TickEvent event) {
-        if (aM_.player.age % 600 < 10) {
-            if (aM_.player.getMainHandStack().getItem() instanceof AxeItem) {
-                aM_.player.getInventory().selectedSlot = (int) MathUtil.a(0.0f, 8.0f);
+        if (mc.player.age % 600 < 10) {
+            if (mc.player.getMainHandStack().getItem() instanceof AxeItem) {
+                mc.player.getInventory().selectedSlot = (int) MathUtil.a(0.0f, 8.0f);
                 return;
             }
             return;
         }
         Delta.h().d().t().aV().b(19);
-        if (Delta.h().d().v().k().a() || !Delta.h().d().v().i().a(aM_.player.getMainHandStack(), 10.0d, 98.0d)) {
+        if (Delta.h().d().v().k().a() || !Delta.h().d().v().i().a(mc.player.getMainHandStack(), 10.0d, 98.0d)) {
             return;
         }
         BlockPos leaf = a(5.0d, s -> {
@@ -63,7 +63,7 @@ public class AppleFarmer extends Module {
             });
             return;
         }
-        if (aM_.currentScreen instanceof GenericContainerScreen) {
+        if (mc.currentScreen instanceof GenericContainerScreen) {
             q();
             return;
         }
@@ -89,23 +89,23 @@ public class AppleFarmer extends Module {
     }
 
     private void a(BlockPos pos, Predicate<ItemStack> tool) {
-        if (!tool.test(aM_.player.getMainHandStack())) {
+        if (!tool.test(mc.player.getMainHandStack())) {
             a(tool);
             return;
         }
-        if ((aM_.player.getMainHandStack().getItem() instanceof AxeItem) && aM_.player.getAttackCooldownProgress(0.0f) <= 0.15f) {
+        if ((mc.player.getMainHandStack().getItem() instanceof AxeItem) && mc.player.getAttackCooldownProgress(0.0f) <= 0.15f) {
             return;
         }
         Vec3d center = pos.toCenterPos();
         if (a(center)) {
-            Vec3d hit = new Box(pos).raycast(aM_.player.getEyePos(), center).orElse(center);
-            aM_.interactionManager.updateBlockBreakingProgress(pos, Direction.getFacing(hit.subtract(center)));
-            aM_.player.swingHand(Hand.MAIN_HAND);
+            Vec3d hit = new Box(pos).raycast(mc.player.getEyePos(), center).orElse(center);
+            mc.interactionManager.updateBlockBreakingProgress(pos, Direction.getFacing(hit.subtract(center)));
+            mc.player.swingHand(Hand.MAIN_HAND);
         }
     }
 
     private void a(BlockPos dirt) {
-        boolean grown = aM_.world.getBlockState(dirt.up()).getBlock() instanceof SaplingBlock;
+        boolean grown = mc.world.getBlockState(dirt.up()).getBlock() instanceof SaplingBlock;
         Predicate<ItemStack> want = grown ? s -> {
             return s.isOf(Items.BONE_MEAL);
         } : s2 -> {
@@ -114,30 +114,30 @@ public class AppleFarmer extends Module {
             }
             return false;
         };
-        if (!want.test(aM_.player.getMainHandStack())) {
+        if (!want.test(mc.player.getMainHandStack())) {
             a(want);
             return;
         }
         Vec3d top = new Vec3d(((double) dirt.getX()) + 0.5d, dirt.getY() + 1, ((double) dirt.getZ()) + 0.5d);
-        if (a(top) && aM_.player.age % 4 == 0) {
-            aM_.interactionManager.interactBlock(aM_.player, Hand.MAIN_HAND, new BlockHitResult(top, Direction.UP, grown ? dirt.up() : dirt, false));
-            aM_.player.swingHand(Hand.MAIN_HAND);
+        if (a(top) && mc.player.age % 4 == 0) {
+            mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, new BlockHitResult(top, Direction.UP, grown ? dirt.up() : dirt, false));
+            mc.player.swingHand(Hand.MAIN_HAND);
         }
     }
 
     private void q() {
-        GenericContainerScreen screen = (GenericContainerScreen) aM_.currentScreen;
+        GenericContainerScreen screen = (GenericContainerScreen) mc.currentScreen;
         if (!(screen instanceof GenericContainerScreen)) {
             b(a(5.0d, s -> {
                 return s.isOf(u() ? Blocks.CHEST : Blocks.BARREL);
             }, this::c));
             return;
         }
-        if (aM_.player.age % 50 == 0) {
-            aM_.player.closeHandledScreen();
+        if (mc.player.age % 50 == 0) {
+            mc.player.closeHandledScreen();
             return;
         }
-        if (aM_.player.age % 2 != 0) {
+        if (mc.player.age % 2 != 0) {
             return;
         }
         ScreenHandler handler = screen.getScreenHandler();
@@ -157,18 +157,18 @@ public class AppleFarmer extends Module {
             movedCount = v() ? a(handler, true, 3, this::a) : 0;
         }
         if (movedCount == 0) {
-            aM_.player.closeHandledScreen();
+            mc.player.closeHandledScreen();
         }
     }
 
     private void r() {
-        if (aM_.player.age % 2 != 0) {
+        if (mc.player.age % 2 != 0) {
             return;
         }
-        PlayerScreenHandler handler = aM_.player.playerScreenHandler;
+        PlayerScreenHandler handler = mc.player.playerScreenHandler;
         if (handler.getSlot(0).getStack().isOf(Items.BONE_MEAL)) {
             a(handler, 0, 0, SlotActionType.QUICK_MOVE);
-            aM_.player.closeHandledScreen();
+            mc.player.closeHandledScreen();
             return;
         }
         int bone = a(Items.BONE);
@@ -182,10 +182,10 @@ public class AppleFarmer extends Module {
     private void s() {
         float sw = t();
         a(new Rotation(sw * 10.0f, MathUtil.b(sw / 4.0f, -30.0f, 30.0f)));
-        if (aM_.player.age % 5 != 0) {
+        if (mc.player.age % 5 != 0) {
             return;
         }
-        PlayerScreenHandler handler = aM_.player.playerScreenHandler;
+        PlayerScreenHandler handler = mc.player.playerScreenHandler;
         int keep = -1;
         int max = -1;
         for (Slot slot : handler.slots) {
@@ -202,36 +202,36 @@ public class AppleFarmer extends Module {
     }
 
     private void b(BlockPos block) {
-        if (block != null && a(block.toCenterPos()) && aM_.player.age % 4 == 0) {
+        if (block != null && a(block.toCenterPos()) && mc.player.age % 4 == 0) {
             Vec3d center = block.toCenterPos();
-            Vec3d hit = new Box(block).raycast(aM_.player.getEyePos(), center).orElse(center);
-            aM_.interactionManager.interactBlock(aM_.player, Hand.MAIN_HAND, new BlockHitResult(hit, Direction.getFacing(hit.subtract(center)), block, false));
+            Vec3d hit = new Box(block).raycast(mc.player.getEyePos(), center).orElse(center);
+            mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, new BlockHitResult(hit, Direction.getFacing(hit.subtract(center)), block, false));
         }
     }
 
     private void a(Predicate<ItemStack> match) {
         int slot = IntStream.range(0, 36).filter(i -> {
-            return match.test(aM_.player.getInventory().getStack(i));
+            return match.test(mc.player.getInventory().getStack(i));
         }).findFirst().orElse(-1);
         if (slot < 0) {
             return;
         }
         if (slot < 9) {
-            aM_.player.getInventory().selectedSlot = slot;
+            mc.player.getInventory().selectedSlot = slot;
             return;
         }
-        if (aM_.player.age % 4 != 0) {
+        if (mc.player.age % 4 != 0) {
             return;
         }
         int target = IntStream.range(0, 9).filter(i2 -> {
-            return aM_.player.getInventory().getStack(i2).isEmpty();
-        }).findFirst().orElse(aM_.player.getInventory().selectedSlot);
+            return mc.player.getInventory().getStack(i2).isEmpty();
+        }).findFirst().orElse(mc.player.getInventory().selectedSlot);
         Delta.h().d().v().a().a(slot, target, 1);
-        aM_.player.getInventory().selectedSlot = target;
+        mc.player.getInventory().selectedSlot = target;
     }
 
     private boolean a(Vec3d point) {
-        Rotation rotation = Rotation.a(aM_.player.getEyePos(), point);
+        Rotation rotation = Rotation.a(mc.player.getEyePos(), point);
         float sw = t();
         a(new Rotation(rotation.c() + (sw / 2.0f), MathUtil.b(rotation.d() + (sw / 4.0f), -90.0f, 90.0f)));
         return Rotation.b().a(rotation) < 20.0d;
@@ -242,7 +242,7 @@ public class AppleFarmer extends Module {
     }
 
     private float t() {
-        float time = aM_.player.age + aM_.getRenderTickCounter().getTickDelta(false);
+        float time = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
         return (float) (((Math.sin(time * 0.31f) * 0.5d) + (Math.sin((time * 0.73f) + 1.1f) * 0.30000003042305273d) + (Math.sin((time * 1.7f) + 2.6f) * 0.2000000149681302d)) * 8.0d);
     }
 
@@ -261,15 +261,15 @@ public class AppleFarmer extends Module {
     }
 
     private void a(ScreenHandler handler, int slot, int button, SlotActionType action) {
-        aM_.interactionManager.clickSlot(handler.syncId, slot, button, action, aM_.player);
+        mc.interactionManager.clickSlot(handler.syncId, slot, button, action, mc.player);
     }
 
     private boolean a(Slot slot) {
-        return ((platform.inject.accessors.SlotAccessor) slot).getInventory() == aM_.player.getInventory();
+        return ((platform.inject.accessors.SlotAccessor) slot).getInventory() == mc.player.getInventory();
     }
 
     private int a(Item item) {
-        for (Slot slot : aM_.player.playerScreenHandler.slots) {
+        for (Slot slot : mc.player.playerScreenHandler.slots) {
             if (a(slot) && slot.getStack().isOf(item)) {
                 return slot.id;
             }
@@ -295,12 +295,12 @@ public class AppleFarmer extends Module {
     }
 
     private double c(BlockPos pos) {
-        return aM_.player.getEyePos().squaredDistanceTo(Vec3d.ofCenter(pos));
+        return mc.player.getEyePos().squaredDistanceTo(Vec3d.ofCenter(pos));
     }
 
     private double d(BlockPos pos) {
-        Vec3d eye = aM_.player.getEyePos();
-        Vec3d look = aM_.player.getRotationVec(1.0f);
+        Vec3d eye = mc.player.getEyePos();
+        Vec3d look = mc.player.getRotationVec(1.0f);
         Vec3d diff = Vec3d.ofCenter(pos).subtract(eye);
         double along = diff.dotProduct(look);
         if (along <= 0.0d) {
@@ -310,7 +310,7 @@ public class AppleFarmer extends Module {
     }
 
     private BlockPos a(double radius, Predicate<BlockState> match, ToDoubleFunction<BlockPos> score) {
-        BlockPos origin = aM_.player.getBlockPos();
+        BlockPos origin = mc.player.getBlockPos();
         BlockPos best = null;
         double bestScore = 1.7976922776554332E308d;
         double reachSq = radius * radius;
@@ -320,7 +320,7 @@ public class AppleFarmer extends Module {
             for (int y = -r; y <= r; y++) {
                 for (int z = -r; z <= r; z++) {
                     pos.set(origin.getX() + x, origin.getY() + y, origin.getZ() + z);
-                    if (match.test(aM_.world.getBlockState(pos)) && c(pos) <= reachSq) {
+                    if (match.test(mc.world.getBlockState(pos)) && c(pos) <= reachSq) {
                         double s = score.applyAsDouble(pos);
                         if (s < bestScore) {
                             bestScore = s;

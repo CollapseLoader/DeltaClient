@@ -116,7 +116,7 @@ public class Draw2DProcessor extends BaseProcessor implements Interface {
     }
 
     public void a(MatrixStack matrices, Identifier texture, float x, float y, float width, float height, float radius, int color) {
-        a(matrices, x, y, width, height, radius, color, 0.0f, 0.0f, 1.0f, 1.0f, aM_.getTextureManager().getTexture(texture).getGlId());
+        a(matrices, x, y, width, height, radius, color, 0.0f, 0.0f, 1.0f, 1.0f, mc.getTextureManager().getTexture(texture).getGlId());
     }
 
     public void a(MatrixStack matrices, float x, float y, float width, float height, float radius, int color, float u, float v, float textureWidth, float textureHeight, int textureId) {
@@ -147,7 +147,7 @@ public class Draw2DProcessor extends BaseProcessor implements Interface {
             return;
         }
         int color = ColorUtil.a(255, 255, 255, (int) (alpha * 255.0f));
-        int textureId = aM_.getTextureManager().getTexture(skin).getGlId();
+        int textureId = mc.getTextureManager().getTexture(skin).getGlId();
         a(matrices, x, y, width, height, radius, color, 0.125f, 0.125f, 0.125f, 0.125f, textureId);
         a(matrices, x, y, width, height, radius, color, 0.625f, 0.125f, 0.125f, 0.125f, textureId);
     }
@@ -203,7 +203,7 @@ public class Draw2DProcessor extends BaseProcessor implements Interface {
         float vTop = 0.0f;
         float vBottom = 0.0f;
         if (mix != 1.0f) {
-            float scale = framebuffer.textureWidth / aM_.getWindow().getScaledWidth();
+            float scale = framebuffer.textureWidth / mc.getWindow().getScaledWidth();
             uLeft = (x * scale) / framebuffer.textureWidth;
             uRight = ((x + width) * scale) / framebuffer.textureWidth;
             vTop = 1.0f - ((y * scale) / framebuffer.textureHeight);
@@ -250,7 +250,7 @@ public class Draw2DProcessor extends BaseProcessor implements Interface {
         float clampedGlowRadius = Math.max(glowRadius, 0.0f);
         float padding = 0.8f * 1.5f;
         Framebuffer framebuffer = this.f.e().getFirst();
-        float scale = framebuffer.textureWidth / aM_.getWindow().getScaledWidth();
+        float scale = framebuffer.textureWidth / mc.getWindow().getScaledWidth();
         float uLeft = (x * scale) / framebuffer.textureWidth;
         float uRight = ((x + width) * scale) / framebuffer.textureWidth;
         float vTop = 1.0f - ((y * scale) / framebuffer.textureHeight);
@@ -271,7 +271,7 @@ public class Draw2DProcessor extends BaseProcessor implements Interface {
         }
         float padding = 0.8f * 1.5f;
         Framebuffer framebuffer = this.f.e().getFirst();
-        float scale = framebuffer.textureWidth / aM_.getWindow().getScaledWidth();
+        float scale = framebuffer.textureWidth / mc.getWindow().getScaledWidth();
         float uLeft = (x * scale) / framebuffer.textureWidth;
         float uRight = ((x + width) * scale) / framebuffer.textureWidth;
         float vTop = 1.0f - ((y * scale) / framebuffer.textureHeight);

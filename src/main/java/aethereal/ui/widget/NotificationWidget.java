@@ -38,7 +38,7 @@ public class NotificationWidget extends Widget implements Interface {
 
     @Override
     public void a(GlobalEvent event) {
-        d().a((aM_.currentScreen instanceof ChatScreen) || !Delta.h().d().m().b().isEmpty());
+        d().a((mc.currentScreen instanceof ChatScreen) || !Delta.h().d().m().b().isEmpty());
         super.a(event);
     }
 
@@ -57,7 +57,7 @@ public class NotificationWidget extends Widget implements Interface {
                     fA = Fonts.e.a(String.valueOf(message), this.e);
                 }
                 float width = 17.5f + fA + 4.0f;
-                float x = (aM_.getWindow().getScaledWidth() - width) / 2.0f;
+                float x = (mc.getWindow().getScaledWidth() - width) / 2.0f;
                 int color = notification.e() == -1 ? Delta.h().d().o().a(ThemeInfo.PRIMARY).a() : notification.e();
                 Object objD = notification.d();
                 if (objD instanceof ItemStack stack) {
@@ -80,13 +80,13 @@ public class NotificationWidget extends Widget implements Interface {
             ItemPickupAnimationS2CPacket class_2775VarD = (ItemPickupAnimationS2CPacket) event.d();
             if (class_2775VarD instanceof ItemPickupAnimationS2CPacket) {
                 ItemPickupAnimationS2CPacket itemPickupAnimationS2CPacket = class_2775VarD;
-                ClientPlayerEntity class_746VarMethod_8469 = (ClientPlayerEntity) aM_.world.getEntityById(itemPickupAnimationS2CPacket.getCollectorEntityId());
+                ClientPlayerEntity class_746VarMethod_8469 = (ClientPlayerEntity) mc.world.getEntityById(itemPickupAnimationS2CPacket.getCollectorEntityId());
                 if (class_746VarMethod_8469 instanceof PlayerEntity) {
                     ClientPlayerEntity class_746Var = class_746VarMethod_8469;
-                    ItemEntity class_1542VarMethod_8469 = (ItemEntity) aM_.world.getEntityById(itemPickupAnimationS2CPacket.getEntityId());
+                    ItemEntity class_1542VarMethod_8469 = (ItemEntity) mc.world.getEntityById(itemPickupAnimationS2CPacket.getEntityId());
                     if (class_1542VarMethod_8469 instanceof ItemEntity) {
                         ItemEntity itemEntity = class_1542VarMethod_8469;
-                        if (class_746Var != aM_.player && !itemEntity.getStack().getName().getString().contains("Упс.") && ((itemEntity.getStack().contains(DataComponentTypes.CUSTOM_NAME) && itemEntity.getStack().contains(DataComponentTypes.LORE)) || itemEntity.getStack().isOf(Items.ENCHANTED_GOLDEN_APPLE))) {
+                        if (class_746Var != mc.player && !itemEntity.getStack().getName().getString().contains("Упс.") && ((itemEntity.getStack().contains(DataComponentTypes.CUSTOM_NAME) && itemEntity.getStack().contains(DataComponentTypes.LORE)) || itemEntity.getStack().isOf(Items.ENCHANTED_GOLDEN_APPLE))) {
                             Delta.h().d().m().a(new Notification(itemEntity.getStack().copy(), class_746Var.getName().copy().append(" подобрал ").append(itemEntity.getStack().getName()).append(itemPickupAnimationS2CPacket.getStackAmount() > 1 ? " x" + itemPickupAnimationS2CPacket.getStackAmount() : ""), 1500));
                         }
                     }

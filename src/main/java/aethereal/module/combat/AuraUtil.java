@@ -39,10 +39,10 @@ public class AuraUtil implements Interface {
     }
 
     public static double a(Entity entity) {
-        if (aM_.player == null) {
+        if (mc.player == null) {
             return Double.POSITIVE_INFINITY;
         }
-        return a(aM_.player.getEyePos(), entity);
+        return a(mc.player.getEyePos(), entity);
     }
 
     public static boolean a(Entity entity, double maxReach) {
@@ -50,7 +50,7 @@ public class AuraUtil implements Interface {
     }
 
     public static boolean a(LivingEntity entity, double distance) {
-        Vec3d eye = aM_.player.getEyePos();
+        Vec3d eye = mc.player.getEyePos();
         Box box = entity.getBoundingBox();
         double cx = MathHelper.clamp(eye.x, box.minX, box.maxX);
         double cy = MathHelper.clamp(eye.y, box.minY, box.maxY);
@@ -62,19 +62,19 @@ public class AuraUtil implements Interface {
     }
 
     public static boolean a(float yaw, float pitch, double distance, Entity entity, boolean throwalls) {
-        if (aM_.player == null || aM_.world == null) {
+        if (mc.player == null || mc.world == null) {
             return false;
         }
-        return a(aM_.player.getEyePos(), yaw, pitch, distance, entity, throwalls);
+        return a(mc.player.getEyePos(), yaw, pitch, distance, entity, throwalls);
     }
 
     public static boolean a(Vec3d rayOrigin, float yaw, float pitch, double distance, Entity entity, boolean throwalls) {
-        if (aM_.player == null || aM_.world == null) {
+        if (mc.player == null || mc.world == null) {
             return false;
         }
         Vec3d dir = Vec3d.fromPolar(pitch, yaw).multiply(distance);
         Optional<Vec3d> opt = entity.getBoundingBox().contains(rayOrigin) ? Optional.of(rayOrigin) : entity.getBoundingBox().raycast(rayOrigin, rayOrigin.add(dir));
-        return opt.filter(vec3d -> throwalls || aM_.world.raycast(new RaycastContext(rayOrigin, vec3d, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, aM_.player)).getType() == HitResult.Type.MISS).isPresent();
+        return opt.filter(vec3d -> throwalls || mc.world.raycast(new RaycastContext(rayOrigin, vec3d, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player)).getType() == HitResult.Type.MISS).isPresent();
     }
 
     public static boolean a(Vec3d from, LivingEntity entity, double reach) {
@@ -91,7 +91,7 @@ public class AuraUtil implements Interface {
                         if (distSq > reachSq) {
                         } else {
                             Vec3d end = point.add(from.subtract(point).multiply(0.05000000993895991d / Math.sqrt(distSq)));
-                            if (aM_.world.raycast(new RaycastContext(from, end, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, aM_.player)).getType() == HitResult.Type.MISS) {
+                            if (mc.world.raycast(new RaycastContext(from, end, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player)).getType() == HitResult.Type.MISS) {
                                 return true;
                             }
                         }
@@ -103,29 +103,29 @@ public class AuraUtil implements Interface {
     }
 
     public static boolean a(int ticks, LivingEntity target, boolean checks) {
-        if (!checks && ticks >= 7 && a(target, 3.0d) && aM_.player.getAttackCooldownProgress(0.5f) > 0.7f) {
+        if (!checks && ticks >= 7 && a(target, 3.0d) && mc.player.getAttackCooldownProgress(0.5f) > 0.7f) {
             return a();
         }
         return false;
     }
 
     public static boolean a() {
-        if (aM_.player == null || aM_.world == null) {
+        if (mc.player == null || mc.world == null) {
             return false;
         }
-        double dy = (aM_.player.getVelocity().y - 0.08000000049877275d) * 0.9799995837206814d;
+        double dy = (mc.player.getVelocity().y - 0.08000000049877275d) * 0.9799995837206814d;
         if (dy >= 0.0d) {
             return false;
         }
-        Box moved = aM_.player.getBoundingBox().offset(0.0d, dy, 0.0d);
+        Box moved = mc.player.getBoundingBox().offset(0.0d, dy, 0.0d);
         Box feet = new Box(moved.minX, moved.minY - 0.010000001417203743d, moved.minZ, moved.maxX, moved.minY, moved.maxZ);
-        return aM_.world.isBlockSpaceEmpty(aM_.player, feet);
+        return mc.world.isBlockSpaceEmpty(mc.player, feet);
     }
 
     public static Vec3d a(Vec3d eye, LivingEntity target, double reach, boolean throughWalls) {
         Box bb = target.getBoundingBox();
         boolean mace = MaceUtil.a();
-        Vec3d aimEye = (!mace || aM_.player == null) ? eye : eye.add(aM_.player.getVelocity());
+        Vec3d aimEye = (!mace || mc.player == null) ? eye : eye.add(mc.player.getVelocity());
         double mx = (bb.minX + bb.maxX) * 0.5d;
         double mz = (bb.minZ + bb.maxZ) * 0.5d;
         Vec3d targetEye = target.getPos().add(0.0d, target.getStandingEyeHeight(), 0.0d);
@@ -202,17 +202,17 @@ public class AuraUtil implements Interface {
     }
 
     public static boolean b() {
-        if (aM_.player == null || aM_.player.getWorld() == null) {
+        if (mc.player == null || mc.player.getWorld() == null) {
             return false;
         }
-        World world = aM_.player.getWorld();
-        BlockPos eye = BlockPos.ofFloored(aM_.player.getEyePos());
+        World world = mc.player.getWorld();
+        BlockPos eye = BlockPos.ofFloored(mc.player.getEyePos());
         FluidState fluid = world.getFluidState(eye);
-        return !aM_.player.hasStatusEffect(StatusEffects.LEVITATION) && !aM_.player.hasStatusEffect(StatusEffects.BLINDNESS) && !fluid.isIn(FluidTags.WATER) && !fluid.isIn(FluidTags.LAVA) && !aM_.player.getAbilities().flying && !aM_.player.isGliding() && !aM_.player.isClimbing() && !aM_.player.hasVehicle();
+        return !mc.player.hasStatusEffect(StatusEffects.LEVITATION) && !mc.player.hasStatusEffect(StatusEffects.BLINDNESS) && !fluid.isIn(FluidTags.WATER) && !fluid.isIn(FluidTags.LAVA) && !mc.player.getAbilities().flying && !mc.player.isGliding() && !mc.player.isClimbing() && !mc.player.hasVehicle();
     }
 
     public static boolean c() {
-        return aM_.player != null && b() && aM_.player.fallDistance > 0.0f && !aM_.player.isOnGround();
+        return mc.player != null && b() && mc.player.fallDistance > 0.0f && !mc.player.isOnGround();
     }
 
     public static float a(float start, float end, float amount) {

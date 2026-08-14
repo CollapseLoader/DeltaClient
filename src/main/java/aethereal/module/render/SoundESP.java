@@ -67,7 +67,7 @@ public class SoundESP extends Module {
                             str = path.contains("trident") ? "Трезубец" : "Звук";
                         }
                         String soundName = str;
-                        int distance = (int) aM_.player.getPos().distanceTo(new Vec3d(soundInfo.b().getX(), soundInfo.b().getY(), soundInfo.b().getZ()));
+                        int distance = (int) mc.player.getPos().distanceTo(new Vec3d(soundInfo.b().getX(), soundInfo.b().getY(), soundInfo.b().getZ()));
                         int timeAlive = (int) (soundInfo.a().c() / 1000);
                         Text text = Text.literal(soundName + " [" + distance + "м/" + timeAlive + " сек]");
                         float textWidth = Fonts.e.a(text, 7.5f);

@@ -129,7 +129,7 @@ public class EnvironmentWidget extends Widget implements Interface {
         float textY = (y + ((12.0f - Fonts.e.a(6.5f)) / 2.0f)) - 0.5f;
         String health = ((int) data.f) + "HP";
         a(event, x, y, width, 12.0f, 3.0f, animation, false);
-        event.d().a(event.h(), x + 2.0f, y + 2.0f, 8.0f, 8.0f, 1.5f, ColorUtil.a(-1, animation), 0.125f, 0.125f, 0.125f, 0.125f, aM_.getTextureManager().getTexture(data.e).getGlId());
+        event.d().a(event.h(), x + 2.0f, y + 2.0f, 8.0f, 8.0f, 1.5f, ColorUtil.a(-1, animation), 0.125f, 0.125f, 0.125f, 0.125f, mc.getTextureManager().getTexture(data.e).getGlId());
         Fonts.e.a(event.h(), health, ((x + width) - 3.0f) - Fonts.e.a(health, 6.5f), textY, 6.5f, ColorUtil.a(-1, animation));
         float right = ((x + width) - 4.0f) - Fonts.e.a(health, 6.5f);
         if (this.f.c().booleanValue()) {
@@ -180,7 +180,7 @@ public class EnvironmentWidget extends Widget implements Interface {
     @Override
     public void a(GlobalEvent event) {
         PlayerEntity class_1657Var;
-        if (aM_.world != null && aM_.player != null) {
+        if (mc.world != null && mc.player != null) {
             PlayerEntity class_1657VarS = (PlayerEntity) Delta.h().d().t().B().s();
             if (class_1657VarS instanceof PlayerEntity) {
                 PlayerEntity aura = class_1657VarS;
@@ -200,8 +200,8 @@ public class EnvironmentWidget extends Widget implements Interface {
                 this.i[0] = target.getUuid();
             }
             long now = System.currentTimeMillis();
-            List<? extends PlayerEntity> nearby = aM_.world.getPlayers().stream().filter(player -> {
-                return player != aM_.player && player.isAlive() && !Delta.h().d().e().d(player.getName().getString());
+            List<? extends PlayerEntity> nearby = mc.world.getPlayers().stream().filter(player -> {
+                return player != mc.player && player.isAlive() && !Delta.h().d().e().d(player.getName().getString());
             }).sorted(Comparator.comparingInt((PlayerEntity player2) -> {
                 if (player2.getUuid().equals(this.i[0])) {
                     return 0;
@@ -223,7 +223,7 @@ public class EnvironmentWidget extends Widget implements Interface {
                 return !this.h.contains(data.a) && now - data.g > 30000;
             });
         }
-        d().a(aM_.world != null && (!this.h.isEmpty() || (aM_.currentScreen instanceof ChatScreen)));
+        d().a(mc.world != null && (!this.h.isEmpty() || (mc.currentScreen instanceof ChatScreen)));
         super.a(event);
     }
 
@@ -302,7 +302,7 @@ public class EnvironmentWidget extends Widget implements Interface {
         private void a(PlayerEntity player, ItemStack stack, int hand, long now) {
             a entry = this.b.remove(stack.getItem());
             if (entry != null) {
-                if (stack.getCount() < entry.a.getCount() && EnvironmentWidget.b(stack) > 0 && Interface.aM_.world.getEntitiesByClass(ItemEntity.class, player.getBoundingBox().expand(2.0d), item -> {
+                if (stack.getCount() < entry.a.getCount() && EnvironmentWidget.b(stack) > 0 && Interface.mc.world.getEntitiesByClass(ItemEntity.class, player.getBoundingBox().expand(2.0d), item -> {
                     return item.getStack().isOf(stack.getItem());
                 }).isEmpty()) {
                     entry.b = now;

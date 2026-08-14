@@ -69,13 +69,13 @@ public class Animations extends Module {
         this.d.a(0.0f, 1.0f, 0.45f, EasingList.g, event.g());
         this.e.a(0.0f, 1.0f, 0.4f, EasingList.g, event.g());
         this.f.a(0.0f, 1.0f, 0.35f, EasingList.g, event.g());
-        this.g = this.g < 0.0f ? aM_.player.getInventory().selectedSlot : MathUtil.c(this.g, aM_.player.getInventory().selectedSlot, 1.25f);
+        this.g = this.g < 0.0f ? mc.player.getInventory().selectedSlot : MathUtil.c(this.g, mc.player.getInventory().selectedSlot, 1.25f);
     }
 
     @EventTarget
     public void a(TickEvent event) {
-        this.e.a(aM_.currentScreen instanceof InventoryScreen);
-        this.f.a(aM_.options.getPerspective() != Perspective.FIRST_PERSON);
-        this.d.a(aM_.currentScreen instanceof ChatScreen);
+        this.e.a(mc.currentScreen instanceof InventoryScreen);
+        this.f.a(mc.options.getPerspective() != Perspective.FIRST_PERSON);
+        this.d.a(mc.currentScreen instanceof ChatScreen);
     }
 }

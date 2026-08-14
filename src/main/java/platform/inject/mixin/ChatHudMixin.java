@@ -45,7 +45,7 @@ public abstract class ChatHudMixin {
         if (!Delta.h().d().t().as().m() || !Delta.h().d().t().as().q().c().booleanValue() || (((Integer) args.get(4)).intValue() & 16777215) != 0) {
             return;
         }
-        args.set(2, Integer.valueOf(((Integer) args.get(0)).intValue() + Interface.aM_.textRenderer.getWidth(line.content()) + 5));
+        args.set(2, Integer.valueOf(((Integer) args.get(0)).intValue() + Interface.mc.textRenderer.getWidth(line.content()) + 5));
     }
 
     @WrapOperation(method = {"render(Lnet/minecraft/client/gui/DrawContext;IIIZ)V"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawTextWithShadow(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/text/OrderedText;III)I")})
@@ -54,7 +54,7 @@ public abstract class ChatHudMixin {
         if (!animations.m() || !animations.q().a("Появление сообщений").c().booleanValue()) {
             return original.call(context, renderer, text, Integer.valueOf(x), Integer.valueOf(y), Integer.valueOf(color)).intValue();
         }
-        double t = Math.max(0.0d, Math.min(1.0d, ((double) ((currentTick - line.addedTime()) + Interface.aM_.getRenderTickCounter().getTickDelta(false))) / 9.0d));
+        double t = Math.max(0.0d, Math.min(1.0d, ((double) ((currentTick - line.addedTime()) + Interface.mc.getRenderTickCounter().getTickDelta(false))) / 9.0d));
         double progress = EasingList.p.ease((float) t);
         int alpha = (int) Math.round(((double) ((color >>> 24) & 255)) * progress);
         context.getMatrices().push();

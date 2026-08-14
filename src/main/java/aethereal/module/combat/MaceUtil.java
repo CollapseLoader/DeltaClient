@@ -28,7 +28,7 @@ public class MaceUtil implements Interface {
     }
 
     public static boolean a() {
-        return aM_.player != null && aM_.player.getMainHandStack().isOf(Items.MACE);
+        return mc.player != null && mc.player.getMainHandStack().isOf(Items.MACE);
     }
 
     public static Optional<Vec3d> a(ClientPlayerEntity player, World world) {
@@ -88,10 +88,10 @@ public class MaceUtil implements Interface {
 
     public static boolean b() {
         Vec3d allowed;
-        if (aM_.world == null) {
+        if (mc.world == null) {
             return false;
         }
-        ClientPlayerEntity player = aM_.player;
+        ClientPlayerEntity player = mc.player;
         if (player == null) {
             return false;
         }
@@ -107,10 +107,10 @@ public class MaceUtil implements Interface {
                 allowed = collider.getAdjustMovementForCollisions(step);
             } else {
                 ArrayList<VoxelShape> shapes = new ArrayList<>();
-                EntityCollisionPredictionInvoker.findCollisionsForMovement(player, aM_.world, shapes, box);
-                allowed = EntityCollisionPredictionInvoker.adjustMovementForCollisions(player, step, box, aM_.world, shapes);
+                EntityCollisionPredictionInvoker.findCollisionsForMovement(player, mc.world, shapes, box);
+                allowed = EntityCollisionPredictionInvoker.adjustMovementForCollisions(player, step, box, mc.world, shapes);
             }
-            if (nextVy < 0.0d && b(aM_.world, box.offset(allowed.x, allowed.y, allowed.z))) {
+            if (nextVy < 0.0d && b(mc.world, box.offset(allowed.x, allowed.y, allowed.z))) {
                 return true;
             }
             offsetY += allowed.y;

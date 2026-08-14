@@ -45,7 +45,7 @@ public class Nuker extends Module {
     public void a(TickEvent event) {
         MineAssistant assistant = Delta.h().d().t().ak();
         this.f = null;
-        ItemStack tool = aM_.player.getMainHandStack();
+        ItemStack tool = mc.player.getMainHandStack();
         if (tool.isDamageable() && tool.getMaxDamage() - tool.getDamage() < 50) {
             ChatUtil.sendMessage("Работа прекращена во избежание поломки кирки.");
             a();
@@ -55,11 +55,11 @@ public class Nuker extends Module {
             assistant.q();
         }
         boolean pickaxe = tool.getItem() instanceof PickaxeItem;
-        int minY = this.e.c().booleanValue() ? aM_.player.getBlockY() + ((pickaxe && InventoryUtil.a(tool, "Бульдозер")) ? 1 : 0) : Integer.MIN_VALUE;
+        int minY = this.e.c().booleanValue() ? mc.player.getBlockY() + ((pickaxe && InventoryUtil.a(tool, "Бульдозер")) ? 1 : 0) : Integer.MIN_VALUE;
         float range = this.c.h().floatValue();
-        Box scan = aM_.player.getBoundingBox().expand(range + 1.0f);
-        Vec3d eye = aM_.player.getEyePos();
-        Vec3d look = aM_.player.getRotationVec(1.0f);
+        Box scan = mc.player.getBoundingBox().expand(range + 1.0f);
+        Vec3d eye = mc.player.getEyePos();
+        Vec3d look = mc.player.getRotationVec(1.0f);
         double bestScore = 1.7976922776554427E308d;
         Direction face = null;
         for (BlockPos pos : BlockPos.iterate(BlockPos.ofFloored(scan.minX, scan.minY, scan.minZ), BlockPos.ofFloored(scan.maxX, scan.maxY, scan.maxZ))) {
@@ -83,9 +83,9 @@ public class Nuker extends Module {
             Delta.h().d().k().a(new Rotation(MathHelper.wrapDegrees(base.c() + MathUtil.a(-3.0f, 3.0f)), MathHelper.clamp(base.d() + MathUtil.a(-3.0f, 3.0f), -90.0f, 90.0f)), 180.0f, 1, 1);
             if (Rotation.b().a(base) <= 20.0d) {
                 for (int i = 0; i < this.d.h().intValue(); i++) {
-                    aM_.interactionManager.updateBlockBreakingProgress(this.f, face);
+                    mc.interactionManager.updateBlockBreakingProgress(this.f, face);
                 }
-                aM_.player.swingHand(Hand.MAIN_HAND);
+                mc.player.swingHand(Hand.MAIN_HAND);
             }
         }
     }
@@ -105,18 +105,18 @@ public class Nuker extends Module {
     }
 
     private boolean a(BlockPos pos, boolean pickaxe, Box mineBox) {
-        BlockState state = aM_.world.getBlockState(pos);
+        BlockState state = mc.world.getBlockState(pos);
         if (state.isAir()) {
             return false;
         }
-        return !this.b.l("Шахта ФанТайм") || (pickaxe && mineBox.contains(pos.toCenterPos()) && state.calcBlockBreakingDelta(aM_.player, aM_.world, pos) >= 1.0f);
+        return !this.b.l("Шахта ФанТайм") || (pickaxe && mineBox.contains(pos.toCenterPos()) && state.calcBlockBreakingDelta(mc.player, mc.world, pos) >= 1.0f);
     }
 
     private boolean a(Vec3d eye, BlockPos pos) {
         Box box = new Box(pos).contract(0.05000000385685581d);
         for (int i = -1; i < 8; i++) {
             Vec3d point = i < 0 ? box.getCenter() : new Vec3d((i & 1) == 0 ? box.minX : box.maxX, (i & 2) == 0 ? box.minY : box.maxY, (i & 4) == 0 ? box.minZ : box.maxZ);
-            if (aM_.world.raycast(new RaycastContext(eye, point, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, aM_.player)).getBlockPos().equals(pos)) {
+            if (mc.world.raycast(new RaycastContext(eye, point, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player)).getBlockPos().equals(pos)) {
                 return true;
             }
         }

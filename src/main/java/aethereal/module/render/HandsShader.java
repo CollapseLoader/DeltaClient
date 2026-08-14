@@ -20,7 +20,7 @@ public class HandsShader extends Module {
     @EventTarget
     public void a(HandEvent event) {
         NoiseShader shader = Delta.h().d().i().f();
-        if (aM_.options.getPerspective() == Perspective.FIRST_PERSON) {
+        if (mc.options.getPerspective() == Perspective.FIRST_PERSON) {
             if (event.b()) {
                 shader.e();
             }

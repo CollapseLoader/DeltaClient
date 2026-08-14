@@ -40,7 +40,7 @@ public class AntiBot extends Module {
             EntitySpawnS2CPacket spawn = (EntitySpawnS2CPacket) event.d();
             if (spawn instanceof EntitySpawnS2CPacket) {
                 if (spawn.getEntityType() == EntityType.PLAYER) {
-                    PlayerListEntry entry = aM_.getNetworkHandler().getPlayerListEntry(spawn.getUuid());
+                    PlayerListEntry entry = mc.getNetworkHandler().getPlayerListEntry(spawn.getUuid());
                     boolean skin = entry != null && entry.getSkinTextures() != null && entry.getSkinTextures().textureUrl() != null;
                     boolean texture = entry != null && !entry.getProfile().getProperties().get("textures").isEmpty();
                     boolean ping = entry == null || entry.getLatency() == 0;
@@ -56,12 +56,12 @@ public class AntiBot extends Module {
     public void a(TickEvent event) {
         List<UUID> checked = new ArrayList<>();
         for (UUID uuid : this.b) {
-            for (PlayerEntity player : aM_.world.getPlayers()) {
+            for (PlayerEntity player : mc.world.getPlayers()) {
                 if (player.getUuid().equals(uuid)) {
                     boolean armor = !player.getEquippedStack(EquipmentSlot.HEAD).isEmpty() && !player.getEquippedStack(EquipmentSlot.CHEST).isEmpty() && !player.getEquippedStack(EquipmentSlot.LEGS).isEmpty() && !player.getEquippedStack(EquipmentSlot.FEET).isEmpty();
                     if (armor) {
                         ChatUtil.sendMessage("Фальшивый игрок был обнаружен, и удален из мира.");
-                        aM_.world.removeEntity(player.getId(), Entity.RemovalReason.DISCARDED);
+                        mc.world.removeEntity(player.getId(), Entity.RemovalReason.DISCARDED);
                     }
                     checked.add(uuid);
                     break;

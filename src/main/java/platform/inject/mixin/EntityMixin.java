@@ -52,7 +52,7 @@ public abstract class EntityMixin {
 
     @ModifyExpressionValue(method = {"move"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;isControlledByPlayer()Z")})
     private boolean move(boolean original) {
-        if ((Object) this == Interface.aM_.player) {
+        if ((Object) this == Interface.mc.player) {
             return false;
         }
         return original;

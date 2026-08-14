@@ -58,7 +58,7 @@ public class RotationProcessor extends BaseProcessor implements Interface {
     }
 
     public static Rotation a(Rotation rotation) {
-        float t = aM_.player.age + aM_.getRenderTickCounter().getTickDelta(false);
+        float t = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
         float sw = ((float) ((((Math.sin(t * 0.8f) * 11.0d) + (Math.sin((((double) t) * 0.04000001502137623d) + 17.200010267039897d) * 1.5d)) + (Math.sin((((double) t) * 0.10999997113093289d) + 5.8000000238651515d) * 3.0d)) + (Math.sin((((double) t) * 0.07000004685868849d) + 12.300000009313816d)))) / 6.0f;
         float sh = ((float) (Math.sin(((double) t) * 0.09999998815548458d) + (Math.sin((((double) t) * 0.029999993539464892d) + 54.10000012300467d) * 0.5d))) / 4.0f;
         return new Rotation(rotation.c() + MathHelper.clamp(sw, -0.15f, 0.15f), rotation.d() + MathHelper.clamp(sh, -0.15f, 0.15f));
@@ -80,22 +80,22 @@ public class RotationProcessor extends BaseProcessor implements Interface {
     private static Rotation a(int mode, int idleTicks) {
         float baseYaw = Look.b();
         float basePitch = Look.c();
-        float t = aM_.player.age + aM_.getRenderTickCounter().getTickDelta(false);
+        float t = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
         float sw = ((float) ((((Math.sin(t * 0.31f) * 0.5d) + (Math.sin((t * 0.73f) + 1.1f) * 0.3000000002422922d)) + (Math.sin((t * 1.7f) + 2.6f) * 0.19999998556632664d)) * 12.0d)) / 4.0f;
         switch (mode) {
             case 1:
-                float baseYaw2 = AuraUtil.a(aM_.player.getYaw(), Look.b(), MathUtil.a(0.1f, 0.45f));
-                float basePitch2 = AuraUtil.a(aM_.player.getPitch(), Look.c(), MathUtil.a(0.1f, 0.45f));
+                float baseYaw2 = AuraUtil.a(mc.player.getYaw(), Look.b(), MathUtil.a(0.1f, 0.45f));
+                float basePitch2 = AuraUtil.a(mc.player.getPitch(), Look.c(), MathUtil.a(0.1f, 0.45f));
                 return new Rotation(baseYaw2 + sw, MathHelper.clamp(basePitch2 + sw, -90.0f, 90.0f));
             case 7:
                 if (!Delta.h().d().t().aS().m()) {
                     idleTicks = 25;
                 }
                 if (idleTicks <= 20) {
-                    return new Rotation(aM_.player.getYaw() + sw, MathHelper.clamp(aM_.player.getPitch() + sw, -90.0f, 90.0f));
+                    return new Rotation(mc.player.getYaw() + sw, MathHelper.clamp(mc.player.getPitch() + sw, -90.0f, 90.0f));
                 }
-                float baseYaw3 = AuraUtil.a(aM_.player.getYaw(), Look.b(), MathUtil.a(0.2f, 0.35f));
-                float basePitch3 = AuraUtil.a(aM_.player.getPitch(), Look.c(), MathUtil.a(0.2f, 0.35f));
+                float baseYaw3 = AuraUtil.a(mc.player.getYaw(), Look.b(), MathUtil.a(0.2f, 0.35f));
+                float basePitch3 = AuraUtil.a(mc.player.getPitch(), Look.c(), MathUtil.a(0.2f, 0.35f));
                 return new Rotation(baseYaw3 + sw, MathHelper.clamp(basePitch3 + sw, -90.0f, 90.0f));
             default:
                 return new Rotation(baseYaw + sw, basePitch + sw);
@@ -103,7 +103,7 @@ public class RotationProcessor extends BaseProcessor implements Interface {
     }
 
     public static float a(float lastYaw, float current) {
-        double sens = (aM_.options.getMouseSensitivity().getValue().doubleValue() * 0.6000000498956214d) + 0.19999998556632664d;
+        double sens = (mc.options.getMouseSensitivity().getValue().doubleValue() * 0.6000000498956214d) + 0.19999998556632664d;
         double gcd = sens * sens * sens * 8.0d;
         return (float) (((double) lastYaw) + (Math.ceil((((double) (current - lastYaw)) / gcd) / 0.15000006556510925d) * gcd * 0.15000006556510925d));
     }
@@ -181,24 +181,24 @@ public class RotationProcessor extends BaseProcessor implements Interface {
     }
 
     private boolean a(Rotation rotation, float turnSpeed, boolean bait) {
-        Rotation currentRotation = new Rotation(aM_.player);
+        Rotation currentRotation = new Rotation(mc.player);
         float yawDelta = MathHelper.wrapDegrees(rotation.c() - currentRotation.c());
         float pitchDelta = rotation.d() - currentRotation.d();
         float totalDelta = Math.abs(yawDelta) + Math.abs(pitchDelta);
         float yawSpeed = totalDelta == 0.0f ? 0.0f : Math.abs(yawDelta / totalDelta) * turnSpeed;
         float pitchSpeed = totalDelta == 0.0f ? 0.0f : Math.abs(pitchDelta / totalDelta) * turnSpeed;
-        float newYaw = aM_.player.getYaw() + MathHelper.clamp(yawDelta, -yawSpeed, yawSpeed);
-        float newPitch = aM_.player.getPitch() + MathHelper.clamp(pitchDelta, -pitchSpeed, pitchSpeed);
-        float newYaw2 = a(aM_.player.getYaw(), newYaw);
-        float newPitch2 = MathHelper.clamp(a(aM_.player.getPitch(), newPitch), -90.0f, 90.0f);
+        float newYaw = mc.player.getYaw() + MathHelper.clamp(yawDelta, -yawSpeed, yawSpeed);
+        float newPitch = mc.player.getPitch() + MathHelper.clamp(pitchDelta, -pitchSpeed, pitchSpeed);
+        float newYaw2 = a(mc.player.getYaw(), newYaw);
+        float newPitch2 = MathHelper.clamp(a(mc.player.getPitch(), newPitch), -90.0f, 90.0f);
         if (i > 0) {
-            newPitch2 = aM_.player.getPitch();
-            newYaw2 = aM_.player.getYaw();
+            newPitch2 = mc.player.getPitch();
+            newYaw2 = mc.player.getYaw();
             i--;
         }
-        aM_.player.setYaw(newYaw2);
-        aM_.player.setPitch(newPitch2);
-        Rotation finalRotation = new Rotation(aM_.player);
+        mc.player.setYaw(newYaw2);
+        mc.player.setPitch(newPitch2);
+        Rotation finalRotation = new Rotation(mc.player);
         if (bait) {
             h = 0;
         }

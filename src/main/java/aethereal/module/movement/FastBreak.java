@@ -18,10 +18,10 @@ public class FastBreak extends Module {
 
     @EventTarget
     public void a(TickEvent event) {
-        if (aM_.options.attackKey.isPressed() && aM_.interactionManager.isBreakingBlock()) {
-            if (aM_.crosshairTarget instanceof BlockHitResult hit) {
+        if (mc.options.attackKey.isPressed() && mc.interactionManager.isBreakingBlock()) {
+            if (mc.crosshairTarget instanceof BlockHitResult hit) {
                 for (int i = 0; i < this.b.c().intValue() - 1; i++) {
-                    aM_.interactionManager.updateBlockBreakingProgress(hit.getBlockPos(), hit.getSide());
+                    mc.interactionManager.updateBlockBreakingProgress(hit.getBlockPos(), hit.getSide());
                 }
             }
         }

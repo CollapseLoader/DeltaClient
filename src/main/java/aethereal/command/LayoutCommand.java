@@ -50,8 +50,8 @@ public class LayoutCommand extends BaseCommand {
             layouts.removeIf(layout -> {
                 return layout.a().equalsIgnoreCase(name);
             });
-            for (Slot slot : aM_.player.playerScreenHandler.slots) {
-                if (slot.inventory == aM_.player.getInventory() && !slot.getStack().isEmpty()) {
+            for (Slot slot : mc.player.playerScreenHandler.slots) {
+                if (slot.inventory == mc.player.getInventory() && !slot.getStack().isEmpty()) {
                     layouts.add(new a(name, slot.getStack().copy(), slot.id));
                 }
             }
@@ -127,7 +127,7 @@ public class LayoutCommand extends BaseCommand {
                 return;
             }
             this.e = 2;
-            DefaultedList class_2371Var = aM_.player.playerScreenHandler.slots;
+            DefaultedList class_2371Var = mc.player.playerScreenHandler.slots;
             List<String> missing = new ArrayList<>();
             for (a info : this.d) {
                 Slot target = (Slot) class_2371Var.get(info.c());
@@ -136,19 +136,19 @@ public class LayoutCommand extends BaseCommand {
                     @SuppressWarnings("unchecked")
                     List<Slot> slotList = (List<Slot>) (List<?>) class_2371Var;
                     Slot source = slotList.stream()
-                            .filter(slot -> ((platform.inject.accessors.SlotAccessor) slot).getInventory() == aM_.player.getInventory())
+                            .filter(slot -> ((platform.inject.accessors.SlotAccessor) slot).getInventory() == mc.player.getInventory())
                             .filter(slot2 -> slot2.getStack().getItem() == item)
                             .filter(slot3 -> this.d.stream().noneMatch(other -> other.c() == slot3.id && other.b().getItem() == slot3.getStack().getItem()))
                             .findFirst().orElse(null);
                     if (source != null) {
                         int hotbar = (source.id == 36 || target.id == 36) ? (source.id == 37 || target.id == 37) ? 2 : 1 : 0;
-                        aM_.interactionManager.clickSlot(aM_.player.playerScreenHandler.syncId, source.id, hotbar, SlotActionType.SWAP, aM_.player);
-                        aM_.interactionManager.clickSlot(aM_.player.playerScreenHandler.syncId, target.id, hotbar, SlotActionType.SWAP, aM_.player);
-                        aM_.interactionManager.clickSlot(aM_.player.playerScreenHandler.syncId, source.id, hotbar, SlotActionType.SWAP, aM_.player);
+                        mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, source.id, hotbar, SlotActionType.SWAP, mc.player);
+                        mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, target.id, hotbar, SlotActionType.SWAP, mc.player);
+                        mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, source.id, hotbar, SlotActionType.SWAP, mc.player);
                         if (this.d.stream().noneMatch(other -> {
                             return ((Slot) class_2371Var.get(other.c())).getStack().getItem() != other.b().getItem();
                         })) {
-                            aM_.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(aM_.player.playerScreenHandler.syncId));
+                            mc.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(mc.player.playerScreenHandler.syncId));
                             this.d.clear();
                             return;
                         }

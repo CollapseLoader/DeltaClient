@@ -25,9 +25,9 @@ public class FullBright extends Module {
     @EventTarget
     public void a(TickEvent event) {
         if (this.b.l("Ночное зрение")) {
-            aM_.player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 240, 1, false, false, false));
+            mc.player.addStatusEffect(new StatusEffectInstance(StatusEffects.NIGHT_VISION, 240, 1, false, false, false));
         } else {
-            aM_.player.removeStatusEffect(StatusEffects.NIGHT_VISION);
+            mc.player.removeStatusEffect(StatusEffects.NIGHT_VISION);
         }
     }
 

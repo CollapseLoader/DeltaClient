@@ -26,7 +26,7 @@ public class AutoEat extends Module {
 
     public void b(int level) {
         int slot;
-        if (aM_.player != null && aM_.player.getHungerManager().getFoodLevel() < level && (slot = q()) >= 0) {
+        if (mc.player != null && mc.player.getHungerManager().getFoodLevel() < level && (slot = q()) >= 0) {
             Delta.h().d().v().k().a(slot);
         }
     }
@@ -38,7 +38,7 @@ public class AutoEat extends Module {
         int bestSlot = -1;
         int bestRank = Integer.MAX_VALUE;
         for (int slot = 0; slot < 36 && bestRank > 0; slot++) {
-            ItemStack stack = aM_.player.getInventory().getStack(slot);
+            ItemStack stack = mc.player.getInventory().getStack(slot);
             if (stack.contains(DataComponentTypes.FOOD) && !blacklist.contains(stack.getItem()) && !stack.contains(DataComponentTypes.CUSTOM_NAME)) {
                 if (stack.isOf(Items.ENCHANTED_GOLDEN_APPLE)) {
                     i = 3;

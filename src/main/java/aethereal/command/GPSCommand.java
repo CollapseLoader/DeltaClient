@@ -31,14 +31,14 @@ public class GPSCommand extends BaseCommand {
             ChatUtil.sendMessage("Использование: .gps <x> <z>, .gps <x> <y> <z> или .gps off");
             return 1;
         }).then(e("y или z").executes(context3 -> {
-            a(new Vec3d(b(context3, "x"), aM_.player.getY(), b(context3, "y или z")));
+            a(new Vec3d(b(context3, "x"), mc.player.getY(), b(context3, "y или z")));
             return 1;
         }).then(e("z").executes(context4 -> {
             a(new Vec3d(b(context4, "x"), b(context4, "y или z"), b(context4, "z")));
             return 1;
         })))).then(a("event").executes(context5 -> {
             Delta.h().d().u().c().a(WayCommand.a.GPS);
-            aM_.player.networkHandler.sendCommand("event delay");
+            mc.player.networkHandler.sendCommand("event delay");
             return 1;
         })).executes(context6 -> {
             ChatUtil.sendMessage("Использование: .gps <x> <z>, .gps <x> <y> <z> или .gps off");

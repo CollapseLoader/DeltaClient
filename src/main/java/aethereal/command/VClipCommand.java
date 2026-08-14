@@ -40,15 +40,15 @@ public class VClipCommand extends BaseCommand {
     }
 
     private void a(float yOffset) {
-        double x = aM_.player.getX();
-        double y = aM_.player.getY() + ((double) yOffset);
-        double z = aM_.player.getZ();
-        aM_.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(x, y, z, aM_.player.isOnGround(), aM_.player.horizontalCollision));
-        aM_.player.setPosition(x, y, z);
+        double x = mc.player.getX();
+        double y = mc.player.getY() + ((double) yOffset);
+        double z = mc.player.getZ();
+        mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(x, y, z, mc.player.isOnGround(), mc.player.horizontalCollision));
+        mc.player.setPosition(x, y, z);
     }
 
     private float a(boolean up) {
-        BlockPos playerPos = aM_.player.getBlockPos();
+        BlockPos playerPos = mc.player.getBlockPos();
         int startY = up ? 25 : -1;
         int endY = up ? 255 : -255;
         int step = up ? 1 : -1;
@@ -58,10 +58,10 @@ public class VClipCommand extends BaseCommand {
             if (offset != endY) {
                 BlockPos targetPos = playerPos.add(0, offset, 0);
                 BlockPos nextPos = playerPos.add(0, offset + step, 0);
-                if (aM_.world.getBlockState(targetPos).isAir() && aM_.world.getBlockState(nextPos).isAir()) {
+                if (mc.world.getBlockState(targetPos).isAir() && mc.world.getBlockState(nextPos).isAir()) {
                     return offset + (up ? 1.0f : -1.0f);
                 }
-                if (up || !aM_.world.getBlockState(targetPos).isOf(Blocks.BEDROCK)) {
+                if (up || !mc.world.getBlockState(targetPos).isOf(Blocks.BEDROCK)) {
                     i = offset + step;
                 } else {
                     ChatUtil.sendMessage(Formatting.GRAY + "Телепортация в данное место невозможно");

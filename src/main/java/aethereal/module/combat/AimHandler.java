@@ -39,7 +39,7 @@ public class AimHandler extends BaseHandler implements Interface {
             if (!ProjectUtil.isOnScreen(screen)) {
                 return;
             }
-            float distance = (float) aM_.player.getEyePos().distanceTo(real);
+            float distance = (float) mc.player.getEyePos().distanceTo(real);
             float size = ((float) Math.max(28.0d, 40.0d - (((double) distance) * 0.7000002488091963d))) * (1.2f - (0.2f * alpha));
             event.h().push();
             event.h().translate(screen.x(), screen.y(), 0.0f);

@@ -281,12 +281,12 @@ public class TextField {
         int from = (int) Math.min(this.g.getX(), this.g.getY());
         int to = (int) Math.max(this.g.getX(), this.g.getY());
         if (from < to) {
-            GLFW.glfwSetClipboardString(Interface.aM_.getWindow().getHandle(), this.f.substring(from, to));
+            GLFW.glfwSetClipboardString(Interface.mc.getWindow().getHandle(), this.f.substring(from, to));
         }
     }
 
     private void n() {
-        String clip = GLFW.glfwGetClipboardString(Interface.aM_.getWindow().getHandle());
+        String clip = GLFW.glfwGetClipboardString(Interface.mc.getWindow().getHandle());
         if (clip != null && !clip.isEmpty()) {
             c(this.b ? clip.replaceAll("[^0-9]", "") : clip);
         }

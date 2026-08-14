@@ -43,7 +43,7 @@ public class AutoTotem extends Module implements Interface {
     @EventTarget
     public void a(TickEvent event) {
         System.arraycopy(this.g, 0, this.g, 1, 19);
-        this.g[0] = aM_.player.getHealth() + (aM_.player.hasStatusEffect(StatusEffects.ABSORPTION) ? aM_.player.getAbsorptionAmount() : 0.0f);
+        this.g[0] = mc.player.getHealth() + (mc.player.hasStatusEffect(StatusEffects.ABSORPTION) ? mc.player.getAbsorptionAmount() : 0.0f);
         if (this.d.a("Не во время еды").c().booleanValue() && t()) {
             return;
         }
@@ -62,7 +62,7 @@ public class AutoTotem extends Module implements Interface {
     }
 
     private boolean q() {
-        ItemStack offhand = aM_.player.getOffHandStack();
+        ItemStack offhand = mc.player.getOffHandStack();
         boolean preferPlain = this.d.a("Сначала обычные тотемы").c().booleanValue();
         if (a(offhand) && (!preferPlain || !offhand.hasGlint())) {
             return false;
@@ -82,7 +82,7 @@ public class AutoTotem extends Module implements Interface {
     }
 
     private boolean r() {
-        ItemStack offhand = aM_.player.getOffHandStack();
+        ItemStack offhand = mc.player.getOffHandStack();
         if (this.d.a("Возвращать предмет").c().booleanValue() && this.h != -1 && (offhand.isEmpty() || a(offhand))) {
             Delta.h().d().v().a().a(this.h, 40, 1);
         }
@@ -91,12 +91,12 @@ public class AutoTotem extends Module implements Interface {
     }
 
     private Boolean s() {
-        if (aM_.player.getItemCooldownManager().isCoolingDown(Items.TOTEM_OF_UNDYING.getDefaultStack())) {
+        if (mc.player.getItemCooldownManager().isCoolingDown(Items.TOTEM_OF_UNDYING.getDefaultStack())) {
             return false;
         }
-        ItemStack active = aM_.player.getActiveItem();
-        if (this.e.c().booleanValue() && t() && active.getItem().getMaxUseTime(active, aM_.player) > 5) {
-            int left = aM_.player.getItemUseTimeLeft();
+        ItemStack active = mc.player.getActiveItem();
+        if (this.e.c().booleanValue() && t() && active.getItem().getMaxUseTime(active, mc.player) > 5) {
+            int left = mc.player.getItemUseTimeLeft();
             if (left < 10) {
                 return null;
             }
@@ -111,8 +111,8 @@ public class AutoTotem extends Module implements Interface {
     }
 
     private boolean t() {
-        ItemStack active = aM_.player.getActiveItem();
-        return aM_.player.isUsingItem() && !active.isEmpty() && active.get(DataComponentTypes.FOOD) != null;
+        ItemStack active = mc.player.getActiveItem();
+        return mc.player.isUsingItem() && !active.isEmpty() && active.get(DataComponentTypes.FOOD) != null;
     }
 
     private boolean a(ItemStack stack) {

@@ -15,7 +15,7 @@ public class MoveUtil implements Interface {
     }
 
     public static boolean a() {
-        return aM_.player.input.movementForward != 0.0f || aM_.player.input.movementSideways != 0.0f;
+        return mc.player.input.movementForward != 0.0f || mc.player.input.movementSideways != 0.0f;
     }
 
     public static void a(InputEvent event, float yaw, int priority) {
@@ -43,7 +43,7 @@ public class MoveUtil implements Interface {
         for (float pf = -1.0f; pf <= 1.0f; pf += 1.0f) {
             for (float ps = -1.0f; ps <= 1.0f; ps += 1.0f) {
                 if (pf != 0.0f || ps != 0.0f) {
-                    double predicted = MathHelper.wrapDegrees(Math.toDegrees(a(aM_.player.getYaw(), pf, ps)));
+                    double predicted = MathHelper.wrapDegrees(Math.toDegrees(a(mc.player.getYaw(), pf, ps)));
                     float diff = (float) Math.abs(angle - predicted);
                     if (diff < bestDiff) {
                         bestDiff = diff;
@@ -89,9 +89,9 @@ public class MoveUtil implements Interface {
     }
 
     public static boolean a(float under) {
-        if (aM_.player.getY() < 0.0d) {
+        if (mc.player.getY() < 0.0d) {
             return false;
         }
-        return aM_.world.getCollisions(aM_.player, aM_.player.getBoundingBox().offset(0.0d, -under, 0.0d)).iterator().hasNext();
+        return mc.world.getCollisions(mc.player, mc.player.getBoundingBox().offset(0.0d, -under, 0.0d)).iterator().hasNext();
     }
 }

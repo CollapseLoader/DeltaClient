@@ -1,8 +1,5 @@
 package aethereal.module.render;
 
-import aethereal.core.Interface;
-
-import static aethereal.core.Interface.aM_;
 import aethereal.core.Delta;
 import aethereal.core.InterfaceC0020Opcode;
 import aethereal.core.Module;
@@ -42,7 +39,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.text.Text;
 import net.minecraft.text.Style;
 import net.minecraft.text.MutableText;
-import net.minecraft.client.network.ClientPlayerEntity;
 import org.joml.Vector2f;
 
 @ModuleRegister(a = "Entity ESP", b = "Отображает информацию о сущностях над их головой", c = Category.Render)
@@ -63,8 +59,8 @@ public class EntityESP extends Module {
     public void onDraw(DrawEvent event) {
         String str;
         if (event.b()) {
-            for (Entity entity : aM_.world.getEntities()) {
-                if (entity != aM_.player) {
+            for (Entity entity : mc.world.getEntities()) {
+                if (entity != mc.player) {
                     if (entity instanceof PlayerEntity) {
                         str = "Игроки";
                     } else if (entity instanceof HostileEntity) {

@@ -64,7 +64,7 @@ public abstract class ClientPlayNetworkHandlerMixin implements Interface {
 
     @ModifyArg(method = {"onEntityStatusEffect"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;setStatusEffect(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)V"), index = 0)
     private StatusEffectInstance onEntityStatusEffect(StatusEffectInstance newEffect, @Local(argsOnly = true) EntityStatusEffectS2CPacket packet) {
-        Entity entity = aM_.world == null ? null : aM_.world.getEntityById(packet.getEntityId());
+        Entity entity = mc.world == null ? null : mc.world.getEntityById(packet.getEntityId());
         if (entity instanceof LivingEntity living) {
             IStatusEffectInstance iStatusEffectInstanceMethod_6112 = (IStatusEffectInstance) living.getStatusEffect(newEffect.getEffectType());
             if (iStatusEffectInstanceMethod_6112 != null) {

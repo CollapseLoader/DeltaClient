@@ -44,10 +44,10 @@ public class ShulkerPreview extends Module {
     public void a(DrawEvent event) {
         ItemStack stack;
         if (event.b()) {
-            for (ItemEntity itemEntity : aM_.world.getEntitiesByClass(ItemEntity.class, aM_.player.getBoundingBox().expand(64), entity -> true)) {
+            for (ItemEntity itemEntity : mc.world.getEntitiesByClass(ItemEntity.class, mc.player.getBoundingBox().expand(64), entity -> true)) {
                 if (itemEntity.getStack().getItem() instanceof BlockItem blockItem) {
                     if ((blockItem.getBlock() instanceof ShulkerBoxBlock) && (stack = itemEntity.getStack()) != null && !stack.isEmpty()) {
-                        Vector2f projected = ProjectUtil.project(itemEntity.prevX + ((itemEntity.getX() - itemEntity.prevX) * ((double) aM_.getRenderTickCounter().getTickDelta(false))), itemEntity.prevY + ((itemEntity.getY() - itemEntity.prevY) * ((double) aM_.getRenderTickCounter().getTickDelta(false))) + 0.5d, itemEntity.prevZ + ((itemEntity.getZ() - itemEntity.prevZ) * ((double) aM_.getRenderTickCounter().getTickDelta(false))));
+                        Vector2f projected = ProjectUtil.project(itemEntity.prevX + ((itemEntity.getX() - itemEntity.prevX) * ((double) mc.getRenderTickCounter().getTickDelta(false))), itemEntity.prevY + ((itemEntity.getY() - itemEntity.prevY) * ((double) mc.getRenderTickCounter().getTickDelta(false))) + 0.5d, itemEntity.prevZ + ((itemEntity.getZ() - itemEntity.prevZ) * ((double) mc.getRenderTickCounter().getTickDelta(false))));
                         ContainerComponent container = stack.get(DataComponentTypes.CONTAINER);
                         if (container != null && !container.stream().toList().isEmpty()) {
                             a(event.i(), stack, container.stream().toList(), projected.x() - ((this.b.x() * 0.5f) / 2.0f), projected.y() - (this.b.y() * 0.5f), 0.5f, false);

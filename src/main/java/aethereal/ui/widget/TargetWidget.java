@@ -52,7 +52,7 @@ public class TargetWidget extends Widget {
             float headSize = j().g() / 1.35f;
             float headY = y + ((j().g() - headSize) / 2.0f);
             if (this.j instanceof AbstractClientPlayerEntity player) {
-                event.d().a(event.h(), x + 5.0f, headY, headSize, headSize, 2.0f, ColorUtil.a(-1, a()), 0.125f, 0.125f, 0.125f, 0.125f, Interface.aM_.getTextureManager().getTexture(player.getSkinTextures().texture()).getGlId());
+                event.d().a(event.h(), x + 5.0f, headY, headSize, headSize, 2.0f, ColorUtil.a(-1, a()), 0.125f, 0.125f, 0.125f, 0.125f, Interface.mc.getTextureManager().getTexture(player.getSkinTextures().texture()).getGlId());
             } else if (this.j != null) {
                 Fonts.a.a(event.h(), "B", x + 6.5f + ((headSize - 24.0f) / 2.0f), headY + ((headSize - 24.0f) / 2.0f), 24.0f, ColorUtil.a(-1, a()));
             }
@@ -125,13 +125,13 @@ public class TargetWidget extends Widget {
         LivingEntity class_1309Var2;
         LivingEntity targets = Delta.h().d().t().B().s() != null ? Delta.h().d().t().B().s() : Delta.h().d().t().X().s();
         if (this.g.c().booleanValue()) {
-            EntityHitResult class_3966Var = Interface.aM_.crosshairTarget instanceof EntityHitResult ? (EntityHitResult) Interface.aM_.crosshairTarget : null;
+            EntityHitResult class_3966Var = Interface.mc.crosshairTarget instanceof EntityHitResult ? (EntityHitResult) Interface.mc.crosshairTarget : null;
             if (class_3966Var instanceof EntityHitResult) {
                 EntityHitResult hit = class_3966Var;
                 LivingEntity class_1309VarMethod_17782 = hit.getEntity() instanceof LivingEntity ? (LivingEntity) hit.getEntity() : null;
                 if (class_1309VarMethod_17782 instanceof PlayerEntity) {
                     LivingEntity class_1309Var3 = class_1309VarMethod_17782;
-                    if (class_1309Var3 != Interface.aM_.player) {
+                    if (class_1309Var3 != Interface.mc.player) {
                         class_1309Var = class_1309Var3;
                     } else {
                         class_1309Var = null;
@@ -151,7 +151,7 @@ public class TargetWidget extends Widget {
         } else if (crosshair != null) {
             class_1309Var2 = crosshair;
         } else {
-            class_1309Var2 = Interface.aM_.currentScreen instanceof ChatScreen ? Interface.aM_.player : null;
+            class_1309Var2 = Interface.mc.currentScreen instanceof ChatScreen ? Interface.mc.player : null;
         }
         LivingEntity target = class_1309Var2;
         boolean visible = target != null;

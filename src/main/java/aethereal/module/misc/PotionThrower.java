@@ -17,12 +17,12 @@ public class PotionThrower extends Module implements Interface {
 
     public PotionThrower() {
         BindSetting d = new BindSetting("Открыть меню зелий", 86, 0).a(() -> {
-            aM_.setScreen(this.c);
+            mc.setScreen(this.c);
         }).b(() -> {
-            if (aM_.currentScreen == this.c) {
+            if (mc.currentScreen == this.c) {
                 this.c.b(this.c.b());
-                if (aM_.currentScreen == this.c) {
-                    aM_.setScreen(null);
+                if (mc.currentScreen == this.c) {
+                    mc.setScreen(null);
                 }
             }
         }).a(() -> {

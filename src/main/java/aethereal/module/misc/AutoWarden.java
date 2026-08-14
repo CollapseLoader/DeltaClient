@@ -66,7 +66,6 @@ import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.client.gui.screen.DeathScreen;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.entity.mob.WardenEntity;
@@ -161,52 +160,52 @@ public class AutoWarden extends Module {
 
     @EventTarget
     public void onTick(TickEvent event) {
-        if ((aM_.currentScreen instanceof DeathScreen) && aM_.player.deathTime >= 5) {
-            aM_.player.requestRespawn();
+        if ((mc.currentScreen instanceof DeathScreen) && mc.player.deathTime >= 5) {
+            mc.player.requestRespawn();
         }
-        if (aM_.player == null || aM_.world == null) {
+        if (mc.player == null || mc.world == null) {
             return;
         }
-        if (this.debug.c().booleanValue() && aM_.player.age % 20 == 0) {
+        if (this.debug.c().booleanValue() && mc.player.age % 20 == 0) {
             debugOutput();
         }
-        if (aM_.options.sneakKey.isPressed() && aM_.options.jumpKey.isPressed()) {
+        if (mc.options.sneakKey.isPressed() && mc.options.jumpKey.isPressed()) {
             a();
         }
-        for (WardenEntity warden : aM_.world.getEntitiesByClass(WardenEntity.class, aM_.player.getBoundingBox().expand(256.0), e -> true)) {
-            this.wardenPositions.put(warden.getBlockPos(), Integer.valueOf(aM_.player.age + 100));
+        for (WardenEntity warden : mc.world.getEntitiesByClass(WardenEntity.class, mc.player.getBoundingBox().expand(256.0), e -> true)) {
+            this.wardenPositions.put(warden.getBlockPos(), Integer.valueOf(mc.player.age + 100));
         }
         this.wardenPositions.values().removeIf(expire -> {
-            return aM_.player.age > expire.intValue();
+            return mc.player.age > expire.intValue();
         });
         if (this.killerName != null) {
-            if (aM_.player.age >= 20 && aM_.player.age < 30) {
-                aM_.player.networkHandler.sendChatMessage("/report " + this.killerName + " чит");
+            if (mc.player.age >= 20 && mc.player.age < 30) {
+                mc.player.networkHandler.sendChatMessage("/report " + this.killerName + " чит");
                 this.killerName = null;
                 return;
             }
             return;
         }
-        if (aM_.player.age < 5) {
+        if (mc.player.age < 5) {
             this.roarTimer = 0;
             this.chestOpenCounts.clear();
             return;
         }
         if (ServerUtil.a.d() < 0) {
-            if (aM_.player.age % 100 == 0 && currentAnarchy() >= 0 && aM_.player.age > 300) {
-                aM_.player.networkHandler.sendChatCommand("an" + currentAnarchy());
+            if (mc.player.age % 100 == 0 && currentAnarchy() >= 0 && mc.player.age > 300) {
+                mc.player.networkHandler.sendChatCommand("an" + currentAnarchy());
             }
             this.state = State.SAVE;
             return;
         }
-        if (aM_.player.age % 100 == 0 && isInFarmArea() && (this.farmArea == null || !isInsideFarmArea())) {
+        if (mc.player.age % 100 == 0 && isInFarmArea() && (this.farmArea == null || !isInsideFarmArea())) {
             updateFarmArea();
         }
-        if (aM_.player.hasStatusEffect(StatusEffects.GLOWING) && isPlayerNearby(32.0d)) {
+        if (mc.player.hasStatusEffect(StatusEffects.GLOWING) && isPlayerNearby(32.0d)) {
             findEscapeSpot(false);
             return;
         }
-        if (aM_.player.hasStatusEffect(StatusEffects.GLOWING) && isPlayerNearby(32.0d)) {
+        if (mc.player.hasStatusEffect(StatusEffects.GLOWING) && isPlayerNearby(32.0d)) {
             findEscapeSpot(false);
             return;
         }
@@ -224,7 +223,7 @@ public class AutoWarden extends Module {
                 handleEscape();
                 break;
         }
-        if (!isStuck() || aM_.player.age % 15 != 0) {
+        if (!isStuck() || mc.player.age % 15 != 0) {
             return;
         }
         cancelPathing();
@@ -240,13 +239,13 @@ public class AutoWarden extends Module {
                 }
                 this.died = true;
                 String text = message.content().getString();
-                if (this.reportKillers.c().booleanValue() && aM_.player != null && text.contains("Вас убил")) {
+                if (this.reportKillers.c().booleanValue() && mc.player != null && text.contains("Вас убил")) {
                     StringBuilder effects = new StringBuilder();
-                    for (StatusEffectInstance effect : aM_.player.getStatusEffects()) {
+                    for (StatusEffectInstance effect : mc.player.getStatusEffects()) {
                         effects.append(((StatusEffect) effect.getEffectType().value()).getName().getString()).append(StringUtils.a);
                     }
                     ChatUtil.sendMessage((Object) ("Эффекты при смерти: " + (effects.isEmpty() ? "нет" : effects.toString().trim())));
-                    if (!aM_.player.hasStatusEffect(StatusEffects.GLOWING) && !isNearChest(2.0d)) {
+                    if (!mc.player.hasStatusEffect(StatusEffects.GLOWING) && !isNearChest(2.0d)) {
                         this.killerName = text.split("Вас убил ")[1].split(",")[0].trim();
                     }
                 }
@@ -257,39 +256,39 @@ public class AutoWarden extends Module {
     @EventTarget
     public void onSound(SoundEvent event) {
         String path = event.b().getId().getPath();
-        if (aM_.player != null) {
+        if (mc.player != null) {
             if (path.contains("warden.roar") || path.contains("warden.angry") || path.contains("warden.sonic")) {
-                this.roarTimer = aM_.player.age + 100;
+                this.roarTimer = mc.player.age + 100;
             }
         }
     }
 
     @EventTarget
     public void onInput(InputEvent event) {
-        if (aM_.player == null) {
+        if (mc.player == null) {
             return;
         }
-        if (!aM_.player.isOnGround() && !aM_.player.isClimbing()) {
+        if (!mc.player.isOnGround() && !mc.player.isClimbing()) {
             event.c(false);
         }
-        if (isStuck() && aM_.player.getMainHandStack().isEmpty() && !isNearChest(3.0d)) {
-            int dir = ((float) (aM_.player.age % 10)) <= MathUtil.a(3.0f, 8.0f) ? -1 : 1;
+        if (isStuck() && mc.player.getMainHandStack().isEmpty() && !isNearChest(3.0d)) {
+            int dir = ((float) (mc.player.age % 10)) <= MathUtil.a(3.0f, 8.0f) ? -1 : 1;
             event.a(dir);
             event.b(dir);
         }
     }
 
     private boolean isStuck() {
-        if (aM_.world.getBlockState(aM_.player.getBlockPos()).isIn(BlockTags.CANDLES) || aM_.world.getBlockState(aM_.player.getBlockPos().down()).isIn(BlockTags.CANDLES)) {
+        if (mc.world.getBlockState(mc.player.getBlockPos()).isIn(BlockTags.CANDLES) || mc.world.getBlockState(mc.player.getBlockPos().down()).isIn(BlockTags.CANDLES)) {
             return true;
         }
-        return !isWardenAggro() && this.state == State.COLLECTING && isInFarmArea() && aM_.currentScreen == null && !isMoving() && !Delta.h().d().v().k().a() && isInsideBlock();
+        return !isWardenAggro() && this.state == State.COLLECTING && isInFarmArea() && mc.currentScreen == null && !isMoving() && !Delta.h().d().v().k().a() && isInsideBlock();
     }
 
     private boolean isInsideBlock() {
-        Box box = aM_.player.getBoundingBox().expand(0.05000000009506496d, 0.0d, 0.05000000009506496d);
+        Box box = mc.player.getBoundingBox().expand(0.05000000009506496d, 0.0d, 0.05000000009506496d);
         for (BlockPos pos : BlockPos.iterate(BlockPos.ofFloored(box.minX, box.minY, box.minZ), BlockPos.ofFloored(box.maxX, box.maxY, box.maxZ))) {
-            if (!aM_.world.getBlockState(pos).isAir()) {
+            if (!mc.world.getBlockState(pos).isAir()) {
                 return true;
             }
         }
@@ -298,7 +297,7 @@ public class AutoWarden extends Module {
 
     private boolean isNearChest(double range) {
         for (BlockPos chest : Delta.h().d().t().i().q()) {
-            if (aM_.player.squaredDistanceTo(Vec3d.ofCenter(chest)) <= range * range) {
+            if (mc.player.squaredDistanceTo(Vec3d.ofCenter(chest)) <= range * range) {
                 return true;
             }
         }
@@ -317,8 +316,8 @@ public class AutoWarden extends Module {
     }
 
     private void handleSave() {
-        if (currentAnarchy() >= 0 && ServerUtil.a.d() != currentAnarchy() && !ServerUtil.e() && aM_.player.age % 5 == 0 && aM_.player.age > 5) {
-            aM_.player.networkHandler.sendChatCommand("an" + currentAnarchy());
+        if (currentAnarchy() >= 0 && ServerUtil.a.d() != currentAnarchy() && !ServerUtil.e() && mc.player.age % 5 == 0 && mc.player.age > 5) {
+            mc.player.networkHandler.sendChatCommand("an" + currentAnarchy());
         }
         if (isOnTargetAnarchy()) {
             moveToHotbar();
@@ -337,7 +336,7 @@ public class AutoWarden extends Module {
         }
         this.roarTimer = 0;
         this.chestOpenCounts.clear();
-        if (aM_.player.age % 20 == 0) {
+        if (mc.player.age % 20 == 0) {
             StringBuilder missing = new StringBuilder("Собираем (возможно не хватает) -> ");
             if (invisibilityCount() < 1) {
                 missing.append("зелье невидимости, ");
@@ -348,8 +347,8 @@ public class AutoWarden extends Module {
             if (this.useSpeed.c().booleanValue() && findSlot(this::isSpeedPotion) < 0) {
                 missing.append("зелье скорости ");
             }
-            if (aM_.player.age % InterfaceC0020Opcode.aN == 0 && !missing.isEmpty() && !hasCursorItem()) {
-                aM_.player.closeScreen();
+            if (mc.player.age % InterfaceC0020Opcode.aN == 0 && !missing.isEmpty() && !hasCursorItem()) {
+                mc.player.closeScreen();
             }
         }
         if (isOnTargetAnarchy()) {
@@ -370,7 +369,7 @@ public class AutoWarden extends Module {
             return;
         }
         if (this.anarchyList.size() <= 1) {
-            if (aM_.player.age % 20 == 0) {
+            if (mc.player.age % 20 == 0) {
                 ChatUtil.sendMessage((Object) "ОШИБКА -> .warden list пустой");
                 return;
             }
@@ -381,13 +380,13 @@ public class AutoWarden extends Module {
         }
         int target = this.anarchyList.get(this.anarchyIndex).intValue();
         if (ServerUtil.a.d() != target) {
-            if (aM_.player.age % 10 != 0 || aM_.player.age <= 10) {
+            if (mc.player.age % 10 != 0 || mc.player.age <= 10) {
                 return;
             }
-            aM_.player.networkHandler.sendChatCommand("an" + target);
+            mc.player.networkHandler.sendChatCommand("an" + target);
             return;
         }
-        if (aM_.player.age > 5) {
+        if (mc.player.age > 5) {
             collect();
         }
     }
@@ -405,9 +404,9 @@ public class AutoWarden extends Module {
 
     private boolean shouldEscape() {
         boolean aggro = isWardenAggro();
-        if ((aggro || inventoryCount() > priorityMultiplier(20) || aM_.player.getHungerManager().getFoodLevel() < 8 || (this.chestOpenCounts.values().stream().filter(count -> {
+        if ((aggro || inventoryCount() > priorityMultiplier(20) || mc.player.getHungerManager().getFoodLevel() < 8 || (this.chestOpenCounts.values().stream().filter(count -> {
             return count.intValue() >= 2;
-        }).count() >= 3 && aM_.player.age % 30 == 0)) && aM_.player.age > 100) {
+        }).count() >= 3 && mc.player.age % 30 == 0)) && mc.player.age > 100) {
             if (aggro) {
                 this.died = true;
             }
@@ -427,9 +426,9 @@ public class AutoWarden extends Module {
     }
 
     private void collect() {
-        StatusEffectInstance invis = aM_.player.getStatusEffect(StatusEffects.INVISIBILITY);
-        boolean ready = aM_.player.hasStatusEffect(StatusEffects.GLOWING) || (invis != null && invis.getDuration() >= 400);
-        if (!ready && invis == null && invisibilityCount() < 1 && aM_.player.age % 5 == 0 && !ServerUtil.e()) {
+        StatusEffectInstance invis = mc.player.getStatusEffect(StatusEffects.INVISIBILITY);
+        boolean ready = mc.player.hasStatusEffect(StatusEffects.GLOWING) || (invis != null && invis.getDuration() >= 400);
+        if (!ready && invis == null && invisibilityCount() < 1 && mc.player.age % 5 == 0 && !ServerUtil.e()) {
             this.state = State.ESCAPE;
             return;
         }
@@ -437,11 +436,11 @@ public class AutoWarden extends Module {
             drinkInvisibilityPotion();
         }
         if (!isInFarmArea()) {
-            if (aM_.player.age % 50 == 0) {
-                aM_.player.networkHandler.sendChatCommand("home");
+            if (mc.player.age % 50 == 0) {
+                mc.player.networkHandler.sendChatCommand("home");
             }
         } else if (ready) {
-            int speedSlot = (this.useSpeed.c().booleanValue() && aM_.player.getStatusEffect(StatusEffects.SPEED) == null) ? findSlot(this::isSpeedPotion) : -1;
+            int speedSlot = (this.useSpeed.c().booleanValue() && mc.player.getStatusEffect(StatusEffects.SPEED) == null) ? findSlot(this::isSpeedPotion) : -1;
             if (speedSlot < 0) {
                 handleChest();
             } else {
@@ -451,11 +450,11 @@ public class AutoWarden extends Module {
     }
 
     private boolean isWardenAggro() {
-        if (aM_.player.age < this.roarTimer) {
-            for (Entity entity : aM_.world.getEntities()) {
+        if (mc.player.age < this.roarTimer) {
+            for (Entity entity : mc.world.getEntities()) {
                 if (entity instanceof WardenEntity) {
                     WardenEntity warden = (WardenEntity) entity;
-                    double distSq = aM_.player.squaredDistanceTo(warden);
+                    double distSq = mc.player.squaredDistanceTo(warden);
                     if (distSq < 900.0d && isWardenFacing(warden) && (distSq < 16.0d || isWardenApproaching(warden))) {
                         return true;
                     }
@@ -467,11 +466,11 @@ public class AutoWarden extends Module {
     }
 
     private boolean isWardenApproaching(WardenEntity warden) {
-        return ((aM_.player.getX() - warden.getX()) * (warden.getX() - warden.prevX)) + ((aM_.player.getZ() - warden.getZ()) * (warden.getZ() - warden.prevZ)) > 0.010000003841705648d;
+        return ((mc.player.getX() - warden.getX()) * (warden.getX() - warden.prevX)) + ((mc.player.getZ() - warden.getZ()) * (warden.getZ() - warden.prevZ)) > 0.010000003841705648d;
     }
 
     private boolean isWardenFacing(WardenEntity warden) {
-        double yawToMe = Math.toDegrees(Math.atan2(-(aM_.player.getX() - warden.getX()), aM_.player.getZ() - warden.getZ()));
+        double yawToMe = Math.toDegrees(Math.atan2(-(mc.player.getX() - warden.getX()), mc.player.getZ() - warden.getZ()));
         return Math.abs(((((((double) warden.getBodyYaw()) - yawToMe) % 360.0d) + 540.0d) % 360.0d) - 180.0d) < 10.0d;
     }
 
@@ -485,7 +484,7 @@ public class AutoWarden extends Module {
             return;
         }
         BlockPos near = findNearestChest();
-        if ((aM_.currentScreen instanceof GenericContainerScreen) || (near != null && Delta.h().d().t().i().a(near) < 0 && aM_.player.getEyePos().squaredDistanceTo(Vec3d.ofCenter(near)) <= 16.0d)) {
+        if ((mc.currentScreen instanceof GenericContainerScreen) || (near != null && Delta.h().d().t().i().a(near) < 0 && mc.player.getEyePos().squaredDistanceTo(Vec3d.ofCenter(near)) <= 16.0d)) {
             handleChest();
             return;
         }
@@ -506,10 +505,10 @@ public class AutoWarden extends Module {
         moveToHotbar();
         BlockPos best = null;
         double bestScore = -1.0d;
-        int y = aM_.player.getBlockPos().getY();
+        int y = mc.player.getBlockPos().getY();
         for (int angle = 0; angle < 360; angle += 30) {
-            int x = clampX((int) (aM_.player.getX() + (Math.cos(Math.toRadians(angle)) * 25.0d)));
-            int z = clampZ((int) (aM_.player.getZ() + (Math.sin(Math.toRadians(angle)) * 25.0d)));
+            int x = clampX((int) (mc.player.getX() + (Math.cos(Math.toRadians(angle)) * 25.0d)));
+            int z = clampZ((int) (mc.player.getZ() + (Math.sin(Math.toRadians(angle)) * 25.0d)));
             double score = escapeScore(x, z, warden);
             if (score > bestScore) {
                 bestScore = score;
@@ -521,7 +520,7 @@ public class AutoWarden extends Module {
 
     private void pathTo(BlockPos spot) {
         if (spot != null) {
-            if (aM_.player.age % 10 == 0 || (!isMoving() && aM_.player.age % 5 == 0)) {
+            if (mc.player.age % 10 == 0 || (!isMoving() && mc.player.age % 5 == 0)) {
                 BaritoneAPI.getProvider().getPrimaryBaritone().getCustomGoalProcess().setGoalAndPath(new GoalBlock(new BlockPos(clampX(spot.getX()), spot.getY(), clampZ(spot.getZ()))));
             }
         }
@@ -534,14 +533,14 @@ public class AutoWarden extends Module {
     private void debugOutput() {
         baritone.api.IBaritone.PathingBehavior pathing = BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior();
         ChatUtil.sendMessage((Object) ("&7[AW] состояние &f" + this.state + " &7| анархия &f" + ServerUtil.a.d() + "&7, нужна &f" + currentAnarchy() + " &7(список: &f" + this.anarchyList.size() + "&7) | в зоне фермы &f" + isInFarmArea() + " &7| сундуков у ESP &f" + Delta.h().d().t().i().q().size() + " &7| варден &f" + isWardenAggro() + " &7| пвп &f" + ServerUtil.e() + " &7| baritone: &f" + (pathing.hasPath() ? "идёт" : "стоит")));
-        ChatUtil.sendMessage((Object) ("&7[AW] застрял(r) &c" + isStuck() + " &7| двигаюсь(L) &f" + isMoving() + " &7| в блоке(s) &f" + isInsideBlock() + " &7| свечи &f" + (aM_.world.getBlockState(aM_.player.getBlockPos()).isIn(BlockTags.CANDLES) || aM_.world.getBlockState(aM_.player.getBlockPos().down()).isIn(BlockTags.CANDLES))));
+        ChatUtil.sendMessage((Object) ("&7[AW] застрял(r) &c" + isStuck() + " &7| двигаюсь(L) &f" + isMoving() + " &7| в блоке(s) &f" + isInsideBlock() + " &7| свечи &f" + (mc.world.getBlockState(mc.player.getBlockPos()).isIn(BlockTags.CANDLES) || mc.world.getBlockState(mc.player.getBlockPos().down()).isIn(BlockTags.CANDLES))));
         BlockPos reach = findChestInHand(true);
         BlockPos far = findNearestReceiver();
-        ChatUtil.sendMessage((Object) ("&7[AW] лут в инвентаре(R) &f" + hasLoot() + " &7| приёмник в руке &f" + (reach == null ? "нет" : String.valueOf(reach)) + " &7| ближайший приёмник &f" + (far == null ? "не найден в радиусе 16" : far + " (" + ((int) Math.sqrt(aM_.player.squaredDistanceTo(Vec3d.ofCenter(far)))) + " бл.)") + " &7| экран &f" + (aM_.currentScreen == null ? "нет" : aM_.currentScreen.getClass().getSimpleName())));
+        ChatUtil.sendMessage((Object) ("&7[AW] лут в инвентаре(R) &f" + hasLoot() + " &7| приёмник в руке &f" + (reach == null ? "нет" : String.valueOf(reach)) + " &7| ближайший приёмник &f" + (far == null ? "не найден в радиусе 16" : far + " (" + ((int) Math.sqrt(mc.player.squaredDistanceTo(Vec3d.ofCenter(far)))) + " бл.)") + " &7| экран &f" + (mc.currentScreen == null ? "нет" : mc.currentScreen.getClass().getSimpleName())));
     }
 
     private BlockPos findNearestReceiver() {
-        BlockPos origin = aM_.player.getBlockPos();
+        BlockPos origin = mc.player.getBlockPos();
         BlockPos.Mutable pos = new BlockPos.Mutable();
         BlockPos best = null;
         double bestDist = Double.MAX_VALUE;
@@ -549,8 +548,8 @@ public class AutoWarden extends Module {
             for (int dy = -6; dy <= 6; dy++) {
                 for (int dz = -16; dz <= 16; dz++) {
                     pos.set(origin.getX() + dx, origin.getY() + dy, origin.getZ() + dz);
-                    if (aM_.world.getBlockState(pos).isOf(Blocks.CHEST) && isHopperChest((BlockPos) pos) && aM_.world.getBlockState(pos.up()).isAir()) {
-                        double dist = aM_.player.squaredDistanceTo(Vec3d.ofCenter(pos));
+                    if (mc.world.getBlockState(pos).isOf(Blocks.CHEST) && isHopperChest((BlockPos) pos) && mc.world.getBlockState(pos.up()).isAir()) {
+                        double dist = mc.player.squaredDistanceTo(Vec3d.ofCenter(pos));
                         if (dist < bestDist) {
                             bestDist = dist;
                             best = pos.toImmutable();
@@ -564,8 +563,8 @@ public class AutoWarden extends Module {
 
     private double escapeScore(int x, int z, boolean warden) {
         double min = 1.7976922776554316E308d;
-        for (Entity entity : aM_.world.getEntities()) {
-            if (entity != aM_.player && ((entity instanceof PlayerEntity) || (warden && (entity instanceof WardenEntity)))) {
+        for (Entity entity : mc.world.getEntities()) {
+            if (entity != mc.player && ((entity instanceof PlayerEntity) || (warden && (entity instanceof WardenEntity)))) {
                 min = Math.min(min, Math.hypot(entity.getX() - ((double) x), entity.getZ() - ((double) z)));
             }
         }
@@ -574,7 +573,7 @@ public class AutoWarden extends Module {
 
     private int inventoryCount() {
         int n = 0;
-        for (ItemStack stack : aM_.player.getInventory().main) {
+        for (ItemStack stack : mc.player.getInventory().main) {
             if (!stack.isEmpty()) {
                 n++;
             }
@@ -583,15 +582,15 @@ public class AutoWarden extends Module {
     }
 
     private boolean isInFarmArea() {
-        return aM_.world.getRegistryKey().getValue().toString().equals("minecraft:overworld") && aM_.player.getX() <= -1921.0d && aM_.player.getX() >= -2070.0d && aM_.player.getZ() <= -1929.0d && aM_.player.getZ() >= -2076.0d;
+        return mc.world.getRegistryKey().getValue().toString().equals("minecraft:overworld") && mc.player.getX() <= -1921.0d && mc.player.getX() >= -2070.0d && mc.player.getZ() <= -1929.0d && mc.player.getZ() >= -2076.0d;
     }
 
     private void updateFarmArea() {
-        this.farmArea = new Box(-2070.0d, aM_.player.getBlockPos().getY(), -2076.0d, -1921.0d, aM_.player.getBlockPos().getY(), -1929.0d);
+        this.farmArea = new Box(-2070.0d, mc.player.getBlockPos().getY(), -2076.0d, -1921.0d, mc.player.getBlockPos().getY(), -1929.0d);
     }
 
     private boolean isInsideFarmArea() {
-        return this.farmArea != null && aM_.player.getX() >= this.farmArea.minX && aM_.player.getX() <= this.farmArea.maxX && aM_.player.getZ() >= this.farmArea.minZ && aM_.player.getZ() <= this.farmArea.maxZ;
+        return this.farmArea != null && mc.player.getX() >= this.farmArea.minX && mc.player.getX() <= this.farmArea.maxX && mc.player.getZ() >= this.farmArea.minZ && mc.player.getZ() <= this.farmArea.maxZ;
     }
 
     private int clampX(int x) {
@@ -603,7 +602,7 @@ public class AutoWarden extends Module {
     }
 
     private void handleChest() {
-        if (aM_.currentScreen instanceof GenericContainerScreen screen) {
+        if (mc.currentScreen instanceof GenericContainerScreen screen) {
             quickMoveLoot(screen);
             return;
         }
@@ -619,7 +618,7 @@ public class AutoWarden extends Module {
             this.targetChest = pick;
         }
         BlockPos target = this.targetChest;
-        if (target == null && aM_.player.age % 40 == 0) {
+        if (target == null && mc.player.age % 40 == 0) {
             this.state = State.ESCAPE;
             this.died = true;
         }
@@ -627,7 +626,7 @@ public class AutoWarden extends Module {
         if (target != null && remaining > 1000 && isPlayerNear(target, 7.0d)) {
             BlockPos spot = findStandSpot(target);
             if (spot != null) {
-                if (aM_.player.squaredDistanceTo(Vec3d.ofCenter(spot)) > 2.0d) {
+                if (mc.player.squaredDistanceTo(Vec3d.ofCenter(spot)) > 2.0d) {
                     pathTo(spot);
                     return;
                 } else {
@@ -641,7 +640,7 @@ public class AutoWarden extends Module {
             pathTo(orbitSpot(target));
             return;
         }
-        double distSq = aM_.player.getEyePos().squaredDistanceTo(Vec3d.ofCenter(target));
+        double distSq = mc.player.getEyePos().squaredDistanceTo(Vec3d.ofCenter(target));
         if (distSq <= 20.0d) {
             if (this.chestOpenCounts.getOrDefault(target, 0).intValue() < (remaining >= 0 ? 1 : 3)) {
                 if (interactChest(target, remaining >= 0 ? 6 : 1)) {
@@ -661,7 +660,7 @@ public class AutoWarden extends Module {
     }
 
     private BlockPos orbitSpot(BlockPos chest) {
-        double angle = ((double) (aM_.player.age / 40)) * 2.4000011930854526d;
+        double angle = ((double) (mc.player.age / 40)) * 2.4000011930854526d;
         return new BlockPos(clampX(chest.getX() + ((int) (Math.cos(angle) * 10.0d))), chest.getY(), clampZ(chest.getZ() + ((int) (Math.sin(angle) * 10.0d))));
     }
 
@@ -686,7 +685,7 @@ public class AutoWarden extends Module {
         double bestSq = 1.7976922776554316E308d;
         for (BlockPos chest : esp.q()) {
             if (hasStandSpot(chest) && !isArmoredPlayerNear(chest)) {
-                double distSq = aM_.player.getEyePos().squaredDistanceTo(Vec3d.ofCenter(chest));
+                double distSq = mc.player.getEyePos().squaredDistanceTo(Vec3d.ofCenter(chest));
                 long remaining = esp.a(chest);
                 if (!isNearWarden(chest) || (remaining < 0 && distSq <= 16.0d)) {
                     if (remaining >= 0 || this.chestOpenCounts.getOrDefault(chest, 0).intValue() < 3) {
@@ -705,9 +704,9 @@ public class AutoWarden extends Module {
                         if (tier < 0) {
                             continue;
                         }
-                        double up = Vec3d.ofCenter(chest).y - aM_.player.getEyeY();
-                        double dx = (((double) chest.getX()) + 0.5d) - aM_.player.getX();
-                        double dz = (((double) chest.getZ()) + 0.5d) - aM_.player.getZ();
+                        double up = Vec3d.ofCenter(chest).y - mc.player.getEyeY();
+                        double dx = (((double) chest.getX()) + 0.5d) - mc.player.getX();
+                        double dz = (((double) chest.getZ()) + 0.5d) - mc.player.getZ();
                         double weightedSq = (dx * dx) + (dz * dz) + (((double) (up > 0.0d ? 2 : 1)) * up * up);
                         if (tier < bestTier || (tier == bestTier && weightedSq < bestSq)) {
                             bestTier = tier;
@@ -722,9 +721,9 @@ public class AutoWarden extends Module {
     }
 
     private boolean isPlayerNearby(double range) {
-        for (Entity _e : aM_.world.getEntities()) {
+        for (Entity _e : mc.world.getEntities()) {
             if (!(_e instanceof PlayerEntity player)) continue;
-            if (player != aM_.player && aM_.player.squaredDistanceTo(player) < range * range) {
+            if (player != mc.player && mc.player.squaredDistanceTo(player) < range * range) {
                 return true;
             }
         }
@@ -736,7 +735,7 @@ public class AutoWarden extends Module {
             cancelPathing();
             return;
         }
-        if (aM_.player.age % 2 != 0) {
+        if (mc.player.age % 2 != 0) {
             return;
         }
         Slot slot = findScreenSlot(screen, false, stack -> {
@@ -754,20 +753,20 @@ public class AutoWarden extends Module {
             for (int dz = -1; dz <= 1; dz++) {
                 if (dx != 0 || dz != 0) {
                     BlockPos side = chest.add(dx, 0, dz);
-                    if (aM_.world.getBlockState(side).isAir() && aM_.world.getBlockState(side.up()).isAir() && !aM_.world.getBlockState(side.down()).isAir() && canReachChest(side, chest)) {
+                    if (mc.world.getBlockState(side).isAir() && mc.world.getBlockState(side.up()).isAir() && !mc.world.getBlockState(side.down()).isAir() && canReachChest(side, chest)) {
                         return side;
                     }
                 }
             }
         }
-        if (aM_.world.getBlockState(chest.up()).isAir() && aM_.world.getBlockState(chest.up().up()).isAir() && canReachChest(chest.up(), chest)) {
+        if (mc.world.getBlockState(chest.up()).isAir() && mc.world.getBlockState(chest.up().up()).isAir() && canReachChest(chest.up(), chest)) {
             return chest.up();
         }
         return null;
     }
 
     private boolean canReachChest(BlockPos from, BlockPos chest) {
-        return findVisiblePoint(Vec3d.ofCenter(from).add(0.0d, ((double) aM_.player.getEyeHeight(aM_.player.getPose())) - 0.5d, 0.0d), chest) != null;
+        return findVisiblePoint(Vec3d.ofCenter(from).add(0.0d, ((double) mc.player.getEyeHeight(mc.player.getPose())) - 0.5d, 0.0d), chest) != null;
     }
 
     private Vec3d findVisiblePoint(Vec3d eye, BlockPos chest) {
@@ -779,7 +778,7 @@ public class AutoWarden extends Module {
                 for (double dz = -0.3999999563044224d; dz <= 0.41000000193542635d; dz += 0.4000000009895358d) {
                     Vec3d point = center.add(dx, dy, dz);
                     double sq = point.squaredDistanceTo(center);
-                    if (sq < bestSq && aM_.world.raycast(new RaycastContext(eye, point, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, aM_.player)).getBlockPos().equals(chest)) {
+                    if (sq < bestSq && mc.world.raycast(new RaycastContext(eye, point, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player)).getBlockPos().equals(chest)) {
                         bestSq = sq;
                         best = point;
                     }
@@ -799,9 +798,9 @@ public class AutoWarden extends Module {
     }
 
     private boolean isArmoredPlayerNear(BlockPos pos) {
-        for (Entity _e : aM_.world.getEntities()) {
+        for (Entity _e : mc.world.getEntities()) {
             if (!(_e instanceof PlayerEntity player)) continue;
-            if (player != aM_.player && player.getPos().squaredDistanceTo(Vec3d.ofCenter(pos)) < 20.0d && Stream.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET).anyMatch(slot -> {
+            if (player != mc.player && player.getPos().squaredDistanceTo(Vec3d.ofCenter(pos)) < 20.0d && Stream.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET).anyMatch(slot -> {
                 return player.getEquippedStack(slot).getItem() instanceof ArmorItem;
             })) {
                 return true;
@@ -811,9 +810,9 @@ public class AutoWarden extends Module {
     }
 
     private boolean isPlayerNear(BlockPos pos, double range) {
-        for (Entity _e : aM_.world.getEntities()) {
+        for (Entity _e : mc.world.getEntities()) {
             if (!(_e instanceof PlayerEntity player)) continue;
-            if (player != aM_.player && player.getPos().squaredDistanceTo(Vec3d.ofCenter(pos)) < range * range) {
+            if (player != mc.player && player.getPos().squaredDistanceTo(Vec3d.ofCenter(pos)) < range * range) {
                 return true;
             }
         }
@@ -826,14 +825,14 @@ public class AutoWarden extends Module {
 
     private void drinkInvisibilityPotion() {
         int slot = findSlot(this::isInvisibilityPotion);
-        if (slot >= 0 && aM_.player.age > 20) {
+        if (slot >= 0 && mc.player.age > 20) {
             Delta.h().d().v().k().a(slot);
         }
     }
 
     private int findSlot(Predicate<ItemStack> match) {
         for (int i = 0; i < 36; i++) {
-            if (match.test(aM_.player.getInventory().getStack(i))) {
+            if (match.test(mc.player.getInventory().getStack(i))) {
                 return i;
             }
         }
@@ -848,7 +847,7 @@ public class AutoWarden extends Module {
             }
             return;
         }
-        if (aM_.currentScreen instanceof GenericContainerScreen screen) {
+        if (mc.currentScreen instanceof GenericContainerScreen screen) {
             if (!hopper) {
                 sortInventory(screen);
                 return;
@@ -863,46 +862,46 @@ public class AutoWarden extends Module {
     private boolean interactChest(BlockPos chest, int rate) {
         Vec3d eye;
         Vec3d aim;
-        if (chest == null || (aM_.currentScreen instanceof GenericContainerScreen) || (aim = findVisiblePoint((eye = aM_.player.getEyePos()), chest)) == null) {
+        if (chest == null || (mc.currentScreen instanceof GenericContainerScreen) || (aim = findVisiblePoint((eye = mc.player.getEyePos()), chest)) == null) {
             return false;
         }
         Rotation target = Rotation.a(eye, aim);
-        float t = aM_.player.age + aM_.getRenderTickCounter().getTickDelta(false);
+        float t = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
         float sw = (float) (((Math.sin(t * 0.31f) * 0.5d) + (Math.sin((t * 0.73f) + 1.1f) * 0.3000000317022817d) + (Math.sin((t * 1.7f) + 2.6f) * 0.1999999860971588d)) * 8.0d);
         Delta.h().d().k().a(new Rotation(target.c() + sw, MathUtil.b(target.d() + (sw / 4.0f), -90.0f, 90.0f)), 120.0f, 1, 1);
-        if (aM_.player.age % rate != 0 || Rotation.b().a(target) > 5.0d) {
+        if (mc.player.age % rate != 0 || Rotation.b().a(target) > 5.0d) {
             return false;
         }
-        BlockHitResult hit = aM_.world.raycast(new RaycastContext(eye, aim, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, aM_.player));
+        BlockHitResult hit = mc.world.raycast(new RaycastContext(eye, aim, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player));
         if (!hit.getBlockPos().equals(chest)) {
             return false;
         }
-        aM_.interactionManager.interactBlock(aM_.player, Hand.MAIN_HAND, hit);
-        aM_.player.swingHand(Hand.MAIN_HAND);
+        mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, hit);
+        mc.player.swingHand(Hand.MAIN_HAND);
         return true;
     }
 
     private boolean isMoving() {
-        return aM_.player.getVelocity().horizontalLengthSquared() > 0.002500001077917312d;
+        return mc.player.getVelocity().horizontalLengthSquared() > 0.002500001077917312d;
     }
 
     private void moveToHotbar() {
-        if (aM_.player.getMainHandStack().isEmpty()) {
+        if (mc.player.getMainHandStack().isEmpty()) {
             return;
         }
         for (int i = 0; i < 9; i++) {
-            if (aM_.player.getInventory().getStack(i).isEmpty()) {
-                aM_.player.getInventory().selectedSlot = i;
+            if (mc.player.getInventory().getStack(i).isEmpty()) {
+                mc.player.getInventory().selectedSlot = i;
                 return;
             }
         }
         for (int i2 = 9; i2 < 36; i2++) {
-            if (aM_.player.getInventory().getStack(i2).isEmpty()) {
-                if (aM_.player.age % 10 >= 2 && isMoving()) {
+            if (mc.player.getInventory().getStack(i2).isEmpty()) {
+                if (mc.player.age % 10 >= 2 && isMoving()) {
                     cancelPathing();
                 }
-                if (aM_.player.age % 10 == 4) {
-                    Delta.h().d().v().a().a(aM_.player.getInventory().selectedSlot, i2, 1);
+                if (mc.player.age % 10 == 4) {
+                    Delta.h().d().v().a().a(mc.player.getInventory().selectedSlot, i2, 1);
                     return;
                 }
                 return;
@@ -911,14 +910,14 @@ public class AutoWarden extends Module {
     }
 
     private boolean closeScreen() {
-        if ((aM_.currentScreen instanceof GenericContainerScreen) && aM_.player.age % 2 == 0) {
-            aM_.player.closeHandledScreen();
+        if ((mc.currentScreen instanceof GenericContainerScreen) && mc.player.age % 2 == 0) {
+            mc.player.closeHandledScreen();
         }
-        return !(aM_.currentScreen instanceof GenericContainerScreen);
+        return !(mc.currentScreen instanceof GenericContainerScreen);
     }
 
     private void moveLootToHopper(GenericContainerScreen screen) {
-        if (aM_.player.age % 2 != 0) {
+        if (mc.player.age % 2 != 0) {
             return;
         }
         boolean keepPotion = false;
@@ -927,7 +926,7 @@ public class AutoWarden extends Module {
         for (Slot slot : screen.getScreenHandler().slots) {
             if (moved < 4) {
                 ItemStack stack = slot.getStack();
-                if (slot.inventory == aM_.player.getInventory() && !stack.isEmpty() && (!this.useSpeed.c().booleanValue() || !isSpeedPotion(stack))) {
+                if (slot.inventory == mc.player.getInventory() && !stack.isEmpty() && (!this.useSpeed.c().booleanValue() || !isSpeedPotion(stack))) {
                     if (!keepPotion && isInvisibilityPotion(stack)) {
                         keepPotion = true;
                     } else if (keepCarrot || !stack.isOf(Items.GOLDEN_CARROT)) {
@@ -944,7 +943,7 @@ public class AutoWarden extends Module {
     }
 
     private void sortInventory(GenericContainerScreen screen) {
-        if (aM_.player.age % 2 != 0) {
+        if (mc.player.age % 2 != 0) {
             return;
         }
         ItemStack cursor = screen.getScreenHandler().getCursorStack();
@@ -965,7 +964,7 @@ public class AutoWarden extends Module {
 
     private Slot findScreenSlot(GenericContainerScreen screen, boolean player, Predicate<ItemStack> match) {
         for (Slot slot : screen.getScreenHandler().slots) {
-            if ((slot.inventory == aM_.player.getInventory()) == player && match.test(slot.getStack())) {
+            if ((slot.inventory == mc.player.getInventory()) == player && match.test(slot.getStack())) {
                 return slot;
             }
         }
@@ -974,12 +973,12 @@ public class AutoWarden extends Module {
 
     private void clickSlot(GenericContainerScreen screen, Slot slot, int button, SlotActionType type) {
         if (slot != null) {
-            aM_.interactionManager.clickSlot(screen.getScreenHandler().syncId, slot.id, button, type, aM_.player);
+            mc.interactionManager.clickSlot(screen.getScreenHandler().syncId, slot.id, button, type, mc.player);
         }
     }
 
     private boolean hasCursorItem() {
-        GenericContainerScreen screen = (GenericContainerScreen) aM_.currentScreen;
+        GenericContainerScreen screen = (GenericContainerScreen) mc.currentScreen;
         if (screen instanceof GenericContainerScreen) {
             if (!screen.getScreenHandler().getCursorStack().isEmpty()) {
                 return true;
@@ -998,7 +997,7 @@ public class AutoWarden extends Module {
 
     private int invisibilityCount() {
         int total = 0;
-        for (ItemStack stack : aM_.player.getInventory().main) {
+        for (ItemStack stack : mc.player.getInventory().main) {
             if (isInvisibilityPotion(stack)) {
                 total++;
             }
@@ -1046,13 +1045,13 @@ public class AutoWarden extends Module {
     }
 
     private BlockPos findChestInHand(boolean hopper) {
-        BlockPos origin = aM_.player.getBlockPos();
+        BlockPos origin = mc.player.getBlockPos();
         BlockPos.Mutable pos = new BlockPos.Mutable();
         for (int dx = -4; dx <= 4; dx++) {
             for (int dy = -4; dy <= 4; dy++) {
                 for (int dz = -4; dz <= 4; dz++) {
                     pos.set(origin.getX() + dx, origin.getY() + dy, origin.getZ() + dz);
-                    if (aM_.world.getBlockState(pos).isOf(Blocks.CHEST) && isHopperChest((BlockPos) pos) == hopper && aM_.world.getBlockState(pos.up()).isAir() && aM_.world.raycast(new RaycastContext(aM_.player.getEyePos(), Vec3d.ofCenter(pos), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, aM_.player)).getBlockPos().equals(pos)) {
+                    if (mc.world.getBlockState(pos).isOf(Blocks.CHEST) && isHopperChest((BlockPos) pos) == hopper && mc.world.getBlockState(pos.up()).isAir() && mc.world.raycast(new RaycastContext(mc.player.getEyePos(), Vec3d.ofCenter(pos), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player)).getBlockPos().equals(pos)) {
                         return pos.toImmutable();
                     }
                 }
@@ -1062,15 +1061,15 @@ public class AutoWarden extends Module {
     }
 
     private boolean isHopperChest(BlockPos pos) {
-        if (aM_.world.getBlockState(pos.down()).isOf(Blocks.HOPPER)) {
+        if (mc.world.getBlockState(pos.down()).isOf(Blocks.HOPPER)) {
             return true;
         }
-        BlockState state = aM_.world.getBlockState(pos);
+        BlockState state = mc.world.getBlockState(pos);
         if (state.get(Properties.CHEST_TYPE) != ChestType.SINGLE) {
             for (Direction dir : Direction.Type.HORIZONTAL) {
                 BlockPos partner = pos.offset(dir);
-                BlockState ps = aM_.world.getBlockState(partner);
-                if (ps.isOf(Blocks.CHEST) && ps.get(Properties.CHEST_TYPE) != ChestType.SINGLE && ps.get(Properties.CHEST_TYPE) != state.get(Properties.CHEST_TYPE) && ps.get(Properties.HORIZONTAL_FACING) == state.get(Properties.HORIZONTAL_FACING) && aM_.world.getBlockState(partner.down()).isOf(Blocks.HOPPER)) {
+                BlockState ps = mc.world.getBlockState(partner);
+                if (ps.isOf(Blocks.CHEST) && ps.get(Properties.CHEST_TYPE) != ChestType.SINGLE && ps.get(Properties.CHEST_TYPE) != state.get(Properties.CHEST_TYPE) && ps.get(Properties.HORIZONTAL_FACING) == state.get(Properties.HORIZONTAL_FACING) && mc.world.getBlockState(partner.down()).isOf(Blocks.HOPPER)) {
                     return true;
                 }
             }
@@ -1082,7 +1081,7 @@ public class AutoWarden extends Module {
     private boolean hasLoot() {
         boolean keepPotion = false;
         boolean keepCarrot = false;
-        for (ItemStack stack : aM_.player.getInventory().main) {
+        for (ItemStack stack : mc.player.getInventory().main) {
             if (!stack.isEmpty() && (!this.useSpeed.c().booleanValue() || !isSpeedPotion(stack))) {
                 if (!keepPotion && isInvisibilityPotion(stack)) {
                     keepPotion = true;

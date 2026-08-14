@@ -19,8 +19,8 @@ public class ScissorUtil implements Interface {
     }
 
     public static void a(MatrixStack matrixStack, float x, float y, float width, float height) {
-        float scaleFactor = (float) aM_.getWindow().getScaleFactor();
-        a scissorBox = new a((int) (x * scaleFactor), (int) (((aM_.getWindow().getScaledHeight() - y) - height) * scaleFactor), (int) (width * scaleFactor), (int) (height * scaleFactor));
+        float scaleFactor = (float) mc.getWindow().getScaleFactor();
+        a scissorBox = new a((int) (x * scaleFactor), (int) (((mc.getWindow().getScaledHeight() - y) - height) * scaleFactor), (int) (width * scaleFactor), (int) (height * scaleFactor));
         if (!b.isEmpty()) {
             scissorBox = scissorBox.a(b.peek());
         }

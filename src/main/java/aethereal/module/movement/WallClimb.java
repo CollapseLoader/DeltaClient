@@ -33,12 +33,12 @@ public class WallClimb extends Module {
     }
 
     private void a(MotionEvent event, long value) {
-        if (this.d.a(value * 5) && aM_.player.horizontalCollision) {
+        if (this.d.a(value * 5) && mc.player.horizontalCollision) {
             event.b(true);
-            aM_.player.setOnGround(true);
-            aM_.player.verticalCollision = true;
-            aM_.player.horizontalCollision = true;
-            aM_.player.jump();
+            mc.player.setOnGround(true);
+            mc.player.verticalCollision = true;
+            mc.player.horizontalCollision = true;
+            mc.player.jump();
             this.d.b();
         }
     }

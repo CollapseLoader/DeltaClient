@@ -55,7 +55,7 @@ public class Structures extends Module {
         this.c.forEach(structure2 -> {
             structure2.b().a(!structure2.c().a(structure2.d().d() - 200));
             float remaining = Math.max(0.0f, (structure2.d().d() - structure2.c().c()) / 1000.0f);
-            if (structure2.e().contains(aM_.player.getBlockPos())) {
+            if (structure2.e().contains(mc.player.getBlockPos())) {
                 structure2.a(remaining / (structure2.d().d() / 1000.0f), remaining);
             } else {
                 structure2.a();
@@ -219,7 +219,7 @@ public class Structures extends Module {
             MutableText barText = Text.literal(String.format(Locale.US, "%s — %.1f сек", this.d.a(), Float.valueOf(remaining)));
             if (this.f == null) {
                 this.f = new ClientBossBar(UUID.randomUUID(), barText, progress, BossBar.Color.WHITE, BossBar.Style.PROGRESS, false, false, false);
-                ((platform.inject.accessors.BossBarHudAccessor) aM_.inGameHud.getBossBarHud()).getBossBars().put(this.f.getUuid(), this.f);
+                ((platform.inject.accessors.BossBarHudAccessor) mc.inGameHud.getBossBarHud()).getBossBars().put(this.f.getUuid(), this.f);
             } else {
                 this.f.setName(barText);
                 this.f.setPercent(progress);
@@ -228,7 +228,7 @@ public class Structures extends Module {
 
         public void a() {
             if (this.f != null) {
-                ((platform.inject.accessors.BossBarHudAccessor) aM_.inGameHud.getBossBarHud()).getBossBars().remove(this.f.getUuid());
+                ((platform.inject.accessors.BossBarHudAccessor) mc.inGameHud.getBossBarHud()).getBossBars().remove(this.f.getUuid());
                 this.f = null;
             }
         }

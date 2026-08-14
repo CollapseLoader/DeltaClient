@@ -169,7 +169,7 @@ public class AutoBuySection extends Section implements Interface {
             return true;
         }
         if (this.h != null && MathUtil.a(mouseX, mouseY, this.d.x, this.d.y, this.d.z, this.d.w)) {
-            aM_.player.networkHandler.sendChatCommand("ah search " + this.h.b().replaceAll("\\[\\d+x\\d+]", "").replace("⚡", "").replace("xxx", "").replace("[", "").replace("]", "").replace("★", "").trim().replaceAll("\\s+", StringUtils.a));
+            mc.player.networkHandler.sendChatCommand("ah search " + this.h.b().replaceAll("\\[\\d+x\\d+]", "").replace("⚡", "").replace("xxx", "").replace("[", "").replace("]", "").replace("★", "").trim().replaceAll("\\s+", StringUtils.a));
             return true;
         }
         if (this.h != null && MathUtil.a(mouseX, mouseY, this.g.x, this.g.y, this.g.z, this.g.w)) {

@@ -133,7 +133,7 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> {
         for (int i = this.chestSize; i < this.handler.slots.size(); i++) {
             Slot slot = this.handler.slots.get(i);
             if (hasStack(slot)) {
-                Interface.aM_.interactionManager.clickSlot(this.handler.syncId, slot.id, 0, SlotActionType.QUICK_MOVE, Interface.aM_.player);
+                Interface.mc.interactionManager.clickSlot(this.handler.syncId, slot.id, 0, SlotActionType.QUICK_MOVE, Interface.mc.player);
             }
         }
     }
@@ -143,7 +143,7 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> {
         for (int i = 0; i < this.chestSize; i++) {
             Slot slot = this.handler.slots.get(i);
             if (hasStack(slot)) {
-                Interface.aM_.interactionManager.clickSlot(this.handler.syncId, slot.id, 0, SlotActionType.QUICK_MOVE, Interface.aM_.player);
+                Interface.mc.interactionManager.clickSlot(this.handler.syncId, slot.id, 0, SlotActionType.QUICK_MOVE, Interface.mc.player);
             }
         }
     }
@@ -153,7 +153,7 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> {
         for (int i = 0; i < this.chestSize; i++) {
             Slot slot = this.handler.slots.get(i);
             if (hasStack(slot)) {
-                Interface.aM_.interactionManager.clickSlot(this.handler.syncId, slot.id, 1, SlotActionType.THROW, Interface.aM_.player);
+                Interface.mc.interactionManager.clickSlot(this.handler.syncId, slot.id, 1, SlotActionType.THROW, Interface.mc.player);
             }
         }
     }
@@ -167,7 +167,7 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> {
             info.setReturnValue(true);
             return;
         }
-        if (Interface.aM_.options.dropKey == null || !Interface.aM_.options.dropKey.matchesKey(keyCode, scanCode) || (modifiers & 2) == 0 || (modifiers & 1) == 0 || (focusedSlot = ((HandledScreenAccessor) this).getFocusedSlot()) == null || !focusedSlot.hasStack()) {
+        if (Interface.mc.options.dropKey == null || !Interface.mc.options.dropKey.matchesKey(keyCode, scanCode) || (modifiers & 2) == 0 || (modifiers & 1) == 0 || (focusedSlot = ((HandledScreenAccessor) this).getFocusedSlot()) == null || !focusedSlot.hasStack()) {
             return;
         }
         handleDropItems(focusedSlot.getStack().getItem());
@@ -179,7 +179,7 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> {
         for (Slot slot : this.handler.slots) {
             ItemStack stack = slot.getStack();
             if (!stack.isEmpty() && stack.getItem() == targetItem) {
-                Interface.aM_.interactionManager.clickSlot(this.handler.syncId, slot.id, 1, SlotActionType.THROW, Interface.aM_.player);
+                Interface.mc.interactionManager.clickSlot(this.handler.syncId, slot.id, 1, SlotActionType.THROW, Interface.mc.player);
             }
         }
     }
@@ -191,7 +191,7 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> {
             swapScreen.a(swapScreen.a(), slot.getStack());
             swapScreen.a(-1);
             swapScreen.a(false);
-            Interface.aM_.setScreen(swapScreen);
+            Interface.mc.setScreen(swapScreen);
             ci.cancel();
         }
     }
@@ -215,8 +215,8 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> {
         }
         EventManager.a(new ContainerEvent((HandledScreen) (Object) this, context, mouseX, mouseY, ContainerEvent.Phase.PRE));
         ItemScroller itemScroller = Delta.h().d().t().w();
-        if (itemScroller.m() && ((HandledScreenAccessor) this).getFocusedSlot() != null && ((HandledScreenAccessor) this).getFocusedSlot().hasStack() && GLFW.glfwGetMouseButton(Interface.aM_.getWindow().getHandle(), 0) == 1 && GLFW.glfwGetKey(Interface.aM_.getWindow().getHandle(), TokenId.O_) == 1 && itemScroller.r().a(itemScroller.q().c().intValue())) {
-            Interface.aM_.interactionManager.clickSlot(this.handler.syncId, ((HandledScreenAccessor) this).getFocusedSlot().id, 0, SlotActionType.QUICK_MOVE, Interface.aM_.player);
+        if (itemScroller.m() && ((HandledScreenAccessor) this).getFocusedSlot() != null && ((HandledScreenAccessor) this).getFocusedSlot().hasStack() && GLFW.glfwGetMouseButton(Interface.mc.getWindow().getHandle(), 0) == 1 && GLFW.glfwGetKey(Interface.mc.getWindow().getHandle(), TokenId.O_) == 1 && itemScroller.r().a(itemScroller.q().c().intValue())) {
+            Interface.mc.interactionManager.clickSlot(this.handler.syncId, ((HandledScreenAccessor) this).getFocusedSlot().id, 0, SlotActionType.QUICK_MOVE, Interface.mc.player);
             itemScroller.r().b();
         }
     }

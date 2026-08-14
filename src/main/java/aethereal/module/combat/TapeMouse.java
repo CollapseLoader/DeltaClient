@@ -42,13 +42,13 @@ public class TapeMouse extends Module implements Interface {
 
     @EventTarget
     public void a(TickEvent event) {
-        if ((!this.c.c().booleanValue() || !aM_.player.isUsingItem()) && this.e.a(this.b.c().intValue())) {
+        if ((!this.c.c().booleanValue() || !mc.player.isUsingItem()) && this.e.a(this.b.c().intValue())) {
             switch (this.d.c()) {
                 case "Правая":
-                    ((platform.inject.invokers.MinecraftClientInvoker) aM_).invokeDoItemUse();
+                    ((platform.inject.invokers.MinecraftClientInvoker) mc).invokeDoItemUse();
                     break;
                 case "Левая":
-                    ((platform.inject.invokers.MinecraftClientInvoker) aM_).invokeDoAttack();
+                    ((platform.inject.invokers.MinecraftClientInvoker) mc).invokeDoAttack();
                     break;
             }
             this.e.b();

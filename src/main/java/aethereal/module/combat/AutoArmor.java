@@ -45,12 +45,12 @@ public class AutoArmor extends Module implements Interface {
             return;
         }
         this.d++;
-        boolean urgent = a(aM_.player.getEquippedStack(EquipmentSlot.HEAD)) || a(aM_.player.getEquippedStack(EquipmentSlot.CHEST)) || a(aM_.player.getEquippedStack(EquipmentSlot.LEGS)) || a(aM_.player.getEquippedStack(EquipmentSlot.FEET));
+        boolean urgent = a(mc.player.getEquippedStack(EquipmentSlot.HEAD)) || a(mc.player.getEquippedStack(EquipmentSlot.CHEST)) || a(mc.player.getEquippedStack(EquipmentSlot.LEGS)) || a(mc.player.getEquippedStack(EquipmentSlot.FEET));
         if (!urgent) {
             if (this.d % 2 != 0) {
                 return;
             }
-            if (this.b.c().booleanValue() && aM_.player.getVelocity().horizontalLengthSquared() > 9.99999713651348E-5d) {
+            if (this.b.c().booleanValue() && mc.player.getVelocity().horizontalLengthSquared() > 9.99999713651348E-5d) {
                 return;
             }
         }
@@ -59,13 +59,13 @@ public class AutoArmor extends Module implements Interface {
     }
 
     private boolean a(EquipmentSlot slot, int armorIndex) {
-        ItemStack current = aM_.player.getEquippedStack(slot);
+        ItemStack current = mc.player.getEquippedStack(slot);
         boolean low = a(current);
         double best = low ? b(current) + 20 : c(current);
         int bestSlot = -1;
         int bestBundle = -1;
         for (int inventorySlot = 0; inventorySlot < 36; inventorySlot++) {
-            ItemStack stack = aM_.player.getInventory().getStack(inventorySlot);
+            ItemStack stack = mc.player.getInventory().getStack(inventorySlot);
             if (a(stack, slot)) {
                 double value = low ? b(stack) : c(stack);
                 if (value > best) {
@@ -93,7 +93,7 @@ public class AutoArmor extends Module implements Interface {
             return false;
         }
         if (bestBundle != -1) {
-            aM_.player.networkHandler.sendPacket(new BundleItemSelectedC2SPacket(bestSlot < 9 ? 36 + bestSlot : bestSlot, bestBundle));
+            mc.player.networkHandler.sendPacket(new BundleItemSelectedC2SPacket(bestSlot < 9 ? 36 + bestSlot : bestSlot, bestBundle));
         }
         Delta.h().d().v().a().b(bestSlot, armorIndex, 1);
         return true;
@@ -116,7 +116,7 @@ public class AutoArmor extends Module implements Interface {
         if (stack.isEmpty()) {
             return 0.0d;
         }
-        double score = EnchantmentHelper.getLevel(aM_.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.PROTECTION), stack);
+        double score = EnchantmentHelper.getLevel(mc.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.PROTECTION), stack);
         AttributeModifiersComponent modifiers = stack.get(DataComponentTypes.ATTRIBUTE_MODIFIERS);
         if (modifiers != null) {
             for (AttributeModifiersComponent.Entry entry : modifiers.modifiers()) {

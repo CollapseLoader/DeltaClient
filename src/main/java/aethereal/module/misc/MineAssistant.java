@@ -41,7 +41,7 @@ public class MineAssistant extends Module implements Interface {
     }
 
     public void q() {
-        for (ArmorStandEntity stand : aM_.world.getEntitiesByClass(ArmorStandEntity.class, aM_.player.getBoundingBox().expand(256.0), e -> true)) {
+        for (ArmorStandEntity stand : mc.world.getEntitiesByClass(ArmorStandEntity.class, mc.player.getBoundingBox().expand(256.0), e -> true)) {
             if (stand.getName().getString().contains("Авто-Шахта")) {
                 if (this.d == null || this.d.getAverageSideLength() <= 15.0d) {
                     int scanY = ((int) Math.floor(stand.getY())) - 2;
@@ -51,16 +51,16 @@ public class MineAssistant extends Module implements Interface {
                     int maxX = startX;
                     int minZ = startZ;
                     int maxZ = startZ;
-                    while (a(aM_.world.getBlockState(new BlockPos(minX - 2, scanY, startZ)).getBlock()) != null) {
+                    while (a(mc.world.getBlockState(new BlockPos(minX - 2, scanY, startZ)).getBlock()) != null) {
                         minX--;
                     }
-                    while (a(aM_.world.getBlockState(new BlockPos(maxX + 2, scanY, startZ)).getBlock()) != null) {
+                    while (a(mc.world.getBlockState(new BlockPos(maxX + 2, scanY, startZ)).getBlock()) != null) {
                         maxX++;
                     }
-                    while (a(aM_.world.getBlockState(new BlockPos(startX, scanY, minZ - 1)).getBlock()) != null) {
+                    while (a(mc.world.getBlockState(new BlockPos(startX, scanY, minZ - 1)).getBlock()) != null) {
                         minZ--;
                     }
-                    while (a(aM_.world.getBlockState(new BlockPos(startX, scanY, maxZ + 1)).getBlock()) != null) {
+                    while (a(mc.world.getBlockState(new BlockPos(startX, scanY, maxZ + 1)).getBlock()) != null) {
                         maxZ++;
                     }
                     this.d = new Box(minX, scanY + 1, minZ, maxX + 1, scanY - 8, maxZ + 1);
@@ -79,7 +79,7 @@ public class MineAssistant extends Module implements Interface {
                 for (int y = (int) this.d.minY; y <= ((int) this.d.maxY); y++) {
                     for (int z = (int) this.d.minZ; z <= ((int) this.d.maxZ); z++) {
                         BlockPos pos = new BlockPos(x, y, z);
-                        a info = a(aM_.world.getBlockState(pos).getBlock());
+                        a info = a(mc.world.getBlockState(pos).getBlock());
                         if (info != null && info.b() != -1 && this.b.a(info.c()).c().booleanValue()) {
                             event.e().a(event.h(), new Box(pos), ColorUtil.a(info.b(), InterfaceC0020Opcode.ap), 1.0f);
                         }

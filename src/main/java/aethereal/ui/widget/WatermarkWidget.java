@@ -51,7 +51,7 @@ public class WatermarkWidget extends Widget implements Interface {
         float fMethod_4476;
         d().a(true);
         d().a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
-        this.f = MathUtil.c(this.f, aM_.getCurrentFps(), 0.1f);
+        this.f = MathUtil.c(this.f, mc.getCurrentFps(), 0.1f);
         float iconSize = this.e - 0.5f;
         float logoSize = this.e + 1.0f;
         float sectionGap = !this.h.c().booleanValue() ? 5.0f : 2.0f;
@@ -59,13 +59,13 @@ public class WatermarkWidget extends Widget implements Interface {
         String[][] bottomSections = l();
         float topWidth = a(topSections, true, iconSize, logoSize, 5.0f, sectionGap, 3.0f, 4.0f);
         float bottomWidth = a(bottomSections, false, iconSize, logoSize, 5.0f, sectionGap, 3.0f, 4.0f);
-        float x = this.g.c().booleanValue() ? 5.0f : (aM_.getWindow().getScaledWidth() - topWidth) / 2.0f;
-        if (this.g.c().booleanValue() || ((platform.inject.accessors.BossBarHudAccessor) aM_.inGameHud.getBossBarHud()).getBossBars().isEmpty()) {
+        float x = this.g.c().booleanValue() ? 5.0f : (mc.getWindow().getScaledWidth() - topWidth) / 2.0f;
+        if (this.g.c().booleanValue() || ((platform.inject.accessors.BossBarHudAccessor) mc.inGameHud.getBossBarHud()).getBossBars().isEmpty()) {
             fMethod_4476 = 0.0f;
         } else {
-            int size = ((platform.inject.accessors.BossBarHudAccessor) aM_.inGameHud.getBossBarHud()).getBossBars().size() - 1;
-            Objects.requireNonNull(aM_.textRenderer);
-            fMethod_4476 = (((12 + (size * (10 + 9))) + 5) * aM_.getWindow().calculateScaleFactor(aM_.options.getGuiScale().getValue().intValue(), aM_.forcesUnicodeFont())) / aM_.getWindow().calculateScaleFactor(2, aM_.forcesUnicodeFont());
+            int size = ((platform.inject.accessors.BossBarHudAccessor) mc.inGameHud.getBossBarHud()).getBossBars().size() - 1;
+            Objects.requireNonNull(mc.textRenderer);
+            fMethod_4476 = (((12 + (size * (10 + 9))) + 5) * mc.getWindow().calculateScaleFactor(mc.options.getGuiScale().getValue().intValue(), mc.forcesUnicodeFont())) / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont());
         }
         float y = 5.0f + fMethod_4476;
         float bottomX = this.g.c().booleanValue() ? x : x + ((topWidth - bottomWidth) / 2.0f);
@@ -170,7 +170,7 @@ public class WatermarkWidget extends Widget implements Interface {
     private String[][] l() {
         List<String[]> sections = new ArrayList<>();
         if (this.m.c().booleanValue()) {
-            sections.add(new String[]{"b", "x " + ((int) aM_.player.getX()) + " y " + ((int) aM_.player.getY()) + " z " + ((int) aM_.player.getZ())});
+            sections.add(new String[]{"b", "x " + ((int) mc.player.getX()) + " y " + ((int) mc.player.getY()) + " z " + ((int) mc.player.getZ())});
         }
         if (this.n.c().booleanValue()) {
             sections.add(new String[]{"g", String.format("%.1f TPS", Float.valueOf(Delta.h().d().v().j().a()))});

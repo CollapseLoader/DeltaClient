@@ -112,14 +112,14 @@ public class RadialScreen implements Interface {
             double endAngle = startAngle + (6.2831872368967865d / ((double) count));
             double drawStart = startAngle + (((endAngle - startAngle) * 0.010000000036845655d) / 2.0d);
             double drawEnd = endAngle - (((endAngle - startAngle) * 0.010000000036845655d) / 2.0d);
-            boolean isSelected = slot == this.e && !(aM_.currentScreen instanceof AssistantScreen);
+            boolean isSelected = slot == this.e && !(mc.currentScreen instanceof AssistantScreen);
             a segment = this.b[slot];
             if (segment != null) {
-                segment.a().a(0.0f, 1.0f, 0.3f, EasingList.g, aM_.getRenderTickCounter().getTickDelta(false));
+                segment.a().a(0.0f, 1.0f, 0.3f, EasingList.g, mc.getRenderTickCounter().getTickDelta(false));
                 segment.a().a(slot == a(mouseX, mouseY, center));
                 int primary = ColorUtil.a(Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), 80);
                 int hoverColor = ColorUtil.a(ColorUtil.a(255, 255, 255, 80), primary, segment.a().c());
-                boolean assistant = aM_.currentScreen instanceof AssistantScreen;
+                boolean assistant = mc.currentScreen instanceof AssistantScreen;
                 int amount = (!assistant || segment.b.isEmpty()) ? -1 : InventoryUtil.c(segment.b, false);
                 int fillColor = ((isSelected || amount == 0) && !segment.b.isEmpty()) ? ColorUtil.a(255, 128, 128, 80) : hoverColor;
                 double midAngle = (startAngle + endAngle) / 2.0d;
@@ -152,13 +152,13 @@ public class RadialScreen implements Interface {
         String name = string;
         if (hasSegment) {
             Fonts.e.a(context.getMatrices(), name, cx - (Fonts.e.a(name, 10.0f) / 2.0f), baseY, 10.0f, ColorUtil.a(255, 255, 255, 255));
-            if (aM_.currentScreen instanceof AssistantScreen) {
+            if (mc.currentScreen instanceof AssistantScreen) {
                 Fonts.d.a(context.getMatrices(), "СКМ – добавление слота", cx - (Fonts.d.a("СКМ – добавление слота", 7.0f) / 2.0f), baseY + Fonts.d.a(10.0f) + 3.0f, 7.0f, ColorUtil.a(255, 255, 255, InterfaceC0020Opcode.cG));
                 return;
             }
             return;
         }
-        if (aM_.currentScreen instanceof AssistantScreen) {
+        if (mc.currentScreen instanceof AssistantScreen) {
             Fonts.d.a(context.getMatrices(), "СКМ – добавление слота", cx - (Fonts.d.a("СКМ – добавление слота", 7.0f) / 2.0f), baseY, 7.0f, ColorUtil.a(255, 255, 255, InterfaceC0020Opcode.cG));
         }
     }

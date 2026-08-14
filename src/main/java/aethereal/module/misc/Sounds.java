@@ -41,10 +41,10 @@ public class Sounds extends Module {
     }
 
     public void a(String filename) {
-        if (filename != null && !filename.isEmpty() && aM_.getResourceManager() != null) {
+        if (filename != null && !filename.isEmpty() && mc.getResourceManager() != null) {
             this.d.execute(() -> {
                 try {
-                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(new BufferedInputStream(aM_.getResourceManager().open(Identifier.of("delta", "sounds/" + filename))));
+                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(new BufferedInputStream(mc.getResourceManager().open(Identifier.of("delta", "sounds/" + filename))));
                     Clip clip = AudioSystem.getClip();
                     clip.open(audioStream);
                     if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {

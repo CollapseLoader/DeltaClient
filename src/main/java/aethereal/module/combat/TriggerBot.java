@@ -76,7 +76,7 @@ public class TriggerBot extends Module {
             MoveUtil.a(e, this.n, 3);
         }
         if (this.o != null) {
-            Vec3d targetPosition = AuraUtil.a(aM_.player.getEyePos(), this.o, 3.0d, true);
+            Vec3d targetPosition = AuraUtil.a(mc.player.getEyePos(), this.o, 3.0d, true);
             this.n = targetPosition == Vec3d.ZERO ? Look.b() : (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(targetPosition.z, targetPosition.x)) - 90.0d);
         }
         if (this.i.l("Легитный") && this.l > 0) {
@@ -93,14 +93,14 @@ public class TriggerBot extends Module {
 
     @EventTarget
     public void a(WillLandEvent e) {
-        this.c = e.b() && !aM_.player.isOnGround();
+        this.c = e.b() && !mc.player.isOnGround();
     }
 
     private void t() {
         this.d++;
         v();
-        if (this.o != null && this.g.a("Случайные промахи").c().booleanValue() && this.d >= 2 && this.m >= 30 && (((Math.random() > 0.5d && this.d >= 1) || this.d == 4) && (!this.e || !AuraUtil.a(aM_.player.getYaw(), aM_.player.getPitch(), 3.0d, this.o, false)))) {
-            ((platform.inject.invokers.MinecraftClientInvoker) aM_).invokeDoAttack();
+        if (this.o != null && this.g.a("Случайные промахи").c().booleanValue() && this.d >= 2 && this.m >= 30 && (((Math.random() > 0.5d && this.d >= 1) || this.d == 4) && (!this.e || !AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), 3.0d, this.o, false)))) {
+            ((platform.inject.invokers.MinecraftClientInvoker) mc).invokeDoAttack();
             this.e = !this.e;
             this.m = (int) MathUtil.a(-10.0f, 10.0f);
         }
@@ -114,27 +114,27 @@ public class TriggerBot extends Module {
         if (this.o == null || !q()) {
             return;
         }
-        if (!AuraUtil.a(aM_.player.getYaw(), aM_.player.getPitch(), 3.0d, this.o, !this.h.a("Враг за стеной").c().booleanValue())) {
+        if (!AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), 3.0d, this.o, !this.h.a("Враг за стеной").c().booleanValue())) {
             return;
         }
         boolean skip = false;
-        if ((Delta.h().d().t().H().e || (aM_.player.fallDistance > 2.0f && Delta.h().d().t().H().c.c().booleanValue())) && InventoryUtil.b(Items.MACE) != -1) {
-            if (aM_.player.fallDistance < 1.5f) {
+        if ((Delta.h().d().t().H().e || (mc.player.fallDistance > 2.0f && Delta.h().d().t().H().c.c().booleanValue())) && InventoryUtil.b(Items.MACE) != -1) {
+            if (mc.player.fallDistance < 1.5f) {
                 return;
             }
-            double landDist = MaceUtil.a(aM_.player, aM_.world).map(pos -> {
+            double landDist = MaceUtil.a(mc.player, mc.world).map(pos -> {
                 return Double.valueOf(pos.distanceTo(this.o.getPos()));
             }).orElse(Double.valueOf(33.0d)).doubleValue();
             boolean hitNow = landDist > 2.0d;
-            if ((!this.c && !MaceUtil.b() && Delta.h().d().t().H().b.c().booleanValue() && !hitNow) || !MaceUtil.a() || aM_.player.isGliding()) {
+            if ((!this.c && !MaceUtil.b() && Delta.h().d().t().H().b.c().booleanValue() && !hitNow) || !MaceUtil.a() || mc.player.isGliding()) {
                 return;
             } else {
                 skip = true;
             }
         }
         if (skip || !w()) {
-            aM_.interactionManager.attackEntity(aM_.player, this.o);
-            aM_.player.swingHand(Hand.MAIN_HAND);
+            mc.interactionManager.attackEntity(mc.player, this.o);
+            mc.player.swingHand(Hand.MAIN_HAND);
             if (Math.random() <= 0.899999737739563d) {
                 this.m++;
             }
@@ -144,7 +144,7 @@ public class TriggerBot extends Module {
 
     private void v() {
         if (this.j.l("Фиксирующий")) {
-            if (!a(this.o) || (MaceUtil.a() && !this.c && !aM_.player.getItemCooldownManager().isCoolingDown(Items.MACE.getDefaultStack()))) {
+            if (!a(this.o) || (MaceUtil.a() && !this.c && !mc.player.getItemCooldownManager().isCoolingDown(Items.MACE.getDefaultStack()))) {
                 this.o = d(false);
                 return;
             }
@@ -160,15 +160,15 @@ public class TriggerBot extends Module {
     }
 
     private boolean a(LivingEntity entity) {
-        return entity != null && entity.isAlive() && !entity.isSpectator() && entity != aM_.player && b(entity) && d(entity);
+        return entity != null && entity.isAlive() && !entity.isSpectator() && entity != mc.player && b(entity) && d(entity);
     }
 
     private boolean b(LivingEntity entity) {
-        if (Delta.h().d().t().G().m() && aM_.player.isGliding()) {
+        if (Delta.h().d().t().G().m() && mc.player.isGliding()) {
             return true;
         }
-        return AuraUtil.a((Entity) entity, 4.0d + (aM_.player.getVelocity().length() * 3.0d) + ((double) ((InventoryUtil.b(Items.MACE) == -1 || ((double) aM_.player.fallDistance) <= 1.5d) ? 0.0f : 1.5f)) + ((double) ((Delta.h().d().t().H().m() && InventoryUtil.b(Items.MACE) != -1 && MaceUtil.a(aM_.player, aM_.world).map(p -> {
-            return Boolean.valueOf(aM_.player.getY() - p.getY() > 2.0d);
+        return AuraUtil.a((Entity) entity, 4.0d + (mc.player.getVelocity().length() * 3.0d) + ((double) ((InventoryUtil.b(Items.MACE) == -1 || ((double) mc.player.fallDistance) <= 1.5d) ? 0.0f : 1.5f)) + ((double) ((Delta.h().d().t().H().m() && InventoryUtil.b(Items.MACE) != -1 && MaceUtil.a(mc.player, mc.world).map(p -> {
+            return Boolean.valueOf(mc.player.getY() - p.getY() > 2.0d);
         }).orElse(false).booleanValue()) ? 10 : 0)));
     }
 
@@ -179,44 +179,44 @@ public class TriggerBot extends Module {
     }
 
     private boolean w() {
-        if (!((platform.inject.accessors.ClientPlayerEntityAccessor) aM_.player).getWasSprinting() || aM_.player.isTouchingWater() || aM_.player.isInLava() || aM_.player.isSwimming() || aM_.player.isOnGround()) {
+        if (!((platform.inject.accessors.ClientPlayerEntityAccessor) mc.player).getWasSprinting() || mc.player.isTouchingWater() || mc.player.isInLava() || mc.player.isSwimming() || mc.player.isOnGround()) {
             return false;
         }
         if (this.i.l("Рейдж")) {
-            ((platform.inject.accessors.ClientPlayerEntityAccessor) aM_.player).setWasSprinting(false);
-            aM_.player.setSprinting(false);
-            aM_.player.networkHandler.sendPacket(new ClientCommandC2SPacket(aM_.player, ClientCommandC2SPacket.Mode.STOP_SPRINTING));
+            ((platform.inject.accessors.ClientPlayerEntityAccessor) mc.player).setWasSprinting(false);
+            mc.player.setSprinting(false);
+            mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.STOP_SPRINTING));
             this.l = 1;
             return false;
         }
         this.l = 1;
-        return ((platform.inject.accessors.ClientPlayerEntityAccessor) aM_.player).getWasSprinting();
+        return ((platform.inject.accessors.ClientPlayerEntityAccessor) mc.player).getWasSprinting();
     }
 
     public boolean q() {
-        if (this.h.a("Используется предмет") != null && this.h.a("Используется предмет").c().booleanValue() && aM_.player.isUsingItem() && aM_.player.getItemUseTimeLeft() > 0 && this.d >= 8) {
+        if (this.h.a("Используется предмет") != null && this.h.a("Используется предмет").c().booleanValue() && mc.player.isUsingItem() && mc.player.getItemUseTimeLeft() > 0 && this.d >= 8) {
             this.d = 8;
             return false;
         }
-        if ((this.h.a("Открыт контейнер") != null && this.h.a("Открыт контейнер").c().booleanValue() && aM_.currentScreen != null && !(aM_.currentScreen instanceof GUIScreen) && !(aM_.currentScreen instanceof AssistantScreen)) || !AuraUtil.a(this.o, 3.0d)) {
+        if ((this.h.a("Открыт контейнер") != null && this.h.a("Открыт контейнер").c().booleanValue() && mc.currentScreen != null && !(mc.currentScreen instanceof GUIScreen) && !(mc.currentScreen instanceof AssistantScreen)) || !AuraUtil.a(this.o, 3.0d)) {
             return false;
         }
         if (Delta.h().d().t().H().e) {
-            if (aM_.player.getItemCooldownManager().isCoolingDown(aM_.player.getMainHandStack())) {
+            if (mc.player.getItemCooldownManager().isCoolingDown(mc.player.getMainHandStack())) {
                 return false;
             }
-        } else if (aM_.player.fallDistance > 1.5f) {
-            if (aM_.player.getItemCooldownManager().isCoolingDown(aM_.player.getMainHandStack()) || this.d <= 3) {
+        } else if (mc.player.fallDistance > 1.5f) {
+            if (mc.player.getItemCooldownManager().isCoolingDown(mc.player.getMainHandStack()) || this.d <= 3) {
                 return false;
             }
         } else if (MaceUtil.a()) {
-            if (aM_.player.getItemCooldownManager().isCoolingDown(aM_.player.getMainHandStack()) || aM_.player.getAttackCooldownProgress(0.5f) < 0.9f) {
+            if (mc.player.getItemCooldownManager().isCoolingDown(mc.player.getMainHandStack()) || mc.player.getAttackCooldownProgress(0.5f) < 0.9f) {
                 return false;
             }
-        } else if (aM_.player.getAttackCooldownProgress(0.5f) < 0.9f || this.d < 10) {
+        } else if (mc.player.getAttackCooldownProgress(0.5f) < 0.9f || this.d < 10) {
             return false;
         }
-        return AuraUtil.c() || (this.g.a("Адаптивные удары").c().booleanValue() && aM_.player.isOnGround() && !aM_.player.input.playerInput.jump()) || !AuraUtil.b();
+        return AuraUtil.c() || (this.g.a("Адаптивные удары").c().booleanValue() && mc.player.isOnGround() && !mc.player.input.playerInput.jump()) || !AuraUtil.b();
     }
 
     private LivingEntity d(boolean aimed) {
@@ -225,8 +225,8 @@ public class TriggerBot extends Module {
                 return e(true);
             }) : e(true)).orElse(null);
         }
-        float yaw = aM_.player.getYaw();
-        float pitch = aM_.player.getPitch();
+        float yaw = mc.player.getYaw();
+        float pitch = mc.player.getPitch();
         return x().filter(e -> {
             return AuraUtil.a(yaw, pitch, 3.0d, e, !this.h.a("Враг за стеной").c().booleanValue());
         }).min(Comparator.comparingDouble((v0) -> {
@@ -236,18 +236,18 @@ public class TriggerBot extends Module {
 
     private Optional<LivingEntity> e(boolean allowBehindWalls) {
         Comparator<? super LivingEntity> comparatorComparingDouble;
-        Vec3d eye = aM_.player.getEyePos();
+        Vec3d eye = mc.player.getEyePos();
         if (MaceUtil.a()) {
-            Vec3d landing = MaceUtil.a(aM_.player, aM_.world).orElse(null);
-            Vec3d landingEye = landing != null ? landing.add(0.0d, aM_.player.getStandingEyeHeight(), 0.0d) : null;
+            Vec3d landing = MaceUtil.a(mc.player, mc.world).orElse(null);
+            Vec3d landingEye = landing != null ? landing.add(0.0d, mc.player.getStandingEyeHeight(), 0.0d) : null;
             comparatorComparingDouble = Comparator.comparing((LivingEntity e) ->
                     Boolean.valueOf(!AuraUtil.a(eye, e, 4.0d) && (landingEye == null || !AuraUtil.a(landingEye, e, 4.0d)))
             ).thenComparing((LivingEntity e2) ->
-                    Boolean.valueOf(aM_.player.fallDistance > 1.0f && !c(e2))
+                    Boolean.valueOf(mc.player.fallDistance > 1.0f && !c(e2))
             ).thenComparingDouble((LivingEntity v0) -> AuraUtil.a(v0));
         } else {
             comparatorComparingDouble = Comparator.comparingDouble(e3 -> {
-                return Math.acos(MathHelper.clamp(Vec3d.fromPolar(aM_.player.getPitch(), aM_.player.getYaw()).dotProduct(e3.getBoundingBox().getCenter().subtract(eye).normalize()), -1.0d, 1.0d));
+                return Math.acos(MathHelper.clamp(Vec3d.fromPolar(mc.player.getPitch(), mc.player.getYaw()).dotProduct(e3.getBoundingBox().getCenter().subtract(eye).normalize()), -1.0d, 1.0d));
             });
         }
         Stream<LivingEntity> stream = x();
@@ -260,7 +260,7 @@ public class TriggerBot extends Module {
     }
 
     private Stream<LivingEntity> x() {
-        return StreamSupport.stream(aM_.world.getEntities().spliterator(), false)
+        return StreamSupport.stream(mc.world.getEntities().spliterator(), false)
                 .filter(LivingEntity.class::isInstance)
                 .map(LivingEntity.class::cast)
                 .filter(this::a);

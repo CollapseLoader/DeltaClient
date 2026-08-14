@@ -107,7 +107,7 @@ public class EnchantmentCondition implements Condition {
         if (this.c == ItemType.OFF) {
             return true;
         }
-        RegistryEntry.Reference class_6883VarMethod_46747 = Interface.aM_.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(this.b);
+        RegistryEntry.Reference class_6883VarMethod_46747 = Interface.mc.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(this.b);
         ItemEnchantmentsComponent enchantments = stack.getOrDefault(DataComponentTypes.ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT);
         int level = enchantments.getLevel(class_6883VarMethod_46747);
         int threshold = this.d == 0 ? 1 : this.d;
@@ -127,13 +127,13 @@ public class EnchantmentCondition implements Condition {
         if (level <= 0) {
             return 0;
         }
-        if (Interface.aM_.world == null || !Interface.aM_.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).contains(this.b)) {
+        if (Interface.mc.world == null || !Interface.mc.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).contains(this.b)) {
             return level;
         }
         if (this.b.equals(Enchantments.SHARPNESS)) {
             iMethod_8183 = 7;
         } else {
-            iMethod_8183 = (this.b.equals(Enchantments.PROTECTION) || this.b.equals(Enchantments.UNBREAKING)) ? 5 : Interface.aM_.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(this.b).value().getMaxLevel();
+            iMethod_8183 = (this.b.equals(Enchantments.PROTECTION) || this.b.equals(Enchantments.UNBREAKING)) ? 5 : Interface.mc.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(this.b).value().getMaxLevel();
         }
         return Math.max(1, Math.min(iMethod_8183, level));
     }

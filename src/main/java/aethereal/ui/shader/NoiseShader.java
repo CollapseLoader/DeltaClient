@@ -30,12 +30,12 @@ public class NoiseShader extends Shader implements Interface {
 
     @EventTarget
     public void a(ResizeEvent event) {
-        this.e = new SimpleFramebuffer(aM_.getWindow().getFramebufferWidth(), aM_.getWindow().getFramebufferHeight(), true);
+        this.e = new SimpleFramebuffer(mc.getWindow().getFramebufferWidth(), mc.getWindow().getFramebufferHeight(), true);
     }
 
     public void e() {
         if (this.e != null) {
-            this.e.copyDepthFrom(aM_.getFramebuffer());
+            this.e.copyDepthFrom(mc.getFramebuffer());
         }
     }
 
@@ -55,8 +55,8 @@ public class NoiseShader extends Shader implements Interface {
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
             RenderSystem.disableCull();
-            RenderSystem.setShaderTexture(0, aM_.getFramebuffer().getColorAttachment());
-            RenderSystem.setShaderTexture(1, aM_.getFramebuffer().getDepthAttachment());
+            RenderSystem.setShaderTexture(0, mc.getFramebuffer().getColorAttachment());
+            RenderSystem.setShaderTexture(1, mc.getFramebuffer().getDepthAttachment());
             RenderSystem.setShaderTexture(2, this.e.getDepthAttachment());
             a();
             if (this.f != null) {

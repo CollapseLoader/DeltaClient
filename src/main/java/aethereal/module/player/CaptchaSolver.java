@@ -32,8 +32,8 @@ public class CaptchaSolver extends Module {
     @EventTarget
     public void a(TickEvent event) {
         if (ServerUtil.a.c() && Delta.h().f().g()) {
-            if (aM_.crosshairTarget instanceof BlockHitResult hit) {
-                aM_.world.getEntitiesByClass(ItemFrameEntity.class, new Box(hit.getBlockPos()).expand(0.5d), frame -> {
+            if (mc.crosshairTarget instanceof BlockHitResult hit) {
+                mc.world.getEntitiesByClass(ItemFrameEntity.class, new Box(hit.getBlockPos()).expand(0.5d), frame -> {
                     return frame.getHeldItemStack().getItem() instanceof FilledMapItem;
                 }).stream().findFirst().ifPresent(this::a);
             }
@@ -45,7 +45,7 @@ public class CaptchaSolver extends Module {
         String code;
         Packet packet = event.getPacket();
         if (event.isReceive() && "captcha".equals(packet.getId()) && (code = packet.getSecurity().extractString(packet.getPayload(), "code")) != null) {
-            aM_.player.networkHandler.sendChatMessage(code);
+            mc.player.networkHandler.sendChatMessage(code);
         }
     }
 

@@ -77,7 +77,7 @@ public class FontBuilder implements Interface {
 
     private String a(Identifier identifier) {
         try {
-            InputStream inputStream = aM_.getResourceManager().open(identifier);
+            InputStream inputStream = mc.getResourceManager().open(identifier);
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
                 try {

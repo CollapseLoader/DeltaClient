@@ -49,22 +49,22 @@ public class MainScreen extends Screen {
         this.b = new AnimationUtil();
         this.h = new ArrayList();
         this.j = -1.0f;
-        if (Interface.aM_.currentScreen instanceof MainScreen) {
+        if (Interface.mc.currentScreen instanceof MainScreen) {
             this.b.c(1.0f);
             this.b.d(1.0f);
             this.b.e(1.0f);
         }
         this.c = new Button(88.0f, 38.0f, "Одиночный Режим", () -> {
-            Interface.aM_.setScreen(new SelectWorldScreen(null));
+            Interface.mc.setScreen(new SelectWorldScreen(null));
         });
         this.d = new Button(88.0f, 38.0f, "Сетевая Игра", () -> {
-            Interface.aM_.setScreen(new MultiplayerScreen(null));
+            Interface.mc.setScreen(new MultiplayerScreen(null));
         });
         this.e = new Button(181.0f, 30.0f, "Выбор аккаунта", () -> {
-            Interface.aM_.setScreen(new AltScreen());
+            Interface.mc.setScreen(new AltScreen());
         });
         this.f = new Button(79.0f, 19.5f, "Настройки", () -> {
-            Interface.aM_.setScreen(new OptionsScreen(null, Interface.aM_.options));
+            Interface.mc.setScreen(new OptionsScreen(null, Interface.mc.options));
         });
         this.g = List.of(this.c, this.d, this.e, this.f);
     }
@@ -88,14 +88,14 @@ public class MainScreen extends Screen {
     @Compile
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
-        this.b.a(Interface.aM_.currentScreen instanceof MainScreen);
+        this.b.a(Interface.mc.currentScreen instanceof MainScreen);
         this.b.a(0.0f, 1.0f, 0.15f, EasingList.g, delta);
         float fMin = Math.min(1.0f, this.b.c() / 0.9f);
         double dA = MathUtil.scale(mouseX, 2);
         double dA2 = MathUtil.scale(mouseY, 2);
         ScaleUtil.a(context, 2);
-        int iMethod_4486 = Interface.aM_.getWindow().getScaledWidth();
-        int iMethod_4502 = Interface.aM_.getWindow().getScaledHeight();
+        int iMethod_4486 = Interface.mc.getWindow().getScaledWidth();
+        int iMethod_4502 = Interface.mc.getWindow().getScaledHeight();
         a(context, iMethod_4486, iMethod_4502, (int) dA, (int) dA2, 1.25f - (EasingList.s.ease(fMin) * 0.2f));
         Delta.h().d().i().e().a(context.getMatrices());
         a(iMethod_4486, iMethod_4502);
@@ -149,7 +149,7 @@ public class MainScreen extends Screen {
         if (fMethod_15363 < 0.95f) {
             return true;
         }
-        Interface.aM_.scheduleStop();
+        Interface.mc.scheduleStop();
         return true;
     }
 

@@ -23,13 +23,13 @@ public class ChatUtil implements Interface {
 
     public static void sendMessage(String prefix, Object message) {
         MutableText class_5250VarB;
-        if (aM_.player != null) {
+        if (mc.player != null) {
             if (prefix == null || prefix.isEmpty()) {
                 class_5250VarB = b(message);
             } else {
                 class_5250VarB = sendMessage(prefix).copy().append(Text.literal("")).append(b(message));
             }
-            aM_.player.sendMessage(class_5250VarB, false);
+            mc.player.sendMessage(class_5250VarB, false);
         }
     }
 

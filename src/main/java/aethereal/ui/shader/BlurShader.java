@@ -72,7 +72,7 @@ public class BlurShader extends Shader implements Interface {
         if (!this.n.isEmpty()) {
             int actualPasses = Math.max(this.n.size() - 1, 1);
             try {
-                a(matrixStack, this.p, aM_.getFramebuffer(), this.n.getFirst(), 0, 24);
+                a(matrixStack, this.p, mc.getFramebuffer(), this.n.getFirst(), 0, 24);
                 for (int i = 0; i < actualPasses; i++) {
                     a(matrixStack, this.p, this.n.get(i), this.n.get(i + 1), i + 1, 24);
                 }
@@ -80,7 +80,7 @@ public class BlurShader extends Shader implements Interface {
                     a(matrixStack, this.o, this.n.get(i2), this.n.get(i2 - 1), i2, 24);
                 }
             } finally {
-                aM_.getFramebuffer().beginWrite(false);
+                mc.getFramebuffer().beginWrite(false);
             }
         }
     }
@@ -104,14 +104,14 @@ public class BlurShader extends Shader implements Interface {
     private void a(Matrix4f matrix4f) {
         BufferBuilder builder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION);
         builder.vertex(matrix4f, 0.0f, 0.0f, 0.0f);
-        builder.vertex(matrix4f, 0.0f, aM_.getWindow().getScaledHeight(), 0.0f);
-        builder.vertex(matrix4f, aM_.getWindow().getScaledWidth(), aM_.getWindow().getScaledHeight(), 0.0f);
-        builder.vertex(matrix4f, aM_.getWindow().getScaledWidth(), 0.0f, 0.0f);
+        builder.vertex(matrix4f, 0.0f, mc.getWindow().getScaledHeight(), 0.0f);
+        builder.vertex(matrix4f, mc.getWindow().getScaledWidth(), mc.getWindow().getScaledHeight(), 0.0f);
+        builder.vertex(matrix4f, mc.getWindow().getScaledWidth(), 0.0f, 0.0f);
         BufferRenderer.drawWithGlobalProgram(builder.end());
     }
 
     private SimpleFramebuffer f() {
-        return new SimpleFramebuffer(aM_.getWindow().getFramebufferWidth(), aM_.getWindow().getFramebufferHeight(), false);
+        return new SimpleFramebuffer(mc.getWindow().getFramebufferWidth(), mc.getWindow().getFramebufferHeight(), false);
     }
 
     public void a(float width, float height) {

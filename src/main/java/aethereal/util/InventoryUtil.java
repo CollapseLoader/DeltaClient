@@ -51,7 +51,7 @@ public class InventoryUtil implements Interface {
     public static int a(Item item) {
         int count = 0;
         for (int slot = 0; slot < 36; slot++) {
-            ItemStack stack = aM_.player.getInventory().getStack(slot);
+            ItemStack stack = mc.player.getInventory().getStack(slot);
             if (stack.getItem() == item) {
                 count += stack.getCount();
             }
@@ -60,11 +60,11 @@ public class InventoryUtil implements Interface {
     }
 
     public static boolean a(ItemStack stack, RegistryKey<Enchantment> enchantment, int minLevel) {
-        return stack.getOrDefault(DataComponentTypes.ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT).getLevel(aM_.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(enchantment)) >= minLevel;
+        return stack.getOrDefault(DataComponentTypes.ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT).getLevel(mc.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(enchantment)) >= minLevel;
     }
 
     public static boolean a(ItemStack stack, String needle) {
-        return stack.getTooltip(Item.TooltipContext.DEFAULT, aM_.player, TooltipType.BASIC).stream().anyMatch(line -> {
+        return stack.getTooltip(Item.TooltipContext.DEFAULT, mc.player, TooltipType.BASIC).stream().anyMatch(line -> {
             return line.getString().contains(needle);
         });
     }
@@ -72,7 +72,7 @@ public class InventoryUtil implements Interface {
     public static int a(Item item, boolean hotbar) {
         int end = hotbar ? 9 : 36;
         for (int i = 0; i < end; i++) {
-            ItemStack stack = aM_.player.getInventory().getStack(i);
+            ItemStack stack = mc.player.getInventory().getStack(i);
             if (!stack.isEmpty() && stack.getItem() == item) {
                 return i;
             }
@@ -87,7 +87,7 @@ public class InventoryUtil implements Interface {
     public static int a(Item item, boolean hotbar, boolean simple) {
         int end = hotbar ? 9 : 36;
         for (int i = 0; i < end; i++) {
-            ItemStack stack = aM_.player.getInventory().getStack(i);
+            ItemStack stack = mc.player.getInventory().getStack(i);
             if (!stack.isEmpty() && stack.getItem() == item && (!simple || !stack.hasGlint())) {
                 return i;
             }
@@ -99,7 +99,7 @@ public class InventoryUtil implements Interface {
         if (stack != null && !stack.isEmpty()) {
             int slotLimit = hotbar ? 9 : 36;
             for (int slotIndex = 0; slotIndex < slotLimit; slotIndex++) {
-                ItemStack candidate = aM_.player.getInventory().getStack(slotIndex);
+                ItemStack candidate = mc.player.getInventory().getStack(slotIndex);
                 if (!candidate.isEmpty() && candidate.getItem() == stack.getItem() && Objects.equals(candidate.get(DataComponentTypes.ATTRIBUTE_MODIFIERS), stack.get(DataComponentTypes.ATTRIBUTE_MODIFIERS))) {
                     return slotIndex;
                 }
@@ -117,13 +117,13 @@ public class InventoryUtil implements Interface {
             return -1;
         }
         int direct = IntStream.range(0, hotbar ? 9 : 36).filter(slot -> {
-            return info.a(aM_.player.getInventory().getStack(slot));
+            return info.a(mc.player.getInventory().getStack(slot));
         }).findFirst().orElse(-1);
         if (direct != -1 || hotbar) {
             return direct;
         }
         return IntStream.range(0, 36).filter(slot2 -> {
-            BundleContentsComponent contents = aM_.player.getInventory().getStack(slot2).get(DataComponentTypes.BUNDLE_CONTENTS);
+            BundleContentsComponent contents = mc.player.getInventory().getStack(slot2).get(DataComponentTypes.BUNDLE_CONTENTS);
             if (contents != null) {
                 Stream<ItemStack> streamMethod_59707 = contents.stream();
                 Objects.requireNonNull(info);
@@ -154,7 +154,7 @@ public class InventoryUtil implements Interface {
             return 0;
         }
         return IntStream.range(0, hotbar ? 9 : 36).mapToObj(slot -> {
-            return aM_.player.getInventory().getStack(slot);
+            return mc.player.getInventory().getStack(slot);
         }).mapToInt(stack -> {
             BundleContentsComponent contents = stack.get(DataComponentTypes.BUNDLE_CONTENTS);
             if (contents != null) {
@@ -173,8 +173,8 @@ public class InventoryUtil implements Interface {
         AttributeModifiersComponent modifiers;
         int fallbackSlot = -1;
         for (int i = 0; i < 45; i++) {
-            if (i != 40 && aM_.player.getInventory().getStack(i).getItem() == item) {
-                if (aM_.player.getInventory().getStack(i).contains(DataComponentTypes.ATTRIBUTE_MODIFIERS) && (modifiers = aM_.player.getInventory().getStack(i).get(DataComponentTypes.ATTRIBUTE_MODIFIERS)) != null && !modifiers.modifiers().isEmpty()) {
+            if (i != 40 && mc.player.getInventory().getStack(i).getItem() == item) {
+                if (mc.player.getInventory().getStack(i).contains(DataComponentTypes.ATTRIBUTE_MODIFIERS) && (modifiers = mc.player.getInventory().getStack(i).get(DataComponentTypes.ATTRIBUTE_MODIFIERS)) != null && !modifiers.modifiers().isEmpty()) {
                     return i;
                 }
                 if (fallbackSlot == -1) {
@@ -186,12 +186,12 @@ public class InventoryUtil implements Interface {
     }
 
     public static int a() {
-        Registry<Enchantment> registry = aM_.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT);
+        Registry<Enchantment> registry = mc.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT);
         RegistryEntry.Reference<Enchantment> protection = registry.getOrThrow(Enchantments.PROTECTION);
         int bestSlot = -1;
         double bestScore = 0.0d;
         for (int slot = 0; slot < 36; slot++) {
-            ItemStack stack = aM_.player.getInventory().getStack(slot);
+            ItemStack stack = mc.player.getInventory().getStack(slot);
             EquippableComponent equippable = stack.get(DataComponentTypes.EQUIPPABLE);
             if (equippable != null && equippable.slot() == EquipmentSlot.CHEST && !stack.isEmpty() && !stack.isOf(Items.ELYTRA)) {
                 double score = EnchantmentHelper.getLevel(protection, stack);

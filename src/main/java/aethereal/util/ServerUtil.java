@@ -30,27 +30,27 @@ public class ServerUtil implements Interface {
     }
 
     public static String a() {
-        return (aM_.player == null || aM_.player.networkHandler == null || ((platform.inject.accessors.PlayerListHudAccessor) aM_.inGameHud.getPlayerListHud()).getHeader() == null) ? "" : ((platform.inject.accessors.PlayerListHudAccessor) aM_.inGameHud.getPlayerListHud()).getHeader().getString();
+        return (mc.player == null || mc.player.networkHandler == null || ((platform.inject.accessors.PlayerListHudAccessor) mc.inGameHud.getPlayerListHud()).getHeader() == null) ? "" : ((platform.inject.accessors.PlayerListHudAccessor) mc.inGameHud.getPlayerListHud()).getHeader().getString();
     }
 
     public static String b() {
-        return (aM_.player == null || aM_.player.networkHandler == null) ? "" : Objects.requireNonNull(aM_.player.networkHandler.getServerInfo()).address;
+        return (mc.player == null || mc.player.networkHandler == null) ? "" : Objects.requireNonNull(mc.player.networkHandler.getServerInfo()).address;
     }
 
     public static double c() {
-        return Math.hypot(aM_.player.getX() - aM_.player.prevX, aM_.player.getZ() - aM_.player.prevZ) * 20.0d;
+        return Math.hypot(mc.player.getX() - mc.player.prevX, mc.player.getZ() - mc.player.prevZ) * 20.0d;
     }
 
     public static int d() {
-        if (aM_.player == null || Objects.requireNonNull(aM_.getNetworkHandler()).getPlayerListEntry(aM_.player.getUuid()) == null) {
+        if (mc.player == null || Objects.requireNonNull(mc.getNetworkHandler()).getPlayerListEntry(mc.player.getUuid()) == null) {
             return 0;
         }
-        return Objects.requireNonNull(aM_.getNetworkHandler().getPlayerListEntry(aM_.player.getUuid())).getLatency();
+        return Objects.requireNonNull(mc.getNetworkHandler().getPlayerListEntry(mc.player.getUuid())).getLatency();
     }
 
     public static boolean e() {
-        if (aM_.player != null && !((platform.inject.accessors.BossBarHudAccessor) aM_.inGameHud.getBossBarHud()).getBossBars().isEmpty()) {
-            for (ClientBossBar bossBar : ((platform.inject.accessors.BossBarHudAccessor) aM_.inGameHud.getBossBarHud()).getBossBars().values()) {
+        if (mc.player != null && !((platform.inject.accessors.BossBarHudAccessor) mc.inGameHud.getBossBarHud()).getBossBars().isEmpty()) {
+            for (ClientBossBar bossBar : ((platform.inject.accessors.BossBarHudAccessor) mc.inGameHud.getBossBarHud()).getBossBars().values()) {
                 if (bossBar.getName().getString().toLowerCase(Locale.ROOT).contains("pvp") || bossBar.getName().getString().toLowerCase(Locale.ROOT).contains("пвп") || bossBar.getName().getString().toLowerCase(Locale.ROOT).contains("дуэль")) {
                     return true;
                 }
@@ -61,10 +61,10 @@ public class ServerUtil implements Interface {
     }
 
     public static int f() {
-        if (aM_.player == null || ((platform.inject.accessors.BossBarHudAccessor) aM_.inGameHud.getBossBarHud()).getBossBars().isEmpty()) {
+        if (mc.player == null || ((platform.inject.accessors.BossBarHudAccessor) mc.inGameHud.getBossBarHud()).getBossBars().isEmpty()) {
             return -1;
         }
-        for (ClientBossBar bossBar : ((platform.inject.accessors.BossBarHudAccessor) aM_.inGameHud.getBossBarHud()).getBossBars().values()) {
+        for (ClientBossBar bossBar : ((platform.inject.accessors.BossBarHudAccessor) mc.inGameHud.getBossBarHud()).getBossBars().values()) {
             String name = bossBar.getName().getString().toLowerCase(Locale.ROOT);
             if (name.contains("pvp") || name.contains("пвп")) {
                 Matcher matcher = Pattern.compile("(\\d+):(\\d+)").matcher(name);
@@ -96,7 +96,7 @@ public class ServerUtil implements Interface {
 
         public static int a(ItemStack itemStack) {
             if (!itemStack.isEmpty()) {
-                List<String> tooltipLines = itemStack.getTooltip(Item.TooltipContext.DEFAULT, Interface.aM_.player, TooltipType.BASIC).stream().skip(1L).map((v0) -> {
+                List<String> tooltipLines = itemStack.getTooltip(Item.TooltipContext.DEFAULT, Interface.mc.player, TooltipType.BASIC).stream().skip(1L).map((v0) -> {
                     return v0.getString();
                 }).toList();
                 if (!itemStack.getItem().getName().getString().contains("Товар не актуален") && itemStack.getItem() != Items.GRAY_DYE) {
@@ -131,11 +131,11 @@ public class ServerUtil implements Interface {
         }
 
         public static boolean b() {
-            return a() && Interface.aM_.world != null && Interface.aM_.world.getRegistryKey().getValue().toString().equals("minecraft:duels");
+            return a() && Interface.mc.world != null && Interface.mc.world.getRegistryKey().getValue().toString().equals("minecraft:duels");
         }
 
         public static boolean c() {
-            return a() && Interface.aM_.player.networkHandler.getBrand() != null && Interface.aM_.world.getBiome(Interface.aM_.player.getBlockPos()).matchesKey(BiomeKeys.SWAMP) && Interface.aM_.player.networkHandler.getBrand().contains("BotFilter (https://vk.cc/8hr1pU)");
+            return a() && Interface.mc.player.networkHandler.getBrand() != null && Interface.mc.world.getBiome(Interface.mc.player.getBlockPos()).matchesKey(BiomeKeys.SWAMP) && Interface.mc.player.networkHandler.getBrand().contains("BotFilter (https://vk.cc/8hr1pU)");
         }
 
         public static int d() {
@@ -147,7 +147,7 @@ public class ServerUtil implements Interface {
 
         public static int a(ItemStack itemStack) {
             if (!itemStack.isEmpty()) {
-                List<String> tooltipLines = itemStack.getTooltip(Item.TooltipContext.DEFAULT, Interface.aM_.player, TooltipType.BASIC).stream().skip(1L).map((v0) -> {
+                List<String> tooltipLines = itemStack.getTooltip(Item.TooltipContext.DEFAULT, Interface.mc.player, TooltipType.BASIC).stream().skip(1L).map((v0) -> {
                     return v0.getString();
                 }).toList();
                 if (!itemStack.getItem().getName().getString().contains("Товар не актуален") && itemStack.getItem() != Items.GRAY_DYE) {
@@ -171,8 +171,8 @@ public class ServerUtil implements Interface {
         }
 
         public static float a(LivingEntity entity) {
-            if (Interface.aM_.world != null) {
-                Scoreboard scoreboard = Interface.aM_.world.getScoreboard();
+            if (Interface.mc.world != null) {
+                Scoreboard scoreboard = Interface.mc.world.getScoreboard();
                 for (ScoreboardObjective objective : scoreboard.getObjectives()) {
                     ReadableScoreboardScore score = scoreboard.getScore(entity, objective);
                     if (score != null) {
@@ -184,8 +184,8 @@ public class ServerUtil implements Interface {
         }
 
         public static long e() {
-            if (Interface.aM_.world != null) {
-                for (Team team : Interface.aM_.world.getScoreboard().getTeams()) {
+            if (Interface.mc.world != null) {
+                for (Team team : Interface.mc.world.getScoreboard().getTeams()) {
                     String message = team.getPrefix().getString().toLowerCase(Locale.ROOT);
                     if (message.contains("монет")) {
                         return Long.parseLong(message.substring(message.lastIndexOf(StringUtils.a) + 1).replaceAll("[^0-9]", ""));

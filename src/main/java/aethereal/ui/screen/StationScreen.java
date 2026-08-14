@@ -54,7 +54,7 @@ public class StationScreen extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
         Vector4f vector4f = this.b;
-        MinecraftClient class_310Var = Interface.aM_;
+        MinecraftClient class_310Var = Interface.mc;
         vector4f.x = (class_310Var.getWindow().getScaledWidth() - this.b.z) * 0.5f;
         this.b.y = (class_310Var.getWindow().getScaledHeight() - this.b.w) * 0.5f;
         this.f.a(0.0f, 1.0f, 0.3f, EasingList.g, delta);

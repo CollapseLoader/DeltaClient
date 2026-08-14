@@ -11,8 +11,8 @@ import aethereal.util.ChatUtil;
 public class DeathCoords extends Module {
     @EventTarget
     public void a(TickEvent event) {
-        if (aM_.player.deathTime == 1) {
-            ChatUtil.sendMessage(String.format("Вы погибли на координатах: &c[%d, %d, %d]", Integer.valueOf(aM_.player.getBlockPos().getX()), Integer.valueOf(aM_.player.getBlockPos().getY()), Integer.valueOf(aM_.player.getBlockPos().getZ())));
+        if (mc.player.deathTime == 1) {
+            ChatUtil.sendMessage(String.format("Вы погибли на координатах: &c[%d, %d, %d]", Integer.valueOf(mc.player.getBlockPos().getX()), Integer.valueOf(mc.player.getBlockPos().getY()), Integer.valueOf(mc.player.getBlockPos().getZ())));
         }
     }
 }

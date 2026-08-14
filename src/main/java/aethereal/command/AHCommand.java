@@ -31,9 +31,9 @@ public class AHCommand extends BaseCommand implements Interface {
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
-            ItemStack stack = aM_.player.getMainHandStack();
+            ItemStack stack = mc.player.getMainHandStack();
             if (!stack.isEmpty()) {
-                aM_.player.networkHandler.sendChatCommand("ah search " + a(stack));
+                mc.player.networkHandler.sendChatCommand("ah search " + a(stack));
                 return 1;
             }
             return 1;
@@ -55,7 +55,7 @@ public class AHCommand extends BaseCommand implements Interface {
                 if (packet.getSyncId() != 0) {
                     List<ItemStack> contents = packet.getContents();
                     List<Integer> prices = contents.subList(0, Math.max(0, contents.size() - 36)).stream().filter(stack -> {
-                        return this.f.a().a(stack) && stack.getTooltip(Item.TooltipContext.DEFAULT, aM_.player, TooltipType.BASIC).stream().noneMatch(line -> {
+                        return this.f.a().a(stack) && stack.getTooltip(Item.TooltipContext.DEFAULT, mc.player, TooltipType.BASIC).stream().noneMatch(line -> {
                             return line.getString().contains("Нажмите, чтобы забрать");
                         });
                     }).mapToInt(ServerUtil.a::a).filter(price -> {
@@ -81,17 +81,17 @@ public class AHCommand extends BaseCommand implements Interface {
     @EventTarget
     public void a(TickEvent event) {
         if (this.e != null) {
-            if (aM_.currentScreen != null) {
-                aM_.player.closeHandledScreen();
+            if (mc.currentScreen != null) {
+                mc.player.closeHandledScreen();
             } else {
-                aM_.player.networkHandler.sendCommand(this.e);
+                mc.player.networkHandler.sendCommand(this.e);
                 this.e = null;
             }
         }
     }
 
     private void a(float percent) {
-        ItemStack stack = aM_.player.getMainHandStack();
+        ItemStack stack = mc.player.getMainHandStack();
         AutoBuyEntry item = Delta.h().d().q().e().stream().filter(info -> {
             return info.a(stack);
         }).findFirst().orElse(null);
@@ -106,7 +106,7 @@ public class AHCommand extends BaseCommand implements Interface {
         if (cached != null) {
             a(request, cached.b());
         } else {
-            aM_.player.networkHandler.sendChatCommand("ah search " + a(stack));
+            mc.player.networkHandler.sendChatCommand("ah search " + a(stack));
             this.f = request;
         }
     }
@@ -119,7 +119,7 @@ public class AHCommand extends BaseCommand implements Interface {
     }
 
     private String a(ItemStack stack) {
-        this.d = this.d == null ? TranslationStorage.load(aM_.getResourceManager(), List.of("ru_ru"), false) : this.d;
+        this.d = this.d == null ? TranslationStorage.load(mc.getResourceManager(), List.of("ru_ru"), false) : this.d;
         String name = Delta.h().d().q().e().stream().filter(item -> {
             return item.a(stack);
         }).findFirst().map((v0) -> {

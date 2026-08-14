@@ -55,7 +55,7 @@ public class AutoAuth extends Module implements Interface {
             if (ServerUtil.a.a() && ServerUtil.a.c()) {
                 return;
             }
-            aM_.player.networkHandler.sendChatMessage(this.d);
+            mc.player.networkHandler.sendChatMessage(this.d);
             this.d = null;
         }
     }

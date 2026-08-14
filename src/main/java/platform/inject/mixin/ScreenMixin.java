@@ -32,7 +32,7 @@ public class ScreenMixin {
         Screen self = (Screen) (Object) this;
         if (((self instanceof ReconfiguringScreen) || (self instanceof DownloadingTerrainScreen)) && Delta.h().d().t().aN().m()) {
             if (self instanceof DownloadingTerrainScreen) {
-                Interface.aM_.setScreen(null);
+                Interface.mc.setScreen(null);
             }
             ci.cancel();
         }

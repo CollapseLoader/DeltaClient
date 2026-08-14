@@ -28,7 +28,7 @@ public class WindHop extends Module implements Interface {
     public void a(PacketEvent event) {
         if (event.b()) {
             if (event.d() instanceof PlayerInteractItemC2SPacket packet) {
-                if (aM_.player.getStackInHand(packet.getHand()).isOf(Items.WIND_CHARGE)) {
+                if (mc.player.getStackInHand(packet.getHand()).isOf(Items.WIND_CHARGE)) {
                     this.c = 2;
                 }
             }

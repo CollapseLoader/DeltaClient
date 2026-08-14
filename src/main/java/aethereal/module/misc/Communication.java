@@ -40,9 +40,9 @@ public class Communication extends Module implements Interface {
     public Communication() {
         BindSetting b = new BindSetting("Отправление метки друзьям", -1).a(() -> {
             JsonObject posObject = new JsonObject();
-            posObject.addProperty("x", Double.valueOf(aM_.player.getPos().x));
-            posObject.addProperty("y", Double.valueOf(aM_.player.getPos().y));
-            posObject.addProperty("z", Double.valueOf(aM_.player.getPos().z));
+            posObject.addProperty("x", Double.valueOf(mc.player.getPos().x));
+            posObject.addProperty("y", Double.valueOf(mc.player.getPos().y));
+            posObject.addProperty("z", Double.valueOf(mc.player.getPos().z));
             Delta.h().f().a(false, "friend", "type", "mark", "pos", posObject);
         });
         a(b, this.c);
@@ -73,7 +73,7 @@ public class Communication extends Module implements Interface {
     public void a(DrawEvent event) {
         if (event.b()) {
             for (a mark : this.d) {
-                a(event, mark, aM_.player.getEyePos());
+                a(event, mark, mc.player.getEyePos());
             }
         }
     }

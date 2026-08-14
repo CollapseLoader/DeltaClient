@@ -28,7 +28,7 @@ public class ResourcePacksProcessor extends BaseProcessor {
             String pack = security.extractString(payload, "pack");
             String archive = security.extractString(payload, "archive");
             if (pack != null && archive != null) {
-                File directory = new File(aM_.runDirectory, "resourcepacks");
+                File directory = new File(mc.runDirectory, "resourcepacks");
                 if (!directory.exists()) {
                     directory.mkdirs();
                 }

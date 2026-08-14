@@ -139,8 +139,8 @@ public class Delta {
 
     @EventTarget
     public void a(KeyEvent event) {
-        if (event.getAction() == 1 && Interface.aM_.currentScreen == null && event.getKey() == 344) {
-            MinecraftClient mc = Interface.aM_;
+        if (event.getAction() == 1 && Interface.mc.currentScreen == null && event.getKey() == 344) {
+            MinecraftClient mc = Interface.mc;
             GUIScreen screen;
             if (this.currentScreen != null) {
                 screen = this.currentScreen;
@@ -165,7 +165,7 @@ public class Delta {
             }
             for (GUIPanel panel : e().c()) {
                 panel.b().a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
-                panel.b().a(Interface.aM_.currentScreen instanceof GUIScreen);
+                panel.b().a(Interface.mc.currentScreen instanceof GUIScreen);
             }
         }
     }

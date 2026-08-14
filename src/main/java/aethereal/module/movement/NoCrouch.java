@@ -21,7 +21,7 @@ public class NoCrouch extends Module {
             mode = this.b ? ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY : null;
         }
         if (mode != null) {
-            aM_.player.networkHandler.sendPacket(new ClientCommandC2SPacket(aM_.player, mode));
+            mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, mode));
         }
         this.b = sneaking;
         e.c(false);

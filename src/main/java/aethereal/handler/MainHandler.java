@@ -82,7 +82,7 @@ public class MainHandler extends BaseHandler implements Interface {
                             return line5.substring("Окончание:".length()).trim();
                         }).findFirst().orElse(null);
                         if (userLine != null && reason != null && expiration != null) {
-                            aM_.player.sendMessage(Text.literal("§c[♨] §6" + userLine.substring(userLine.indexOf(93) + 1).trim() + "§e забанен с причиной: §c\"" + reason + "\"§e на §c\"" + expiration + "\" ").append(ChatUtil.sendMessage((Object) "&c[Подробнее]", hoverText)), false);
+                            mc.player.sendMessage(Text.literal("§c[♨] §6" + userLine.substring(userLine.indexOf(93) + 1).trim() + "§e забанен с причиной: §c\"" + reason + "\"§e на §c\"" + expiration + "\" ").append(ChatUtil.sendMessage((Object) "&c[Подробнее]", hoverText)), false);
                             event.a(true);
                             break;
                         }
@@ -115,7 +115,7 @@ public class MainHandler extends BaseHandler implements Interface {
                 }
             }
             String message = strComp_2532;
-            if (message != null && aM_.player != null) {
+            if (message != null && mc.player != null) {
                 int sell = message.trim().toLowerCase(Locale.ROOT).startsWith("/ah sell") ? 8 : message.trim().toLowerCase(Locale.ROOT).startsWith("ah sell") ? 7 : -1;
                 if (sell >= 0 && message.trim().endsWith("!")) {
                     String body = message.trim().substring(sell, message.trim().length() - 1).trim();
@@ -124,8 +124,8 @@ public class MainHandler extends BaseHandler implements Interface {
                         numEnd++;
                     }
                     if (numEnd > 0) {
-                        ClientPlayNetworkHandler class_634Var = aM_.player.networkHandler;
-                        long jRound = Math.round(Double.parseDouble(body.substring(0, numEnd)) * ((double) Math.max(1, aM_.player.getMainHandStack().getCount())));
+                        ClientPlayNetworkHandler class_634Var = mc.player.networkHandler;
+                        long jRound = Math.round(Double.parseDouble(body.substring(0, numEnd)) * ((double) Math.max(1, mc.player.getMainHandStack().getCount())));
                         body.substring(numEnd);
                         class_634Var.sendChatMessage("/ah sell " + jRound + class_634Var);
                         event.a(true);
@@ -133,13 +133,13 @@ public class MainHandler extends BaseHandler implements Interface {
                     }
                 }
             }
-            if (message != null && aM_.player != null) {
+            if (message != null && mc.player != null) {
                 int pay = message.trim().toLowerCase(Locale.ROOT).startsWith("/pay ") ? 5 : message.trim().toLowerCase(Locale.ROOT).startsWith("pay ") ? 4 : -1;
                 if (pay >= 0) {
                     String[] parts = message.trim().substring(pay).trim().split("\\s+");
                     long balance = ServerUtil.a.e();
                     if (parts.length == 2 && parts[1].equalsIgnoreCase("all") && balance > 0) {
-                        aM_.player.networkHandler.sendChatMessage("/pay " + parts[0] + " " + balance);
+                        mc.player.networkHandler.sendChatMessage("/pay " + parts[0] + " " + balance);
                         event.a(true);
                         return;
                     }
@@ -191,7 +191,7 @@ public class MainHandler extends BaseHandler implements Interface {
                     return effect.getEffectType() == StatusEffects.INSTANT_HEALTH;
                 });
                 if (heal) {
-                    ((aethereal.mixin.IItemCooldownManager) aM_.player.getItemCooldownManager()).setHealCooldown(TokenId.au_);
+                    ((aethereal.mixin.IItemCooldownManager) mc.player.getItemCooldownManager()).setHealCooldown(TokenId.au_);
                 }
             }
         }
@@ -200,13 +200,13 @@ public class MainHandler extends BaseHandler implements Interface {
     @EventTarget
     public void a(GlobalEvent globalEvent) {
         String str;
-        if (aM_.player != null || (aM_.currentScreen instanceof MultiplayerScreen)) {
+        if (mc.player != null || (mc.currentScreen instanceof MultiplayerScreen)) {
             Client clientF = Delta.h().f();
             Object[] objArr = new Object[6];
             objArr[0] = "uuid";
-            objArr[1] = aM_.player != null ? aM_.player.getUuid() : null;
+            objArr[1] = mc.player != null ? mc.player.getUuid() : null;
             objArr[2] = "minecraft";
-            objArr[3] = aM_.getSession().getUsername();
+            objArr[3] = mc.getSession().getUsername();
             objArr[4] = "server";
             if (ServerUtil.a.a()) {
                 str = "funtime";

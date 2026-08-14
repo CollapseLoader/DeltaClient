@@ -85,7 +85,7 @@ public class PotionWidget extends Widget implements Interface {
                 float textY = (drawY + ((11.5f - Fonts.e.a(6.5f)) / 2.0f)) - 0.5f;
                 a(event, x + offsetX, drawY, width, 11.5f, false, animation);
                 a(event, x + offsetX + 15.0f, drawY, 11.5f, animation);
-                event.e().a(event.i(), aM_.getStatusEffectSpriteManager().getSprite(iStatusEffectInstance2.getEffectType()), x + offsetX + 5.0f, drawY + 2.0f, 0.0f, 0.4f, animation);
+                event.e().a(event.i(), mc.getStatusEffectSpriteManager().getSprite(iStatusEffectInstance2.getEffectType()), x + offsetX + 5.0f, drawY + 2.0f, 0.0f, 0.4f, animation);
                 Fonts.e.a(event.h(), name2, x + offsetX + 19.0f, textY, 6.5f, ColorUtil.a(iStatusEffectInstance2.getEffectType().value().getCategory() == StatusEffectCategory.HARMFUL ? ColorUtil.a(255, InterfaceC0020Opcode.cG, InterfaceC0020Opcode.cG, 255) : -1, animation));
                 Fonts.e.a(event.h(), duration, ((((x + offsetX) + width) - 5.0f) - durationWidth) - 1.0f, textY, 6.5f, ColorUtil.a(-1, 0.55f * animation));
                 contentY += 13.5f * animation;
@@ -104,7 +104,7 @@ public class PotionWidget extends Widget implements Interface {
                 visibleCount++;
             }
         }
-        float posY = (aM_.getWindow().getScaledHeight() - ((visibleCount * 26.0f) + ((visibleCount - 1) * 2.0f))) / 2.0f;
+        float posY = (mc.getWindow().getScaledHeight() - ((visibleCount * 26.0f) + ((visibleCount - 1) * 2.0f))) / 2.0f;
         float contentY = posY;
         float maxWidth = 0.0f;
         Iterator<StatusEffectInstance> it2 = k().iterator();
@@ -121,7 +121,7 @@ public class PotionWidget extends Widget implements Interface {
                 float drawX = 3.0f - (width * (1.0f - animation));
                 float textX = drawX + 13.5f + 6.0f;
                 a(event, drawX, contentY, width, 24.0f, true, animation);
-                event.e().a(event.i(), aM_.getStatusEffectSpriteManager().getSprite(iStatusEffectInstance.getEffectType()), drawX + 3.5f, contentY + 5.75f, 0.0f, 0.6944444f, animation);
+                event.e().a(event.i(), mc.getStatusEffectSpriteManager().getSprite(iStatusEffectInstance.getEffectType()), drawX + 3.5f, contentY + 5.75f, 0.0f, 0.6944444f, animation);
                 Fonts.e.a(event.h(), name, textX, contentY + 3.5f, 7.0f, ColorUtil.a(harmful ? ColorUtil.a(215, 76, 76, 255) : -1, animation));
                 Fonts.e.a(event.h(), duration, textX, contentY + 13.0f, 6.0f, ColorUtil.a(-1, 0.55f * animation));
                 int initialDuration = iStatusEffectInstance.getInitialDuration();
@@ -142,10 +142,10 @@ public class PotionWidget extends Widget implements Interface {
 
     @Override
     public void a(GlobalEvent event) {
-        boolean visible = aM_.currentScreen instanceof ChatScreen;
+        boolean visible = mc.currentScreen instanceof ChatScreen;
         for (StatusEffectInstance effect : k()) {
             if (!effect.getEffectType().equals(StatusEffects.NIGHT_VISION)) {
-                ((IStatusEffectInstance) effect).getAnimation().a(effect == this.g ? aM_.currentScreen instanceof ChatScreen : effect.getDuration() > 20);
+                ((IStatusEffectInstance) effect).getAnimation().a(effect == this.g ? mc.currentScreen instanceof ChatScreen : effect.getDuration() > 20);
                 if (((IStatusEffectInstance) effect).getAnimation().c() > 0.0d) {
                     visible = true;
                 }
@@ -161,11 +161,11 @@ public class PotionWidget extends Widget implements Interface {
     }
 
     private List<StatusEffectInstance> k() {
-        List<StatusEffectInstance> effects = new ArrayList<>(aM_.player.getStatusEffects());
+        List<StatusEffectInstance> effects = new ArrayList<>(mc.player.getStatusEffects());
         boolean empty = effects.stream().allMatch(effect -> {
             return effect.getEffectType().equals(StatusEffects.NIGHT_VISION);
         });
-        if (this.f.c().booleanValue() && empty && ((aM_.currentScreen instanceof ChatScreen) || ((IStatusEffectInstance) this.g).getAnimation().c() > 0.0f)) {
+        if (this.f.c().booleanValue() && empty && ((mc.currentScreen instanceof ChatScreen) || ((IStatusEffectInstance) this.g).getAnimation().c() > 0.0f)) {
             effects.add(this.g);
         }
         effects.sort(Comparator.comparingInt(effect2 -> {

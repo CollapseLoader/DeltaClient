@@ -47,7 +47,7 @@ public class Collector_2 extends Module {
 
     public Collector_2() {
         ButtonSetting c = new ButtonSetting("Открыть редактор", () -> {
-            aM_.setScreen(new StationScreen(Text.literal(""), 0));
+            mc.setScreen(new StationScreen(Text.literal(""), 0));
         });
         ButtonSetting b = new ButtonSetting("Запустить работу", () -> {
             if (!m()) {
@@ -97,15 +97,15 @@ public class Collector_2 extends Module {
     @EventTarget
     public void a(TickEvent event) {
         if (this.h != null) {
-            if (aM_.player.getInventory().getEmptySlot() == -1) {
+            if (mc.player.getInventory().getEmptySlot() == -1) {
                 ChatUtil.sendMessage("Автоматическое отключение: нет свободных слотов в инвентаре, освободите место");
                 s();
                 a();
                 return;
             }
             this.j++;
-            if (!(aM_.currentScreen instanceof GenericContainerScreen) && aM_.player.age >= 200 && this.f.a(1000L, 300L)) {
-                aM_.player.networkHandler.sendCommand("ah search " + this.h.j());
+            if (!(mc.currentScreen instanceof GenericContainerScreen) && mc.player.age >= 200 && this.f.a(1000L, 300L)) {
+                mc.player.networkHandler.sendCommand("ah search " + this.h.j());
                 this.f.b();
                 this.j = 0;
             }
@@ -162,7 +162,7 @@ public class Collector_2 extends Module {
                                         })).orElse(null);
                                     }
                                     if (offer2 != null) {
-                                        aM_.interactionManager.clickSlot(event.c().syncId, offer2.id, 0, SlotActionType.QUICK_MOVE, aM_.player);
+                                        mc.interactionManager.clickSlot(event.c().syncId, offer2.id, 0, SlotActionType.QUICK_MOVE, mc.player);
                                         this.f.b();
                                     } else {
                                         ChatUtil.sendMessage("Оффер пропал, пересканирую");
@@ -197,7 +197,7 @@ public class Collector_2 extends Module {
                                 })).orElse(null);
                             }
                             if (cheapest != null) {
-                                aM_.interactionManager.clickSlot(event.c().syncId, cheapest.id, 0, SlotActionType.QUICK_MOVE, aM_.player);
+                                mc.interactionManager.clickSlot(event.c().syncId, cheapest.id, 0, SlotActionType.QUICK_MOVE, mc.player);
                                 this.f.b();
                             } else {
                                 Matcher matcher2 = Pattern.compile("(\\d+)/(\\d+)").matcher(title);
@@ -251,10 +251,10 @@ public class Collector_2 extends Module {
                     Delta.h().d().v().g().a(10);
                 }
             }
-            if ((event.d() instanceof OpenScreenS2CPacket) && !(aM_.currentScreen instanceof GenericContainerScreen)) {
+            if ((event.d() instanceof OpenScreenS2CPacket) && !(mc.currentScreen instanceof GenericContainerScreen)) {
                 if (this.j >= 8) {
                     int anarchy = (int) (MathUtil.a(0.0f, 100.0f) <= 50.0f ? MathUtil.a(205.0f, 231.0f) : MathUtil.a(305.0f, 325.0f));
-                    aM_.player.networkHandler.sendChatMessage("/an" + anarchy);
+                    mc.player.networkHandler.sendChatMessage("/an" + anarchy);
                     ChatUtil.sendMessage("Обнаружили замедление аукциона, переходим на " + anarchy + " анархию");
                 }
                 this.g.b();
@@ -264,7 +264,7 @@ public class Collector_2 extends Module {
 
     @EventTarget
     public void a(InputEvent event) {
-        if (this.h != null && (aM_.currentScreen instanceof HandledScreen)) {
+        if (this.h != null && (mc.currentScreen instanceof HandledScreen)) {
             event.a(0.0f);
             event.b(0.0f);
         }
@@ -272,7 +272,7 @@ public class Collector_2 extends Module {
 
     @EventTarget
     public void a(KeyEvent event) {
-        if (this.h != null && (aM_.currentScreen instanceof HandledScreen)) {
+        if (this.h != null && (mc.currentScreen instanceof HandledScreen)) {
             event.a(true);
         }
         if (event.b() == 256 && this.h != null) {
@@ -285,14 +285,14 @@ public class Collector_2 extends Module {
         event.e().stream().filter(slot -> {
             return slot.getStack().getName().getString().toLowerCase().contains(name.toLowerCase());
         }).findFirst().ifPresent(slot2 -> {
-            aM_.interactionManager.clickSlot(event.c().syncId, slot2.id, 0, SlotActionType.QUICK_MOVE, aM_.player);
+            mc.interactionManager.clickSlot(event.c().syncId, slot2.id, 0, SlotActionType.QUICK_MOVE, mc.player);
         });
     }
 
     private void s() {
-        if (aM_.currentScreen instanceof GenericContainerScreen) {
-            aM_.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(aM_.player.currentScreenHandler.syncId));
-            aM_.player.closeScreen();
+        if (mc.currentScreen instanceof GenericContainerScreen) {
+            mc.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(mc.player.currentScreenHandler.syncId));
+            mc.player.closeScreen();
         }
     }
 
@@ -301,12 +301,12 @@ public class Collector_2 extends Module {
             return false;
         }
         IntStream slotRange = IntStream.range(0, 40);
-        PlayerInventory playerInventory = aM_.player.getInventory();
+        PlayerInventory playerInventory = mc.player.getInventory();
         Objects.requireNonNull(playerInventory);
         ItemStack inventory = slotRange.mapToObj(playerInventory::getStack).filter(s -> {
             return !s.isEmpty() && this.h.a(s);
         }).findFirst().orElse(ItemStack.EMPTY);
-        if ((!inventory.isEmpty() && (((this.h.i() instanceof PotionItem) && !Objects.equals(stack.get(DataComponentTypes.POTION_CONTENTS), inventory.get(DataComponentTypes.POTION_CONTENTS))) || !stack.getName().getString().trim().equalsIgnoreCase(inventory.getName().getString().trim()))) || stack.getTooltip(Item.TooltipContext.DEFAULT, aM_.player, TooltipType.BASIC).stream().anyMatch(line -> {
+        if ((!inventory.isEmpty() && (((this.h.i() instanceof PotionItem) && !Objects.equals(stack.get(DataComponentTypes.POTION_CONTENTS), inventory.get(DataComponentTypes.POTION_CONTENTS))) || !stack.getName().getString().trim().equalsIgnoreCase(inventory.getName().getString().trim()))) || stack.getTooltip(Item.TooltipContext.DEFAULT, mc.player, TooltipType.BASIC).stream().anyMatch(line -> {
             return line.getString().contains("➥ Нажмите, чтобы забрать");
         }) || ServerUtil.a.a(stack) <= 0) {
             return false;
@@ -331,7 +331,7 @@ public class Collector_2 extends Module {
 
     private int a(b slot) {
         IntStream slotRange = IntStream.range(0, 40);
-        PlayerInventory playerInventory = aM_.player.getInventory();
+        PlayerInventory playerInventory = mc.player.getInventory();
         Objects.requireNonNull(playerInventory);
         return slotRange.mapToObj(playerInventory::getStack).filter(stack -> {
             return !stack.isEmpty() && slot.a(stack);

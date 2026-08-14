@@ -74,7 +74,7 @@ public abstract class InventoryScreenMixin extends HandledScreen<PlayerScreenHan
     private void onDropAllClick(ButtonWidget button) {
         for (Slot slot : this.handler.slots) {
             if (hasStack(slot) && this.button.active) {
-                Interface.aM_.interactionManager.clickSlot(this.handler.syncId, slot.id, 1, SlotActionType.THROW, Interface.aM_.player);
+                Interface.mc.interactionManager.clickSlot(this.handler.syncId, slot.id, 1, SlotActionType.THROW, Interface.mc.player);
             }
         }
     }

@@ -22,7 +22,7 @@ public class HitBoxes extends Module {
         if (player instanceof PlayerEntity) {
             Box box = event.b();
             Box changedBox = new Box(box.minX - ((double) (this.b.h().floatValue() / 2.0f)), box.minY, box.minZ - ((double) (this.b.h().floatValue() / 2.0f)), box.maxX + ((double) (this.b.h().floatValue() / 2.0f)), box.maxY + ((double) this.c.h().floatValue()), box.maxZ + ((double) (this.b.h().floatValue() / 2.0f)));
-            if (player.getId() != aM_.player.getId() && !Delta.h().d().e().d(player.getName().getString())) {
+            if (player.getId() != mc.player.getId() && !Delta.h().d().e().d(player.getName().getString())) {
                 event.a(changedBox);
             }
         }

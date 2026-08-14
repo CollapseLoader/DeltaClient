@@ -107,7 +107,7 @@ public class CosmeticsProcessor extends BaseProcessor {
         } catch (IOException e) {
             return;
         }
-        aM_.execute(() -> {
+        mc.execute(() -> {
             register(new Cosmetic(name, uuid, category, scale, offset, bakedModel, bakedAnimations, image));
         });
     }

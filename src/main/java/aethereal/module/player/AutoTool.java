@@ -23,18 +23,18 @@ public class AutoTool extends Module implements Interface {
         int bestSlot;
         InventoryHandler handler = Delta.h().d().v().a();
         if (handler.a().isEmpty()) {
-            if (aM_.crosshairTarget instanceof BlockHitResult hit) {
-                if (aM_.options.attackKey.isPressed()) {
-                    if (this.b[0] != -1 || (bestSlot = a(aM_.world.getBlockState(hit.getBlockPos()))) == -1) {
+            if (mc.crosshairTarget instanceof BlockHitResult hit) {
+                if (mc.options.attackKey.isPressed()) {
+                    if (this.b[0] != -1 || (bestSlot = a(mc.world.getBlockState(hit.getBlockPos()))) == -1) {
                         return;
                     }
-                    this.b[0] = aM_.player.getInventory().selectedSlot;
+                    this.b[0] = mc.player.getInventory().selectedSlot;
                     if (bestSlot > 8) {
                         this.b[1] = bestSlot;
                         handler.a(bestSlot, this.b[0], 1);
                         return;
                     } else {
-                        aM_.player.getInventory().selectedSlot = bestSlot;
+                        mc.player.getInventory().selectedSlot = bestSlot;
                         return;
                     }
                 }
@@ -43,7 +43,7 @@ public class AutoTool extends Module implements Interface {
                 return;
             }
             if (this.b[1] == -1) {
-                aM_.player.getInventory().selectedSlot = this.b[0];
+                mc.player.getInventory().selectedSlot = this.b[0];
             } else {
                 handler.a(this.b[1], this.b[0], 1);
             }
@@ -54,7 +54,7 @@ public class AutoTool extends Module implements Interface {
 
     private int a(BlockState state) {
         int shears;
-        PlayerInventory inventory = aM_.player.getInventory();
+        PlayerInventory inventory = mc.player.getInventory();
         return (!state.isOf(Blocks.COBWEB) || (shears = IntStream.range(0, inventory.main.size()).filter(i -> {
             return inventory.getStack(i).isOf(Items.SHEARS);
         }).findFirst().orElse(-1)) == -1) ? IntStream.range(0, inventory.main.size()).filter(i2 -> {

@@ -39,10 +39,10 @@ public class ElytraHelper extends Module implements Interface {
             z();
         });
         this.f = new BindSetting("Кнопка переключения", -1).a(() -> {
-            int slot = aM_.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Items.ELYTRA ? InventoryUtil.a() : InventoryUtil.b(Items.ELYTRA);
+            int slot = mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Items.ELYTRA ? InventoryUtil.a() : InventoryUtil.b(Items.ELYTRA);
             Delta.h().d().v().a().b(slot, 1, 1);
             if (this.b.c().booleanValue() && InventoryUtil.b(Items.ELYTRA) == slot) {
-                this.i = aM_.player.age;
+                this.i = mc.player.age;
                 this.g = true;
             }
         });
@@ -91,7 +91,7 @@ public class ElytraHelper extends Module implements Interface {
 
     @EventTarget
     public void a(InputEvent event) {
-        if (aM_.player.age < 5) {
+        if (mc.player.age < 5) {
             this.g = false;
         } else if (this.g && y()) {
             b(event);
@@ -102,24 +102,24 @@ public class ElytraHelper extends Module implements Interface {
         if (!this.c.c().booleanValue() || this.h) {
             return true;
         }
-        if (this.i + 1 == aM_.player.age) {
-            aM_.player.networkHandler.sendChatCommand("fly");
+        if (this.i + 1 == mc.player.age) {
+            mc.player.networkHandler.sendChatCommand("fly");
         }
-        if (aM_.player.getAbilities().allowFlying && this.i <= aM_.player.age && aM_.player.isOnGround()) {
-            double x = aM_.player.getX();
-            double y = aM_.player.getY() + 0.19999997317790985d;
-            double z = aM_.player.getZ();
-            aM_.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(x, y, z, false, aM_.player.horizontalCollision));
-            aM_.player.setPosition(x, y, z);
-            this.i = aM_.player.age + 9;
+        if (mc.player.getAbilities().allowFlying && this.i <= mc.player.age && mc.player.isOnGround()) {
+            double x = mc.player.getX();
+            double y = mc.player.getY() + 0.19999997317790985d;
+            double z = mc.player.getZ();
+            mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.PositionAndOnGround(x, y, z, false, mc.player.horizontalCollision));
+            mc.player.setPosition(x, y, z);
+            this.i = mc.player.age + 9;
         }
-        if (aM_.player.getAbilities().allowFlying && !aM_.player.isOnGround()) {
-            aM_.player.getAbilities().flying = true;
-            aM_.player.setVelocity(0.0d, 0.0d, 0.0d);
-            aM_.player.sendAbilitiesUpdate();
+        if (mc.player.getAbilities().allowFlying && !mc.player.isOnGround()) {
+            mc.player.getAbilities().flying = true;
+            mc.player.setVelocity(0.0d, 0.0d, 0.0d);
+            mc.player.sendAbilitiesUpdate();
             this.g = false;
         }
-        if (b(15) || (b(3) && aM_.player.getEquippedStack(EquipmentSlot.CHEST).getItem() != Items.ELYTRA)) {
+        if (b(15) || (b(3) && mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() != Items.ELYTRA)) {
             this.g = false;
             return false;
         }
@@ -127,15 +127,15 @@ public class ElytraHelper extends Module implements Interface {
     }
 
     private void b(InputEvent event) {
-        boolean wearingElytra = aM_.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Items.ELYTRA;
-        if (!aM_.player.isGliding() && wearingElytra) {
-            event.b(aM_.player.age % 2 == 0);
-            this.i = aM_.player.age;
+        boolean wearingElytra = mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Items.ELYTRA;
+        if (!mc.player.isGliding() && wearingElytra) {
+            event.b(mc.player.age % 2 == 0);
+            this.i = mc.player.age;
             if (!this.d.c().booleanValue()) {
                 this.g = false;
             }
         }
-        if (aM_.player.isGliding() && this.d.c().booleanValue() && !aM_.player.isTouchingWater() && !aM_.player.isOnGround() && b(2)) {
+        if (mc.player.isGliding() && this.d.c().booleanValue() && !mc.player.isTouchingWater() && !mc.player.isOnGround() && b(2)) {
             z();
             this.g = false;
         }
@@ -145,13 +145,13 @@ public class ElytraHelper extends Module implements Interface {
     }
 
     private void z() {
-        if (aM_.player.isGliding()) {
+        if (mc.player.isGliding()) {
             Delta.h().d().v().b().a(Items.FIREWORK_ROCKET.getDefaultStack());
         }
     }
 
     private boolean b(int delay) {
-        return this.i + delay < aM_.player.age;
+        return this.i + delay < mc.player.age;
     }
 
     @EventTarget

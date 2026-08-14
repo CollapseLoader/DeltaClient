@@ -175,7 +175,7 @@ public class BatchProcessor extends BaseProcessor {
         }
 
         private void a(VertexConsumer buffer, Matrix4f matrix, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3, double x4, double y4, double z4, float r, float g, float b, float a) {
-            Vec3d cam = Interface.aM_.getEntityRenderDispatcher().camera.getPos();
+            Vec3d cam = Interface.mc.getEntityRenderDispatcher().camera.getPos();
             buffer.vertex(matrix, (float) (x1 - cam.x), (float) (y1 - cam.y), (float) (z1 - cam.z)).color(r, g, b, a);
             buffer.vertex(matrix, (float) (x2 - cam.x), (float) (y2 - cam.y), (float) (z2 - cam.z)).color(r, g, b, a);
             buffer.vertex(matrix, (float) (x3 - cam.x), (float) (y3 - cam.y), (float) (z3 - cam.z)).color(r, g, b, a);
@@ -183,7 +183,7 @@ public class BatchProcessor extends BaseProcessor {
         }
 
         private void a(Matrix4f matrix, VertexConsumer buffer, MatrixStack.Entry entry, double x1, double y1, double z1, double x2, double y2, double z2, float[] rgba) {
-            Vec3d cam = Interface.aM_.getEntityRenderDispatcher().camera.getPos();
+            Vec3d cam = Interface.mc.getEntityRenderDispatcher().camera.getPos();
             float lenSq = (float) (((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)) + ((z2 - z1) * (z2 - z1)));
             float len = MathHelper.sqrt(lenSq);
             float nx = len > 1.0E-6f ? ((float) (x2 - x1)) / len : 0.0f;

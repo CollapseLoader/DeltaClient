@@ -18,7 +18,7 @@ public class ClanUpgrader extends Module {
     public void c() {
         super.c();
         if (this.b != -1) {
-            aM_.player.getInventory().selectedSlot = this.b;
+            mc.player.getInventory().selectedSlot = this.b;
             this.b = -1;
         }
     }
@@ -33,22 +33,22 @@ public class ClanUpgrader extends Module {
             a();
             return;
         }
-        float randomPitch = ((float) (Math.sin(System.currentTimeMillis() / 1220.0d) * ((double) (Math.abs(90.0f - aM_.player.getPitch()) / 8.0f)))) + MathUtil.a(-0.1f, 0.1f);
+        float randomPitch = ((float) (Math.sin(System.currentTimeMillis() / 1220.0d) * ((double) (Math.abs(90.0f - mc.player.getPitch()) / 8.0f)))) + MathUtil.a(-0.1f, 0.1f);
         Rotation rotation = new Rotation(Look.b() + MathUtil.a(-1.0f, 1.0f), MathUtil.b(88.0f + randomPitch, -90.0f, 90.0f));
         Delta.h().d().k().a(rotation, 90.0f, 1, 1);
         if (this.b == -1) {
-            this.b = aM_.player.getInventory().selectedSlot;
+            this.b = mc.player.getInventory().selectedSlot;
         }
-        if (aM_.player.getInventory().selectedSlot != target) {
-            aM_.player.getInventory().selectedSlot = target;
+        if (mc.player.getInventory().selectedSlot != target) {
+            mc.player.getInventory().selectedSlot = target;
         }
         if (Rotation.b().a(rotation) <= 1.0d) {
-            BlockPos position = aM_.player.getBlockPos();
-            if (aM_.world.getBlockState(position).isOf(Blocks.REDSTONE_WIRE) || aM_.world.getBlockState(position).isOf(Blocks.TORCH)) {
-                aM_.interactionManager.attackBlock(position, Direction.UP);
-                aM_.player.swingHand(Hand.MAIN_HAND);
+            BlockPos position = mc.player.getBlockPos();
+            if (mc.world.getBlockState(position).isOf(Blocks.REDSTONE_WIRE) || mc.world.getBlockState(position).isOf(Blocks.TORCH)) {
+                mc.interactionManager.attackBlock(position, Direction.UP);
+                mc.player.swingHand(Hand.MAIN_HAND);
             } else {
-                ((platform.inject.invokers.MinecraftClientInvoker) aM_).invokeDoItemUse();
+                ((platform.inject.invokers.MinecraftClientInvoker) mc).invokeDoItemUse();
             }
         }
     }

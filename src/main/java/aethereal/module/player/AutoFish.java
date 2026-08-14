@@ -31,8 +31,8 @@ public class AutoFish extends Module implements Interface {
     @Override
     public void b() {
         super.b();
-        if (aM_.player != null && aM_.player.getInventory().getStack(aM_.player.getInventory().selectedSlot).getItem() == Items.FISHING_ROD) {
-            if (aM_.player.fishHook == null) {
+        if (mc.player != null && mc.player.getInventory().getStack(mc.player.getInventory().selectedSlot).getItem() == Items.FISHING_ROD) {
+            if (mc.player.fishHook == null) {
                 d(false);
             }
             ChatUtil.sendMessage(j() + " активирован, удачной рыбалки!");
@@ -42,7 +42,7 @@ public class AutoFish extends Module implements Interface {
     @EventTarget
     public void a(PacketEvent event) {
         if (event.d() instanceof PlaySoundS2CPacket packet) {
-            if (packet.getSound().value().id().equals(SoundEvents.ENTITY_FISHING_BOBBER_SPLASH.id()) && aM_.player.fishHook.squaredDistanceTo(packet.getX(), packet.getY(), packet.getZ()) <= 0.48999979194765847d && aM_.player.fishHook != null) {
+            if (packet.getSound().value().id().equals(SoundEvents.ENTITY_FISHING_BOBBER_SPLASH.id()) && mc.player.fishHook.squaredDistanceTo(packet.getX(), packet.getY(), packet.getZ()) <= 0.48999979194765847d && mc.player.fishHook != null) {
                 d(true);
                 this.b.b();
             }
@@ -64,8 +64,8 @@ public class AutoFish extends Module implements Interface {
     }
 
     public void d(boolean cast) {
-        aM_.interactionManager.interactItem(aM_.player, Hand.MAIN_HAND);
-        aM_.player.swingHand(Hand.MAIN_HAND);
+        mc.interactionManager.interactItem(mc.player, Hand.MAIN_HAND);
+        mc.player.swingHand(Hand.MAIN_HAND);
         this.c = cast;
     }
 }

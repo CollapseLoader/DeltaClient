@@ -49,7 +49,7 @@ public class NotificationProcessor extends BaseProcessor implements Interface {
     public void a(TickEvent event) {
         List<Notification> notifications = new ArrayList<>(b());
         notifications.remove(this.b);
-        boolean preview = (aM_.currentScreen instanceof ChatScreen) && notifications.isEmpty();
+        boolean preview = (mc.currentScreen instanceof ChatScreen) && notifications.isEmpty();
         if (!b().contains(this.b)) {
             b().add(this.b);
         }

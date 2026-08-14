@@ -79,15 +79,15 @@ public class PvEHandler extends BaseHandler implements Interface {
             ChatUtil.sendMessage("На предмете нету починки, отмена.");
             return true;
         }
-        ItemStack main = aM_.player.getMainHandStack();
-        ItemStack off = aM_.player.getOffHandStack();
+        ItemStack main = mc.player.getMainHandStack();
+        ItemStack off = mc.player.getOffHandStack();
         if (main.isEmpty() || ItemStack.areItemsAndComponentsEqual(main, tool)) {
             class_1799VarMethod_7972 = (off.isEmpty() || off.getItem() == tool.getItem()) ? ItemStack.EMPTY : off.copy();
         } else {
             class_1799VarMethod_7972 = main.copy();
         }
         ItemStack restore = class_1799VarMethod_7972;
-        this.b.add(new c(tool.getItem(), endPct, aM_.player.getInventory().selectedSlot, restore));
+        this.b.add(new c(tool.getItem(), endPct, mc.player.getInventory().selectedSlot, restore));
         return false;
     }
 
@@ -113,12 +113,12 @@ public class PvEHandler extends BaseHandler implements Interface {
         @Override
         public boolean a() {
             InventoryHandler handler = Delta.h().d().v().a();
-            ItemStack offHand = aM_.player.getOffHandStack();
-            ItemStack mainHand = aM_.player.getMainHandStack();
+            ItemStack offHand = mc.player.getOffHandStack();
+            ItemStack mainHand = mc.player.getMainHandStack();
             switch (this.f) {
                 case 0:
-                    if (aM_.currentScreen != null) {
-                        aM_.currentScreen.close();
+                    if (mc.currentScreen != null) {
+                        mc.currentScreen.close();
                     }
                     int i = this.g + 1;
                     this.g = i;
@@ -138,7 +138,7 @@ public class PvEHandler extends BaseHandler implements Interface {
                     }
                     int onBar = InventoryUtil.a(Items.EXPERIENCE_BOTTLE, true);
                     if (onBar != -1) {
-                        aM_.player.getInventory().selectedSlot = onBar;
+                        mc.player.getInventory().selectedSlot = onBar;
                         this.f = 2;
                         return false;
                     }
@@ -165,11 +165,11 @@ public class PvEHandler extends BaseHandler implements Interface {
                     }
                     if (mainHand.getItem() != Items.EXPERIENCE_BOTTLE) {
                         int bar = InventoryUtil.a(Items.EXPERIENCE_BOTTLE, true);
-                        aM_.player.getInventory().selectedSlot = bar != -1 ? bar : this.d;
+                        mc.player.getInventory().selectedSlot = bar != -1 ? bar : this.d;
                         return false;
                     }
-                    Delta.h().d().k().a(new Rotation(aM_.player.getYaw(), 90.0f), 360.0f, 1, 1);
-                    aM_.interactionManager.interactItem(aM_.player, Hand.MAIN_HAND);
+                    Delta.h().d().k().a(new Rotation(mc.player.getYaw(), 90.0f), 360.0f, 1, 1);
+                    mc.interactionManager.interactItem(mc.player, Hand.MAIN_HAND);
                     return false;
                 case 3:
                     int i2 = this.g + 1;
@@ -215,20 +215,20 @@ public class PvEHandler extends BaseHandler implements Interface {
         public boolean a() {
             switch (this.e) {
                 case 0:
-                    if (aM_.currentScreen != null) {
-                        aM_.currentScreen.close();
+                    if (mc.currentScreen != null) {
+                        mc.currentScreen.close();
                     }
                     int i = this.f + 1;
                     this.f = i;
                     if (i >= 3) {
-                        aM_.player.networkHandler.sendChatMessage("/ah search " + (this.b == Items.EXPERIENCE_BOTTLE ? "Опыт" : new ItemStack(this.b).getName().getString()));
+                        mc.player.networkHandler.sendChatMessage("/ah search " + (this.b == Items.EXPERIENCE_BOTTLE ? "Опыт" : new ItemStack(this.b).getName().getString()));
                         this.e = 1;
                         this.f = 0;
                         return false;
                     }
                     return false;
                 case 1:
-                    GenericContainerScreen class_476Var = (GenericContainerScreen) aM_.currentScreen;
+                    GenericContainerScreen class_476Var = (GenericContainerScreen) mc.currentScreen;
                     if (!(class_476Var instanceof GenericContainerScreen)) {
                         int i2 = this.f + 1;
                         this.f = i2;
@@ -257,7 +257,7 @@ public class PvEHandler extends BaseHandler implements Interface {
                     }
                     return false;
                 case 3:
-                    GenericContainerScreen class_476Var2 = (GenericContainerScreen) aM_.currentScreen;
+                    GenericContainerScreen class_476Var2 = (GenericContainerScreen) mc.currentScreen;
                     if (!(class_476Var2 instanceof GenericContainerScreen)) {
                         this.f = 0;
                         this.e = 0;
@@ -268,13 +268,13 @@ public class PvEHandler extends BaseHandler implements Interface {
                         int i4 = this.f + 1;
                         this.f = i4;
                         if (i4 >= 6) {
-                            aM_.currentScreen.close();
+                            mc.currentScreen.close();
                             return true;
                         }
                         return false;
                     }
                     this.f = 0;
-                    if (aM_.player.age % 7 == 0) {
+                    if (mc.player.age % 7 == 0) {
                         Slot offer = null;
                         for (int i5 = 0; i5 < screen2.getScreenHandler().slots.size() - 36; i5++) {
                             Slot slot = screen2.getScreenHandler().slots.get(i5);
@@ -283,10 +283,10 @@ public class PvEHandler extends BaseHandler implements Interface {
                             }
                         }
                         if (offer == null) {
-                            aM_.interactionManager.clickSlot(screen2.getScreenHandler().syncId, 50, 0, SlotActionType.QUICK_MOVE, aM_.player);
+                            mc.interactionManager.clickSlot(screen2.getScreenHandler().syncId, 50, 0, SlotActionType.QUICK_MOVE, mc.player);
                             return false;
                         }
-                        aM_.interactionManager.clickSlot(screen2.getScreenHandler().syncId, offer.id, 0, SlotActionType.QUICK_MOVE, aM_.player);
+                        mc.interactionManager.clickSlot(screen2.getScreenHandler().syncId, offer.id, 0, SlotActionType.QUICK_MOVE, mc.player);
                         return false;
                     }
                     return false;

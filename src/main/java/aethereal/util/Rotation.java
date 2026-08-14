@@ -29,10 +29,10 @@ public class Rotation implements Interface {
     }
 
     public static Rotation a() {
-        if (aM_.player == null) {
+        if (mc.player == null) {
             return new Rotation(Look.b(), Look.c());
         }
-        float py = aM_.player.getYaw();
+        float py = mc.player.getYaw();
         float fy = Look.b();
         return new Rotation(py + MathHelper.wrapDegrees(fy - py), Look.c());
     }
@@ -46,7 +46,7 @@ public class Rotation implements Interface {
     }
 
     public static Rotation b() {
-        ClientPlayerEntityAccessor accessor = (ClientPlayerEntityAccessor) aM_.player;
+        ClientPlayerEntityAccessor accessor = (ClientPlayerEntityAccessor) mc.player;
         return new Rotation(Objects.requireNonNull(accessor).getLastYaw(), accessor.getLastPitch());
     }
 

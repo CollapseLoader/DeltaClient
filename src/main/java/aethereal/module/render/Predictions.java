@@ -56,35 +56,35 @@ public class Predictions extends Module {
 
     @EventTarget
     public void a(DrawEvent event) {
-        if (aM_.player == null || aM_.world == null) {
+        if (mc.player == null || mc.world == null) {
             return;
         }
         if (event.c()) {
             Set<Integer> activeIds = new HashSet<>();
-            Box range = aM_.player.getBoundingBox().expand(aM_.options.getViewDistance().getValue().intValue() * 16);
+            Box range = mc.player.getBoundingBox().expand(mc.options.getViewDistance().getValue().intValue() * 16);
             if (this.b.a("Стрелы").c().booleanValue()) {
-                aM_.world.getEntitiesByClass(ArrowEntity.class, range, (v1) -> {
+                mc.world.getEntitiesByClass(ArrowEntity.class, range, (v1) -> {
                     return a(v1);
                 }).forEach(e -> {
                     a(event, e, Items.ARROW.getDefaultStack(), activeIds);
                 });
             }
             if (this.b.a("Трезубцы").c().booleanValue()) {
-                aM_.world.getEntitiesByClass(TridentEntity.class, range, e2 -> {
+                mc.world.getEntitiesByClass(TridentEntity.class, range, e2 -> {
                     return ((TridentEntityAccessor) e2).getReturnTimer() <= 0 && a(e2);
                 }).forEach(e3 -> {
                     a(event, e3, Items.TRIDENT.getDefaultStack(), activeIds);
                 });
             }
             if (this.b.a("Эндер жемчуг").c().booleanValue()) {
-                aM_.world.getEntitiesByClass(EnderPearlEntity.class, range, (v1) -> {
+                mc.world.getEntitiesByClass(EnderPearlEntity.class, range, (v1) -> {
                     return a(v1);
                 }).forEach(e4 -> {
                     a(event, e4, Items.ENDER_PEARL.getDefaultStack(), activeIds);
                 });
             }
             if (this.b.a("Зелья").c().booleanValue()) {
-                aM_.world.getEntitiesByClass(PotionEntity.class, range, (v1) -> {
+                mc.world.getEntitiesByClass(PotionEntity.class, range, (v1) -> {
                     return a(v1);
                 }).forEach(e5 -> {
                     a(event, e5, e5.getStack(), activeIds);
@@ -167,13 +167,13 @@ public class Predictions extends Module {
         double gravity = entity instanceof PotionEntity ? 0.05000000070627959d : 0.030000000582077163d;
         List<Vec3d> path = new ArrayList<>();
         path.add(pos);
-        for (int i = 0; i < 140 && vel.lengthSquared() >= 1.0000000000139336E-6d && pos.getY() >= aM_.world.getBottomY() && pos.getY() <= aM_.world.getBottomY() + aM_.world.getHeight(); i++) {
-            double drag = aM_.world.getFluidState(BlockPos.ofFloored(pos)).isIn(FluidTags.WATER) ? isThrowable ? 0.7999999144424994d : 0.6000000001891753d : 0.990000120151185d;
+        for (int i = 0; i < 140 && vel.lengthSquared() >= 1.0000000000139336E-6d && pos.getY() >= mc.world.getBottomY() && pos.getY() <= mc.world.getBottomY() + mc.world.getHeight(); i++) {
+            double drag = mc.world.getFluidState(BlockPos.ofFloored(pos)).isIn(FluidTags.WATER) ? isThrowable ? 0.7999999144424994d : 0.6000000001891753d : 0.990000120151185d;
             if (isThrowable) {
                 vel = new Vec3d(vel.x * drag, (vel.y - gravity) * drag, vel.z * drag);
             }
             Vec3d next = pos.add(vel);
-            BlockHitResult impact = aM_.world.raycast(new RaycastContext(pos, next, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity));
+            BlockHitResult impact = mc.world.raycast(new RaycastContext(pos, next, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity));
             if (impact.getType() != HitResult.Type.MISS) {
                 path.add(impact.getPos());
                 return path;
@@ -188,9 +188,9 @@ public class Predictions extends Module {
     }
 
     private void b(DrawEvent event) {
-        ItemStack mainStack = aM_.player.getStackInHand(Hand.MAIN_HAND);
+        ItemStack mainStack = mc.player.getStackInHand(Hand.MAIN_HAND);
         Item main = mainStack.getItem();
-        Item off = aM_.player.getStackInHand(Hand.OFF_HAND).getItem();
+        Item off = mc.player.getStackInHand(Hand.OFF_HAND).getItem();
         float speed = 0.0f;
         boolean isThrowable = false;
         boolean potion = main == Items.SPLASH_POTION || main == Items.LINGERING_POTION || off == Items.SPLASH_POTION || off == Items.LINGERING_POTION;
@@ -248,23 +248,23 @@ public class Predictions extends Module {
     }
 
     private boolean a(ItemStack stack) {
-        return stack.getOrDefault(DataComponentTypes.ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT).getLevel(aM_.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.MULTISHOT)) > 0;
+        return stack.getOrDefault(DataComponentTypes.ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT).getLevel(mc.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.MULTISHOT)) > 0;
     }
 
     private float q() {
-        ItemStack active = aM_.player.getActiveItem();
-        if (!aM_.player.isUsingItem() || !(active.getItem() instanceof BowItem)) {
+        ItemStack active = mc.player.getActiveItem();
+        if (!mc.player.isUsingItem() || !(active.getItem() instanceof BowItem)) {
             return 0.0f;
         }
-        int useTicks = active.getItem().getMaxUseTime(active, aM_.player) - aM_.player.getItemUseTimeLeft();
+        int useTicks = active.getItem().getMaxUseTime(active, mc.player) - mc.player.getItemUseTimeLeft();
         float f = useTicks / 20.0f;
         return Math.min(((f * f) + (f * 2.0f)) / 3.0f, 1.0f);
     }
 
     private a a(float speed, boolean isThrowable, float pitchOffset, double gravity, float viewSpreadDegrees, float tickDelta) {
-        double pitchRad = Math.toRadians(aM_.player.getPitch(tickDelta));
-        double yawRad = Math.toRadians(aM_.player.getYaw(tickDelta));
-        Vec3d look = new Vec3d((-Math.sin(yawRad)) * Math.cos(pitchRad), -Math.sin(Math.toRadians(aM_.player.getPitch(tickDelta) + pitchOffset)), Math.cos(yawRad) * Math.cos(pitchRad)).normalize();
+        double pitchRad = Math.toRadians(mc.player.getPitch(tickDelta));
+        double yawRad = Math.toRadians(mc.player.getYaw(tickDelta));
+        Vec3d look = new Vec3d((-Math.sin(yawRad)) * Math.cos(pitchRad), -Math.sin(Math.toRadians(mc.player.getPitch(tickDelta) + pitchOffset)), Math.cos(yawRad) * Math.cos(pitchRad)).normalize();
         if (viewSpreadDegrees != 0.0f) {
             Vec3d right = new Vec3d(0.0d, 1.0d, 0.0d).crossProduct(look);
             Vec3d axis = look.crossProduct(right.lengthSquared() < 9.999996190428959E-11d ? new Vec3d(Math.cos(yawRad), 0.0d, Math.sin(yawRad)) : right.normalize()).normalize();
@@ -273,17 +273,17 @@ public class Predictions extends Module {
             double s = Math.sin(rad);
             look = look.multiply(c).add(axis.crossProduct(look).multiply(s)).add(axis.multiply(axis.dotProduct(look) * (1.0d - c)));
         }
-        Vec3d vel = look.multiply(speed).add(aM_.player.getVelocity().x, aM_.player.isOnGround() ? 0.0d : aM_.player.getVelocity().y, aM_.player.getVelocity().z);
-        Vec3d pos = aM_.player.getCameraPosVec(tickDelta);
+        Vec3d vel = look.multiply(speed).add(mc.player.getVelocity().x, mc.player.isOnGround() ? 0.0d : mc.player.getVelocity().y, mc.player.getVelocity().z);
+        Vec3d pos = mc.player.getCameraPosVec(tickDelta);
         List<Vec3d> path = new ArrayList<>();
         path.add(pos);
-        for (int i = 0; i < 130 && vel.lengthSquared() >= 1.0000000000139336E-6d && pos.getY() >= aM_.world.getBottomY() && pos.getY() <= aM_.world.getBottomY() + aM_.world.getHeight(); i++) {
-            double drag = aM_.world.getFluidState(BlockPos.ofFloored(pos)).isIn(FluidTags.WATER) ? isThrowable ? 0.7999999144424994d : 0.6000000001891753d : 0.990000120151185d;
+        for (int i = 0; i < 130 && vel.lengthSquared() >= 1.0000000000139336E-6d && pos.getY() >= mc.world.getBottomY() && pos.getY() <= mc.world.getBottomY() + mc.world.getHeight(); i++) {
+            double drag = mc.world.getFluidState(BlockPos.ofFloored(pos)).isIn(FluidTags.WATER) ? isThrowable ? 0.7999999144424994d : 0.6000000001891753d : 0.990000120151185d;
             if (isThrowable) {
                 vel = new Vec3d(vel.x * drag, (vel.y - gravity) * drag, vel.z * drag);
             }
             Vec3d next = pos.add(vel);
-            BlockHitResult hitBlock = aM_.world.raycast(new RaycastContext(pos, next, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, aM_.player));
+            BlockHitResult hitBlock = mc.world.raycast(new RaycastContext(pos, next, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player));
             Vec3d end = hitBlock.getType() != HitResult.Type.MISS ? hitBlock.getPos() : next;
             Entity hitEntity = a(pos, end);
             if (hitEntity != null) {
@@ -306,7 +306,7 @@ public class Predictions extends Module {
     private Entity a(Vec3d start, Vec3d end) {
         Entity closest = null;
         double closestDist = 1.7976922776554332E308d;
-        for (Entity candidate : aM_.world.getOtherEntities(aM_.player, new Box(start, end).expand(1.0d))) {
+        for (Entity candidate : mc.world.getOtherEntities(mc.player, new Box(start, end).expand(1.0d))) {
             if (candidate.isAlive() && !candidate.isSpectator() && (candidate instanceof LivingEntity)) {
                 Optional<Vec3d> hit = candidate.getBoundingBox().expand(0.30000001176381136d).raycast(start, end);
                 if (hit.isPresent()) {

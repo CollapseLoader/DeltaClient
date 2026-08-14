@@ -39,7 +39,7 @@ public abstract class GameMenuScreenMixin extends Screen {
 
     @Inject(method = {"init"}, at = {@At("TAIL")})
     private void init(CallbackInfo ci) {
-        ServerInfo server = Interface.aM_.getCurrentServerEntry();
+        ServerInfo server = Interface.mc.getCurrentServerEntry();
         children().stream().filter(child -> {
             return child instanceof ButtonWidget;
         }).map(child2 -> {
@@ -77,8 +77,8 @@ public abstract class GameMenuScreenMixin extends Screen {
                     this.reconnect = true;
                 } else {
                     try {
-                        Interface.aM_.world.disconnect();
-                        ConnectScreen.connect(new TitleScreen(), Interface.aM_, ServerAddress.parse(server.address), server, false, null);
+                        Interface.mc.world.disconnect();
+                        ConnectScreen.connect(new TitleScreen(), Interface.mc, ServerAddress.parse(server.address), server, false, null);
                     } catch (Exception e) {
                     }
                 }

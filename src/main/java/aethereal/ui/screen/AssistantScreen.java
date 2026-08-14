@@ -168,7 +168,7 @@ public class AssistantScreen extends Screen implements Interface {
                 this.e = d();
             } else {
                 Delta.h().d().v().b().a(this.b.c(slot));
-                aM_.player.closeScreen();
+                mc.player.closeScreen();
             }
         };
     }

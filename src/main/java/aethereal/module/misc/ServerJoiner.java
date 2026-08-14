@@ -59,18 +59,18 @@ public class ServerJoiner extends Module implements Interface {
 
     @EventTarget
     public void a(TickEvent e) {
-        if (!(aM_.currentScreen instanceof GUIScreen)) {
+        if (!(mc.currentScreen instanceof GUIScreen)) {
             if (this.b.l("SpookyTime")) {
                 if (ServerUtil.a().contains("Хаб")) {
                     int compassSlot = InventoryUtil.a(Items.COMPASS, true);
-                    if (compassSlot >= 0 && compassSlot <= 8 && aM_.currentScreen == null) {
-                        aM_.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(compassSlot));
-                        ((platform.inject.invokers.ClientPlayerInteractionManagerInvoker) aM_.interactionManager).invokeSendSequencedPacket(aM_.world, sequence -> {
-                            return new PlayerInteractItemC2SPacket(aM_.player.getActiveHand(), sequence, aM_.player.getYaw(), aM_.player.getPitch());
+                    if (compassSlot >= 0 && compassSlot <= 8 && mc.currentScreen == null) {
+                        mc.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(compassSlot));
+                        ((platform.inject.invokers.ClientPlayerInteractionManagerInvoker) mc.interactionManager).invokeSendSequencedPacket(mc.world, sequence -> {
+                            return new PlayerInteractItemC2SPacket(mc.player.getActiveHand(), sequence, mc.player.getYaw(), mc.player.getPitch());
                         });
                     }
                     if (this.e != -1) {
-                        aM_.player.networkHandler.sendPacket(new ClickSlotC2SPacket(this.e, 0, 13, 0, SlotActionType.PICKUP, ItemStack.EMPTY, Int2ObjectMaps.emptyMap()));
+                        mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(this.e, 0, 13, 0, SlotActionType.PICKUP, ItemStack.EMPTY, Int2ObjectMaps.emptyMap()));
                         this.e = -1;
                         return;
                     }
@@ -86,23 +86,23 @@ public class ServerJoiner extends Module implements Interface {
             if (this.b.l("ReallyWorld")) {
                 if (ServerUtil.a().isEmpty()) {
                     int compassSlot2 = InventoryUtil.a(Items.COMPASS, true);
-                    if (compassSlot2 >= 0 && compassSlot2 <= 8 && aM_.currentScreen == null) {
-                        aM_.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(compassSlot2));
-                        ((platform.inject.invokers.ClientPlayerInteractionManagerInvoker) aM_.interactionManager).invokeSendSequencedPacket(aM_.world, sequence2 -> {
-                            return new PlayerInteractItemC2SPacket(aM_.player.getActiveHand(), sequence2, aM_.player.getYaw(), aM_.player.getPitch());
+                    if (compassSlot2 >= 0 && compassSlot2 <= 8 && mc.currentScreen == null) {
+                        mc.player.networkHandler.sendPacket(new UpdateSelectedSlotC2SPacket(compassSlot2));
+                        ((platform.inject.invokers.ClientPlayerInteractionManagerInvoker) mc.interactionManager).invokeSendSequencedPacket(mc.world, sequence2 -> {
+                            return new PlayerInteractItemC2SPacket(mc.player.getActiveHand(), sequence2, mc.player.getYaw(), mc.player.getPitch());
                         });
                     }
-                    GenericContainerScreen screen = (GenericContainerScreen) aM_.currentScreen;
+                    GenericContainerScreen screen = (GenericContainerScreen) mc.currentScreen;
                     if (screen instanceof GenericContainerScreen) {
                         GenericContainerScreenHandler handler = screen.getScreenHandler();
                         if (screen.getTitle().getString().contains("» Выбор сервера")) {
-                            aM_.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handler.syncId, handler.getRevision(), 21, 0, SlotActionType.PICKUP, handler.getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
+                            mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handler.syncId, handler.getRevision(), 21, 0, SlotActionType.PICKUP, handler.getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
                         }
                         for (int i = 0; i < handler.getRows() * 9; i++) {
                             Slot slot = handler.slots.get(i);
                             if (slot.getStack().getName().getString().contains("ГРИФ #" + this.c.c().intValue() + " (1.16.5+)") && screen.getTitle().getString().contains("Выбор мира грифа ")) {
                                 if (this.d.a(5500L)) {
-                                    aM_.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handler.syncId, handler.getRevision(), slot.id, 0, SlotActionType.PICKUP, handler.getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
+                                    mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handler.syncId, handler.getRevision(), slot.id, 0, SlotActionType.PICKUP, handler.getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
                                     this.d.b();
                                     return;
                                 }

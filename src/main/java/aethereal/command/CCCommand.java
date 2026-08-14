@@ -21,8 +21,8 @@ public class CCCommand extends BaseCommand {
                 for (int i = 0; i < 3 + ((int) (Math.random() * 3.0d)); i++) {
                     name.append("абвгдежзийклмнопрстуфхцчшщъыьэюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".charAt((int) (Math.random() * ((double) "абвгдежзийклмнопрстуфхцчшщъыьэюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".length()))));
                 }
-                aM_.player.networkHandler.sendChatMessage("/clan create " + name);
-                this.c = aM_.player.age + 2;
+                mc.player.networkHandler.sendChatMessage("/clan create " + name);
+                this.c = mc.player.age + 2;
                 return 1;
             }
             return 1;
@@ -31,13 +31,13 @@ public class CCCommand extends BaseCommand {
 
     @EventTarget
     public void a(TickEvent eventTick) {
-        if (this.c >= aM_.player.age) {
+        if (this.c >= mc.player.age) {
             for (FriendConstructor constructor : Delta.h().d().e().e()) {
-                PlayerListEntry entry = aM_.player.networkHandler.getPlayerList().stream().filter(listEntry -> {
+                PlayerListEntry entry = mc.player.networkHandler.getPlayerList().stream().filter(listEntry -> {
                     return listEntry.getProfile().getName().equalsIgnoreCase(constructor.a());
                 }).findFirst().orElse(null);
-                if (entry != null && !constructor.a().equals(aM_.getSession().getUsername())) {
-                    aM_.player.networkHandler.sendChatMessage("/clan invite " + constructor.a());
+                if (entry != null && !constructor.a().equals(mc.getSession().getUsername())) {
+                    mc.player.networkHandler.sendChatMessage("/clan invite " + constructor.a());
                 }
             }
             this.c = -3;

@@ -52,7 +52,7 @@ public abstract class ClientPlayerEntityMixin {
 
     @Inject(method = {"dropSelectedItem"}, at = {@At("HEAD")}, cancellable = true)
     private void onDropSelectedItem(boolean entireStack, CallbackInfoReturnable<Boolean> cir) {
-        DropItemEvent dropItemEvent = new DropItemEvent(Interface.aM_.player.getInventory().selectedSlot);
+        DropItemEvent dropItemEvent = new DropItemEvent(Interface.mc.player.getInventory().selectedSlot);
         EventManager.a(dropItemEvent);
         if (dropItemEvent.a()) {
             cir.cancel();

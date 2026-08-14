@@ -102,11 +102,11 @@ public class DragInfo implements Interface {
     }
 
     public float a() {
-        return MathUtil.b(this.c, 0.0f, (aM_.getWindow().getFramebufferWidth() / aM_.getWindow().calculateScaleFactor(2, aM_.forcesUnicodeFont())) - this.e);
+        return MathUtil.b(this.c, 0.0f, (mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - this.e);
     }
 
     public float b() {
-        return MathUtil.b(this.d, 0.0f, (aM_.getWindow().getFramebufferHeight() / aM_.getWindow().calculateScaleFactor(2, aM_.forcesUnicodeFont())) - this.f);
+        return MathUtil.b(this.d, 0.0f, (mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - this.f);
     }
 
     public float c() {

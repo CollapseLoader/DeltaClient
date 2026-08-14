@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class KeyboardMixin {
     @Inject(method = {"onKey"}, at = {@At("HEAD")}, cancellable = true)
     public void onKey(long window, int key, int scanCode, int action, int modifiers, CallbackInfo ci) {
-        if (Interface.aM_.currentScreen == null || (Interface.aM_.currentScreen instanceof SwapScreen) || (Interface.aM_.currentScreen instanceof AssistantScreen) || (Interface.aM_.currentScreen instanceof StationScreen) || (Interface.aM_.currentScreen instanceof HandledScreen)) {
+        if (Interface.mc.currentScreen == null || (Interface.mc.currentScreen instanceof SwapScreen) || (Interface.mc.currentScreen instanceof AssistantScreen) || (Interface.mc.currentScreen instanceof StationScreen) || (Interface.mc.currentScreen instanceof HandledScreen)) {
             KeyEvent event = new KeyEvent(key, scanCode, action, modifiers);
             EventManager.a(event);
             if (event.a()) {

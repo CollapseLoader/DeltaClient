@@ -11,8 +11,8 @@ import net.minecraft.client.gui.screen.DeathScreen;
 public class AutoRespawn extends Module {
     @EventTarget
     public void a(TickEvent event) {
-        if ((aM_.currentScreen instanceof DeathScreen) && aM_.player.deathTime >= 5) {
-            aM_.player.requestRespawn();
+        if ((mc.currentScreen instanceof DeathScreen) && mc.player.deathTime >= 5) {
+            mc.player.requestRespawn();
         }
     }
 }

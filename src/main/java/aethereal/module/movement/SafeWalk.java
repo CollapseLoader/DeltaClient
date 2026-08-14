@@ -14,6 +14,6 @@ public class SafeWalk extends Module {
     }
 
     public void b(InputEvent event) {
-        event.c(event.e() || (aM_.world.getBlockState(aM_.player.getBlockPos().down()).getCollisionShape(aM_.world, aM_.player.getBlockPos().down()).isEmpty() && aM_.player.isOnGround()));
+        event.c(event.e() || (mc.world.getBlockState(mc.player.getBlockPos().down()).getCollisionShape(mc.world, mc.player.getBlockPos().down()).isEmpty() && mc.player.isOnGround()));
     }
 }

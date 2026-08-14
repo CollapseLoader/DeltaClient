@@ -57,13 +57,13 @@ public class WayCommand extends BaseCommand {
             ChatUtil.sendMessage("Использование: .way add <название> <x> <z> или .way add <название> <x> <y> <z>\"");
             return 1;
         }).then(e("y или z").executes(context4 -> {
-            a(a(context4, "название"), new Vec3d(b(context4, "x"), aM_.player.getY(), b(context4, "y или z")));
+            a(a(context4, "название"), new Vec3d(b(context4, "x"), mc.player.getY(), b(context4, "y или z")));
             return 1;
         }).then(e("z").executes(context5 -> {
             a(a(context5, "название"), new Vec3d(b(context5, "x"), b(context5, "y или z"), b(context5, "z")));
             return 1;
         })))))).then(a("me").executes(context6 -> {
-            a("me", aM_.player.getPos());
+            a("me", mc.player.getPos());
             return 1;
         })).then(a("remove").executes(context7 -> {
             ChatUtil.sendMessage("Использование: .way remove <название>");
@@ -95,7 +95,7 @@ public class WayCommand extends BaseCommand {
             return 1;
         })).then(a("event").executes(context10 -> {
             this.e = a.WAY;
-            aM_.player.networkHandler.sendCommand("event delay");
+            mc.player.networkHandler.sendCommand("event delay");
             return 1;
         })).then(a("clear").executes(context11 -> {
             ChatUtil.sendMessage("Количество удалённых меток: " + this.c.size());
@@ -162,11 +162,11 @@ public class WayCommand extends BaseCommand {
     public void a(DrawEvent event) {
         if (event.b()) {
             for (b way : this.c) {
-                a(event, way, aM_.player.getEyePos());
+                a(event, way, mc.player.getEyePos());
             }
             Vec3d gps = Delta.h().d().u().d().c();
             if (gps != null) {
-                a(event, gps, aM_.player.getEyePos());
+                a(event, gps, mc.player.getEyePos());
             }
         }
     }
@@ -208,12 +208,12 @@ public class WayCommand extends BaseCommand {
     private void a(DrawEvent event, Vec3d gps, Vec3d eyes) {
         MatrixStack matrices = event.h();
         int primary = Delta.h().d().o().a(ThemeInfo.PRIMARY).a();
-        double dx = gps.x - aM_.player.getX();
-        double dz = gps.z - aM_.player.getZ();
+        double dx = gps.x - mc.player.getX();
+        double dz = gps.z - mc.player.getZ();
         float targetYaw = (float) Math.toDegrees(Math.atan2(-dx, dz));
-        float angle = MathHelper.wrapDegrees(targetYaw - aM_.player.getYaw());
-        float cx = aM_.getWindow().getScaledWidth() / 2.0f;
-        float cy = aM_.getWindow().getScaledHeight() * 0.25f;
+        float angle = MathHelper.wrapDegrees(targetYaw - mc.player.getYaw());
+        float cx = mc.getWindow().getScaledWidth() / 2.0f;
+        float cy = mc.getWindow().getScaledHeight() * 0.25f;
         matrices.push();
         matrices.translate(cx, cy, 0.0f);
         matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(angle));

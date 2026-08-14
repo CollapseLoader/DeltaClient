@@ -60,7 +60,7 @@ public class ItemHelper extends Module implements Interface {
         private void f() {
             if (this.d == -1) {
                 int from = InventoryUtil.b(this.a);
-                int target = Interface.aM_.player.getInventory().selectedSlot;
+                int target = Interface.mc.player.getInventory().selectedSlot;
                 if (from != -1 && from != target) {
                     this.d = from;
                     this.c = target;

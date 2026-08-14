@@ -16,25 +16,25 @@ public class ProjectUtil implements Interface {
     }
 
     public static Vector2f project(double x, double y, double z) {
-        net.minecraft.client.render.Camera camera = aM_.getEntityRenderDispatcher().camera;
+        net.minecraft.client.render.Camera camera = mc.getEntityRenderDispatcher().camera;
         Vector3f result3f = new Vector3f((float) (x - camera.getPos().x), (float) (y - camera.getPos().y), (float) (z - camera.getPos().z));
         Quaternionf invCamRot = new Quaternionf(camera.getRotation()).conjugate();
         result3f.rotate(invCamRot);
-        return project(result3f, ((GameRendererInvoker) (Object) aM_.gameRenderer).invokeGetFov(camera, aM_.getRenderTickCounter().getTickDelta(false), true));
+        return project(result3f, ((GameRendererInvoker) (Object) mc.gameRenderer).invokeGetFov(camera, mc.getRenderTickCounter().getTickDelta(false), true));
     }
 
     private static Vector2f project(Vector3f result3f, double fov) {
         if (result3f.z >= 0.0f) {
             return new Vector2f(Float.MAX_VALUE, Float.MAX_VALUE);
         }
-        float realAspect = (float) aM_.getWindow().getFramebufferWidth() / (float) aM_.getWindow().getFramebufferHeight();
+        float realAspect = (float) mc.getWindow().getFramebufferWidth() / (float) mc.getWindow().getFramebufferHeight();
         float modifiedAspect = Delta.h().d().t().aB().m() ? Delta.h().d().t().aB().q() : realAspect;
         double halfHeightAtDepth = (-result3f.z) * Math.tan(Math.toRadians(fov / 2.0d));
         double halfWidthAtDepth = halfHeightAtDepth * ((double) modifiedAspect);
         double ndcX = result3f.x / halfWidthAtDepth;
         double ndcY = result3f.y / halfHeightAtDepth;
-        float screenX = (float) (aM_.getWindow().getScaledWidth() / 2.0f + ndcX * (aM_.getWindow().getScaledWidth() / 2.0f));
-        float screenY = (float) (aM_.getWindow().getScaledHeight() / 2.0f - ndcY * (aM_.getWindow().getScaledHeight() / 2.0f));
+        float screenX = (float) (mc.getWindow().getScaledWidth() / 2.0f + ndcX * (mc.getWindow().getScaledWidth() / 2.0f));
+        float screenY = (float) (mc.getWindow().getScaledHeight() / 2.0f - ndcY * (mc.getWindow().getScaledHeight() / 2.0f));
         return new Vector2f(screenX, screenY);
     }
 
@@ -62,6 +62,6 @@ public class ProjectUtil implements Interface {
     }
 
     public static boolean isOnScreen(Vector2f screen) {
-        return screen.x() != Float.MAX_VALUE && screen.y() != Float.MAX_VALUE && screen.x() >= 0.0f && screen.y() >= 0.0f && screen.x() <= ((float) aM_.getWindow().getScaledWidth()) && screen.y() <= ((float) aM_.getWindow().getScaledHeight());
+        return screen.x() != Float.MAX_VALUE && screen.y() != Float.MAX_VALUE && screen.x() >= 0.0f && screen.y() >= 0.0f && screen.x() <= ((float) mc.getWindow().getScaledWidth()) && screen.y() <= ((float) mc.getWindow().getScaledHeight());
     }
 }

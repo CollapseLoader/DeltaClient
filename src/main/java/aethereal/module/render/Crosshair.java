@@ -26,15 +26,15 @@ public class Crosshair extends Module {
 
     @EventTarget
     public void a(CrosshairEvent e) {
-        if (aM_.options.getPerspective().isFirstPerson() && !aM_.options.hudHidden) {
+        if (mc.options.getPerspective().isFirstPerson() && !mc.options.hudHidden) {
             e.a(true);
         }
     }
 
     @EventTarget
     public void a(DrawEvent event) {
-        if (event.b() && aM_.options.getPerspective().isFirstPerson() && !aM_.options.hudHidden) {
-            a(event, aM_.getWindow().getScaledWidth() / 2.0f, aM_.getWindow().getScaledHeight() / 2.0f, 1.0f - aM_.player.getAttackCooldownProgress(event.g()));
+        if (event.b() && mc.options.getPerspective().isFirstPerson() && !mc.options.hudHidden) {
+            a(event, mc.getWindow().getScaledWidth() / 2.0f, mc.getWindow().getScaledHeight() / 2.0f, 1.0f - mc.player.getAttackCooldownProgress(event.g()));
         }
     }
 
@@ -42,7 +42,7 @@ public class Crosshair extends Module {
         Draw2DProcessor draw2D = drawEvent.d();
         DrawContext context = drawEvent.i();
         float actualGap = this.d.a("Адаптивность").c().booleanValue() ? this.b.c().floatValue() + (8.0f * cooldown) : this.b.c().floatValue();
-        int color = aM_.crosshairTarget instanceof EntityHitResult ? ColorUtil.a(255, 64, 64) : -1;
+        int color = mc.crosshairTarget instanceof EntityHitResult ? ColorUtil.a(255, 64, 64) : -1;
         if (this.d.a("Контур").c().booleanValue()) {
             draw2D.a(context, (centerX + actualGap) - 0.5f, (centerY - 0.5f) - 0.5f, this.c.c().floatValue() + 1.0f, 2.0f, ColorUtil.a(0, 0, 0));
             draw2D.a(context, ((centerX - actualGap) - this.c.c().floatValue()) - 0.5f, (centerY - 0.5f) - 0.5f, this.c.c().floatValue() + 1.0f, 2.0f, ColorUtil.a(0, 0, 0));

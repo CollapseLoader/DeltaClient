@@ -53,9 +53,9 @@ public class UseTracker extends Module {
     @EventTarget
     public void a(TickEvent event) {
         if (this.b.a("Предмета").c().booleanValue()) {
-            for (Entity _e : aM_.world.getEntities()) {
+            for (Entity _e : mc.world.getEntities()) {
                 if (!(_e instanceof PlayerEntity player)) continue;
-                if (player != aM_.player) {
+                if (player != mc.player) {
                     ItemStack active = player.getActiveItem();
                     if ((active.getItem() instanceof PotionItem) || active.get(DataComponentTypes.FOOD) != null || active.getItem() == Items.MILK_BUCKET) {
                         if (player.getItemUseTimeLeft() == 1) {
@@ -77,25 +77,25 @@ public class UseTracker extends Module {
     @EventTarget
     public void a(PotionEvent event) {
         MutableText notificationText;
-        if (this.b.a("Зелья").c().booleanValue() && event.b() == PotionEvent.a.PARTICLES && aM_.world != null) {
+        if (this.b.a("Зелья").c().booleanValue() && event.b() == PotionEvent.a.PARTICLES && mc.world != null) {
             for (a type : a.values()) {
                 for (int color : type.d()) {
                     if ((color & 16777215) == (event.c() & 16777215)) {
                         BlockPos pos = event.d();
                         Vec3d splash = pos.toCenterPos();
                         Box box = new Box(pos.getX() - 4, pos.getY() - 4, pos.getZ() - 4, pos.getX() + 5, pos.getY() + 5, pos.getZ() + 5);
-                        for (PlayerEntity player : aM_.world.getEntitiesByClass(PlayerEntity.class, box, (v0) -> {
+                        for (PlayerEntity player : mc.world.getEntitiesByClass(PlayerEntity.class, box, (v0) -> {
                             return v0.isAlive();
                         })) {
                             Box boundingBox = player.getBoundingBox();
                             double factor = 1.0d - (Math.sqrt((Math.pow(splash.x - MathHelper.clamp(splash.x, boundingBox.minX, boundingBox.maxX), 2.0d) + Math.pow(splash.y - MathHelper.clamp(splash.y, boundingBox.minY, boundingBox.maxY), 2.0d)) + Math.pow(splash.getZ() - MathHelper.clamp(splash.getZ(), boundingBox.minZ, boundingBox.maxZ), 2.0d)) / 4.0d);
                             if (factor > 0.0d) {
                                 List<StatusEffectInstance> effects = new ArrayList<>();
-                                if (player != aM_.player) {
+                                if (player != mc.player) {
                                     ChatUtil.sendMessage((Object) ("[" + j() + "]"), ChatUtil.b(player.getName().getString() + " получил эффекты от \"").append(type.a()).append(ChatUtil.b("\"")));
                                     ChatUtil.sendMessage("[" + j() + "]", "- Успешность: &a" + ((int) (factor * 100.0d)) + "%");
                                 }
-                                if (player == aM_.player) {
+                                if (player == mc.player) {
                                     notificationText = Text.literal("Вы получили эффекты от ").styled(style -> {
                                         return style.withColor(Delta.h().d().o().a(ThemeInfo.PRIMARY).a());
                                     }).append(type.a()).append(ChatUtil.b(" &7(" + ((int) (factor * 100.0d)) + "%)"));
@@ -108,7 +108,7 @@ public class UseTracker extends Module {
                                     int amplifier = entry.getValue()[1];
                                     if (duration > 20) {
                                         int sec = duration / 20;
-                                        if (player != aM_.player) {
+                                        if (player != mc.player) {
                                             ChatUtil.sendMessage("[" + j() + "]", "- &c" + entry.getKey().value().getName().getString() + " " + MathUtil.a(amplifier) + " &7(" + (sec / 60) + ":" + String.format("%02d", Integer.valueOf(sec % 60)) + ")");
                                         }
                                         if (entry.getKey().equals(StatusEffects.BLINDNESS) || entry.getKey().equals(StatusEffects.STRENGTH) || entry.getKey().equals(StatusEffects.SLOWNESS) || entry.getKey().equals(StatusEffects.WITHER) || entry.getKey().equals(StatusEffects.POISON) || entry.getKey().equals(StatusEffects.WEAKNESS) || entry.getKey().equals(StatusEffects.REGENERATION) || entry.getKey().equals(StatusEffects.HEALTH_BOOST) || entry.getKey().equals(StatusEffects.RESISTANCE)) {
@@ -135,7 +135,7 @@ public class UseTracker extends Module {
                 for (EntityAttributesS2CPacket.Entry entry : packet.getEntries()) {
                     if (entry.attribute().getKey().toString().contains("minecraft:movement_speed")) {
                         for (EntityAttributeModifier modifier : entry.modifiers()) {
-                            if ((aM_.world.getEntityById(packet.getEntityId()) instanceof PlayerEntity) && modifier.id().toString().equals("minecraft:effect.speed") && modifier.value() <= 0.40000001199465773d && modifier.operation() == EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
+                            if ((mc.world.getEntityById(packet.getEntityId()) instanceof PlayerEntity) && modifier.id().toString().equals("minecraft:effect.speed") && modifier.value() <= 0.40000001199465773d && modifier.operation() == EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
                                 Delta.h().d().t().aa().getTrackers().removeIf(info -> {
                                     return info.getEntityId() == packet.getEntityId();
                                 });
@@ -145,7 +145,7 @@ public class UseTracker extends Module {
                 }
             }
             if (event.d() instanceof EntityStatusS2CPacket statusPacket) {
-                ClientPlayerEntity entity = (ClientPlayerEntity) statusPacket.getEntity(aM_.world);
+                ClientPlayerEntity entity = (ClientPlayerEntity) statusPacket.getEntity(mc.world);
                 if (entity instanceof LivingEntity) {
                     if (statusPacket.getStatus() == 35) {
                         Delta.h().d().t().aa().getTrackers().removeIf(info2 -> {
@@ -155,7 +155,7 @@ public class UseTracker extends Module {
                             ItemStack totem = entity.getMainHandStack().getItem() == Items.TOTEM_OF_UNDYING ? entity.getMainHandStack() : entity.getOffHandStack().getItem() == Items.TOTEM_OF_UNDYING ? entity.getOffHandStack() : null;
                             if (totem != null) {
                                 String name = ServerUtil.a.a() ? ServerUtil.a.b(totem) : totem.getName().getString();
-                                ChatUtil.sendMessage("[" + j() + "]", (entity == aM_.player ? "Вы потеряли " : entity.getName().getString() + " потерял ") + name + ", зачарован: " + ((name.startsWith("Талисман") || totem.hasGlint()) ? "&a●&7" : "&c●&7"));
+                                ChatUtil.sendMessage("[" + j() + "]", (entity == mc.player ? "Вы потеряли " : entity.getName().getString() + " потерял ") + name + ", зачарован: " + ((name.startsWith("Талисман") || totem.hasGlint()) ? "&a●&7" : "&c●&7"));
                             }
                         }
                     }

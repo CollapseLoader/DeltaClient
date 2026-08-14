@@ -33,7 +33,7 @@ public abstract class DisconnectedScreenMixin extends Screen {
         ServerInfo server = Delta.h().d().v().h().a();
         if (server != null) {
             this.buttonWidget = addDrawableChild(ButtonWidget.builder(Text.literal("Переподключиться"), btn -> {
-                ConnectScreen.connect(new MultiplayerScreen(null), Interface.aM_, ServerAddress.parse(server.address), server, false, null);
+                ConnectScreen.connect(new MultiplayerScreen(null), Interface.mc, ServerAddress.parse(server.address), server, false, null);
             }).dimensions(0, 0, InterfaceC0020Opcode.aN, 20).build());
         }
     }

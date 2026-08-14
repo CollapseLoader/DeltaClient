@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class InactivityFpsLimiterMixin {
     @Inject(method = {"update"}, at = {@At("HEAD")}, cancellable = true)
     private void onUpdate(CallbackInfoReturnable<Integer> cir) {
-        if ((Interface.aM_.currentScreen instanceof MainScreen) || (Interface.aM_.currentScreen instanceof AltScreen)) {
+        if ((Interface.mc.currentScreen instanceof MainScreen) || (Interface.mc.currentScreen instanceof AltScreen)) {
             cir.setReturnValue(Integer.valueOf(InterfaceC0020Opcode.aN));
         }
     }

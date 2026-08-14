@@ -41,39 +41,39 @@ public class UseableHandler extends BaseHandler implements Interface {
             }
             task.c(task.d() + 1);
             if (task.d() == 0) {
-                task.a(aM_.player.getInventory().selectedSlot);
+                task.a(mc.player.getInventory().selectedSlot);
                 if (hotbar != -1) {
                     task.b(hotbar);
-                    if (hotbar != aM_.player.getInventory().selectedSlot) {
+                    if (hotbar != mc.player.getInventory().selectedSlot) {
                         a(hotbar);
                         return;
                     }
                     return;
                 }
                 if (inventory != -1) {
-                    int bundle = InventoryUtil.a(aM_.player.getInventory().getStack(inventory), task.a());
+                    int bundle = InventoryUtil.a(mc.player.getInventory().getStack(inventory), task.a());
                     if (bundle != -1) {
-                        aM_.player.networkHandler.sendPacket(new BundleItemSelectedC2SPacket(inventory < 9 ? 36 + inventory : inventory, bundle));
+                        mc.player.networkHandler.sendPacket(new BundleItemSelectedC2SPacket(inventory < 9 ? 36 + inventory : inventory, bundle));
                     }
-                    task.b((bundle == -1 || !aM_.player.getMainHandStack().isEmpty()) ? inventory : task.b());
-                    Delta.h().d().v().a().a(inventory, aM_.player.getInventory().selectedSlot, 1);
+                    task.b((bundle == -1 || !mc.player.getMainHandStack().isEmpty()) ? inventory : task.b());
+                    Delta.h().d().v().a().a(inventory, mc.player.getInventory().selectedSlot, 1);
                     return;
                 }
                 return;
             }
             if (task.d() == 1) {
                 if (task.a().getItem() == Items.WIND_CHARGE && windHop.m() && windHop.q().c().booleanValue()) {
-                    float t = aM_.player.age + aM_.getRenderTickCounter().getTickDelta(false);
+                    float t = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
                     float silent = (float) ((Math.sin(t * 0.31f) * 6.600001001477404d) + (Math.sin((t * 0.73f) + 1.1f) * 0.3000001491338646d));
                     Delta.h().d().k().a(new Rotation(Look.b() + silent, 90.0f + (silent / 2.0f)), 180.0f, 1, 3);
                 }
                 a(task);
-                if (aM_.player.getInventory().getStack(task.c()).contains(DataComponentTypes.BUNDLE_CONTENTS)) {
-                    aM_.player.getInventory().setStack(task.b(), ItemStack.EMPTY);
+                if (mc.player.getInventory().getStack(task.c()).contains(DataComponentTypes.BUNDLE_CONTENTS)) {
+                    mc.player.getInventory().setStack(task.b(), ItemStack.EMPTY);
                     Delta.h().d().v().a().a(task.c(), 36 + task.b(), 1);
                 } else if (task.c() > 8) {
                     Delta.h().d().v().a().a(task.b(), task.c(), 1);
-                } else if (task.b() != aM_.player.getInventory().selectedSlot) {
+                } else if (task.b() != mc.player.getInventory().selectedSlot) {
                     a(task.b());
                 }
                 this.b.remove(task);
@@ -82,12 +82,12 @@ public class UseableHandler extends BaseHandler implements Interface {
     }
 
     public void a(int slot) {
-        aM_.player.getInventory().selectedSlot = slot;
+        mc.player.getInventory().selectedSlot = slot;
     }
 
     public void a(a task) {
-        ((platform.inject.invokers.ClientPlayerInteractionManagerInvoker) aM_.interactionManager).invokeSendSequencedPacket(aM_.world, sequence -> {
-            return new PlayerInteractItemC2SPacket(Hand.MAIN_HAND, sequence, aM_.player.getYaw(), aM_.player.getPitch());
+        ((platform.inject.invokers.ClientPlayerInteractionManagerInvoker) mc.interactionManager).invokeSendSequencedPacket(mc.world, sequence -> {
+            return new PlayerInteractItemC2SPacket(Hand.MAIN_HAND, sequence, mc.player.getYaw(), mc.player.getPitch());
         });
     }
 

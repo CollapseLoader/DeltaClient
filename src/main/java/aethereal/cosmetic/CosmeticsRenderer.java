@@ -18,10 +18,10 @@ public class CosmeticsRenderer extends FeatureRenderer<PlayerEntityRenderState, 
     }
 
     public void render(MatrixStack matrices, VertexConsumerProvider buffers, int light, PlayerEntityRenderState state, float limbAngle, float limbDistance) {
-        Entity entity = aM_.world.getEntityById(state.id);
+        Entity entity = mc.world.getEntityById(state.id);
         if (entity != null) {
             UUID uuid = entity.getUuid();
-            float tickDelta = aM_.getRenderTickCounter().getTickDelta(false);
+            float tickDelta = mc.getRenderTickCounter().getTickDelta(false);
             for (Cosmetic cosmetic : Delta.h().d().r().getCosmetics()) {
                 if (uuid.equals(cosmetic.getUuid()) && cosmetic.getType() == CosmeticsType.COSMETIC) {
                     matrices.push();

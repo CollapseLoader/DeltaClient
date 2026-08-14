@@ -33,15 +33,15 @@ public class DebugHudMixin implements Interface {
     @Unique
     private List<String> replaceText(List<String> lines, boolean hasXyz) {
         if (Delta.h().d().t().h().m()) {
-            Vec3d rayEnd = aM_.getEntityRenderDispatcher().camera.getPos().add(Vec3d.fromPolar(aM_.getEntityRenderDispatcher().camera.getPitch(), aM_.getEntityRenderDispatcher().camera.getYaw()).multiply(20.0d));
-            BlockHitResult class_3965VarMethod_17742 = Objects.requireNonNull(aM_.world).raycast(new RaycastContext(aM_.getEntityRenderDispatcher().camera.getPos(), rayEnd, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, aM_.player));
-            String cameraXYZ = String.format(Locale.ROOT, "%.3f / %.5f / %.3f", Double.valueOf(aM_.getEntityRenderDispatcher().camera.getPos().x), Double.valueOf(aM_.getEntityRenderDispatcher().camera.getPos().y), Double.valueOf(aM_.getEntityRenderDispatcher().camera.getPos().z));
+            Vec3d rayEnd = mc.getEntityRenderDispatcher().camera.getPos().add(Vec3d.fromPolar(mc.getEntityRenderDispatcher().camera.getPitch(), mc.getEntityRenderDispatcher().camera.getYaw()).multiply(20.0d));
+            BlockHitResult class_3965VarMethod_17742 = Objects.requireNonNull(mc.world).raycast(new RaycastContext(mc.getEntityRenderDispatcher().camera.getPos(), rayEnd, RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player));
+            String cameraXYZ = String.format(Locale.ROOT, "%.3f / %.5f / %.3f", Double.valueOf(mc.getEntityRenderDispatcher().camera.getPos().x), Double.valueOf(mc.getEntityRenderDispatcher().camera.getPos().y), Double.valueOf(mc.getEntityRenderDispatcher().camera.getPos().z));
             String blockLine = "—";
             if (class_3965VarMethod_17742 instanceof BlockHitResult) {
                 BlockHitResult blockHit = class_3965VarMethod_17742;
                 if (class_3965VarMethod_17742.getType() == HitResult.Type.BLOCK) {
                     BlockPos pos = blockHit.getBlockPos();
-                    blockLine = aM_.world.getBlockState(pos).getBlock().getName().getString() + " [" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + "]";
+                    blockLine = mc.world.getBlockState(pos).getBlock().getName().getString() + " [" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + "]";
                 }
             }
             for (int i = 0; i < lines.size(); i++) {

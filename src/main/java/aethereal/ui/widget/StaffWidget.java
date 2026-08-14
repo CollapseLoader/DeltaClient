@@ -51,11 +51,11 @@ public class StaffWidget extends Widget implements Interface {
                 float textY = (drawY + ((11.5f - Fonts.e.a(6.5f)) / 2.0f)) - 0.5f;
                 a(event, x + offsetX, drawY, width, 11.5f, false, animation);
                 a(event, x + offsetX + 15.0f, drawY, 11.5f, animation);
-                PlayerListEntry entry = aM_.getNetworkHandler() == null ? null : aM_.getNetworkHandler().getPlayerList().stream().filter(e -> {
+                PlayerListEntry entry = mc.getNetworkHandler() == null ? null : mc.getNetworkHandler().getPlayerList().stream().filter(e -> {
                     return e.getProfile().getName().equalsIgnoreCase(staff2.a());
                 }).findFirst().orElse(null);
                 if (entry != null) {
-                    event.d().a(event.h(), x + offsetX + 5.0f, drawY + 2.0f, 7.5f, 7.5f, 2.0f, ColorUtil.a(-1, animation), 0.125f, 0.125f, 0.125f, 0.125f, aM_.getTextureManager().getTexture(entry.getSkinTextures().texture()).getGlId());
+                    event.d().a(event.h(), x + offsetX + 5.0f, drawY + 2.0f, 7.5f, 7.5f, 2.0f, ColorUtil.a(-1, animation), 0.125f, 0.125f, 0.125f, 0.125f, mc.getTextureManager().getTexture(entry.getSkinTextures().texture()).getGlId());
                 } else {
                     Fonts.a.a(event.h(), "y", x + offsetX + 5.0f, drawY + ((11.5f - Fonts.a.a(8.0f)) / 2.0f), 8.0f, ColorUtil.a(Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), animation));
                 }
@@ -71,9 +71,9 @@ public class StaffWidget extends Widget implements Interface {
 
     @Override
     public void a(GlobalEvent event) {
-        boolean visible = aM_.currentScreen instanceof ChatScreen;
+        boolean visible = mc.currentScreen instanceof ChatScreen;
         for (StaffConstructor staff : Delta.h().d().f().a()) {
-            staff.b().a((aM_.getNetworkHandler() != null && aM_.getNetworkHandler().getPlayerList().stream().anyMatch(e -> {
+            staff.b().a((mc.getNetworkHandler() != null && mc.getNetworkHandler().getPlayerList().stream().anyMatch(e -> {
                 return e.getProfile().getName().equalsIgnoreCase(staff.a());
             })) || a(staff.a()));
             if (staff.b().c() > 0.0f) {
@@ -85,7 +85,7 @@ public class StaffWidget extends Widget implements Interface {
     }
 
     private boolean a(String name) {
-        return aM_.world != null && aM_.world.getPlayers().stream().anyMatch(playerEntity -> {
+        return mc.world != null && mc.world.getPlayers().stream().anyMatch(playerEntity -> {
             return playerEntity.getName().getString().equalsIgnoreCase(name);
         });
     }

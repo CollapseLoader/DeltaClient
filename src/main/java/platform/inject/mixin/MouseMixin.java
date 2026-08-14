@@ -21,11 +21,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MouseMixin {
     @Inject(method = {"onMouseButton"}, at = {@At("HEAD")}, cancellable = true)
     public void onMouseButton(long window, int button, int action, int modifiers, CallbackInfo ci) {
-        if (Interface.aM_.currentScreen == null || (Interface.aM_.currentScreen instanceof SwapScreen) || (Interface.aM_.currentScreen instanceof AssistantScreen)) {
+        if (Interface.mc.currentScreen == null || (Interface.mc.currentScreen instanceof SwapScreen) || (Interface.mc.currentScreen instanceof AssistantScreen)) {
             EventManager.a(new KeyEvent((button < 0 || button > 7) ? button : (-100) + button, 0, action, modifiers));
         }
         if (action == 1) {
-            ClickEvent event = new ClickEvent(Interface.aM_.mouse.getX() / 2.0d, Interface.aM_.mouse.getY() / 2.0d, button, ClickEvent.a.PRESS);
+            ClickEvent event = new ClickEvent(Interface.mc.mouse.getX() / 2.0d, Interface.mc.mouse.getY() / 2.0d, button, ClickEvent.a.PRESS);
             EventManager.a(event);
             if (event.a()) {
                 ci.cancel();
@@ -34,7 +34,7 @@ public class MouseMixin {
             return;
         }
         if (action == 0) {
-            ClickEvent event2 = new ClickEvent(Interface.aM_.mouse.getX() / 2.0d, Interface.aM_.mouse.getY() / 2.0d, button, ClickEvent.a.RELEASE);
+            ClickEvent event2 = new ClickEvent(Interface.mc.mouse.getX() / 2.0d, Interface.mc.mouse.getY() / 2.0d, button, ClickEvent.a.RELEASE);
             EventManager.a(event2);
             if (event2.a()) {
                 ci.cancel();
@@ -44,7 +44,7 @@ public class MouseMixin {
 
     @Inject(method = {"onCursorPos"}, at = {@At("HEAD")}, cancellable = true)
     public void onCursorPos(long window, double x, double y, CallbackInfo ci) {
-        ClickEvent event = new ClickEvent(Interface.aM_.mouse.getX() / 2.0d, Interface.aM_.mouse.getY() / 2.0d, 0, ClickEvent.a.DRAG);
+        ClickEvent event = new ClickEvent(Interface.mc.mouse.getX() / 2.0d, Interface.mc.mouse.getY() / 2.0d, 0, ClickEvent.a.DRAG);
         EventManager.a(event);
         if (event.a()) {
             ci.cancel();

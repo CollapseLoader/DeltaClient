@@ -74,7 +74,7 @@ public class BlockESP extends Module {
                 }, (first, second) -> {
                     return second;
                 }));
-                for (BlockEntityTickInvoker ticker : ((platform.inject.accessors.WorldAccessor) aM_.world).getBlockEntityTickers()) {
+                for (BlockEntityTickInvoker ticker : ((platform.inject.accessors.WorldAccessor) mc.world).getBlockEntityTickers()) {
                     if (!ticker.isRemoved()) {
                         a(event, ticker.getPos(), colors);
                     }
@@ -87,7 +87,7 @@ public class BlockESP extends Module {
     }
 
     private void a(DrawEvent event, BlockPos pos, Map<Block, Integer> colors) {
-        Integer color = colors.get(aM_.world.getBlockState(pos).getBlock());
+        Integer color = colors.get(mc.world.getBlockState(pos).getBlock());
         if (color != null) {
             event.e().a(event.h(), new Box(pos), color.intValue() != -1 ? color.intValue() : ColorUtil.a(Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), InterfaceC0020Opcode.al), 1.5f);
         }
@@ -95,14 +95,14 @@ public class BlockESP extends Module {
 
     private void a(Set<Block> targets) {
         List<BlockPos> found = new ArrayList<>();
-        BlockPos center = aM_.player.getBlockPos();
+        BlockPos center = mc.player.getBlockPos();
         BlockPos.Mutable mutable = new BlockPos.Mutable();
-        int maxY = aM_.world.getTopYInclusive();
+        int maxY = mc.world.getTopYInclusive();
         for (int x = center.getX() - 70; x <= center.getX() + 70; x++) {
             for (int z = center.getZ() - 70; z <= center.getZ() + 70; z++) {
-                if (aM_.world.getChunkManager().isChunkLoaded(x >> 4, z >> 4)) {
-                    for (int y = aM_.world.getBottomY(); y < maxY; y++) {
-                        if (targets.contains(aM_.world.getBlockState(mutable.set(x, y, z)).getBlock())) {
+                if (mc.world.getChunkManager().isChunkLoaded(x >> 4, z >> 4)) {
+                    for (int y = mc.world.getBottomY(); y < maxY; y++) {
+                        if (targets.contains(mc.world.getBlockState(mutable.set(x, y, z)).getBlock())) {
                             found.add(mutable.toImmutable());
                         }
                     }

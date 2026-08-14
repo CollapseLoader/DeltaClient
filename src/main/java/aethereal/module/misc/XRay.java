@@ -58,7 +58,7 @@ public class XRay extends Module implements Interface {
     public void a(DrawEvent draw) {
         if (draw.c()) {
             this.b.removeIf(blockPos -> {
-                return aM_.world.getBlockState(blockPos).getBlock().equals(Blocks.AIR) || blockPos.getSquaredDistance(aM_.player.getPos()) >= 6400.0d || !aM_.world.getChunkManager().isChunkLoaded(blockPos.getX() >> 4, blockPos.getZ() >> 4);
+                return mc.world.getBlockState(blockPos).getBlock().equals(Blocks.AIR) || blockPos.getSquaredDistance(mc.player.getPos()) >= 6400.0d || !mc.world.getChunkManager().isChunkLoaded(blockPos.getX() >> 4, blockPos.getZ() >> 4);
             });
             this.b.forEach(pos -> {
                 draw.e().a(draw.h(), new Box(pos), ColorUtil.a(255, InterfaceC0020Opcode.bo, 0, InterfaceC0020Opcode.ap), 1.0f);

@@ -28,13 +28,13 @@ public class AutoSwap extends Module implements Interface {
                 return;
             }
             if (this.b.l("Двойной")) {
-                Delta.h().d().v().a().a(InventoryUtil.c(aM_.player.getOffHandStack().getItem() == a(this.c) ? a(this.d) : a(this.c)), 45, 1);
+                Delta.h().d().v().a().a(InventoryUtil.c(mc.player.getOffHandStack().getItem() == a(this.c) ? a(this.d) : a(this.c)), 45, 1);
             } else if (this.b.l("Тройной")) {
-                aM_.setScreen(this.e);
+                mc.setScreen(this.e);
             }
         }).b(() -> {
-            if (aM_.currentScreen instanceof SwapScreen) {
-                aM_.setScreen(null);
+            if (mc.currentScreen instanceof SwapScreen) {
+                mc.setScreen(null);
             }
         });
         a(f, this.b, this.c, this.d);

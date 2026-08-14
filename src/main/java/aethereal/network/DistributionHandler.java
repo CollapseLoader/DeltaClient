@@ -53,7 +53,7 @@ public class DistributionHandler extends BaseHandler implements Interface {
     @EventTarget
     public void a(ClickEvent event) {
         if (event.b() && this.b) {
-            GenericContainerScreenHandler class_1707Var = aM_.player.currentScreenHandler instanceof GenericContainerScreenHandler ? (GenericContainerScreenHandler) aM_.player.currentScreenHandler : null;
+            GenericContainerScreenHandler class_1707Var = mc.player.currentScreenHandler instanceof GenericContainerScreenHandler ? (GenericContainerScreenHandler) mc.player.currentScreenHandler : null;
             if (class_1707Var instanceof GenericContainerScreenHandler) {
                 GenericContainerScreenHandler handler = class_1707Var;
                 List<Slot> slots = handler.slots.subList(0, handler.getRows() * 9);
@@ -74,9 +74,9 @@ public class DistributionHandler extends BaseHandler implements Interface {
                         Slot source = slots.stream().skip(i + 1).filter(slot2 -> {
                             return slot2.getStack().getItem() == item2;
                         }).findFirst().orElseThrow();
-                        aM_.interactionManager.clickSlot(handler.syncId, source.id, 0, SlotActionType.PICKUP, aM_.player);
-                        aM_.interactionManager.clickSlot(handler.syncId, target.id, 0, SlotActionType.PICKUP, aM_.player);
-                        aM_.interactionManager.clickSlot(handler.syncId, source.id, 0, SlotActionType.PICKUP, aM_.player);
+                        mc.interactionManager.clickSlot(handler.syncId, source.id, 0, SlotActionType.PICKUP, mc.player);
+                        mc.interactionManager.clickSlot(handler.syncId, target.id, 0, SlotActionType.PICKUP, mc.player);
+                        mc.interactionManager.clickSlot(handler.syncId, source.id, 0, SlotActionType.PICKUP, mc.player);
                     }
                 }
             }

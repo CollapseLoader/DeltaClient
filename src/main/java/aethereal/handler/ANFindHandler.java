@@ -60,7 +60,7 @@ public class ANFindHandler extends BaseHandler implements Interface {
     @EventTarget
     public void a(ClickEvent event) {
         if (event.b() && this.c) {
-            HandledScreen<?> class_465Var = (HandledScreen<?>) aM_.currentScreen;
+            HandledScreen<?> class_465Var = (HandledScreen<?>) mc.currentScreen;
             if (class_465Var instanceof HandledScreen) {
                 HandledScreen<?> screen = class_465Var;
                 if (screen.getTitle().getString().contains("☬ Выберите режим:") || screen.getTitle().getString().contains("☬ Выберите тип режима:")) {
@@ -72,7 +72,7 @@ public class ANFindHandler extends BaseHandler implements Interface {
                             v0.a();
                         });
                     }
-                    aM_.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f));
+                    mc.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f));
                 }
             }
         }
@@ -81,7 +81,7 @@ public class ANFindHandler extends BaseHandler implements Interface {
     @EventTarget
     public void a(TickEvent event) {
         if (this.d) {
-            Screen class_437Var = aM_.currentScreen;
+            Screen class_437Var = mc.currentScreen;
             if (class_437Var instanceof GenericContainerScreen) {
                 GenericContainerScreen screen = (GenericContainerScreen) class_437Var;
                 a mode = this.b.get(this.f);
@@ -115,7 +115,7 @@ public class ANFindHandler extends BaseHandler implements Interface {
                 selected = true;
             }
             if (name.contains("Анархия-")) {
-                for (Text line : slot.getStack().getTooltip(Item.TooltipContext.DEFAULT, aM_.player, TooltipType.BASIC)) {
+                for (Text line : slot.getStack().getTooltip(Item.TooltipContext.DEFAULT, mc.player, TooltipType.BASIC)) {
                     Matcher matcher = Pattern.compile("Онлайн режима: (\\d+)").matcher(line.getString());
                     if (matcher.find()) {
                         int online = Integer.parseInt(matcher.group(1));
@@ -158,8 +158,8 @@ public class ANFindHandler extends BaseHandler implements Interface {
                     hover.append(Text.literal("§7• §f" + mode4.a.replace("Команды ", "") + ": " + mode4.b.trim() + " — " + mode4.c + " игроков\n"));
                 });
                 ChatUtil.sendMessage(Text.literal("§a✔ §7Успешно подключился к анархии §a#" + anarchy + "§7, с онлайном §a" + best.c + "§7 — ").append(ChatUtil.sendMessage((Object) "§c[Подробнее]", hover)));
-                aM_.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(aM_.player.currentScreenHandler.syncId));
-                aM_.player.networkHandler.sendChatCommand("an" + anarchy);
+                mc.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(mc.player.currentScreenHandler.syncId));
+                mc.player.networkHandler.sendChatCommand("an" + anarchy);
             }
         });
     }
@@ -167,7 +167,7 @@ public class ANFindHandler extends BaseHandler implements Interface {
     private boolean a(GenericContainerScreen screen, String contains) {
         for (Slot slot : screen.getScreenHandler().slots) {
             if (slot.getStack().getName().getString().contains(contains)) {
-                aM_.player.networkHandler.sendPacket(new ClickSlotC2SPacket(screen.getScreenHandler().syncId, screen.getScreenHandler().getRevision(), slot.id, 0, SlotActionType.PICKUP, screen.getScreenHandler().getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
+                mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(screen.getScreenHandler().syncId, screen.getScreenHandler().getRevision(), slot.id, 0, SlotActionType.PICKUP, screen.getScreenHandler().getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
                 return true;
             }
         }

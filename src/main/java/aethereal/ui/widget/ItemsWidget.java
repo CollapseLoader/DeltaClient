@@ -41,7 +41,7 @@ public class ItemsWidget extends Widget implements Interface {
         float y = j().b();
         float x = j().a();
         float contentX = x;
-        ItemCooldownManagerAccessor accessor = (ItemCooldownManagerAccessor) aM_.player.getItemCooldownManager();
+        ItemCooldownManagerAccessor accessor = (ItemCooldownManagerAccessor) mc.player.getItemCooldownManager();
         int i = 0;
         while (i < providers.size()) {
             ServerAssistant.b provider2 = providers.get(i);
@@ -69,7 +69,7 @@ public class ItemsWidget extends Widget implements Interface {
     @Override
     public void a(GlobalEvent event) {
         ServerAssistant assistant = Delta.h().d().t().aj();
-        boolean visible = aM_.currentScreen instanceof ChatScreen;
+        boolean visible = mc.currentScreen instanceof ChatScreen;
         for (ServerAssistant.b provider : assistant.q()) {
             provider.a().a(assistant.m() && provider.b().c().intValue() != -1 && provider.b().e().get().booleanValue() && InventoryUtil.b(provider.c()) != -1);
             if (provider.a().c() > 0.0f) {

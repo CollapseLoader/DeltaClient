@@ -39,7 +39,7 @@ public class AutoAccept extends Module {
                     if (stream.anyMatch((v1) -> {
                         return chat.contains(v1);
                     })) {
-                        aM_.player.networkHandler.sendChatCommand("tpaccept");
+                        mc.player.networkHandler.sendChatCommand("tpaccept");
                     }
                 }
                 if (this.b.a("В клановую команду").c().booleanValue()) {
@@ -48,7 +48,7 @@ public class AutoAccept extends Module {
                     if (stream2.anyMatch((v1) -> {
                         return chat.contains(v1);
                     })) {
-                        aM_.player.networkHandler.sendChatCommand("clan accept " + chat.split(StringUtils.a)[1]);
+                        mc.player.networkHandler.sendChatCommand("clan accept " + chat.split(StringUtils.a)[1]);
                     }
                 }
             }

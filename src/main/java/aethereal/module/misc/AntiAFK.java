@@ -26,13 +26,13 @@ public class AntiAFK extends Module {
 
     @EventTarget
     public void a(InputEvent event) {
-        if (aM_.player.age % 600 == 0) {
+        if (mc.player.age % 600 == 0) {
             if (this.b.l("Обычный")) {
-                if (this.c.a("Прыжок").c().booleanValue() && aM_.player.isOnGround()) {
+                if (this.c.a("Прыжок").c().booleanValue() && mc.player.isOnGround()) {
                     event.b(true);
                 }
                 if (this.c.a("Взмах").c().booleanValue()) {
-                    aM_.player.swingHand(Hand.MAIN_HAND);
+                    mc.player.swingHand(Hand.MAIN_HAND);
                 }
                 if (this.c.a("Движение").c().booleanValue()) {
                     Delta.h().d().v().g().a(7);

@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class PlayerEntityMixin {
     @Inject(method = {"isPushedByFluids"}, at = {@At("HEAD")}, cancellable = true)
     private void removePushFromFluids(CallbackInfoReturnable<Boolean> cir) {
-        if ((Object) this == Interface.aM_.player) {
+        if ((Object) this == Interface.mc.player) {
             PushEvent event = new PushEvent(PushEvent.a.FLUIDS);
             EventManager.a(event);
             if (event.a()) {

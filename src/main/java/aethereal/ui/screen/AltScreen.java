@@ -63,7 +63,7 @@ public class AltScreen extends Screen {
         MatrixStack class_4587VarMethod_51448;
         super.render(context, mx, my, delta);
         AnimationUtil animationUtil = this.a;
-        MinecraftClient class_310Var = Interface.aM_;
+        MinecraftClient class_310Var = Interface.mc;
         if (class_310Var != null) {
             Screen class_437Var = class_310Var.currentScreen;
             if (animationUtil != null) {
@@ -77,10 +77,10 @@ public class AltScreen extends Screen {
                         double dA = MathUtil.scale(mx, 2);
                         double dA2 = MathUtil.scale(my, 2);
                         ScaleUtil.a(context, 2);
-                        MinecraftClient class_310Var2 = Interface.aM_;
+                        MinecraftClient class_310Var2 = Interface.mc;
                         if (class_310Var2 != null && (class_1041VarMethod_22683 = class_310Var2.getWindow()) != null) {
                             int iMethod_4486 = class_1041VarMethod_22683.getScaledWidth();
-                            MinecraftClient class_310Var3 = Interface.aM_;
+                            MinecraftClient class_310Var3 = Interface.mc;
                             if (class_310Var3 != null && (class_1041VarMethod_22684 = class_310Var3.getWindow()) != null) {
                                 int iMethod_4502 = class_1041VarMethod_22684.getScaledHeight();
                                 EasingList.a aVar = EasingList.s;
@@ -244,7 +244,7 @@ public class AltScreen extends Screen {
             if (keyCode != 256) {
                 return super.keyPressed(keyCode, scanCode, modifiers);
             }
-            Interface.aM_.setScreen(new MainScreen());
+            Interface.mc.setScreen(new MainScreen());
             return true;
         }
         if (keyCode == 257) {
@@ -463,7 +463,7 @@ public class AltScreen extends Screen {
     }
 
     private void d() {
-        String clip = GLFW.glfwGetClipboardString(Interface.aM_.getWindow().getHandle());
+        String clip = GLFW.glfwGetClipboardString(Interface.mc.getWindow().getHandle());
         if (clip == null) {
             return;
         }

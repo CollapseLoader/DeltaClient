@@ -24,10 +24,10 @@ public class AirStuck extends Module implements Interface {
     @Override
     public void b() {
         super.b();
-        if (aM_.player != null) {
-            this.c = aM_.player.getPos();
+        if (mc.player != null) {
+            this.c = mc.player.getPos();
             if (this.b.l("Удаляющий игрока")) {
-                aM_.player.setRemoved(Entity.RemovalReason.DISCARDED);
+                mc.player.setRemoved(Entity.RemovalReason.DISCARDED);
             }
         }
     }
@@ -35,10 +35,10 @@ public class AirStuck extends Module implements Interface {
     @Override
     public void c() {
         super.c();
-        if (aM_.player != null && this.b.l("Удаляющий игрока")) {
-            ((platform.inject.accessors.EntityInvoker) aM_.player).unset();
-            aM_.world.addEntity(aM_.player);
-            aM_.player.refreshPositionAfterTeleport(this.c);
+        if (mc.player != null && this.b.l("Удаляющий игрока")) {
+            ((platform.inject.accessors.EntityInvoker) mc.player).unset();
+            mc.world.addEntity(mc.player);
+            mc.player.refreshPositionAfterTeleport(this.c);
         }
         this.c = null;
     }
@@ -46,17 +46,17 @@ public class AirStuck extends Module implements Interface {
     @EventTarget
     public void a(TickEvent event) {
         if (this.c != null) {
-            aM_.player.setVelocity(0.0d, 0.0d, 0.0d);
-            aM_.player.setPosition(this.c.x, this.c.y, this.c.z);
+            mc.player.setVelocity(0.0d, 0.0d, 0.0d);
+            mc.player.setPosition(this.c.x, this.c.y, this.c.z);
         }
     }
 
     @EventTarget
     public void a(GlobalEvent event) {
-        if (aM_.player == null || !aM_.player.isRemoved()) {
+        if (mc.player == null || !mc.player.isRemoved()) {
             return;
         }
-        ((platform.inject.accessors.EntityInvoker) aM_.player).baseTickInvoker();
+        ((platform.inject.accessors.EntityInvoker) mc.player).baseTickInvoker();
     }
 
     @EventTarget

@@ -96,7 +96,7 @@ public class BottomBar {
             this.b = false;
             this.a[0] = this.a[0] >= 0.95f ? this.a[0] : 0.0f;
             if (this.a[0] > 0.0f) {
-                Interface.aM_.scheduleStop();
+                Interface.mc.scheduleStop();
                 return false;
             }
             return false;
