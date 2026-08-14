@@ -16,14 +16,14 @@ import org.spongepowered.asm.mixin.injection.At;
 public class WeatherRenderingMixin {
     @ModifyExpressionValue(method = {"addParticlesAndSound"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/world/ClientWorld;getRainGradient(F)F")})
     private float onPrecipitationParticles(float original) {
-        AmbienceEvent.d event = new AmbienceEvent.d(AmbienceEvent.d.a.PRECIPITATION_PARTICLES, original);
+        AmbienceEvent.d event = new AmbienceEvent.d(AmbienceEvent.d.type.PRECIPITATION_PARTICLES, original);
         EventManager.a(event);
         return event.c();
     }
 
     @ModifyReturnValue(method = {"getPrecipitationAt"}, at = {@At(value = "RETURN", ordinal = 1)})
     private Biome.Precipitation onGetPrecipitationAt(Biome.Precipitation original, World world, BlockPos pos) {
-        AmbienceEvent.d event = new AmbienceEvent.d(AmbienceEvent.d.a.PRECIPITATION, original);
+        AmbienceEvent.d event = new AmbienceEvent.d(AmbienceEvent.d.type.PRECIPITATION, original);
         EventManager.a(event);
         return event.d();
     }

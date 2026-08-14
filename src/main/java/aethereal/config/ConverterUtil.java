@@ -17,7 +17,6 @@ public final class ConverterUtil {
         return setting.c();
     }
 
-    @SuppressWarnings("unchecked")
     public static void a(Setting<?> setting, Object value) {
         if (setting instanceof BooleanSetting booleanSetting && value instanceof Boolean b) {
             booleanSetting.a(b);

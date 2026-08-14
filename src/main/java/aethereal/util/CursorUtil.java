@@ -27,14 +27,14 @@ public class CursorUtil implements Interface {
         BLOCK(221194),
         RESIZE_ALL(221193);
 
-        private final int i;
+        private final int glfwType;
 
         a(final int glfwType) {
-            this.i = glfwType;
+            this.glfwType = glfwType;
         }
 
         public int a() {
-            return this.i;
+            return this.glfwType;
         }
     }
 }

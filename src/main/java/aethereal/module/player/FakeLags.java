@@ -22,10 +22,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class FakeLags extends Module {
     private final SliderSetting b = new SliderSetting("Задержка симуляции", 20.0f, 1.0f, 40.0f, 1.0f);
     private final BooleanSetting c = new BooleanSetting("Отображать серв-позицию", false);
-    private final Queue<Packet<?>> d = new ConcurrentLinkedQueue();
-    private int e;
-    private int f;
-    private Vec3d g;
+    private final Queue<Packet<?>> d = new ConcurrentLinkedQueue<>();
+    private int delayCounter;
+    private int attackCooldown;
+    private Vec3d serverPosition;
 
     public FakeLags() {
         a(this.b, this.c);
@@ -35,21 +35,21 @@ public class FakeLags extends Module {
     public void b() {
         super.b();
         this.d.clear();
-        this.e = 0;
-        this.f = 0;
-        this.g = null;
+        this.delayCounter = 0;
+        this.attackCooldown = 0;
+        this.serverPosition = null;
     }
 
     @Override
     public void c() {
         super.c();
         q();
-        this.g = null;
+        this.serverPosition = null;
     }
 
     @EventTarget
     public void a(AttackEvent event) {
-        this.f = 2;
+        this.attackCooldown = 2;
         q();
     }
 
@@ -69,7 +69,7 @@ public class FakeLags extends Module {
             return;
         }
         if (event.b()) {
-            if (this.f > 0 || a(event.d())) {
+            if (this.attackCooldown > 0 || a(event.d())) {
                 q();
             } else {
                 this.d.offer(event.d());
@@ -80,21 +80,21 @@ public class FakeLags extends Module {
 
     @EventTarget
     public void a(TickEvent event) {
-        if (this.f > 0) {
-            this.f--;
+        if (this.attackCooldown > 0) {
+            this.attackCooldown--;
         }
-        int i = this.e + 1;
-        this.e = i;
+        int i = this.delayCounter + 1;
+        this.delayCounter = i;
         if (i >= this.b.c().intValue() && !this.d.isEmpty()) {
             q();
-            this.e = 0;
+            this.delayCounter = 0;
         }
     }
 
     @EventTarget
     public void a(DrawEvent event) {
-        if (event.c() && this.c.c().booleanValue() && this.g != null) {
-            event.e().a(event.h(), mc.player.getBoundingBox().offset(this.g.subtract(mc.player.getPos())), ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.aN), 0.75f);
+        if (event.c() && this.c.c().booleanValue() && this.serverPosition != null) {
+            event.e().a(event.h(), mc.player.getBoundingBox().offset(this.serverPosition.subtract(mc.player.getPos())), ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.aN), 0.75f);
         }
     }
 
@@ -108,6 +108,6 @@ public class FakeLags extends Module {
             connection.sendWithoutEvent(packet, null, true);
         });
         this.d.clear();
-        this.g = mc.player.getPos();
+        this.serverPosition = mc.player.getPos();
     }
 }

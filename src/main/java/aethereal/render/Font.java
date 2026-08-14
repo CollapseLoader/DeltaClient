@@ -18,21 +18,21 @@ import platform.client.processors.draw.fonts.FontData;
 import java.util.*;
 
 public class Font {
-    private final ShaderProgramKey a = new ShaderProgramKey(Identifier.of("delta", "core/text/text"), VertexFormats.POSITION_TEXTURE_COLOR, Defines.EMPTY);
-    private final String b;
-    private final AbstractTexture c;
-    private final FontData.AtlasData d;
-    private final FontData.MetricsData e;
-    private final Map<Integer, MsdfGlyph> f;
-    private final Map<Integer, Map<Integer, Float>> g;
+    private final ShaderProgramKey shaderKey = new ShaderProgramKey(Identifier.of("delta", "core/text/text"), VertexFormats.POSITION_TEXTURE_COLOR, Defines.EMPTY);
+    private final String fontName;
+    private final AbstractTexture fontTexture;
+    private final FontData.AtlasData atlasData;
+    private final FontData.MetricsData metricsData;
+    private final Map<Integer, MsdfGlyph> glyphs;
+    private final Map<Integer, Map<Integer, Float>> kernings;
 
     public Font(String name, AbstractTexture texture, FontData.AtlasData atlas, FontData.MetricsData metrics, Map<Integer, MsdfGlyph> glyphs, Map<Integer, Map<Integer, Float>> kernings) {
-        this.b = name;
-        this.c = texture;
-        this.d = atlas;
-        this.e = metrics;
-        this.f = glyphs;
-        this.g = kernings;
+        this.fontName = name;
+        this.fontTexture = texture;
+        this.atlasData = atlas;
+        this.metricsData = metrics;
+        this.glyphs = glyphs;
+        this.kernings = kernings;
     }
 
     public static FontBuilder a() {
@@ -40,15 +40,15 @@ public class Font {
     }
 
     public String b() {
-        return this.b;
+        return this.fontName;
     }
 
     public FontData.AtlasData c() {
-        return this.d;
+        return this.atlasData;
     }
 
     public FontData.MetricsData d() {
-        return this.e;
+        return this.metricsData;
     }
 
     private void a(float outlineThickness, float thickness, float smoothness, int outlineColor) {
@@ -59,12 +59,12 @@ public class Font {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.disableCull();
-        RenderSystem.setShaderTexture(0, this.c.getGlId());
-        ShaderProgram shader = RenderSystem.setShader(this.a);
+        RenderSystem.setShaderTexture(0, this.fontTexture.getGlId());
+        ShaderProgram shader = RenderSystem.setShader(this.shaderKey);
         if (shader == null) {
             return;
         }
-        shader.getUniform("uRange").set(this.d.range());
+        shader.getUniform("uRange").set(this.atlasData.range());
         shader.getUniform("uThickness").set(thickness);
         shader.getUniform("uSmoothness").set(smoothness);
         boolean outlineEnabled = outlineThickness > 0.0f;
@@ -95,7 +95,7 @@ public class Font {
             a(outlineThickness, thickness, smoothness, outlineColor);
             BufferBuilder builder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
             float adjustedThickness = (thickness + (outlineThickness * 0.5f)) * 0.5f * size;
-            float baselineY = y + (this.e.baselineHeight() * size);
+            float baselineY = y + (this.metricsData.baselineHeight() * size);
             boolean hasGlyphs = a(matrix, builder, a(text), size, alpha, adjustedThickness, spacing, x, baselineY, 0.0f);
             if (hasGlyphs) {
                 a(builder);
@@ -116,7 +116,7 @@ public class Font {
         a(outlineThickness, thickness, smoothness, outlineColor);
         BufferBuilder builder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
         float adjustedThickness = (thickness + (outlineThickness * 0.5f)) * 0.5f * size;
-        float baselineY = y + (this.e.baselineHeight() * size);
+        float baselineY = y + (this.metricsData.baselineHeight() * size);
         boolean hasGlyphs = a(matrix, builder, text, size, adjustedThickness, spacing, x, baselineY, 0.0f, color, colorSecond, offset);
         if (hasGlyphs) {
             a(builder);
@@ -154,10 +154,10 @@ public class Font {
                 char n = raw2.charAt(i + 1);
                 if (c == 3618 || c == 9889 || (c == 167 && "0123456789abcdefklor".indexOf(n) >= 0)) {
                     i++;
-                } else if (this.f.containsKey(Integer.valueOf(c))) {
+                } else if (this.glyphs.containsKey(Integer.valueOf(c))) {
                     result.add(new MsdfGlyph.a(c, color));
                 }
-            } else if (this.f.containsKey(Integer.valueOf(c))) {
+            } else if (this.glyphs.containsKey(Integer.valueOf(c))) {
                 result.add(new MsdfGlyph.a(c, color));
             }
             i++;
@@ -216,7 +216,7 @@ public class Font {
         a(0.0f, thickness, 0.5f, -1, fadeStart, fadeEnd);
         BufferBuilder builder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
         float adjustedThickness = (thickness + (thickness * 0.5f)) * 0.5f * size;
-        float baselineY = y + (this.e.baselineHeight() * size);
+        float baselineY = y + (this.metricsData.baselineHeight() * size);
         boolean hasGlyphs = a(matrix, builder, text, size, adjustedThickness, 0.0f, x, baselineY, 0.0f, color, -1, -1.0f);
         if (hasGlyphs) {
             a(builder);
@@ -231,7 +231,7 @@ public class Font {
         boolean hasGlyphs = false;
         for (int i = 0; i < text2.length(); i++) {
             int codePoint = text2.charAt(i);
-            MsdfGlyph glyph = this.f.get(Integer.valueOf(codePoint));
+            MsdfGlyph glyph = this.glyphs.get(Integer.valueOf(codePoint));
             if (glyph != null) {
                 hasGlyphs = true;
                 float x2 = x + a(previousChar, codePoint, size);
@@ -256,7 +256,7 @@ public class Font {
             if (started || codePoint != 32) {
                 started = true;
                 int color = glyphData.b();
-                MsdfGlyph glyph = this.f.get(Integer.valueOf(codePoint));
+                MsdfGlyph glyph = this.glyphs.get(Integer.valueOf(codePoint));
                 if (glyph != null) {
                     hasGlyphs = true;
                     float x2 = x + a(previousChar, codePoint, size);
@@ -273,7 +273,7 @@ public class Font {
     }
 
     private float a(int previousChar, int currentChar, float size) {
-        Map<Integer, Float> kerning = this.g.get(Integer.valueOf(previousChar));
+        Map<Integer, Float> kerning = this.kernings.get(Integer.valueOf(previousChar));
         if (kerning == null) {
             return 0.0f;
         }
@@ -302,7 +302,7 @@ public class Font {
 
     public float b(String text, float size) {
         MsdfGlyph glyph;
-        if (text == null || text.isEmpty() || (glyph = this.f.get(Integer.valueOf(text.charAt(0)))) == null) {
+        if (text == null || text.isEmpty() || (glyph = this.glyphs.get(Integer.valueOf(text.charAt(0)))) == null) {
             return 0.0f;
         }
         return glyph.b(size);
@@ -312,11 +312,11 @@ public class Font {
         if (text == null || text.isEmpty()) {
             return centerY - (a(size) / 2.0f);
         }
-        MsdfGlyph glyph = this.f.get(Integer.valueOf(text.charAt(0)));
+        MsdfGlyph glyph = this.glyphs.get(Integer.valueOf(text.charAt(0)));
         if (glyph == null) {
             return centerY - (a(size) / 2.0f);
         }
-        float inkCenter = ((this.e.baselineHeight() - glyph.a()) + (glyph.b() / 2.0f)) * size;
+        float inkCenter = ((this.metricsData.baselineHeight() - glyph.a()) + (glyph.b() / 2.0f)) * size;
         return centerY - inkCenter;
     }
 
@@ -330,7 +330,7 @@ public class Font {
         int renderedGlyphs = 0;
         for (int i = 0; i < text2.length(); i++) {
             int codePoint = text2.charAt(i);
-            MsdfGlyph glyph = this.f.get(Integer.valueOf(codePoint));
+            MsdfGlyph glyph = this.glyphs.get(Integer.valueOf(codePoint));
             if (glyph != null) {
                 width = width + a(previousChar, codePoint, size) + glyph.a(size);
                 renderedGlyphs++;
@@ -346,7 +346,7 @@ public class Font {
         int renderedGlyphs = 0;
         for (MsdfGlyph.a coloredGlyph : coloredGlyphs) {
             int codePoint = coloredGlyph.a();
-            MsdfGlyph glyph = this.f.get(Integer.valueOf(codePoint));
+            MsdfGlyph glyph = this.glyphs.get(Integer.valueOf(codePoint));
             if (glyph != null) {
                 width = width + a(previousChar, codePoint, size) + glyph.a(size);
                 renderedGlyphs++;
@@ -375,7 +375,7 @@ public class Font {
         ScissorUtil.a(matrixStack, x - 1.0f, y - (size * 0.5f), maxWidth + 2.0f, (size * 1.5f) + 0.5f);
         a(0.0f, 0.0f, 0.5f, -1, (x + maxWidth) - 5.0f, x + maxWidth);
         BufferBuilder builder = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
-        float baselineY = y + (this.e.baselineHeight() * size);
+        float baselineY = y + (this.metricsData.baselineHeight() * size);
         a(matrixStack.peek().getPositionMatrix(), builder, text, size, 0.0f, 0.0f, x - offset, baselineY, 0.0f, color, -1, -1.0f);
         a(matrixStack.peek().getPositionMatrix(), builder, text, size, 0.0f, 0.0f, (x - offset) + wrap, baselineY, 0.0f, color, -1, -1.0f);
         a(builder);

@@ -99,10 +99,10 @@ public class MainScreen extends Screen {
         a(context, iMethod_4486, iMethod_4502, (int) dA, (int) dA2, 1.25f - (EasingList.s.ease(fMin) * 0.2f));
         Delta.getInstance().getModuleProcessor().i().e().a(context.getMatrices());
         a(iMethod_4486, iMethod_4502);
-        a(context, iMethod_4486 * 0.5f, ((iMethod_4502 - this.c.c()) * 0.5f) - 58.0f, fMin);
+        a(context, iMethod_4486 * 0.5f, ((iMethod_4502 - this.c.getHeight()) * 0.5f) - 58.0f, fMin);
         Iterator<Button> it = this.g.iterator();
         while (it.hasNext()) {
-            it.next().a(context, (int) dA, (int) dA2, delta, fMin);
+            it.next().render(context, (int) dA, (int) dA2, delta, fMin);
         }
         a(context, fMin, (int) dA);
         EffectMarker.a(context.getMatrices(), delta, this.h);
@@ -122,8 +122,8 @@ public class MainScreen extends Screen {
             return true;
         }
         for (Button button2 : list2) {
-            if (button2.e() != null && MathUtil.a(dA, dA2, button2.f(), button2.g(), button2.b(), button2.c())) {
-                button2.e().run();
+            if (button2.getAction() != null && MathUtil.a(dA, dA2, button2.getX(), button2.getY(), button2.getWidth(), button2.getHeight())) {
+                button2.getAction().run();
                 return true;
             }
         }
@@ -160,14 +160,14 @@ public class MainScreen extends Screen {
     }
 
     private void a(int width, int height) {
-        float mainY = (height - this.c.c()) / 2.0f;
-        float mainX = (((width - this.c.b()) - 5.0f) - this.d.b()) / 2.0f;
-        this.c.a(mainX, mainY);
-        this.d.a(mainX + this.c.b() + 5.0f, mainY);
-        this.e.a((width - this.e.b()) / 2.0f, mainY + this.c.c() + 5.0f);
+        float mainY = (height - this.c.getHeight()) / 2.0f;
+        float mainX = (((width - this.c.getWidth()) - 5.0f) - this.d.getWidth()) / 2.0f;
+        this.c.setPosition(mainX, mainY);
+        this.d.setPosition(mainX + this.c.getWidth() + 5.0f, mainY);
+        this.e.setPosition((width - this.e.getWidth()) / 2.0f, mainY + this.c.getHeight() + 5.0f);
         this.k = (width - 79.0f) / 2.0f;
         this.l = height * 0.85f;
-        this.f.a((width - this.f.b()) / 2.0f, (this.l - this.f.c()) - 5.0f);
+        this.f.setPosition((width - this.f.getWidth()) / 2.0f, (this.l - this.f.getHeight()) - 5.0f);
     }
 
     private void a(DrawContext context, float open, int mouseX) {

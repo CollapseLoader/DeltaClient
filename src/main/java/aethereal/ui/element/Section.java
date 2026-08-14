@@ -7,12 +7,12 @@ import org.joml.Vector4f;
 
 public class Section {
     private final AnimationUtil a = new AnimationUtil();
-    private final String b;
-    private final String c;
+    private final String icon;
+    private final String name;
 
     protected Section(String icon, String name) {
-        this.b = icon;
-        this.c = name;
+        this.icon = icon;
+        this.name = name;
     }
 
     public AnimationUtil a() {
@@ -20,11 +20,11 @@ public class Section {
     }
 
     public String b() {
-        return this.b;
+        return this.icon;
     }
 
     public String c() {
-        return this.c;
+        return this.name;
     }
 
     public void a(DrawContext context, Vector4f content, int mouseX, int mouseY, float scroll, float delta) {

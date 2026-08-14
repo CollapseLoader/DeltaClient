@@ -34,7 +34,7 @@ public class PotionWidget extends Widget implements Interface {
         super(new DragInfo("Зелья", 0.0f, 0.0f, 0.0f, 0.0f));
         this.f = new BooleanSetting("Боковое отображение", false);
         this.g = new StatusEffectInstance(StatusEffects.SPEED, 1200, 0);
-        j().a(this);
+        j().setWidget(this);
         a(this.f);
     }
 
@@ -50,12 +50,12 @@ public class PotionWidget extends Widget implements Interface {
         } else {
             c(event);
         }
-        j().a(this.f.c().booleanValue() ? 2 : 0);
+        j().setDragStatus(this.f.c().booleanValue() ? 2 : 0);
     }
 
     private void c(DrawEvent event) {
-        float x = j().a();
-        float y = j().b();
+        float x = j().getClampedX();
+        float y = j().getClampedY();
         float targetWidth = 14.5f + Fonts.e.a("Potion-list", this.e) + 5.0f + 2.0f;
         float contentY = y + this.d + 3.0f;
         boolean active = false;
@@ -68,8 +68,8 @@ public class PotionWidget extends Widget implements Interface {
                 targetWidth = Math.max(targetWidth, 19.0f + Fonts.e.a(name, 6.5f) + 8.0f + Fonts.e.a(iStatusEffectInstance.getDuration() > 1000000 ? "∞" : ((iStatusEffectInstance.getDuration() / 20) / 60) + ":" + String.format("%02d", Integer.valueOf((iStatusEffectInstance.getDuration() / 20) % 60)), 6.5f) + 5.0f + 2.0f);
             }
         }
-        float width = MathUtil.c(j().f(), targetWidth, 0.5f);
-        j().c(width);
+        float width = MathUtil.c(j().getWidth(), targetWidth, 0.5f);
+        j().setWidth(width);
         if (a() > 0.0f) {
             a(event, "E", "Potion-list", width, a());
         }
@@ -94,7 +94,7 @@ public class PotionWidget extends Widget implements Interface {
                 contentY += 13.5f * animation;
             }
         }
-        j().d(active ? (contentY - y) - 2.0f : this.d);
+        j().setHeight(active ? (contentY - y) - 2.0f : this.d);
         super.a(event);
     }
 
@@ -136,10 +136,10 @@ public class PotionWidget extends Widget implements Interface {
                 contentY += 28.0f * animation;
             }
         }
-        j().a(3.0f);
-        j().b(posY);
-        j().c(maxWidth);
-        j().d((contentY - posY) - 2.0f);
+        j().setX(3.0f);
+        j().setY(posY);
+        j().setWidth(maxWidth);
+        j().setHeight((contentY - posY) - 2.0f);
         super.a(event);
     }
 

@@ -32,9 +32,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class CosmeticsProcessor extends BaseProcessor {
-    private final List<Cosmetic> cosmetics = new CopyOnWriteArrayList();
+    private final List<Cosmetic> cosmetics = new CopyOnWriteArrayList<>();
     private final ScheduledExecutorService bootstrapper = Executors.newSingleThreadScheduledExecutor();
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public static void lambda$setup$0(EntityType type, LivingEntityRenderer renderer, LivingEntityFeatureRendererRegistrationCallback.RegistrationHelper helper, EntityRendererFactory.Context context) {
         if (type == EntityType.PLAYER) {
             FeatureRendererContext<PlayerEntityRenderState, PlayerEntityModel> playerRenderer = (FeatureRendererContext) renderer;

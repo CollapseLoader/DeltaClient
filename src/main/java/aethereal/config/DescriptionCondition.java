@@ -12,10 +12,10 @@ import net.minecraft.item.tooltip.TooltipType;
 import java.util.stream.Collectors;
 
 public class DescriptionCondition implements Condition {
-    private final AnimationUtil a;
-    private final String b;
-    private ItemType c;
-    private int d;
+    private final AnimationUtil animation;
+    private final String description;
+    private ItemType type;
+    private int requiredLevel;
 
     public DescriptionCondition(String description) {
         this(description, 0, ItemType.ON);
@@ -26,90 +26,90 @@ public class DescriptionCondition implements Condition {
     }
 
     public DescriptionCondition(String description, int requiredLevel, ItemType type) {
-        this.a = new AnimationUtil();
-        this.b = description;
-        this.c = type;
-        this.d = (type != ItemType.ON || requiredLevel <= 0) ? requiredLevel : Math.min(j(), requiredLevel);
+        this.animation = new AnimationUtil();
+        this.description = description;
+        this.type = type;
+        this.requiredLevel = (type != ItemType.ON || requiredLevel <= 0) ? requiredLevel : Math.min(j(), requiredLevel);
     }
 
     @Override
     public AnimationUtil a() {
-        return this.a;
+        return this.animation;
     }
 
     public String i() {
-        return this.b;
+        return this.description;
     }
 
     @Override
     public void a(ItemType type) {
-        this.c = type;
+        this.type = type;
     }
 
     @Override
     public ItemType h() {
-        return this.c;
+        return this.type;
     }
 
     @Override
     public void a(int requiredLevel) {
-        this.d = requiredLevel;
+        this.requiredLevel = requiredLevel;
     }
 
     @Override
     public int g() {
-        return this.d;
+        return this.requiredLevel;
     }
 
     @Override
     public String f() {
-        return this.b;
+        return this.description;
     }
 
     @Override
     public boolean b() {
-        return this.c != ItemType.OFF;
+        return this.type != ItemType.OFF;
     }
 
     @Override
     public void a(boolean enabled) {
-        this.c = enabled ? ItemType.ON : ItemType.OFF;
+        this.type = enabled ? ItemType.ON : ItemType.OFF;
     }
 
     @Override
     public boolean c() {
-        return this.d > 0;
+        return this.requiredLevel > 0;
     }
 
     @Override
     public boolean d() {
-        return this.c == ItemType.DENY;
+        return this.type == ItemType.DENY;
     }
 
     @Override
     public void b(int delta) {
-        if (this.c != ItemType.ON || this.d == 0) {
+        if (this.type != ItemType.ON || this.requiredLevel == 0) {
             return;
         }
-        this.d = Math.max(1, Math.min(j(), this.d + delta));
+        this.requiredLevel = Math.max(1, Math.min(j(), this.requiredLevel + delta));
     }
 
     public boolean a(ItemStack stack) {
         int iA;
-        if (this.c == ItemType.OFF) {
+        if (this.type == ItemType.OFF) {
             return true;
         }
         String tooltip = stack.getTooltip(Item.TooltipContext.DEFAULT, Interface.mc.player, TooltipType.BASIC).stream().skip(1L).map(line -> {
             return line.getString().replaceAll("§.", "").toLowerCase().replaceAll("\\s+", StringUtils.a).trim();
         }).collect(Collectors.joining(StringUtils.a));
-        String needle = this.b.replaceAll("§.", "").toLowerCase().replaceAll("\\s+", StringUtils.a).trim();
-        if (this.c == ItemType.DENY) {
+        String needle = this.description.replaceAll("§.", "").toLowerCase().replaceAll("\\s+", StringUtils.a).trim();
+        if (this.type == ItemType.DENY) {
             return !tooltip.contains(needle);
         }
         if (!tooltip.contains(needle)) {
             return false;
         }
-        if (this.d == 0) {
+        if (this.requiredLevel == 0) {
             return true;
         }
         String after = tooltip.substring(tooltip.indexOf(needle) + needle.length()).trim();
@@ -120,15 +120,15 @@ public class DescriptionCondition implements Condition {
             iA = MathUtil.a(space > 0 ? after.substring(0, space) : after);
         }
         int level = iA;
-        return Math.max(1, level) >= this.d;
+        return Math.max(1, level) >= this.requiredLevel;
     }
 
     @Override
     public String e() {
-        return this.d == 0 ? this.b : this.b + " " + MathUtil.a(this.d - 1);
+        return this.requiredLevel == 0 ? this.description : this.description + " " + MathUtil.a(this.requiredLevel - 1);
     }
 
     private int j() {
-        return ("Окисление".equals(this.b) || "Вампиризм".equals(this.b)) ? 2 : 3;
+        return ("Окисление".equals(this.description) || "Вампиризм".equals(this.description)) ? 2 : 3;
     }
 }

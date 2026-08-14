@@ -158,43 +158,43 @@ public enum AutoBuyEntry {
         this.az = profile;
     }
 
-    public String b() {
+    public String getDisplayName() {
         return this.ay;
     }
 
-    public Object c() {
+    public Object getProfile() {
         return this.az;
     }
 
-    public Item d() {
+    public Item getItem() {
         return this.aA;
     }
 
-    public AttributeProcessor e() {
+    public AttributeProcessor getAttributeProcessor() {
         return this.aB;
     }
 
-    public EnchantmentProcessor f() {
+    public EnchantmentProcessor getEnchantmentProcessor() {
         return this.aC;
     }
 
-    public DescriptionProcessor g() {
+    public DescriptionProcessor getDescriptionProcessor() {
         return this.aD;
     }
 
-    public NBTProcessor h() {
+    public NBTProcessor getNBTProcessor() {
         return this.aE;
     }
 
-    public PotionProcessor i() {
+    public PotionProcessor getPotionProcessor() {
         return this.aF;
     }
 
-    public AnimationUtil j() {
+    public AnimationUtil getAnimation() {
         return this.aG;
     }
 
-    public void a(double price) {
+    public void setPrice(double price) {
         this.aH = price;
     }
 
@@ -202,7 +202,7 @@ public enum AutoBuyEntry {
         return this.aH;
     }
 
-    public void a(boolean status) {
+    public void setActive(boolean status) {
         this.aI = status;
     }
 
@@ -210,6 +210,7 @@ public enum AutoBuyEntry {
         return this.aI;
     }
 
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public ItemStack a() {
         Optional optionalEmpty;
         ItemStack stack = new ItemStack(this.aA);

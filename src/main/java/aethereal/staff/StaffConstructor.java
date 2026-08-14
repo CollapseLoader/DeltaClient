@@ -5,21 +5,21 @@ import aethereal.render.AnimationUtil;
 
 public class StaffConstructor {
     private final AnimationUtil b = new AnimationUtil();
-    private String a;
+    private String name;
 
     public StaffConstructor() {
     }
 
     public StaffConstructor(String name) {
-        this.a = name;
+        this.name = name;
     }
 
     public void a(String name) {
-        this.a = name;
+        this.name = name;
     }
 
     public String a() {
-        return this.a;
+        return this.name;
     }
 
     public AnimationUtil b() {

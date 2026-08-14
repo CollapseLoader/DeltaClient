@@ -2,24 +2,24 @@ package aethereal.setting;
 
 import aethereal.core.Action;
 import aethereal.ui.element.ButtonElement;
-import aethereal.ui.element.Element_2;
+import aethereal.ui.element.Element;
 
 public class ButtonSetting extends Setting<Boolean> {
-    private final Action a;
+    private final Action action;
 
     public ButtonSetting(String name, Action action) {
         super(name, false);
-        this.a = action;
+        this.action = action;
     }
 
     public void k() {
-        if (this.a != null) {
-            this.a.execute();
+        if (this.action != null) {
+            this.action.execute();
         }
     }
 
     @Override
-    public Element_2<?> createBooleanElement() {
+    public Element<?> createBooleanElement() {
         return new ButtonElement(this);
     }
 }

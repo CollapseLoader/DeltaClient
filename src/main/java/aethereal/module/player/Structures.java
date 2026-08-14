@@ -36,13 +36,13 @@ public class Structures extends Module {
             Blocks.POLISHED_BASALT);
     private final List<a> c = new ObjectArrayList<>();
     private final Set<BlockPos> d = new ObjectOpenHashSet<>();
-    private int e;
+    private int changeTickTimer;
 
     @EventTarget
     public void a(BlockChangeEvent event) {
         if (this.allowedBlocks.contains(event.d().getBlock()) && !this.allowedBlocks.contains(event.c().getBlock())) {
             this.d.add(event.b());
-            this.e = 2;
+            this.changeTickTimer = 2;
         }
     }
 
@@ -64,9 +64,9 @@ public class Structures extends Module {
                 structure2.a();
             }
         });
-        if (this.e > 0) {
-            int i = this.e - 1;
-            this.e = i;
+        if (this.changeTickTimer > 0) {
+            int i = this.changeTickTimer - 1;
+            this.changeTickTimer = i;
             if (i == 0) {
                 BlockBox box = BlockBox.encompassPositions(this.d).orElse(null);
                 if (box != null) {
@@ -120,7 +120,7 @@ public class Structures extends Module {
         });
         this.d.clear();
         this.c.clear();
-        this.e = 0;
+        this.changeTickTimer = 0;
         super.c();
     }
 

@@ -4,7 +4,7 @@ public final class LoggerFactory {
     private LoggerFactory() {
     }
 
-    public static Logger_2 a(Class<?> type) {
-        return new Logger_2(type);
+    public static Logger a(Class<?> type) {
+        return new Logger(type);
     }
 }

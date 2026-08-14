@@ -92,7 +92,7 @@ public abstract class MinecraftClientMixin implements Interface {
 
     @Redirect(method = {"handleInputEvents"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;stopUsingItem(Lnet/minecraft/entity/player/PlayerEntity;)V"))
     private void handleInputEvents(ClientPlayerInteractionManager manager, PlayerEntity player) {
-        if (Delta.getInstance().getModuleProcessor().v().k().a()) {
+        if (Delta.getInstance().getModuleProcessor().v().getInteractHandler().hasTasks()) {
             return;
         }
         if (player.isUsingItem()) {

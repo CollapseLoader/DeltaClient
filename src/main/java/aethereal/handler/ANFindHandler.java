@@ -34,22 +34,22 @@ import java.util.regex.Pattern;
 
 public class ANFindHandler extends BaseHandler implements Interface {
     private final List<a> b = List.of(new a("Команды х1"), new a("Команды х2"), new a("Команды х3"), new a("Команды х5"), new a("Команды х10"));
-    private boolean c;
-    private boolean d;
-    private Phase e;
-    private int f;
+    private boolean isHovering;
+    private boolean isActive;
+    private Phase phase;
+    private int currentModeIndex;
 
     @EventTarget
-    public void a(ContainerEvent event) {
-        this.c = false;
+    public void onContainerEvent(ContainerEvent event) {
+        this.isHovering = false;
         if (event.h() == ContainerEvent.Phase.POST) {
             if (event.b().getTitle().getString().contains("☬ Выберите режим:") || event.b().getTitle().getString().contains("☬ Выберите тип режима:")) {
                 HandledScreenAccessor screen = (HandledScreenAccessor) event.b();
                 float x = (screen.getX() + screen.getBackgroundWidth()) - 17;
                 float y = screen.getY() + 5;
-                this.c = MathUtil.a(event.f(), event.g(), x, y, 10.0f, 10.0f);
-                Delta.getInstance().getModuleProcessor().i().a(event.d().getMatrices(), Identifier.of("delta", this.c ? "pictures/minecraft/join_button_hovered.png" : "pictures/minecraft/join_button.png"), x, y, 10.0f, 10.0f, 0.0f, -1);
-                if (this.c) {
+                this.isHovering = MathUtil.a(event.f(), event.g(), x, y, 10.0f, 10.0f);
+                Delta.getInstance().getModuleProcessor().i().a(event.d().getMatrices(), Identifier.of("delta", this.isHovering ? "pictures/minecraft/join_button_hovered.png" : "pictures/minecraft/join_button.png"), x, y, 10.0f, 10.0f, 0.0f, -1);
+                if (this.isHovering) {
                     event.d().drawTooltip(event.b().getTextRenderer(), List.of(Text.of("Авто-поиск анархии с наименьшим онлайном")), event.f(), event.g());
                 }
             }
@@ -57,18 +57,18 @@ public class ANFindHandler extends BaseHandler implements Interface {
     }
 
     @EventTarget
-    public void a(ClickEvent event) {
-        if (event.b() && this.c) {
+    public void onClickEvent(ClickEvent event) {
+        if (event.b() && this.isHovering) {
             HandledScreen<?> class_465Var = (HandledScreen<?>) mc.currentScreen;
             if (class_465Var instanceof HandledScreen) {
                 HandledScreen<?> screen = class_465Var;
                 if (screen.getTitle().getString().contains("☬ Выберите режим:") || screen.getTitle().getString().contains("☬ Выберите тип режима:")) {
-                    this.d = !this.d;
-                    if (this.d) {
-                        this.e = Phase.SELECT_MODE;
-                        this.f = 0;
+                    this.isActive = !this.isActive;
+                    if (this.isActive) {
+                        this.phase = Phase.SELECT_MODE;
+                        this.currentModeIndex = 0;
                         this.b.forEach((v0) -> {
-                            v0.a();
+                            v0.reset();
                         });
                     }
                     mc.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0f));
@@ -78,33 +78,33 @@ public class ANFindHandler extends BaseHandler implements Interface {
     }
 
     @EventTarget
-    public void a(TickEvent event) {
-        if (this.d) {
+    public void onTickEvent(TickEvent event) {
+        if (this.isActive) {
             Screen class_437Var = mc.currentScreen;
             if (class_437Var instanceof GenericContainerScreen) {
                 GenericContainerScreen screen = (GenericContainerScreen) class_437Var;
-                a mode = this.b.get(this.f);
-                switch (this.e) {
+                a mode = this.b.get(this.currentModeIndex);
+                switch (this.phase) {
                     case SELECT_MODE:
-                        if (a(screen, "Анархия 1.21.11")) {
-                            this.e = Phase.SELECT_TYPE;
+                        if (clickSlotWithText(screen, "Анархия 1.21.11")) {
+                            this.phase = Phase.SELECT_TYPE;
                         }
                         break;
                     case SELECT_TYPE:
-                        if (a(screen, mode.a)) {
-                            this.e = Phase.COLLECT;
+                        if (clickSlotWithText(screen, mode.a)) {
+                            this.phase = Phase.COLLECT;
                         }
                         break;
                     case COLLECT:
-                        a(screen, mode);
+                        collectBestServer(screen, mode);
                         break;
                 }
             }
-            this.d = false;
+            this.isActive = false;
         }
     }
 
-    private void a(GenericContainerScreen screen, a mode) {
+    private void collectBestServer(GenericContainerScreen screen, a mode) {
         boolean selected = false;
         int bestOnline = Integer.MAX_VALUE;
         String bestServer = null;
@@ -131,18 +131,18 @@ public class ANFindHandler extends BaseHandler implements Interface {
         if (selected && bestServer != null) {
             mode.c = bestOnline;
             mode.b = bestServer;
-            int i = this.f + 1;
-            this.f = i;
+            int i = this.currentModeIndex + 1;
+            this.currentModeIndex = i;
             if (i >= this.b.size()) {
-                a();
+                connectToBestServer();
             } else {
-                this.e = Phase.SELECT_TYPE;
+                this.phase = Phase.SELECT_TYPE;
             }
         }
     }
 
-    private void a() {
-        this.d = false;
+    private void connectToBestServer() {
+        this.isActive = false;
         this.b.stream().filter(mode -> {
             return mode.b != null;
         }).min(Comparator.comparingInt(mode2 -> {
@@ -163,7 +163,7 @@ public class ANFindHandler extends BaseHandler implements Interface {
         });
     }
 
-    private boolean a(GenericContainerScreen screen, String contains) {
+    private boolean clickSlotWithText(GenericContainerScreen screen, String contains) {
         for (Slot slot : screen.getScreenHandler().slots) {
             if (slot.getStack().getName().getString().contains(contains)) {
                 mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(screen.getScreenHandler().syncId, screen.getScreenHandler().getRevision(), slot.id, 0, SlotActionType.PICKUP, screen.getScreenHandler().getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
@@ -188,19 +188,19 @@ public class ANFindHandler extends BaseHandler implements Interface {
             this.a = title;
         }
 
-        public String b() {
+        public String getTitle() {
             return this.a;
         }
 
-        public String c() {
+        public String getServerName() {
             return this.b;
         }
 
-        public int d() {
+        public int getOnlineCount() {
             return this.c;
         }
 
-        public void a() {
+        public void reset() {
             this.b = null;
             this.c = -1;
         }

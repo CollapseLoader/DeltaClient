@@ -6,19 +6,19 @@ import aethereal.core.Event;
 import net.minecraft.item.Item;
 
 public class CooldownEvent extends Event {
-    private final Item a;
-    private final int b;
+    private final Item item;
+    private final int cooldown;
 
     public CooldownEvent(Item item, int cooldown) {
-        this.a = item;
-        this.b = cooldown;
+        this.item = item;
+        this.cooldown = cooldown;
     }
 
     public Item b() {
-        return this.a;
+        return this.item;
     }
 
     public int c() {
-        return this.b;
+        return this.cooldown;
     }
 }

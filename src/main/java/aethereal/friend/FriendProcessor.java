@@ -13,7 +13,7 @@ import java.util.List;
 public class FriendProcessor extends ConfigProcessor<FriendConstructor> {
     @Override
 
-    protected List<FriendConstructor> a(String json) throws Exception {
+    protected List<FriendConstructor> loadConfig(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
         ArrayList arrayList = new ArrayList<>();
         for (int i = 0; i < jSONArray.a(); i++) {
@@ -24,7 +24,7 @@ public class FriendProcessor extends ConfigProcessor<FriendConstructor> {
 
     @Override
 
-    protected String a(List<FriendConstructor> data) throws Exception {
+    protected String saveConfig(List<FriendConstructor> data) throws Exception {
         JSONArray jSONArray = new JSONArray();
         for (FriendConstructor friendConstructor : data) {
             JSONObject jSONObject = new JSONObject();
@@ -35,7 +35,7 @@ public class FriendProcessor extends ConfigProcessor<FriendConstructor> {
     }
 
     @Override
-    protected String b() {
+    protected String getConfigFileName() {
         return "friends.json";
     }
 

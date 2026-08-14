@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class WorldBorderMixin {
     @Inject(method = {"asVoxelShape"}, at = {@At("HEAD")}, cancellable = true)
     private void asVoxelShape(CallbackInfoReturnable<VoxelShape> cir) {
-        PushEvent event = new PushEvent(PushEvent.a.WORLD_BORDER);
+        PushEvent event = new PushEvent(PushEvent.type.WORLD_BORDER);
         EventManager.a(event);
         if (event.a()) {
             cir.setReturnValue(VoxelShapes.empty());

@@ -17,14 +17,14 @@ import net.minecraft.client.gui.screen.ChatScreen;
 public class HotkeysWidget extends Widget implements Interface {
     public HotkeysWidget() {
         super(new DragInfo("Клавиши", 0.0f, 0.0f, 0.0f, 0.0f));
-        j().a(this);
+        j().setWidget(this);
     }
 
     @Override
     public void a(DrawEvent event) {
         d().a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
-        float x = j().a();
-        float y = j().b();
+        float x = j().getClampedX();
+        float y = j().getClampedY();
         float targetWidth = 14.5f + Fonts.e.a("Hot-keys", this.e) + 5.0f + 2.0f;
         float contentY = y + this.d + 3.0f;
         float rightWidth = Fonts.a.a("Q", 6.5f);
@@ -35,8 +35,8 @@ public class HotkeysWidget extends Widget implements Interface {
                 targetWidth = Math.max(targetWidth, 19.0f + Fonts.e.a(module.j(), 6.5f) + 8.0f + Fonts.e.a(KeyUtil.b(module.p()), 6.5f) + 4.0f + rightWidth + 5.0f + 2.0f);
             }
         }
-        float width = MathUtil.c(j().f(), targetWidth, 0.5f);
-        j().c(width);
+        float width = MathUtil.c(j().getWidth(), targetWidth, 0.5f);
+        j().setWidth(width);
         a(event, "Q", "Hot-keys", width, a());
         for (Module module2 : Delta.getInstance().getModuleProcessor().t().e()) {
             module2.f().a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
@@ -57,7 +57,7 @@ public class HotkeysWidget extends Widget implements Interface {
                 contentY += 13.5f * animation;
             }
         }
-        j().d(active ? (contentY - y) - 2.0f : this.d);
+        j().setHeight(active ? (contentY - y) - 2.0f : this.d);
         super.a(event);
     }
 

@@ -77,7 +77,7 @@ public abstract class ClientPlayerEntityMixin {
 
     @Inject(method = {"pushOutOfBlocks"}, at = {@At("HEAD")}, cancellable = true)
     public void removePushOutFromBlocks(double x, double z, CallbackInfo ci) {
-        PushEvent event = new PushEvent(PushEvent.a.BLOCKS);
+        PushEvent event = new PushEvent(PushEvent.type.BLOCKS);
         EventManager.a(event);
         if (event.a()) {
             ci.cancel();

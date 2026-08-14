@@ -31,13 +31,13 @@ public class GUIScreen extends Screen {
 
     public GUIScreen(Text title) {
         super(title);
-        this.a = new TextField(TextField.a.GUI);
+        this.a = new TextField(TextField.type.GUI);
         this.b = new AnimationUtil();
         this.c = new ArrayList<>();
         for (Category category : Category.values()) {
             this.c.add(new GUIPanel(category));
         }
-        this.a.a("Поиск по модулям");
+        this.a.setPlaceholder("Поиск по модулям");
     }
 
     public static boolean f(GUIPanel panel) {
@@ -125,7 +125,7 @@ public class GUIScreen extends Screen {
     public boolean mouseClicked(final double mouseX, final double mouseY, final int button) {
         TextField textField = this.a;
         List<GUIPanel> list = this.c;
-        textField.a(MathUtil.scale(mouseX, 2), MathUtil.scale(mouseY, 2), button);
+        textField.onMouseClick(MathUtil.scale(mouseX, 2), MathUtil.scale(mouseY, 2), button);
         if (list.stream().filter(obj -> GUIScreen.f(obj)).anyMatch(obj -> obj.a(MathUtil.scale(mouseX, 2), MathUtil.scale(mouseY, 2), button))) {
             return true;
         }
@@ -144,7 +144,7 @@ public class GUIScreen extends Screen {
     public boolean mouseDragged(final double mouseX, final double mouseY, final int button, final double deltaX, final double deltaY) {
         TextField textField = this.a;
         List<GUIPanel> list = this.c;
-        textField.b(MathUtil.scale(mouseX, 2), MathUtil.scale(mouseY, 2), button);
+        textField.onMouseDrag(MathUtil.scale(mouseX, 2), MathUtil.scale(mouseY, 2), button);
         if (list.stream().filter(obj -> GUIScreen.d(obj)).anyMatch(obj -> obj.a(MathUtil.scale(mouseX, 2), MathUtil.scale(mouseY, 2), button, MathUtil.scale(deltaX, 2), MathUtil.scale(deltaY, 2)))) {
             return true;
         }
@@ -172,10 +172,10 @@ public class GUIScreen extends Screen {
         TextField textField = this.a;
         List<GUIPanel> list = this.c;
         if (keyCode == 70 && (modifiers & 2) != 0) {
-            textField.a(!textField.j());
+            textField.a(!textField.isFocused());
             return true;
         }
-        if (textField.j()) {
+        if (textField.isFocused()) {
             textField.a(keyCode, scanCode, modifiers);
             return true;
         }
@@ -189,7 +189,7 @@ public class GUIScreen extends Screen {
     public boolean charTyped(final char character, final int modifiers) {
         TextField textField = this.a;
         List<GUIPanel> list = this.c;
-        if (textField.j()) {
+        if (textField.isFocused()) {
             textField.a(character, modifiers);
             return true;
         }
@@ -226,13 +226,13 @@ public class GUIScreen extends Screen {
     }
 
     public boolean a(GUIPanel panel, Module module) {
-        return module.l() == panel.c() && module.j().toLowerCase().contains(this.a.g().toString().toLowerCase());
+        return module.l() == panel.c() && module.j().toLowerCase().contains(this.a.getTextBuffer().toString().toLowerCase());
     }
 
     private void a(DrawContext context, float centerX, float panelBottom, int mouseX, int mouseY, float delta) {
-        this.a.b(new Vector2f(100.0f, 20.0f));
-        this.a.a(new Vector2f(centerX - 50.0f, panelBottom + 12.0f));
-        this.a.a(context, mouseX, mouseY, delta, 1.0f);
+        this.a.setSize(new Vector2f(100.0f, 20.0f));
+        this.a.setPosition(new Vector2f(centerX - 50.0f, panelBottom + 12.0f));
+        this.a.render(context, mouseX, mouseY, delta, 1.0f);
     }
 
     private void a(MatrixStack matrices, float centerX, float panelTop, float delta) {

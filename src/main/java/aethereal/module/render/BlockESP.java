@@ -24,37 +24,37 @@ import java.util.stream.Collectors;
 @ModuleRegister(name = "Block ESP", description = "Подсвечивает добавленные вами блоки через .blockesp", category = Category.Render)
 public class BlockESP extends Module {
     private final List<BlockPos> b = new CopyOnWriteArrayList<>();
-    private ExecutorService c;
-    private int d;
+    private ExecutorService renderExecutor;
+    private int renderTick;
 
     @Override
     public void b() {
         super.b();
         this.b.clear();
-        this.c = Executors.newSingleThreadExecutor();
-        this.d = 0;
+        this.renderExecutor = Executors.newSingleThreadExecutor();
+        this.renderTick = 0;
     }
 
     @Override
     public void c() {
         super.c();
         this.b.clear();
-        if (this.c != null) {
-            this.c.shutdownNow();
+        if (this.renderExecutor != null) {
+            this.renderExecutor.shutdownNow();
         }
     }
 
     @EventTarget
-    public void a(TickEvent event) {
-        int i = this.d + 1;
-        this.d = i;
+    public void onTick(TickEvent event) {
+        int i = this.renderTick + 1;
+        this.renderTick = i;
         if (i % 12 == 0) {
             List<BlockESPCommand.a> list = Delta.getInstance().getModuleProcessor().u().g().c();
             if (list.isEmpty()) {
                 this.b.clear();
             } else {
-                this.c.submit(() -> {
-                    a(list.stream().map((v0) -> {
+                this.renderExecutor.submit(() -> {
+                    scanNearbyBlocks(list.stream().map((v0) -> {
                         return v0.a();
                     }).collect(Collectors.toSet()));
                 });
@@ -63,7 +63,7 @@ public class BlockESP extends Module {
     }
 
     @EventTarget
-    public void a(DrawEvent event) {
+    public void onDraw(DrawEvent event) {
         if (event.c()) {
             List<BlockESPCommand.a> entries = Delta.getInstance().getModuleProcessor().u().g().c();
             if (!entries.isEmpty()) {
@@ -77,17 +77,17 @@ public class BlockESP extends Module {
                 for (BlockEntityTickInvoker ticker : ((platform.inject.accessors.WorldAccessor) mc.world)
                         .getBlockEntityTickers()) {
                     if (!ticker.isRemoved()) {
-                        a(event, ticker.getPos(), colors);
+                        renderBlock(event, ticker.getPos(), colors);
                     }
                 }
                 for (BlockPos pos : this.b) {
-                    a(event, pos, colors);
+                    renderBlock(event, pos, colors);
                 }
             }
         }
     }
 
-    private void a(DrawEvent event, BlockPos pos, Map<Block, Integer> colors) {
+    private void renderBlock(DrawEvent event, BlockPos pos, Map<Block, Integer> colors) {
         Integer color = colors.get(mc.world.getBlockState(pos).getBlock());
         if (color != null) {
             event.e().a(event.h(), new Box(pos), color.intValue() != -1 ? color.intValue()
@@ -97,7 +97,7 @@ public class BlockESP extends Module {
         }
     }
 
-    private void a(Set<Block> targets) {
+    private void scanNearbyBlocks(Set<Block> targets) {
         List<BlockPos> found = new ArrayList<>();
         BlockPos center = mc.player.getBlockPos();
         BlockPos.Mutable mutable = new BlockPos.Mutable();

@@ -8,19 +8,19 @@ import net.minecraft.text.Text;
 import java.util.List;
 
 public class TooltipEvent extends Event {
-    private final ItemStack a;
-    private final List<Text> b;
+    private final ItemStack stack;
+    private final List<Text> lines;
 
     public TooltipEvent(ItemStack stack, List<Text> lines) {
-        this.a = stack;
-        this.b = lines;
+        this.stack = stack;
+        this.lines = lines;
     }
 
     public ItemStack b() {
-        return this.a;
+        return this.stack;
     }
 
     public List<Text> c() {
-        return this.b;
+        return this.lines;
     }
 }

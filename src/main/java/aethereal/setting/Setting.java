@@ -1,85 +1,85 @@
 package aethereal.setting;
 
-import aethereal.ui.element.Element_2;
+import aethereal.ui.element.Element;
 
 import java.util.Objects;
 import java.util.function.Consumer;
 
 public abstract class Setting<Value> {
-    private final Value c;
-    private final String e;
-    private Value d;
-    private java.util.function.Supplier<Boolean> a = () -> {
+    private final Value defaultValue;
+    private final String name;
+    private Value currentValue;
+    private java.util.function.Supplier<Boolean> visibleSupplier = () -> {
         return true;
     };
-    private Consumer<Value> b = value -> {
+    private Consumer<Value> onChange = value -> {
     };
-    private boolean f = true;
+    private boolean enabled = true;
 
     public Setting(String name, Value defaultValue) {
-        this.e = name;
-        this.c = defaultValue;
-        this.d = defaultValue;
+        this.name = name;
+        this.defaultValue = defaultValue;
+        this.currentValue = defaultValue;
     }
 
-    public abstract Element_2<?> createBooleanElement();
+    public abstract Element<?> createBooleanElement();
 
     public java.util.function.Supplier<Boolean> e() {
-        return this.a;
+        return this.visibleSupplier;
     }
 
     public Consumer<Value> f() {
-        return this.b;
+        return this.onChange;
     }
 
     public Value g() {
-        return this.c;
+        return this.defaultValue;
     }
 
     public Value h() {
-        return this.d;
+        return this.currentValue;
     }
 
     public String i() {
-        return this.e;
+        return this.name;
     }
 
     public boolean j() {
-        return this.f;
+        return this.enabled;
     }
 
     @SuppressWarnings("unchecked")
     public <T extends Setting<Value>> T a() {
-        this.f = false;
+        this.enabled = false;
         return (T) this;
     }
 
     public Setting<Value> a(Value newValue) {
-        if (Objects.equals(this.d, newValue)) {
+        if (Objects.equals(this.currentValue, newValue)) {
             return this;
         }
-        this.d = newValue;
-        this.b.accept(newValue);
+        this.currentValue = newValue;
+        this.onChange.accept(newValue);
         return this;
     }
 
     @SuppressWarnings("unchecked")
     public <T extends Setting<Value>> T a(Consumer<Value> onChange) {
-        this.b = onChange;
+        this.onChange = onChange;
         return (T) this;
     }
 
     public void b() {
-        this.d = this.c;
+        this.currentValue = this.defaultValue;
     }
 
     @SuppressWarnings("unchecked")
     public <T extends Setting<Value>> T a(java.util.function.Supplier<Boolean> bool) {
-        this.a = bool;
+        this.visibleSupplier = bool;
         return (T) this;
     }
 
     public Value c() {
-        return this.d;
+        return this.currentValue;
     }
 }

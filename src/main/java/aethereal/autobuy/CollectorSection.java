@@ -5,10 +5,10 @@ import aethereal.config.ThemeInfo;
 import aethereal.config.ThemeProcessor;
 import aethereal.core.Delta;
 import aethereal.core.InterfaceC0020Opcode;
-import aethereal.module.misc.Collector_2;
+import aethereal.module.misc.Collector;
 import aethereal.render.*;
 import aethereal.ui.element.Section;
-import aethereal.util.Marker_2;
+import aethereal.util.Marker;
 import aethereal.util.MathUtil;
 import aethereal.util.ProcessIdUtil;
 import net.minecraft.client.gui.DrawContext;
@@ -21,8 +21,8 @@ import java.util.stream.Stream;
 public class CollectorSection extends Section {
     private final Vector4f a;
     private final Vector4f b;
-    private Collector_2.b c;
-    private Collector_2.b d;
+    private Collector.b c;
+    private Collector.b d;
     private Condition e;
     private int f;
     private float g;
@@ -38,11 +38,11 @@ public class CollectorSection extends Section {
         float startX = frame.x + 8.0f;
         float top = frame.y;
         float settingsX = ((startX + 240.0f) - 4.0f) + 8.0f;
-        a(context, frame, 20.0f, 4.0f, 10, top, scroll, mouseX, mouseY, delta);
-        a(context, frame, settingsX, top, mouseX, mouseY, delta);
+        drawItemGrid(context, frame, 20.0f, 4.0f, 10, top, scroll, mouseX, mouseY, delta);
+        drawSettingsPanel(context, frame, settingsX, top, mouseX, mouseY, delta);
     }
 
-    private void a(DrawContext context, Vector4f frame, float slot, float gap, int columns, float top, float scroll, int mouseX, int mouseY, float delta) {
+    private void drawItemGrid(DrawContext context, Vector4f frame, float slot, float gap, int columns, float top, float scroll, int mouseX, int mouseY, float delta) {
         MatrixStack matrices = context.getMatrices();
         Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
         Draw3DProcessor draw3d = Delta.getInstance().getModuleProcessor().j();
@@ -51,7 +51,7 @@ public class CollectorSection extends Section {
         float bottom = frame.y + frame.w;
         float scale = (slot / 16.0f) * 0.75f;
         float offset = (slot - (16.0f * scale)) / 2.0f;
-        List<Collector_2.b> items = Delta.getInstance().getModuleProcessor().p().e();
+        List<Collector.b> items = Delta.getInstance().getModuleProcessor().p().e();
         this.g = 0.0f;
         this.d = null;
         if (this.c == null && !items.isEmpty()) {
@@ -59,7 +59,7 @@ public class CollectorSection extends Section {
         }
         ScissorUtil.a(matrices, frame.x, top, frame.z, bottom - top);
         for (int i = 0; i < items.size(); i++) {
-            Collector_2.b item = items.get(i);
+            Collector.b item = items.get(i);
             float slotX = startX + ((i % columns) * (slot + gap));
             float slotY = top + ((i / columns) * (slot + gap)) + scroll;
             this.g = Math.max(this.g, (((i / columns) + 1) * (slot + gap)) - gap);
@@ -82,7 +82,7 @@ public class CollectorSection extends Section {
         ScissorUtil.a(matrices);
     }
 
-    private void a(DrawContext context, Vector4f frame, float settingsX, float y, int mouseX, int mouseY, float delta) {
+    private void drawSettingsPanel(DrawContext context, Vector4f frame, float settingsX, float y, int mouseX, int mouseY, float delta) {
         MatrixStack matrices = context.getMatrices();
         Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
         Draw3DProcessor draw3d = Delta.getInstance().getModuleProcessor().j();
@@ -112,7 +112,7 @@ public class CollectorSection extends Section {
             this.b.set((this.a.x - 6.0f) - 32.0f, center - 5.0f, 32.0f, 10.0f);
             Fonts.c.b(matrices, ProcessIdUtil.a, this.b.x + 6.0f, (center - (Fonts.c.a(11.0f) / 2.0f)) - 2.0f, 11.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), fade));
             Fonts.c.b(matrices, String.valueOf(this.c.m()), this.b.x + (this.b.z / 2.0f), (center - (Fonts.c.a(6.75f) / 2.0f)) - 0.75f, 6.75f, ColorUtil.lerpColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), theme.a(ThemeInfo.TEXT).toIntColor(), active));
-            Fonts.c.b(matrices, Marker_2.b, (this.b.x + this.b.z) - 6.0f, (center - (Fonts.c.a(11.0f) / 2.0f)) - 1.25f, 11.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), fade));
+            Fonts.c.b(matrices, Marker.b, (this.b.x + this.b.z) - 6.0f, (center - (Fonts.c.a(11.0f) / 2.0f)) - 1.25f, 11.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), fade));
         }
         List<Condition> conditions = Stream.concat(this.c.e() == null ? Stream.empty() : this.c.e().b().stream(), this.c.f() == null ? Stream.empty() : this.c.f().b().stream()).toList();
         float enchantY = y + 20.0f + 8.0f;
@@ -128,7 +128,7 @@ public class CollectorSection extends Section {
                 Fonts.c.a(matrices, condition.e(), rowX, (centerY - (Fonts.c.a(6.75f) / 2.0f)) - 0.75f, 6.75f, ColorUtil.lerpColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), theme.a(ThemeInfo.TEXT).toIntColor(), value));
                 if (condition.c()) {
                     draw.a(context, levelX + 13.625f, centerY - 2.5f, 0.75f, 5.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * fade));
-                    Fonts.c.b(matrices, Marker_2.b, levelX + 7.0f, (centerY - (Fonts.c.a(11.0f) / 2.0f)) - 1.25f, 11.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), fade));
+                    Fonts.c.b(matrices, Marker.b, levelX + 7.0f, (centerY - (Fonts.c.a(11.0f) / 2.0f)) - 1.25f, 11.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), fade));
                     Fonts.c.b(matrices, ProcessIdUtil.a, levelX + 21.0f, (centerY - (Fonts.c.a(11.0f) / 2.0f)) - 2.0f, 11.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), fade));
                 }
                 draw.a(matrices, switchX, switchY, 13.0f, 7.695f, 3.078f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), value));

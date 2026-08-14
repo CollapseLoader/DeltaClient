@@ -35,7 +35,7 @@ public class TargetWidget extends Widget {
         this.h = new AnimationUtil();
         this.i = new AnimationUtil();
         this.k = "";
-        j().a(this);
+        j().setWidget(this);
         a(this.g, this.f);
     }
 
@@ -44,13 +44,13 @@ public class TargetWidget extends Widget {
         String string;
         d().a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
         if (a() > 0.0f && this.j != null) {
-            j().c(100.0f);
-            j().d(24.0f);
-            float x = j().a();
-            float y = j().b();
-            a(event, x, y, j().f(), j().g(), true, a());
-            float headSize = j().g() / 1.35f;
-            float headY = y + ((j().g() - headSize) / 2.0f);
+            j().setWidth(100.0f);
+            j().setHeight(24.0f);
+            float x = j().getClampedX();
+            float y = j().getClampedY();
+            a(event, x, y, j().getWidth(), j().getHeight(), true, a());
+            float headSize = j().getHeight() / 1.35f;
+            float headY = y + ((j().getHeight() - headSize) / 2.0f);
             if (this.j instanceof AbstractClientPlayerEntity player) {
                 event.d().a(event.h(), x + 5.0f, headY, headSize, headSize, 2.0f, ColorUtil.applyAlphaToColor(-1, a()), 0.125f, 0.125f, 0.125f, 0.125f, Interface.mc.getTextureManager().getTexture(player.getSkinTextures().texture()).getGlId());
             } else if (this.j != null) {
@@ -73,7 +73,7 @@ public class TargetWidget extends Widget {
                 int i = 0;
                 for (ItemStack stack : new ItemStack[]{this.j.getEquippedStack(EquipmentSlot.FEET), this.j.getEquippedStack(EquipmentSlot.LEGS), this.j.getEquippedStack(EquipmentSlot.CHEST), this.j.getEquippedStack(EquipmentSlot.HEAD), this.j.getOffHandStack(), this.j.getMainHandStack()}) {
                     if (!stack.isEmpty()) {
-                        event.e().a(event.i(), InventoryUtil.a(stack), ((x + j().f()) - 10.0f) - (i * 9), y + j().g(), 0, a(), 0.55f, true);
+                        event.e().a(event.i(), InventoryUtil.a(stack), ((x + j().getWidth()) - 10.0f) - (i * 9), y + j().getHeight(), 0, a(), 0.55f, true);
                         i++;
                     }
                 }
@@ -84,7 +84,7 @@ public class TargetWidget extends Widget {
                 this.k = hpValue;
             }
             float progress = hpValue.equals(this.k) ? 1.0f : this.i.a(0.0f, 1.0f, 0.75f);
-            a(event, hpValue, this.k, ((x + j().f()) - 5.0f) - Fonts.e.a(hpValue, 7.0f), headY + 0.5f, 7.0f, primary, progress);
+            a(event, hpValue, this.k, ((x + j().getWidth()) - 5.0f) - Fonts.e.a(hpValue, 7.0f), headY + 0.5f, 7.0f, primary, progress);
             if (progress >= 0.99f) {
                 this.k = hpValue;
                 this.i.c(0.0f);
@@ -123,7 +123,7 @@ public class TargetWidget extends Widget {
     public void a(GlobalEvent event) {
         LivingEntity class_1309Var;
         LivingEntity class_1309Var2;
-        LivingEntity targets = Delta.getInstance().getModuleProcessor().t().B().s() != null ? Delta.getInstance().getModuleProcessor().t().B().s() : Delta.getInstance().getModuleProcessor().t().X().s();
+        LivingEntity targets = Delta.getInstance().getModuleProcessor().t().B().getTarget() != null ? Delta.getInstance().getModuleProcessor().t().B().getTarget() : Delta.getInstance().getModuleProcessor().t().X().getTarget();
         if (this.g.c().booleanValue()) {
             EntityHitResult class_3966Var = Interface.mc.crosshairTarget instanceof EntityHitResult ? (EntityHitResult) Interface.mc.crosshairTarget : null;
             if (class_3966Var instanceof EntityHitResult) {

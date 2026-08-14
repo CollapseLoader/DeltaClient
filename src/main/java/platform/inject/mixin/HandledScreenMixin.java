@@ -84,7 +84,7 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> {
     private void onInit(CallbackInfo ci) {
         int iMethod_17388;
         if ((this.handler instanceof GenericContainerScreenHandler) || (this.handler instanceof ShulkerBoxScreenHandler)) {
-            Delta.getInstance().getModuleProcessor().v().l();
+            Delta.getInstance().getModuleProcessor().v().performNoOperation();
             AutoBuy autoBuy = Delta.getInstance().getModuleProcessor().t().ba();
             HandledScreenAccessor screen = (HandledScreenAccessor) this;
             ScreenAccessor screenBase = (ScreenAccessor) this;
@@ -109,9 +109,9 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> {
                 if (screenBase.getTitle().getString().toLowerCase().contains("аукцион") || screenBase.getTitle().getString().toLowerCase().contains("категория: настоящие вещи")) {
                     int width = ((((screenBase.getWidth() - screen.getBackgroundWidth()) / 2) - 5) - 100) - 24;
                     int height = (screenBase.getHeight() - screen.getBackgroundHeight()) / 2;
-                    screenBase.invokeAddDrawableChild(ButtonWidget.builder(statusMessage("AutoBuy", autoBuy.q()), widget -> {
-                        autoBuy.d(!autoBuy.q());
-                        widget.setMessage(statusMessage("AutoBuy", autoBuy.q()));
+                    screenBase.invokeAddDrawableChild(ButtonWidget.builder(statusMessage("AutoBuy", autoBuy.isScreenReady()), widget -> {
+                        autoBuy.d(!autoBuy.isScreenReady());
+                        widget.setMessage(statusMessage("AutoBuy", autoBuy.isScreenReady()));
                     }).dimensions((screenBase.getWidth() / 2) - 50, ((screenBase.getHeight() + screen.getBackgroundHeight()) / 2) + 4, 100, 20).build());
                 }
             }

@@ -35,13 +35,13 @@ public class AntiAFK extends Module {
                     mc.player.swingHand(Hand.MAIN_HAND);
                 }
                 if (this.c.a("Движение").c().booleanValue()) {
-                    Delta.getInstance().getModuleProcessor().v().g().a(7);
+                    Delta.getInstance().getModuleProcessor().v().getAFKHandler().a(7);
                     return;
                 }
                 return;
             }
             if (this.b.l("FunTime") && !this.d.c().booleanValue()) {
-                Delta.getInstance().getModuleProcessor().v().g().a(7);
+                Delta.getInstance().getModuleProcessor().v().getAFKHandler().a(7);
             }
         }
     }
@@ -52,7 +52,7 @@ public class AntiAFK extends Module {
             GameMessageS2CPacket message = (GameMessageS2CPacket) event.d();
             if (message instanceof GameMessageS2CPacket) {
                 if (message.content().getString().equals("Данная команда недоступна в режиме AFK")) {
-                    Delta.getInstance().getModuleProcessor().v().g().a(7);
+                    Delta.getInstance().getModuleProcessor().v().getAFKHandler().a(7);
                 }
             }
         }

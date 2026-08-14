@@ -5,7 +5,7 @@ import aethereal.config.ThemeInfo;
 import aethereal.core.Delta;
 import aethereal.core.Interface;
 import aethereal.core.InterfaceC0020Opcode;
-import aethereal.core.Processor_2;
+import aethereal.core.Processor;
 import aethereal.network.AccountConstructor;
 import aethereal.render.*;
 import aethereal.ui.element.TextField;
@@ -45,9 +45,9 @@ public class AltScreen extends Screen {
         super(Text.empty());
         this.a = new AnimationUtil();
         this.b = new AnimationUtil();
-        this.c = new TextField(TextField.a.ALT_MANAGER);
+        this.c = new TextField(TextField.type.ALT_MANAGER);
         this.d = new ArrayList<>();
-        this.c.a("Никнейм");
+        this.c.setPlaceholder("Никнейм");
         a().forEach(account -> {
             this.d.add(new a(account));
         });
@@ -57,7 +57,7 @@ public class AltScreen extends Screen {
     public void render(DrawContext context, int mx, int my, float delta) {
         Window class_1041VarMethod_22683;
         Window class_1041VarMethod_22684;
-        Processor_2 processor_2D;
+        Processor processor_2D;
         Draw2DProcessor draw2DProcessorI;
         BlurShader blurShaderE;
         MatrixStack class_4587VarMethod_51448;
@@ -123,13 +123,13 @@ public class AltScreen extends Screen {
     public boolean mouseClicked(double rawX, double rawY, int button) {
         double dA = MathUtil.scale(rawX, 2);
         double dA2 = MathUtil.scale(rawY, 2);
-        this.c.a(dA, dA2, button);
-        float fMethod_32118 = this.c.d().getX();
-        float fMethod_32119 = this.c.d().getY();
-        float fMethod_321110 = this.c.e().getX();
+        this.c.onMouseClick(dA, dA2, button);
+        float fMethod_32118 = this.c.getPosition().getX();
+        float fMethod_32119 = this.c.getPosition().getY();
+        float fMethod_321110 = this.c.getSize().getX();
         float f = fMethod_32118 + fMethod_321110;
         if (MathUtil.a(dA, dA2, 5.0f + f, fMethod_32119, 18.0f, 18.0f)) {
-            a(this.c.g().toString());
+            a(this.c.getTextBuffer().toString());
             return true;
         }
         if (MathUtil.a(dA, dA2, 28.0f + f, fMethod_32119, 150.0f - fMethod_321110, 18.0f)) {
@@ -167,7 +167,7 @@ public class AltScreen extends Screen {
 
 
     public boolean mouseDragged(double mx, double my, int button, double dx, double dy) {
-        this.c.b(MathUtil.scale(mx, 2), MathUtil.scale(my, 2), button);
+        this.c.onMouseDrag(MathUtil.scale(mx, 2), MathUtil.scale(my, 2), button);
         if (this.f == null) {
             return super.mouseDragged(mx, my, button, dx, dy);
         }
@@ -226,7 +226,7 @@ public class AltScreen extends Screen {
 
 
     public boolean charTyped(char chr, int modifiers) {
-        if (!this.c.j()) {
+        if (!this.c.isFocused()) {
             return super.charTyped(chr, modifiers);
         }
         this.c.a(chr, modifiers);
@@ -240,7 +240,7 @@ public class AltScreen extends Screen {
             d();
             return true;
         }
-        if (!textField.j()) {
+        if (!textField.isFocused()) {
             if (keyCode != 256) {
                 return super.keyPressed(keyCode, scanCode, modifiers);
             }
@@ -248,7 +248,7 @@ public class AltScreen extends Screen {
             return true;
         }
         if (keyCode == 257) {
-            a(textField.g().toString());
+            a(textField.getTextBuffer().toString());
             return true;
         }
         textField.a(keyCode, scanCode, modifiers);
@@ -333,9 +333,9 @@ public class AltScreen extends Screen {
         float randomWidth = Fonts.a.a("H", 8.0f) + 3.0f + Fonts.d.a("Случайный", 7.0f) + 14.0f;
         float fieldWidth = 146.0f - randomWidth;
         float right = px + 11.0f + fieldWidth;
-        this.c.a(new Vector2f(px + 7.0f, fieldY));
-        this.c.b(new Vector2f(fieldWidth, 18.0f));
-        this.c.a(context, mx, my, delta, open);
+        this.c.setPosition(new Vector2f(px + 7.0f, fieldY));
+        this.c.setSize(new Vector2f(fieldWidth, 18.0f));
+        this.c.render(context, mx, my, delta, open);
         a(matrices, draw, right + 0.5f, fieldY, 18.0f, 18.0f, new Vector4f(1.0f, 5.0f, 1.0f, 5.0f), null, "m", ColorUtil.convertToARGB(255, 255, 255, 10), white, open, mx, my);
         a(matrices, draw, right + 27.0f, fieldY, randomWidth, 18.0f, new Vector4f(6.0f, 6.0f, 6.0f, 6.0f), "Случайный", "", ColorUtil.convertToARGB(255, 255, 255, 10), white, open, mx, my);
         a(matrices, draw, px + 15.0f, py + 257.0f, 160.0f, 20.0f, new Vector4f(6.0f, 6.0f, 6.0f, 6.0f), "Удалить все аккаунты", null, ColorUtil.convertToARGB(220, 80, 80, 20), ColorUtil.convertToARGB(220, 80, 80, (int) (255.0f * open)), open, mx, my);

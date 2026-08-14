@@ -36,7 +36,7 @@ public class AssistantScreen extends Screen implements Interface {
         super(title);
         this.b = new RadialScreen(2, 75.0f, 101.25f);
         this.c = Arrays.stream(AutoBuyEntry.values()).filter(info -> {
-            return info.d() == Items.SPLASH_POTION;
+            return info.getItem() == Items.SPLASH_POTION;
         }).toList();
         this.d = null;
         this.e = null;
@@ -61,7 +61,7 @@ public class AssistantScreen extends Screen implements Interface {
     }
 
     public void a(int slot, AutoBuyEntry potion) {
-        this.b.a(slot, potion.a(), potion.b(), c(slot), true);
+        this.b.a(slot, potion.a(), potion.getDisplayName(), c(slot), true);
     }
 
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
@@ -78,7 +78,7 @@ public class AssistantScreen extends Screen implements Interface {
                         }
                     }
                     int slot2 = this.f;
-                    this.b.a(slot2, potion.a(), potion.b(), c(slot2), true);
+                    this.b.a(slot2, potion.a(), potion.getDisplayName(), c(slot2), true);
                     c();
                     return true;
                 }
@@ -153,7 +153,7 @@ public class AssistantScreen extends Screen implements Interface {
                 draw.a(matrices, this.d.getX() + 2.0f, rowY + 1.0f, this.e.getX() - 4.0f, 16.0f, 6.0f, ColorUtil.convertToARGB(255, 255, 255, 12));
             }
             draw3d.a(context, potion.a(), this.d.getX() + 5.0f, (rowY + 9.0f) - 6.0f, 0, 1.0f, 0.75f, false);
-            Fonts.e.a(matrices, potion.b(), this.d.getX() + 5.0f + 12.0f + 4.0f, (rowY + 9.0f) - (Fonts.e.a(6.5f) / 2.0f), 6.5f, hovered ? ColorUtil.convertToARGB(255, 255, 255, 220) : ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.ap));
+            Fonts.e.a(matrices, potion.getDisplayName(), this.d.getX() + 5.0f + 12.0f + 4.0f, (rowY + 9.0f) - (Fonts.e.a(6.5f) / 2.0f), 6.5f, hovered ? ColorUtil.convertToARGB(255, 255, 255, 220) : ColorUtil.convertToARGB(255, 255, 255, InterfaceC0020Opcode.ap));
         }
     }
 
@@ -164,7 +164,7 @@ public class AssistantScreen extends Screen implements Interface {
                 this.d = d(slot);
                 this.e = d();
             } else {
-                Delta.getInstance().getModuleProcessor().v().b().a(this.b.c(slot));
+                Delta.getInstance().getModuleProcessor().v().getUseableHandler().a(this.b.c(slot));
                 mc.player.closeScreen();
             }
         };
@@ -179,7 +179,7 @@ public class AssistantScreen extends Screen implements Interface {
     private Vector2f d() {
         float maxLabelWidth = 0.0f;
         for (AutoBuyEntry potion : this.c) {
-            maxLabelWidth = Math.max(maxLabelWidth, Fonts.e.a(potion.b(), 6.5f));
+            maxLabelWidth = Math.max(maxLabelWidth, Fonts.e.a(potion.getDisplayName(), 6.5f));
         }
         return new Vector2f(26.0f + maxLabelWidth + 10.0f, this.c.size() * 18.0f);
     }

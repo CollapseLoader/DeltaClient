@@ -23,13 +23,13 @@ public class InventoryHandler extends BaseHandler implements Interface {
     }
 
     @EventTarget
-    public void a(TickEvent event) {
+    public void onTickEvent(TickEvent event) {
         if (!this.b.isEmpty()) {
             a task = this.b.getFirst();
-            StopHandler stopHandler = Delta.getInstance().getModuleProcessor().v().c();
-            if (stopHandler.c() < task.c()) {
-                int from = a(task.a());
-                int to = task.d() ? task.b() : a(task.b());
+            StopHandler stopHandler = Delta.getInstance().getModuleProcessor().v().getStopHandler();
+            if (stopHandler.c() < task.getBypass()) {
+                int from = normalizeSlot(task.getFromSlot());
+                int to = task.isArmorMove() ? task.getToSlot() : normalizeSlot(task.getToSlot());
                 if (mc.player.playerScreenHandler.getSlot(from).getStack()
                         .contains(DataComponentTypes.BUNDLE_CONTENTS)) {
                     mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, 1,
@@ -41,12 +41,12 @@ public class InventoryHandler extends BaseHandler implements Interface {
                                 SlotActionType.PICKUP, mc.player);
                     }
                 } else {
-                    int swapButton = a(task.b(), to);
+                    int swapButton = findSwapButton(task.getToSlot(), to);
                     if (swapButton != -1) {
                         mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, from, swapButton,
                                 SlotActionType.SWAP, mc.player);
                     } else {
-                        int swapButton2 = a(task.a(), from);
+                        int swapButton2 = findSwapButton(task.getFromSlot(), from);
                         if (swapButton2 != -1) {
                             mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, to, swapButton2,
                                     SlotActionType.SWAP, mc.player);
@@ -64,48 +64,48 @@ public class InventoryHandler extends BaseHandler implements Interface {
                         .sendPacket(new CloseHandledScreenC2SPacket(mc.player.currentScreenHandler.syncId));
                 this.b.remove(task);
                 if (!this.b.isEmpty()) {
-                    stopHandler.a(this.b.getFirst().c());
+                    stopHandler.a(this.b.getFirst().getBypass());
                 }
             }
         }
     }
 
-    public void a(int fromSlot, int toSlot, int bypass) {
-        a(new a(fromSlot, toSlot, bypass, false));
+    public void moveItem(int fromSlot, int toSlot, int bypass) {
+        enqueueTask(new a(fromSlot, toSlot, bypass, false));
     }
 
-    public void b(int fromSlot, int armorSlot, int bypass) {
-        a(new a(fromSlot, 5 + armorSlot, bypass, true));
+    public void moveToArmor(int fromSlot, int armorSlot, int bypass) {
+        enqueueTask(new a(fromSlot, 5 + armorSlot, bypass, true));
     }
 
-    public void a(Item item, int toSlot, int bypass) {
+    public void moveItemByType(Item item, int toSlot, int bypass) {
         int slot = InventoryUtil.b(item);
         if (slot != -1) {
-            a(new a(slot, toSlot, bypass, false));
+            enqueueTask(new a(slot, toSlot, bypass, false));
         }
     }
 
-    public void a(ItemStack stack, int toSlot, int bypass) {
+    public void moveStack(ItemStack stack, int toSlot, int bypass) {
         int slot = InventoryUtil.a(stack, false);
         if (slot != -1) {
-            a(new a(slot, toSlot, bypass, false));
+            enqueueTask(new a(slot, toSlot, bypass, false));
         }
     }
 
-    private void a(a task) {
-        if (task.a() != -1 && task.b() != -1) {
-            if (this.b.isEmpty() && task.c > 0) {
-                Delta.getInstance().getModuleProcessor().v().c().a(task.c);
+    private void enqueueTask(a task) {
+        if (task.getFromSlot() != -1 && task.getToSlot() != -1) {
+            if (this.b.isEmpty() && task.bypass > 0) {
+                Delta.getInstance().getModuleProcessor().v().getStopHandler().a(task.bypass);
             }
             this.b.add(task);
         }
     }
 
-    private int a(int slot) {
+    private int normalizeSlot(int slot) {
         return (slot < 0 || slot > 8) ? slot : slot + 36;
     }
 
-    private int a(int original, int normalized) {
+    private int findSwapButton(int original, int normalized) {
         if (original == 40 || original == 45 || normalized == 45) {
             return 40;
         }
@@ -115,26 +115,22 @@ public class InventoryHandler extends BaseHandler implements Interface {
         return normalized - 36;
     }
 
-    record a(int a, int b, int c, boolean d) {
+    record a(int fromSlot, int toSlot, int bypass, boolean armorMove) {
 
-        @Override
-        public int a() {
-            return this.a;
+        public int getFromSlot() {
+            return this.fromSlot;
         }
 
-        @Override
-        public int b() {
-            return this.b;
+        public int getToSlot() {
+            return this.toSlot;
         }
 
-        @Override
-        public int c() {
-            return this.c;
+        public int getBypass() {
+            return this.bypass;
         }
 
-        @Override
-        public boolean d() {
-            return this.d;
+        public boolean isArmorMove() {
+            return this.armorMove;
         }
     }
 }

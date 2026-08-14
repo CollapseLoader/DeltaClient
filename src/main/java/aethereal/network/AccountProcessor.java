@@ -11,7 +11,7 @@ import java.util.List;
 public class AccountProcessor extends ConfigProcessor<AccountConstructor> {
     @Override
 
-    protected List<AccountConstructor> a(String json) throws Exception {
+    protected List<AccountConstructor> loadConfig(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
         ArrayList arrayList = new ArrayList<>();
         for (int i = 0; i < jSONArray.a(); i++) {
@@ -26,7 +26,7 @@ public class AccountProcessor extends ConfigProcessor<AccountConstructor> {
 
     @Override
 
-    protected String a(List<AccountConstructor> data) throws Exception {
+    protected String saveConfig(List<AccountConstructor> data) throws Exception {
         JSONArray jSONArray = new JSONArray();
         for (AccountConstructor accountConstructor : data) {
             JSONObject jSONObject = new JSONObject();
@@ -49,7 +49,7 @@ public class AccountProcessor extends ConfigProcessor<AccountConstructor> {
     }
 
     @Override
-    protected String b() {
+    protected String getConfigFileName() {
         return "accounts.json";
     }
 }

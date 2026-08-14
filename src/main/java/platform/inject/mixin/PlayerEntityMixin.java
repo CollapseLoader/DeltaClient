@@ -15,7 +15,7 @@ public class PlayerEntityMixin {
     @Inject(method = {"isPushedByFluids"}, at = {@At("HEAD")}, cancellable = true)
     private void removePushFromFluids(CallbackInfoReturnable<Boolean> cir) {
         if ((Object) this == Interface.mc.player) {
-            PushEvent event = new PushEvent(PushEvent.a.FLUIDS);
+            PushEvent event = new PushEvent(PushEvent.type.FLUIDS);
             EventManager.a(event);
             if (event.a()) {
                 cir.setReturnValue(false);

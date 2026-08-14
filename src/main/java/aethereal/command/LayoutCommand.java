@@ -19,12 +19,12 @@ import java.util.List;
 
 @Command(name = "layout")
 public class LayoutCommand extends BaseCommand {
-    private final List<a> c = new ArrayList<>();
-    private final List<a> d = new ArrayList<>();
-    private int e;
+    private final List<a> layouts = new ArrayList<>();
+    private final List<a> pendingLayout = new ArrayList<>();
+    private int index;
 
     public List<a> c() {
-        return this.c;
+        return this.layouts;
     }
 
     private void d() {
@@ -32,9 +32,9 @@ public class LayoutCommand extends BaseCommand {
     }
 
     private void a(List<a> layout) {
-        this.d.clear();
-        this.d.addAll(layout);
-        this.e = 0;
+        this.pendingLayout.clear();
+        this.pendingLayout.addAll(layout);
+        this.index = 0;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class LayoutCommand extends BaseCommand {
             return 1;
         }).then(d("название").executes(context2 -> {
             String name = a(context2, "название");
-            List<a> layouts = this.c;
+            List<a> layouts = this.layouts;
             layouts.removeIf(layout -> {
                 return layout.a().equalsIgnoreCase(name);
             });
@@ -63,7 +63,7 @@ public class LayoutCommand extends BaseCommand {
             return v0.a();
         })).executes(context4 -> {
             String name = a(context4, "название");
-            List<a> target = this.c.stream().filter(layout -> {
+            List<a> target = this.layouts.stream().filter(layout -> {
                 return layout.a().equalsIgnoreCase(name);
             }).toList();
             if (target.isEmpty()) {
@@ -79,7 +79,7 @@ public class LayoutCommand extends BaseCommand {
             return v0.a();
         })).executes(context6 -> {
             String name = a(context6, "название");
-            List<a> layouts = this.c;
+            List<a> layouts = this.layouts;
             if (layouts.stream().noneMatch(layout -> {
                 return layout.a().equalsIgnoreCase(name);
             })) {
@@ -93,7 +93,7 @@ public class LayoutCommand extends BaseCommand {
             ChatUtil.sendMessage("Раскладка &c" + name + " &7удалена");
             return 1;
         }))).then(a("list").executes(context7 -> {
-            List<a> layouts = this.c;
+            List<a> layouts = this.layouts;
             if (layouts.isEmpty()) {
                 ChatUtil.sendMessage("Список раскладок пуст.");
                 return 1;
@@ -106,7 +106,7 @@ public class LayoutCommand extends BaseCommand {
             });
             return 1;
         })).then(a("clear").executes(context8 -> {
-            this.c.clear();
+            this.layouts.clear();
             d();
             ChatUtil.sendMessage("Раскладки очищены.");
             return 1;
@@ -118,16 +118,16 @@ public class LayoutCommand extends BaseCommand {
 
     @EventTarget
     public void a(TickEvent event) {
-        if (!this.d.isEmpty()) {
-            int i = this.e;
-            this.e = i - 1;
+        if (!this.pendingLayout.isEmpty()) {
+            int i = this.index;
+            this.index = i - 1;
             if (i > 1) {
                 return;
             }
-            this.e = 2;
-            DefaultedList class_2371Var = mc.player.playerScreenHandler.slots;
+            this.index = 2;
+            DefaultedList<Slot> class_2371Var = mc.player.playerScreenHandler.slots;
             List<String> missing = new ArrayList<>();
-            for (a info : this.d) {
+            for (a info : this.pendingLayout) {
                 Slot target = (Slot) class_2371Var.get(info.c());
                 Item item = info.b().getItem();
                 if (target.getStack().getItem() != item) {
@@ -136,18 +136,18 @@ public class LayoutCommand extends BaseCommand {
                     Slot source = slotList.stream()
                             .filter(slot -> ((platform.inject.accessors.SlotAccessor) slot).getInventory() == mc.player.getInventory())
                             .filter(slot2 -> slot2.getStack().getItem() == item)
-                            .filter(slot3 -> this.d.stream().noneMatch(other -> other.c() == slot3.id && other.b().getItem() == slot3.getStack().getItem()))
+                            .filter(slot3 -> this.pendingLayout.stream().noneMatch(other -> other.c() == slot3.id && other.b().getItem() == slot3.getStack().getItem()))
                             .findFirst().orElse(null);
                     if (source != null) {
                         int hotbar = (source.id == 36 || target.id == 36) ? (source.id == 37 || target.id == 37) ? 2 : 1 : 0;
                         mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, source.id, hotbar, SlotActionType.SWAP, mc.player);
                         mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, target.id, hotbar, SlotActionType.SWAP, mc.player);
                         mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, source.id, hotbar, SlotActionType.SWAP, mc.player);
-                        if (this.d.stream().noneMatch(other -> {
+                        if (this.pendingLayout.stream().noneMatch(other -> {
                             return ((Slot) class_2371Var.get(other.c())).getStack().getItem() != other.b().getItem();
                         })) {
                             mc.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(mc.player.playerScreenHandler.syncId));
-                            this.d.clear();
+                            this.pendingLayout.clear();
                             return;
                         }
                         return;
@@ -167,7 +167,7 @@ public class LayoutCommand extends BaseCommand {
                     ChatUtil.sendMessage("- &c" + it.next());
                 }
             }
-            this.d.clear();
+            this.pendingLayout.clear();
         }
     }
 

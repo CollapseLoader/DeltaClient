@@ -76,7 +76,7 @@ public class BatchProcessor extends BaseProcessor {
                 BufferBuilder class_4588VarMethod_60827 = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
                 for (b task : this.b) {
                     if (!task.h) {
-                        task.a(class_4588VarMethod_60827);
+                        task.renderFilledBox(class_4588VarMethod_60827);
                     }
                 }
                 BufferRenderer.drawWithGlobalProgram(class_4588VarMethod_60827.end());
@@ -96,9 +96,9 @@ public class BatchProcessor extends BaseProcessor {
                 BufferBuilder class_4588VarMethod_60828 = Tessellator.getInstance().begin(VertexFormat.DrawMode.LINES, VertexFormats.LINES);
                 for (b task3 : e.getValue()) {
                     if (task3.h) {
-                        task3.c(class_4588VarMethod_60828);
+                        task3.renderBezier(class_4588VarMethod_60828);
                     } else {
-                        task3.b(class_4588VarMethod_60828);
+                        task3.renderLineBox(class_4588VarMethod_60828);
                     }
                 }
                 BufferRenderer.drawWithGlobalProgram(class_4588VarMethod_60828.end());
@@ -156,7 +156,7 @@ public class BatchProcessor extends BaseProcessor {
             return new b(matrices.peek(), start, end, control, color, width);
         }
 
-        void a(VertexConsumer buffer) {
+        void renderFilledBox(VertexConsumer buffer) {
             float[] rgba = ColorUtil.a(ColorUtil.applyAlphaToColor(this.c, (((this.c >> 24) & 255) / 255.0f) * 0.12f));
             double[][][] faces = {new double[][]{new double[]{this.b.minX, this.b.minY, this.b.minZ}, new double[]{this.b.maxX, this.b.minY, this.b.minZ}, new double[]{this.b.maxX, this.b.minY, this.b.maxZ}, new double[]{this.b.minX, this.b.minY, this.b.maxZ}}, new double[][]{new double[]{this.b.minX, this.b.maxY, this.b.minZ}, new double[]{this.b.maxX, this.b.maxY, this.b.minZ}, new double[]{this.b.maxX, this.b.maxY, this.b.maxZ}, new double[]{this.b.minX, this.b.maxY, this.b.maxZ}}, new double[][]{new double[]{this.b.minX, this.b.minY, this.b.minZ}, new double[]{this.b.minX, this.b.maxY, this.b.minZ}, new double[]{this.b.maxX, this.b.maxY, this.b.minZ}, new double[]{this.b.maxX, this.b.minY, this.b.minZ}}, new double[][]{new double[]{this.b.maxX, this.b.minY, this.b.minZ}, new double[]{this.b.maxX, this.b.maxY, this.b.minZ}, new double[]{this.b.maxX, this.b.maxY, this.b.maxZ}, new double[]{this.b.maxX, this.b.minY, this.b.maxZ}}, new double[][]{new double[]{this.b.maxX, this.b.minY, this.b.maxZ}, new double[]{this.b.maxX, this.b.maxY, this.b.maxZ}, new double[]{this.b.minX, this.b.maxY, this.b.maxZ}, new double[]{this.b.minX, this.b.minY, this.b.maxZ}}, new double[][]{new double[]{this.b.minX, this.b.minY, this.b.maxZ}, new double[]{this.b.minX, this.b.maxY, this.b.maxZ}, new double[]{this.b.minX, this.b.maxY, this.b.minZ}, new double[]{this.b.minX, this.b.minY, this.b.minZ}}};
             Matrix4f matrix4f = this.a.getPositionMatrix();
@@ -165,7 +165,7 @@ public class BatchProcessor extends BaseProcessor {
             }
         }
 
-        void b(VertexConsumer buffer) {
+        void renderLineBox(VertexConsumer buffer) {
             float[] rgba = ColorUtil.a(ColorUtil.applyAlphaToColor(this.c, ((this.c >> 24) & 255) / 255.0f));
             Matrix4f matrix = this.a.getPositionMatrix();
             double[][] edges = {new double[]{this.b.minX, this.b.minY, this.b.minZ, this.b.maxX, this.b.minY, this.b.minZ}, new double[]{this.b.maxX, this.b.minY, this.b.minZ, this.b.maxX, this.b.minY, this.b.maxZ}, new double[]{this.b.maxX, this.b.minY, this.b.maxZ, this.b.minX, this.b.minY, this.b.maxZ}, new double[]{this.b.minX, this.b.minY, this.b.maxZ, this.b.minX, this.b.minY, this.b.minZ}, new double[]{this.b.minX, this.b.maxY, this.b.minZ, this.b.maxX, this.b.maxY, this.b.minZ}, new double[]{this.b.maxX, this.b.maxY, this.b.minZ, this.b.maxX, this.b.maxY, this.b.maxZ}, new double[]{this.b.maxX, this.b.maxY, this.b.maxZ, this.b.minX, this.b.maxY, this.b.maxZ}, new double[]{this.b.minX, this.b.maxY, this.b.maxZ, this.b.minX, this.b.maxY, this.b.minZ}, new double[]{this.b.minX, this.b.minY, this.b.minZ, this.b.minX, this.b.maxY, this.b.minZ}, new double[]{this.b.maxX, this.b.minY, this.b.minZ, this.b.maxX, this.b.maxY, this.b.minZ}, new double[]{this.b.maxX, this.b.minY, this.b.maxZ, this.b.maxX, this.b.maxY, this.b.maxZ}, new double[]{this.b.minX, this.b.minY, this.b.maxZ, this.b.minX, this.b.maxY, this.b.maxZ}};
@@ -193,7 +193,7 @@ public class BatchProcessor extends BaseProcessor {
             buffer.vertex(matrix, (float) (x2 - cam.x), (float) (y2 - cam.y), (float) (z2 - cam.z)).color(rgba[0], rgba[1], rgba[2], rgba[3]).normal(entry, nx, ny, nz);
         }
 
-        void c(VertexConsumer buffer) {
+        void renderBezier(VertexConsumer buffer) {
             float[] rgba = ColorUtil.a(ColorUtil.applyAlphaToColor(this.c, ((this.c >> 24) & 255) / 255.0f));
             Matrix4f matrix = this.a.getPositionMatrix();
             if (this.g == null) {

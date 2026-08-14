@@ -1,7 +1,7 @@
 package aethereal.discord;
 
 import aethereal.command.CommandExecutor;
-import aethereal.core.User_2;
+import aethereal.core.DiscordUser;
 import aethereal.lib.jsoup.Connection;
 import aethereal.network.ConnectionManager;
 import aethereal.network.ConnectionState;
@@ -72,7 +72,7 @@ public class DiscordIPC implements Closeable {
         return this.c.a();
     }
 
-    public Optional<User_2> f() {
+    public Optional<DiscordUser> f() {
         return Optional.ofNullable(this.c.p());
     }
 

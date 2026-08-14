@@ -17,14 +17,14 @@ import net.minecraft.util.Hand;
 @ModuleRegister(name = "Auto Fish", description = "Автоматически ловит рыбу в AFK-режиме", category = Category.Player)
 public class AutoFish extends Module {
     private final CounterUtil b = new CounterUtil();
-    private boolean c;
+    private boolean isFishing;
 
     public CounterUtil q() {
         return this.b;
     }
 
     public boolean r() {
-        return this.c;
+        return this.isFishing;
     }
 
     @Override
@@ -50,14 +50,14 @@ public class AutoFish extends Module {
 
     @EventTarget
     public void a(TickEvent event) {
-        if (this.b.a(450L) && this.c) {
+        if (this.b.a(450L) && this.isFishing) {
             d(false);
         }
     }
 
     @EventTarget
     public void a(HotbarEvent event) {
-        if (this.c) {
+        if (this.isFishing) {
             event.a(true);
         }
     }
@@ -65,6 +65,6 @@ public class AutoFish extends Module {
     public void d(boolean cast) {
         mc.interactionManager.interactItem(mc.player, Hand.MAIN_HAND);
         mc.player.swingHand(Hand.MAIN_HAND);
-        this.c = cast;
+        this.isFishing = cast;
     }
 }

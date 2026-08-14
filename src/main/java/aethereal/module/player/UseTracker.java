@@ -76,7 +76,7 @@ public class UseTracker extends Module {
     @EventTarget
     public void a(PotionEvent event) {
         MutableText notificationText;
-        if (this.b.a("Зелья").c().booleanValue() && event.b() == PotionEvent.a.PARTICLES && mc.world != null) {
+        if (this.b.a("Зелья").c().booleanValue() && event.b() == PotionEvent.type.PARTICLES && mc.world != null) {
             for (a type : a.values()) {
                 for (int color : type.d()) {
                     if ((color & 16777215) == (event.c() & 16777215)) {

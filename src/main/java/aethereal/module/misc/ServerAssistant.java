@@ -46,27 +46,27 @@ import java.util.stream.Stream;
 
 @ModuleRegister(name = "Server Assistant", description = "Помощник, упрощающий работу с сервером и игровыми механиками", category = Category.Misc)
 public class ServerAssistant extends Module {
-    final MultiModeSetting d = new MultiModeSetting("Фильтр брони по", new BooleanSetting("Защите", false), new BooleanSetting("Аншип", true), new BooleanSetting("Починке", true), new BooleanSetting("Подводной ходьбе", true)).a(() -> {
-        return Boolean.valueOf(this.c.a("Аукционный ассистент").c().booleanValue() && (this.b.l("FunTime") || this.b.l("SpookyTime")));
+    final MultiModeSetting armorFilter = new MultiModeSetting("Фильтр брони по", new BooleanSetting("Защите", false), new BooleanSetting("Аншип", true), new BooleanSetting("Починке", true), new BooleanSetting("Подводной ходьбе", true)).a(() -> {
+        return Boolean.valueOf(this.helpElements.a("Аукционный ассистент").c().booleanValue() && (this.targetServer.l("FunTime") || this.targetServer.l("SpookyTime")));
     });
-    final MultiModeSetting e = new MultiModeSetting("Фильтр меча по", new BooleanSetting("Остроте", false), new BooleanSetting("Детекции", true), new BooleanSetting("Вампиризму", true), new BooleanSetting("Окислению", true), new BooleanSetting("Яду", true)).a(() -> {
-        return Boolean.valueOf(this.c.a("Аукционный ассистент").c().booleanValue() && (this.b.l("FunTime") || this.b.l("SpookyTime")));
+    final MultiModeSetting swordFilter = new MultiModeSetting("Фильтр меча по", new BooleanSetting("Остроте", false), new BooleanSetting("Детекции", true), new BooleanSetting("Вампиризму", true), new BooleanSetting("Окислению", true), new BooleanSetting("Яду", true)).a(() -> {
+        return Boolean.valueOf(this.helpElements.a("Аукционный ассистент").c().booleanValue() && (this.targetServer.l("FunTime") || this.targetServer.l("SpookyTime")));
     });
-    final MultiModeSetting f = new MultiModeSetting("Фильтр кирки по", new BooleanSetting("Эффективности", false), new BooleanSetting("Удаче", true), new BooleanSetting("Магнит", true), new BooleanSetting("Починке", true)).a(() -> {
-        return Boolean.valueOf(this.c.a("Аукционный ассистент").c().booleanValue() && (this.b.l("FunTime") || this.b.l("SpookyTime")));
+    final MultiModeSetting pickaxeFilter = new MultiModeSetting("Фильтр кирки по", new BooleanSetting("Эффективности", false), new BooleanSetting("Удаче", true), new BooleanSetting("Магнит", true), new BooleanSetting("Починке", true)).a(() -> {
+        return Boolean.valueOf(this.helpElements.a("Аукционный ассистент").c().booleanValue() && (this.targetServer.l("FunTime") || this.targetServer.l("SpookyTime")));
     });
-    private final ModeSetting b = new ModeSetting("Целевой сервер помощи", "FunTime", "FunTime", "SpookyTime", "HolyWorld");
-    private final MultiModeSetting c = new MultiModeSetting("Элементы помощи", new BooleanSetting("Аукционный ассистент", true), new BooleanSetting("Сортировать по цене", true)).a(() -> {
-        return Boolean.valueOf(this.b.l("FunTime") || this.b.l("SpookyTime"));
+    private final ModeSetting targetServer = new ModeSetting("Целевой сервер помощи", "FunTime", "FunTime", "SpookyTime", "HolyWorld");
+    private final MultiModeSetting helpElements = new MultiModeSetting("Элементы помощи", new BooleanSetting("Аукционный ассистент", true), new BooleanSetting("Сортировать по цене", true)).a(() -> {
+        return Boolean.valueOf(this.targetServer.l("FunTime") || this.targetServer.l("SpookyTime"));
     });
-    private final BooleanSetting t = new BooleanSetting("Авто-божья аура", false).a(() -> {
-        return Boolean.valueOf(this.b.l("FunTime") || this.b.l("SpookyTime"));
+    private final BooleanSetting autoGodAura = new BooleanSetting("Авто-божья аура", false).a(() -> {
+        return Boolean.valueOf(this.targetServer.l("FunTime") || this.targetServer.l("SpookyTime"));
     });
-    private final a u = new a();
-    private final CounterUtil v = new CounterUtil();
-    private List<b> w;
-    private Slot x = null;
-    private int[] y = null;
+    private final a itemFilter = new a();
+    private final CounterUtil auraCounter = new CounterUtil();
+    private List<b> bindEntries;
+    private Slot cheapestSlot = null;
+    private int[] sortOrder = null;
 
     public ServerAssistant() {
         BindSetting s = a("Ком снега", Items.SNOWBALL, "HolyWorld");
@@ -82,23 +82,23 @@ public class ServerAssistant extends Module {
         BindSetting i = a("Пласт", Items.DRIED_KELP, "FunTime", "SpookyTime");
         BindSetting h = a("Снежок заморозка", Items.SNOWBALL, "FunTime", "SpookyTime");
         BindSetting g = a("Трапка", Items.NETHERITE_SCRAP, "FunTime", "SpookyTime");
-        a(this.b, this.c, this.d, this.e, this.f, g, h, i, j, k, m, l, n, o, p, q, r, s, this.t);
+        a(this.targetServer, this.helpElements, this.armorFilter, this.swordFilter, this.pickaxeFilter, g, h, i, j, k, m, l, n, o, p, q, r, s, this.autoGodAura);
     }
 
     public List<b> q() {
-        return this.w;
+        return this.bindEntries;
     }
 
     @EventTarget
-    public void a(TickEvent event) {
-        if (this.t.c().booleanValue()) {
+    public void onTick(TickEvent event) {
+        if (this.autoGodAura.c().booleanValue()) {
             if (ServerUtil.a.a() || ServerUtil.d.a()) {
                 boolean hasBadEffect = mc.player.getStatusEffects().stream().anyMatch(effect -> {
                     return effect.getEffectType() == StatusEffects.WEAKNESS && effect.getAmplifier() >= 1 && ((double) effect.getDuration()) / 20.0d >= 15.0d;
                 });
-                if (InventoryUtil.b(Items.PHANTOM_MEMBRANE) != -1 && hasBadEffect && !mc.player.getItemCooldownManager().isCoolingDown(Items.PHANTOM_MEMBRANE.getDefaultStack()) && this.v.a(5000L) && mc.player.getAbsorptionAmount() <= 3.0f) {
-                    Delta.getInstance().getModuleProcessor().v().b().a(Items.PHANTOM_MEMBRANE.getDefaultStack());
-                    this.v.b();
+                if (InventoryUtil.b(Items.PHANTOM_MEMBRANE) != -1 && hasBadEffect && !mc.player.getItemCooldownManager().isCoolingDown(Items.PHANTOM_MEMBRANE.getDefaultStack()) && this.auraCounter.a(5000L) && mc.player.getAbsorptionAmount() <= 3.0f) {
+                    Delta.getInstance().getModuleProcessor().v().getUseableHandler().a(Items.PHANTOM_MEMBRANE.getDefaultStack());
+                    this.auraCounter.b();
                 }
             }
         }
@@ -153,28 +153,28 @@ public class ServerAssistant extends Module {
             if (handledScreenAccessor.getScreenHandler().slots.size() >= 90) {
                 List<Slot> containerSlots = new ArrayList<>(event.e().subList(0, event.e().size() - 36));
                 boolean useFilter = containerSlots.stream().anyMatch(slot2 -> {
-                    return price.applyAsInt(slot2.getStack()) >= 0 && this.u.a(slot2.getStack());
+                    return price.applyAsInt(slot2.getStack()) >= 0 && this.itemFilter.a(slot2.getStack());
                 });
-                if (event.h() == ContainerEvent.Phase.POST && this.c.a("Аукционный ассистент").c().booleanValue()) {
-                    if (this.x == null) {
+                if (event.h() == ContainerEvent.Phase.POST && this.helpElements.a("Аукционный ассистент").c().booleanValue()) {
+                    if (this.cheapestSlot == null) {
                         Slot cheapest = null;
                         int minPrice = Integer.MAX_VALUE;
                         for (Slot slot3 : containerSlots) {
                             ItemStack stack = slot3.getStack();
                             int value = price.applyAsInt(stack);
-                            if (!useFilter || this.u.a(stack)) {
+                            if (!useFilter || this.itemFilter.a(stack)) {
                                 if (value >= 0 && value < minPrice) {
                                     minPrice = value;
                                     cheapest = slot3;
                                 }
                             }
                         }
-                        this.x = cheapest;
+                        this.cheapestSlot = cheapest;
                         return;
                     }
                     HandledScreenAccessor accessor = handledScreenAccessor;
                     float pulse = (float) ((Math.sin(((System.currentTimeMillis() % 100000) / 1000.0f) * 10.0f) + 1.0d) * 0.5d);
-                    Delta.getInstance().getModuleProcessor().i().a(event.d(), accessor.getX() + this.x.x, accessor.getY() + this.x.y, 16.0f, 16.0f, ColorUtil.convertToARGB(0, 255, 0, (int) (25.0f + (175.0f * pulse))));
+                    Delta.getInstance().getModuleProcessor().i().a(event.d(), accessor.getX() + this.cheapestSlot.x, accessor.getY() + this.cheapestSlot.y, 16.0f, 16.0f, ColorUtil.convertToARGB(0, 255, 0, (int) (25.0f + (175.0f * pulse))));
                 }
             }
         }
@@ -191,19 +191,19 @@ public class ServerAssistant extends Module {
             }
             InventoryS2CPacket packet = (InventoryS2CPacket) event.d();
             if (packet instanceof InventoryS2CPacket) {
-                if (this.c.a("Сортировать по цене").c().booleanValue() && (ServerUtil.a.a() || ServerUtil.d.a())) {
+                if (this.helpElements.a("Сортировать по цене").c().booleanValue() && (ServerUtil.a.a() || ServerUtil.d.a())) {
                     List<ItemStack> contents = packet.getContents();
                     int chestSlots = contents.size() > 36 ? contents.size() - 36 : contents.size();
-                    this.y = null;
+                    this.sortOrder = null;
                     if (chestSlots >= 44 && packet.getSyncId() != 0) {
                         ToIntFunction<ItemStack> price = ServerUtil.a.a() ? ServerUtil.a::a : ServerUtil.d::a;
                         boolean useFilter = contents.subList(0, chestSlots).stream().anyMatch(stack -> {
-                            return price.applyAsInt(stack) >= 0 && this.u.a(stack);
+                            return price.applyAsInt(stack) >= 0 && this.itemFilter.a(stack);
                         });
                         int[] prices = new int[chestSlots];
                         for (int i = 0; i < chestSlots; i++) {
                             ItemStack stack2 = contents.get(i);
-                            int value = (stack2.isEmpty() || (useFilter && !this.u.a(stack2))) ? -1 : price.applyAsInt(stack2);
+                            int value = (stack2.isEmpty() || (useFilter && !this.itemFilter.a(stack2))) ? -1 : price.applyAsInt(stack2);
                             prices[i] = value < 0 ? Integer.MAX_VALUE : value;
                         }
                         Integer[] order = IntStream.range(0, chestSlots).boxed().sorted(Comparator.comparingInt(i2 -> {
@@ -212,9 +212,9 @@ public class ServerAssistant extends Module {
                             return new Integer[x$0];
                         });
                         List<ItemStack> original = new ArrayList<>(contents);
-                        this.y = new int[chestSlots];
+                        this.sortOrder = new int[chestSlots];
                         for (int display = 0; display < chestSlots; display++) {
-                            this.y[display] = order[display].intValue();
+                            this.sortOrder[display] = order[display].intValue();
                             contents.set(display, original.get(order[display].intValue()));
                         }
                     }
@@ -223,23 +223,23 @@ public class ServerAssistant extends Module {
             ScreenHandlerSlotUpdateS2CPacketAccessor screenHandlerSlotUpdateS2CPacketAccessorD = (ScreenHandlerSlotUpdateS2CPacketAccessor) event.d();
             if (screenHandlerSlotUpdateS2CPacketAccessorD instanceof ScreenHandlerSlotUpdateS2CPacket) {
                 ScreenHandlerSlotUpdateS2CPacketAccessor screenHandlerSlotUpdateS2CPacketAccessor = screenHandlerSlotUpdateS2CPacketAccessorD;
-                if (this.y != null && screenHandlerSlotUpdateS2CPacketAccessor.getSyncId() != 0 && screenHandlerSlotUpdateS2CPacketAccessor.getSyncId() == mc.player.currentScreenHandler.syncId && screenHandlerSlotUpdateS2CPacketAccessor.getSlot() >= 0 && screenHandlerSlotUpdateS2CPacketAccessor.getSlot() < this.y.length) {
-                    for (int display2 = 0; display2 < this.y.length; display2++) {
-                        if (this.y[display2] == screenHandlerSlotUpdateS2CPacketAccessor.getSlot()) {
+                if (this.sortOrder != null && screenHandlerSlotUpdateS2CPacketAccessor.getSyncId() != 0 && screenHandlerSlotUpdateS2CPacketAccessor.getSyncId() == mc.player.currentScreenHandler.syncId && screenHandlerSlotUpdateS2CPacketAccessor.getSlot() >= 0 && screenHandlerSlotUpdateS2CPacketAccessor.getSlot() < this.sortOrder.length) {
+                    for (int display2 = 0; display2 < this.sortOrder.length; display2++) {
+                        if (this.sortOrder[display2] == screenHandlerSlotUpdateS2CPacketAccessor.getSlot()) {
                             screenHandlerSlotUpdateS2CPacketAccessor.setSlot(display2);
                             break;
                         }
                     }
                 }
-                this.x = null;
+                this.cheapestSlot = null;
             }
         }
         if (event.b()) {
             ClickSlotC2SPacketAccessor clickSlotC2SPacketAccessorD = (ClickSlotC2SPacketAccessor) event.d();
             if (clickSlotC2SPacketAccessorD instanceof ClickSlotC2SPacket) {
                 ClickSlotC2SPacketAccessor clickSlotC2SPacketAccessor = clickSlotC2SPacketAccessorD;
-                if (this.y != null && clickSlotC2SPacketAccessor.getSyncId() != 0 && clickSlotC2SPacketAccessor.getSyncId() == mc.player.currentScreenHandler.syncId && clickSlotC2SPacketAccessor.getSlot() >= 0 && clickSlotC2SPacketAccessor.getSlot() < this.y.length) {
-                    clickSlotC2SPacketAccessor.setSlot(this.y[clickSlotC2SPacketAccessor.getSlot()]);
+                if (this.sortOrder != null && clickSlotC2SPacketAccessor.getSyncId() != 0 && clickSlotC2SPacketAccessor.getSyncId() == mc.player.currentScreenHandler.syncId && clickSlotC2SPacketAccessor.getSlot() >= 0 && clickSlotC2SPacketAccessor.getSlot() < this.sortOrder.length) {
+                    clickSlotC2SPacketAccessor.setSlot(this.sortOrder[clickSlotC2SPacketAccessor.getSlot()]);
                 }
             }
         }
@@ -260,18 +260,18 @@ public class ServerAssistant extends Module {
             if (InventoryUtil.b(item) == -1) {
                 ChatUtil.sendMessage("&c" + name + "&7 - нет в инвентаре");
             } else {
-                Delta.getInstance().getModuleProcessor().v().b().a(item.getDefaultStack());
+                Delta.getInstance().getModuleProcessor().v().getUseableHandler().a(item.getDefaultStack());
             }
         }).a(() -> {
             Stream stream = Arrays.stream(servers);
-            ModeSetting modeSetting = this.b;
+            ModeSetting modeSetting = this.targetServer;
             Objects.requireNonNull(modeSetting);
             return Boolean.valueOf(Arrays.stream(servers).anyMatch(server -> modeSetting.l(server)));
         });
-        if (this.w == null) {
-            this.w = new ArrayList<>();
+        if (this.bindEntries == null) {
+            this.bindEntries = new ArrayList<>();
         }
-        this.w.add(new b(new AnimationUtil(), setting, item));
+        this.bindEntries.add(new b(new AnimationUtil(), setting, item));
         return setting;
     }
 
@@ -299,17 +299,17 @@ public class ServerAssistant extends Module {
         private boolean b(ItemStack stack) {
             if (stack.getItem() instanceof ArmorItem) {
                 EnchantmentProcessor enchament = new EnchantmentProcessor();
-                if (ServerAssistant.this.d.a("Защите").c().booleanValue()) {
+                if (ServerAssistant.this.armorFilter.a("Защите").c().booleanValue()) {
                     enchament.a(Enchantments.UNBREAKING, 4);
                     enchament.a(Enchantments.PROTECTION, 5);
                 }
-                if (ServerAssistant.this.d.a("Аншип").c().booleanValue()) {
+                if (ServerAssistant.this.armorFilter.a("Аншип").c().booleanValue()) {
                     enchament.b(Enchantments.THORNS);
                 }
-                if (ServerAssistant.this.d.a("Починке").c().booleanValue()) {
+                if (ServerAssistant.this.armorFilter.a("Починке").c().booleanValue()) {
                     enchament.a(Enchantments.MENDING, 1);
                 }
-                if (ServerAssistant.this.d.a("Подводной ходьбе").c().booleanValue() && stack.get(DataComponentTypes.EQUIPPABLE) != null && stack.get(DataComponentTypes.EQUIPPABLE).slot() == EquipmentSlot.FEET) {
+                if (ServerAssistant.this.armorFilter.a("Подводной ходьбе").c().booleanValue() && stack.get(DataComponentTypes.EQUIPPABLE) != null && stack.get(DataComponentTypes.EQUIPPABLE).slot() == EquipmentSlot.FEET) {
                     enchament.a(Enchantments.DEPTH_STRIDER, 1);
                 }
                 return enchament.a(stack);
@@ -320,7 +320,7 @@ public class ServerAssistant extends Module {
         private boolean c(ItemStack stack) {
             if (stack.getItem() instanceof SwordItem) {
                 EnchantmentProcessor enchantmentProcessor = new EnchantmentProcessor().b(Enchantments.KNOCKBACK, 2);
-                if (ServerAssistant.this.e.a("Остроте").c().booleanValue()) {
+                if (ServerAssistant.this.swordFilter.a("Остроте").c().booleanValue()) {
                     enchantmentProcessor.a(Enchantments.SHARPNESS, 6);
                 }
                 enchantmentProcessor.b(Enchantments.KNOCKBACK, 1);
@@ -328,16 +328,16 @@ public class ServerAssistant extends Module {
                     DescriptionProcessor descriptionProcessor = new DescriptionProcessor();
                     descriptionProcessor.b("Нестабильность ");
                     descriptionProcessor.b("Нестабильный ");
-                    if (ServerAssistant.this.e.a("Детекции").c().booleanValue()) {
+                    if (ServerAssistant.this.swordFilter.a("Детекции").c().booleanValue()) {
                         descriptionProcessor.a("Детекция", 2);
                     }
-                    if (ServerAssistant.this.e.a("Вампиризму").c().booleanValue()) {
+                    if (ServerAssistant.this.swordFilter.a("Вампиризму").c().booleanValue()) {
                         descriptionProcessor.a("Вампиризм", 2);
                     }
-                    if (ServerAssistant.this.e.a("Окислению").c().booleanValue()) {
+                    if (ServerAssistant.this.swordFilter.a("Окислению").c().booleanValue()) {
                         descriptionProcessor.a("Окисление", 2);
                     }
-                    if (ServerAssistant.this.e.a("Яду").c().booleanValue()) {
+                    if (ServerAssistant.this.swordFilter.a("Яду").c().booleanValue()) {
                         descriptionProcessor.a("Яд", 3);
                     }
                     return descriptionProcessor.a(stack);
@@ -349,17 +349,17 @@ public class ServerAssistant extends Module {
 
         private boolean d(ItemStack stack) {
             if (stack.getItem() instanceof PickaxeItem) {
-                if (ServerAssistant.this.f.a("Починке").c().booleanValue() && !new EnchantmentProcessor().a(Enchantments.MENDING, 1).a(stack)) {
+                if (ServerAssistant.this.pickaxeFilter.a("Починке").c().booleanValue() && !new EnchantmentProcessor().a(Enchantments.MENDING, 1).a(stack)) {
                     return false;
                 }
                 DescriptionProcessor descriptionProcessor = new DescriptionProcessor();
-                if (ServerAssistant.this.f.a("Удаче").c().booleanValue()) {
+                if (ServerAssistant.this.pickaxeFilter.a("Удаче").c().booleanValue()) {
                     descriptionProcessor.a("Удача", 5);
                 }
-                if (ServerAssistant.this.f.a("Эффективности").c().booleanValue()) {
+                if (ServerAssistant.this.pickaxeFilter.a("Эффективности").c().booleanValue()) {
                     descriptionProcessor.a("Эффективность", 4);
                 }
-                if (ServerAssistant.this.f.a("Магнит").c().booleanValue()) {
+                if (ServerAssistant.this.pickaxeFilter.a("Магнит").c().booleanValue()) {
                     descriptionProcessor.a("Магнит");
                 }
                 return descriptionProcessor.a(stack);

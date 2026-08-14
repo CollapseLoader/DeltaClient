@@ -46,8 +46,8 @@ public class AncientFarmer extends Module {
     private final ExecutorService c = Executors.newSingleThreadExecutor();
     private final CounterUtil d = new CounterUtil();
     private Phase e = Phase.SEARCH;
-    private BlockPos f;
-    private Box g;
+    private BlockPos targetPos;
+    private Box searchBox;
 
     public AncientFarmer() {
         a(this.b);
@@ -56,17 +56,17 @@ public class AncientFarmer extends Module {
     @Override
     public void b() {
         super.b();
-        d(true);
+        applyBaritoneSettings(true);
     }
 
     @Override
     public void c() {
         super.c();
-        d(false);
+        applyBaritoneSettings(false);
     }
 
     @EventTarget
-    public void a(TickEvent event) {
+    public void onTick(TickEvent event) {
         a missing = Arrays.stream(a.values()).filter(requirement -> {
             return !requirement.a();
         }).findFirst().orElse(null);
@@ -78,22 +78,22 @@ public class AncientFarmer extends Module {
             a();
             return;
         }
-        InteractHandler eat = Delta.getInstance().getModuleProcessor().v().k();
+        InteractHandler eat = Delta.getInstance().getModuleProcessor().v().getInteractHandler();
         int foodSlot = IntStream.range(0, 9).filter(slot -> {
             return mc.player.getInventory().getStack(slot).contains(DataComponentTypes.FOOD);
         }).findFirst().orElse(-1);
-        if (!eat.a() && mc.player.getHungerManager().getFoodLevel() <= 17 && foodSlot != -1) {
-            eat.a(foodSlot);
+        if (!eat.hasTasks() && mc.player.getHungerManager().getFoodLevel() <= 17 && foodSlot != -1) {
+            eat.addTask(foodSlot);
         }
         int potionSlot = IntStream.range(0, 9).filter(slot2 -> {
             return StreamSupport.stream(mc.player.getInventory().getStack(slot2).getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).getEffects().spliterator(), false).anyMatch(effect -> {
                 return effect.getEffectType() == StatusEffects.FIRE_RESISTANCE;
             });
         }).findFirst().orElse(-1);
-        if (!eat.a() && potionSlot != -1 && (!mc.player.hasStatusEffect(StatusEffects.FIRE_RESISTANCE) || mc.player.getStatusEffect(StatusEffects.FIRE_RESISTANCE).getDuration() <= 100)) {
-            eat.a(potionSlot);
+        if (!eat.hasTasks() && potionSlot != -1 && (!mc.player.hasStatusEffect(StatusEffects.FIRE_RESISTANCE) || mc.player.getStatusEffect(StatusEffects.FIRE_RESISTANCE).getDuration() <= 100)) {
+            eat.addTask(potionSlot);
         }
-        if (eat.a()) {
+        if (eat.hasTasks()) {
             BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().requestPause();
             return;
         }
@@ -102,31 +102,31 @@ public class AncientFarmer extends Module {
             return;
         }
         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
-        boolean near = this.g != null && mc.player.getBlockPos().isWithinDistance(BlockPos.ofFloored(this.g.getCenter()), 2.5d);
+        boolean near = this.searchBox != null && mc.player.getBlockPos().isWithinDistance(BlockPos.ofFloored(this.searchBox.getCenter()), 2.5d);
         boolean primed = !mc.world.getEntitiesByClass(TntEntity.class, mc.player.getBoundingBox().expand(8.0d), t -> {
             return true;
         }).isEmpty();
-        this.f = null;
-        xray.s().removeIf(pos -> {
+        this.targetPos = null;
+        xray.getDebrisList().removeIf(pos -> {
             return baritone.getMineProcess().getBlacklist().contains(pos);
         });
         switch (this.e) {
             case SEARCH:
-                if (!xray.s().isEmpty()) {
+                if (!xray.getDebrisList().isEmpty()) {
                     ChatUtil.sendMessage("Вскапываем обломки найденные по пути");
                     this.e = Phase.MINE;
-                } else if (this.g == null) {
+                } else if (this.searchBox == null) {
                     this.c.execute(() -> {
-                        if (this.g == null && mc.player.age > 20) {
+                        if (this.searchBox == null && mc.player.age > 20) {
                             ChatUtil.sendMessage("Переходим к поиску новой территории.");
-                            this.g = q();
+                            this.searchBox = searchArea();
                         }
                     });
                 } else if (near) {
                     BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
                     this.e = Phase.TNT;
                 } else if (!baritone.getPathingBehavior().hasPath()) {
-                    baritone.getCustomGoalProcess().setGoalAndPath(new GoalBlock(BlockPos.ofFloored(this.g.getCenter())));
+                    baritone.getCustomGoalProcess().setGoalAndPath(new GoalBlock(BlockPos.ofFloored(this.searchBox.getCenter())));
                 }
                 break;
             case TNT:
@@ -140,7 +140,7 @@ public class AncientFarmer extends Module {
                     this.e = Phase.RETREAT;
                     break;
                 } else if (tnt != null) {
-                    this.f = tnt;
+                    this.targetPos = tnt;
                     int flint = InventoryUtil.a(Items.FLINT_AND_STEEL, true);
                     if (flint != -1) {
                         Vec3d eye = mc.player.getEyePos();
@@ -156,7 +156,7 @@ public class AncientFarmer extends Module {
                             return Double.compare(eye.squaredDistanceTo(a2), eye.squaredDistanceTo(b2));
                         }).orElse(null);
                         if (aim != null) {
-                            Delta.getInstance().getModuleProcessor().k().a(Rotation.a(eye, aim), 180.0f, 0, 1);
+                            Delta.getInstance().getModuleProcessor().k().startAiming(Rotation.a(eye, aim), 180.0f, 0, 1);
                             if (new Rotation(mc.player).a(Rotation.b()) < 1.0d && mc.player.age % 5 == 0) {
                                 mc.player.getInventory().selectedSlot = flint;
                                 if (mc.crosshairTarget instanceof BlockHitResult hit) {
@@ -188,12 +188,12 @@ public class AncientFarmer extends Module {
                     }).min((a3, b3) -> {
                         return Double.compare(eye2.squaredDistanceTo(a3.toCenterPos()), eye2.squaredDistanceTo(b3.toCenterPos()));
                     }).orElse(null);
-                    this.f = target;
+                    this.targetPos = target;
                     int slot3 = InventoryUtil.a(Items.TNT, true);
                     if (target != null) {
                         if (slot3 != -1) {
                             BlockPos support = target.down();
-                            Delta.getInstance().getModuleProcessor().k().a(Rotation.a(eye2, new Vec3d(((double) support.getX()) + 0.5d, support.getY() + 1, ((double) support.getZ()) + 0.5d)), 180.0f, 0, 1);
+                            Delta.getInstance().getModuleProcessor().k().startAiming(Rotation.a(eye2, new Vec3d(((double) support.getX()) + 0.5d, support.getY() + 1, ((double) support.getZ()) + 0.5d)), 180.0f, 0, 1);
                             if (new Rotation(mc.player).a(Rotation.b()) < 1.0d && mc.player.age % 5 == 0) {
                                 if (mc.player.getInventory().selectedSlot != slot3) {
                                     mc.player.getInventory().selectedSlot = slot3;
@@ -239,7 +239,7 @@ public class AncientFarmer extends Module {
                 if (burning.isEmpty()) {
                     ChatUtil.sendMessage("Ожидаем обломки, и начинаем вскапывать");
                     baritone.getPathingBehavior().cancelEverything();
-                    this.g = null;
+                    this.searchBox = null;
                     this.e = Phase.MINE;
                     this.d.b();
                 } else if (!baritone.getPathingBehavior().hasPath()) {
@@ -252,10 +252,10 @@ public class AncientFarmer extends Module {
                 break;
             case MINE:
                 if (this.d.a(1000L)) {
-                    if (!xray.s().isEmpty()) {
+                    if (!xray.getDebrisList().isEmpty()) {
                         if (!baritone.getMineProcess().isActive()) {
-                            baritone.getMineProcess().minePositions(Items.ANCIENT_DEBRIS, xray.s());
-                            Delta.getInstance().f().a(false, "telegram", "message", "⛏️ AncientFarmer — Найдены древние обломки!\n\n📍 Позиций для добычи: %s\n".formatted(Integer.valueOf(xray.s().size())));
+                            baritone.getMineProcess().minePositions(Items.ANCIENT_DEBRIS, xray.getDebrisList());
+                            Delta.getInstance().f().a(false, "telegram", "message", "⛏️ AncientFarmer — Найдены древние обломки!\n\n📍 Позиций для добычи: %s\n".formatted(Integer.valueOf(xray.getDebrisList().size())));
                         }
                     } else if (!baritone.getMineProcess().isActive()) {
                         this.e = Phase.SEARCH;
@@ -267,12 +267,12 @@ public class AncientFarmer extends Module {
 
     @EventTarget
     public void a(DrawEvent draw) {
-        if (draw.c() && this.f != null) {
-            draw.e().a(draw.h(), new Box(this.f), ColorUtil.convertToARGB(230, 90, 70, InterfaceC0020Opcode.ap), 1.0f);
+        if (draw.c() && this.targetPos != null) {
+            draw.e().a(draw.h(), new Box(this.targetPos), ColorUtil.convertToARGB(230, 90, 70, InterfaceC0020Opcode.ap), 1.0f);
         }
     }
 
-    private Box q() {
+    private Box searchArea() {
         BlockPos anchor;
         int reach = ((int) ((Math.sqrt(mc.world.getChunkManager().getLoadedChunkCount()) - 1.0d) / 2.0d)) * 16;
         BlockPos feet = mc.player.getBlockPos();
@@ -329,7 +329,7 @@ public class AncientFarmer extends Module {
         return best;
     }
 
-    public void d(boolean status) {
+    public void applyBaritoneSettings(boolean status) {
         BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything();
         BaritoneAPI.getSettings().blockFreeLook.value = true;
         BaritoneAPI.getSettings().allowBreak.value = true;
@@ -337,7 +337,7 @@ public class AncientFarmer extends Module {
         BaritoneAPI.getSettings().turnSpeed.value = Float.valueOf(60.0f);
         BaritoneAPI.getSettings().randomLooking.value = Double.valueOf(1.0d);
         BaritoneAPI.getSettings().randomLooking113.value = Double.valueOf(1.0d);
-        this.g = null;
+        this.searchBox = null;
         this.e = Phase.SEARCH;
     }
 

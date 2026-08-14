@@ -8,7 +8,7 @@ import aethereal.core.Delta;
 import aethereal.core.InterfaceC0020Opcode;
 import aethereal.core.Module;
 import aethereal.render.*;
-import aethereal.ui.element.Element_2;
+import aethereal.ui.element.Element;
 import aethereal.util.KeyUtil;
 import aethereal.util.MathUtil;
 import net.minecraft.client.gui.DrawContext;
@@ -53,17 +53,17 @@ public class GUIPanel {
                 return true;
             }
         }
-        return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.a(mouseX, mouseY, button));
+        return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element::isEnabled).anyMatch(element -> element.onMouseClick(mouseX, mouseY, button));
     }
 
 
     public boolean b(final double mouseX, final double mouseY, final int button) {
-        return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.b(mouseX, mouseY, button));
+        return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element::isEnabled).anyMatch(element -> element.onMouseRelease(mouseX, mouseY, button));
     }
 
 
     public boolean a(final double mouseX, final double mouseY, final int button, final double deltaX, final double deltaY) {
-        return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.a(mouseX, mouseY, button, deltaX, deltaY));
+        return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element::isEnabled).anyMatch(element -> element.onMouseDrag(mouseX, mouseY, button, deltaX, deltaY));
     }
 
 
@@ -75,12 +75,12 @@ public class GUIPanel {
                 return true;
             }
         }
-        return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.a(keyCode, scanCode, modifiers));
+        return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element::isEnabled).anyMatch(element -> element.onKeyPress(keyCode, scanCode, modifiers));
     }
 
 
     public boolean a(final char chr, final int modifiers) {
-        return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.a(chr, modifiers));
+        return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element::isEnabled).anyMatch(element -> element.onCharTyped(chr, modifiers));
     }
 
 
@@ -88,7 +88,7 @@ public class GUIPanel {
         if (!MathUtil.a(mouseX, mouseY, this.a.x, this.a.y, this.a.z, this.a.w)) {
             return false;
         }
-        if (this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.a(mouseX, mouseY, amount))) {
+        if (this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element::isEnabled).anyMatch(element -> element.onMouseScroll(mouseX, mouseY, amount))) {
             return true;
         }
         this.b.a((float) amount * 15.0f);
@@ -201,7 +201,7 @@ public class GUIPanel {
                     Fonts.c.a(matrices, bindText, boxX + 4.0f + iconWidth + 2.5f, Fonts.c.a(bindText, 6.0f, center), 6.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT).toIntColor(), bind));
                 }
                 if (module.d().stream().anyMatch((v0) -> {
-                    return v0.a();
+                    return v0.isEnabled();
                 })) {
                     Fonts.c.a(matrices, "...", ((((this.a.x + this.a.z) - 6.0f) - 4.0f) - Fonts.c.a("...", 10.0f)) - (activation > 0.0f ? 18.0f : 0.0f), Fonts.c.a("...", 10.0f, center), 10.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), fade));
                 }
@@ -217,16 +217,16 @@ public class GUIPanel {
                     ScissorUtil.a(matrices, this.a.x + 6.0f, y2, this.a.z - 12.0f, total);
                     float baseY = (y2 + 16.0f) - (4.0f * (1.0f - extend));
                     float offset = 0.0f;
-                    for (Element_2<?> element : module.d()) {
-                        element.c().a(element.a());
-                        element.c().a(0.0f, 1.0f, 0.4f, EasingList.i, delta);
-                        float visible = element.c().c();
+                    for (Element<?> element : module.d()) {
+                        element.getVisibilityAnimation().a(element.isEnabled());
+                        element.getVisibilityAnimation().a(0.0f, 1.0f, 0.4f, EasingList.i, delta);
+                        float visible = element.getVisibilityAnimation().c();
                         if (visible > 0.0f) {
                             float targetY = (baseY + offset) - (4.0f * (1.0f - visible));
                             float currentY = baseY + ((targetY - baseY) * extend);
-                            element.d().set(this.a.x + 6.0f + 4.5f, currentY, (this.a.z - 12.0f) - 8.0f, element.d().w());
-                            element.a(context, mouseX, mouseY, delta, extend * visible);
-                            offset += (element.d().w() + 4.0f) * visible;
+                            element.getBounds().set(this.a.x + 6.0f + 4.5f, currentY, (this.a.z - 12.0f) - 8.0f, element.getBounds().w());
+                            element.render(context, mouseX, mouseY, delta, extend * visible);
+                            offset += (element.getBounds().w() + 4.0f) * visible;
                         }
                     }
                     ScissorUtil.a(matrices);
@@ -239,15 +239,15 @@ public class GUIPanel {
 
     public void a(DrawContext context, double mouseX, double mouseY, float delta) {
         for (Module module : this.e) {
-            for (Element_2<?> element : module.d()) {
-                element.a(context, mouseX, mouseY, delta);
+            for (Element<?> element : module.d()) {
+                element.renderColorPicker(context, mouseX, mouseY, delta);
             }
         }
     }
 
     private float b(Module module) {
         return 16.0f + (module.d().isEmpty() ? 0.0f : ((float) module.d().stream().mapToDouble(e -> {
-            return (e.d().w() + 4.0f) * e.c().c();
+            return (e.getBounds().w() + 4.0f) * e.getVisibilityAnimation().c();
         }).sum()) * module.h().c());
     }
 

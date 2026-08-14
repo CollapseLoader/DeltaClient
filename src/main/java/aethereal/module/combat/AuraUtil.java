@@ -220,7 +220,7 @@ public class AuraUtil implements Interface {
             return end;
         }
         float stepped = MathHelper.wrapDegrees(start + (delta * amountClamped));
-        float patched = RotationProcessor.a(start, stepped);
+        float patched = RotationProcessor.snapToGCD(start, stepped);
         float remaining = MathHelper.wrapDegrees(end - patched);
         return Math.abs(remaining) < 0.5f ? end : patched;
     }

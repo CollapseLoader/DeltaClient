@@ -3,7 +3,7 @@ package aethereal.command;
 
 import aethereal.config.BaseProcessor;
 import aethereal.lib.log4j.LoggerFactory;
-import aethereal.lib.log4j.Logger_2;
+import aethereal.lib.log4j.Logger;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -21,21 +21,21 @@ import java.util.List;
 
 public class CommandProcessor extends BaseProcessor {
 
-    private static final Logger_2 b;
+    private static final Logger logger;
 
     static {
-        b = LoggerFactory.a(CommandProcessor.class);
+        logger = LoggerFactory.a(CommandProcessor.class);
     }
 
-    private final List<BaseCommand> d = new ArrayList<>();
-    private final WayCommand e = new WayCommand();
-    private final GPSCommand f = new GPSCommand();
-    private final LayoutCommand g = new LayoutCommand();
-    private final RCTCommand h = new RCTCommand();
-    private final BlockESPCommand i = new BlockESPCommand();
-    private final String k = ".";
-    private final CommandDispatcher<CommandSource> c = new CommandDispatcher<>(new CaseInsensitiveLiteral.a());
-    private final ClientCommandSource j = new ClientCommandSource(null, MinecraftClient.getInstance());
+    private final List<BaseCommand> commands = new ArrayList<>();
+    private final WayCommand wayCommand = new WayCommand();
+    private final GPSCommand gpsCommand = new GPSCommand();
+    private final LayoutCommand layoutCommand = new LayoutCommand();
+    private final RCTCommand rctCommand = new RCTCommand();
+    private final BlockESPCommand blockESPCommand = new BlockESPCommand();
+    private final String prefix = ".";
+    private final CommandDispatcher<CommandSource> dispatcher = new CommandDispatcher<>(new CaseInsensitiveLiteral.a());
+    private final ClientCommandSource commandSource = new ClientCommandSource(null, MinecraftClient.getInstance());
 
     public static <T> RequiredArgumentBuilder<CommandSource, T> a(String name, ArgumentType<T> type) {
         return RequiredArgumentBuilder.argument(name, type);
@@ -44,39 +44,39 @@ public class CommandProcessor extends BaseProcessor {
     @Override
 
     public void setup() {
-        a(this.e, this.f, this.g, this.h, this.i, new AHCommand(), new MacrosCommand(), new FriendCommand(), new StaffCommand(), new WardenCommand(), new ConfigCommand(), new BindCommand(), new VClipCommand(), new HClipCommand(), new CCCommand());
+        a(this.wayCommand, this.gpsCommand, this.layoutCommand, this.rctCommand, this.blockESPCommand, new AHCommand(), new MacrosCommand(), new FriendCommand(), new StaffCommand(), new WardenCommand(), new ConfigCommand(), new BindCommand(), new VClipCommand(), new HClipCommand(), new CCCommand());
     }
 
     public CommandDispatcher<CommandSource> a() {
-        return this.c;
+        return this.dispatcher;
     }
 
     public List<BaseCommand> b() {
-        return this.d;
+        return this.commands;
     }
 
     public WayCommand c() {
-        return this.e;
+        return this.wayCommand;
     }
 
     public GPSCommand d() {
-        return this.f;
+        return this.gpsCommand;
     }
 
     public LayoutCommand e() {
-        return this.g;
+        return this.layoutCommand;
     }
 
     public RCTCommand f() {
-        return this.h;
+        return this.rctCommand;
     }
 
     public BlockESPCommand g() {
-        return this.i;
+        return this.blockESPCommand;
     }
 
     public ClientCommandSource h() {
-        return this.j;
+        return this.commandSource;
     }
 
     public String i() {
@@ -89,8 +89,8 @@ public class CommandProcessor extends BaseProcessor {
 
     public void a(BaseCommand... commands) {
         for (BaseCommand command : commands) {
-            this.d.add(command);
-            command.a(this.c);
+            this.commands.add(command);
+            command.a(this.dispatcher);
         }
     }
 
@@ -101,7 +101,7 @@ public class CommandProcessor extends BaseProcessor {
         String command = message.substring(i().length()).trim();
         if (!command.isEmpty()) {
             try {
-                ParseResults<CommandSource> results = this.c.parse(command, this.j);
+                ParseResults<CommandSource> results = this.dispatcher.parse(command, this.commandSource);
                 for (ParsedCommandNode<CommandSource> parsed : results.getContext().getNodes()) {
                     if (parsed.getNode() instanceof LiteralCommandNode) {
                         LiteralCommandNode<CommandSource> literal = (LiteralCommandNode<CommandSource>) parsed.getNode();
@@ -111,7 +111,7 @@ public class CommandProcessor extends BaseProcessor {
                         }
                     }
                 }
-                this.c.execute(results);
+                this.dispatcher.execute(results);
                 ci.cancel();
             } catch (CommandSyntaxException e) {
                 System.out.println("Failure command: " + e.getMessage());

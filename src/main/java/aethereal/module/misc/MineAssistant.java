@@ -20,28 +20,28 @@ import java.util.List;
 @ModuleRegister(name = "Mine Assistant", description = "Помощник, упрощающий добычу ресурсов в шахте под FunTime/SpookyTime", category = Category.Misc)
 public class MineAssistant extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Выберите подсвечиваемые руды", new BooleanSetting("Алмазная", true), new BooleanSetting("Редстоуновая", false), new BooleanSetting("Железная", false), new BooleanSetting("Лазуритовая", false), new BooleanSetting("Золотая", true), new BooleanSetting("Древние", true), new BooleanSetting("Угольная", false));
-    private final List<a> c = java.util.Arrays.asList(new a(Blocks.DIAMOND_ORE, Color.CYAN.getRGB(), "Алмазная"), new a(Blocks.DEEPSLATE_DIAMOND_ORE, Color.CYAN.getRGB(), "Алмазная"), new a(Blocks.REDSTONE_ORE, Color.RED.getRGB(), "Редстоуновая"), new a(Blocks.DEEPSLATE_REDSTONE_ORE, Color.RED.getRGB(), "Редстоуновая"), new a(Blocks.IRON_ORE, Color.LIGHT_GRAY.getRGB(), "Железная"), new a(Blocks.DEEPSLATE_IRON_ORE, Color.LIGHT_GRAY.getRGB(), "Железная"), new a(Blocks.LAPIS_ORE, Color.BLUE.getRGB(), "Лазуритовая"), new a(Blocks.DEEPSLATE_LAPIS_ORE, Color.BLUE.getRGB(), "Лазуритовая"), new a(Blocks.GOLD_ORE, Color.YELLOW.getRGB(), "Золотая"), new a(Blocks.DEEPSLATE_GOLD_ORE, Color.YELLOW.getRGB(), "Золотая"), new a(Blocks.ANCIENT_DEBRIS, new Color(InterfaceC0020Opcode.aJ, 51, 0).getRGB(), "Древние"), new a(Blocks.COAL_ORE, Color.DARK_GRAY.getRGB(), "Угольная"), new a(Blocks.DEEPSLATE_COAL_ORE, Color.DARK_GRAY.getRGB(), "Угольная"), new a(Blocks.AIR, -1, null), new a(Blocks.STONE, -1, null), new a(Blocks.GRANITE, -1, null), new a(Blocks.COBBLESTONE, -1, null));
-    private Box d;
+    private final List<findOreInfo> c = java.util.Arrays.asList(new findOreInfo(Blocks.DIAMOND_ORE, Color.CYAN.getRGB(), "Алмазная"), new findOreInfo(Blocks.DEEPSLATE_DIAMOND_ORE, Color.CYAN.getRGB(), "Алмазная"), new findOreInfo(Blocks.REDSTONE_ORE, Color.RED.getRGB(), "Редстоуновая"), new findOreInfo(Blocks.DEEPSLATE_REDSTONE_ORE, Color.RED.getRGB(), "Редстоуновая"), new findOreInfo(Blocks.IRON_ORE, Color.LIGHT_GRAY.getRGB(), "Железная"), new findOreInfo(Blocks.DEEPSLATE_IRON_ORE, Color.LIGHT_GRAY.getRGB(), "Железная"), new findOreInfo(Blocks.LAPIS_ORE, Color.BLUE.getRGB(), "Лазуритовая"), new findOreInfo(Blocks.DEEPSLATE_LAPIS_ORE, Color.BLUE.getRGB(), "Лазуритовая"), new findOreInfo(Blocks.GOLD_ORE, Color.YELLOW.getRGB(), "Золотая"), new findOreInfo(Blocks.DEEPSLATE_GOLD_ORE, Color.YELLOW.getRGB(), "Золотая"), new findOreInfo(Blocks.ANCIENT_DEBRIS, new Color(InterfaceC0020Opcode.aJ, 51, 0).getRGB(), "Древние"), new findOreInfo(Blocks.COAL_ORE, Color.DARK_GRAY.getRGB(), "Угольная"), new findOreInfo(Blocks.DEEPSLATE_COAL_ORE, Color.DARK_GRAY.getRGB(), "Угольная"), new findOreInfo(Blocks.AIR, -1, null), new findOreInfo(Blocks.STONE, -1, null), new findOreInfo(Blocks.GRANITE, -1, null), new findOreInfo(Blocks.COBBLESTONE, -1, null));
+    private Box mineArea;
 
     public MineAssistant() {
         a(this.b);
     }
 
-    public Box r() {
-        return this.d;
+    public Box getMineArea() {
+        return this.mineArea;
     }
 
     @EventTarget
-    public void a(TickEvent event) {
+    public void onTick(TickEvent event) {
         if (ServerUtil.a.a() || ServerUtil.d.a()) {
-            q();
+            detectMineArea();
         }
     }
 
-    public void q() {
+    public void detectMineArea() {
         for (ArmorStandEntity stand : mc.world.getEntitiesByClass(ArmorStandEntity.class, mc.player.getBoundingBox().expand(256.0), e -> true)) {
             if (stand.getName().getString().contains("Авто-Шахта")) {
-                if (this.d == null || this.d.getAverageSideLength() <= 15.0d) {
+                if (this.mineArea == null || this.mineArea.getAverageSideLength() <= 15.0d) {
                     int scanY = ((int) Math.floor(stand.getY())) - 2;
                     int startX = (int) Math.floor(stand.getX());
                     int startZ = (int) Math.floor(stand.getZ());
@@ -61,25 +61,25 @@ public class MineAssistant extends Module {
                     while (a(mc.world.getBlockState(new BlockPos(startX, scanY, maxZ + 1)).getBlock()) != null) {
                         maxZ++;
                     }
-                    this.d = new Box(minX, scanY + 1, minZ, maxX + 1, scanY - 8, maxZ + 1);
+                    this.mineArea = new Box(minX, scanY + 1, minZ, maxX + 1, scanY - 8, maxZ + 1);
                     return;
                 }
                 return;
             }
         }
-        this.d = null;
+        this.mineArea = null;
     }
 
     @EventTarget
-    public void a(DrawEvent event) {
-        if (event.c() && this.d != null) {
-            for (int x = (int) this.d.minX; x <= ((int) this.d.maxX); x++) {
-                for (int y = (int) this.d.minY; y <= ((int) this.d.maxY); y++) {
-                    for (int z = (int) this.d.minZ; z <= ((int) this.d.maxZ); z++) {
+    public void onDraw(DrawEvent event) {
+        if (event.c() && this.mineArea != null) {
+            for (int x = (int) this.mineArea.minX; x <= ((int) this.mineArea.maxX); x++) {
+                for (int y = (int) this.mineArea.minY; y <= ((int) this.mineArea.maxY); y++) {
+                    for (int z = (int) this.mineArea.minZ; z <= ((int) this.mineArea.maxZ); z++) {
                         BlockPos pos = new BlockPos(x, y, z);
-                        a info = a(mc.world.getBlockState(pos).getBlock());
-                        if (info != null && info.b() != -1 && this.b.a(info.c()).c().booleanValue()) {
-                            event.e().a(event.h(), new Box(pos), ColorUtil.combineColorWithAlpha(info.b(), InterfaceC0020Opcode.ap), 1.0f);
+                        findOreInfo info = a(mc.world.getBlockState(pos).getBlock());
+                        if (info != null && info.getColor() != -1 && this.b.a(info.getName()).c().booleanValue()) {
+                            event.e().a(event.h(), new Box(pos), ColorUtil.combineColorWithAlpha(info.getColor(), InterfaceC0020Opcode.ap), 1.0f);
                         }
                     }
                 }
@@ -87,8 +87,8 @@ public class MineAssistant extends Module {
         }
     }
 
-    public a a(Block block) {
-        for (a info : this.c) {
+    public findOreInfo a(Block block) {
+        for (findOreInfo info : this.c) {
             if (info.a == block) {
                 return info;
             }
@@ -96,26 +96,26 @@ public class MineAssistant extends Module {
         return null;
     }
 
-    public static class a {
+    public static class findOreInfo {
         final Block a;
         final int b;
         final String c;
 
-        a(Block block, int color, String name) {
+        findOreInfo(Block block, int color, String name) {
             this.a = block;
             this.b = color;
             this.c = name;
         }
 
-        public Block a() {
+        public Block getBlock() {
             return this.a;
         }
 
-        public int b() {
+        public int getColor() {
             return this.b;
         }
 
-        public String c() {
+        public String getName() {
             return this.c;
         }
     }

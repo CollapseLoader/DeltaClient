@@ -28,49 +28,49 @@ public class AimAssistant extends Module {
     private final BooleanSetting c = new BooleanSetting("Наводить за стеной", false);
     private final SliderSetting d = new SliderSetting("Порог", 5.0f, 1.0f, 5.0f, 0.25f);
     private final BooleanSetting e = new BooleanSetting("Только с оружием", true);
-    private LivingEntity f;
-    private Vec3d g;
+    private LivingEntity target;
+    private Vec3d targetPos;
 
     public AimAssistant() {
         a(this.b, this.c, this.d, this.e);
     }
 
-    public LivingEntity q() {
-        return this.f;
+    public LivingEntity getTarget() {
+        return this.target;
     }
 
     @Override
     public void c() {
         super.c();
-        this.f = null;
+        this.target = null;
     }
 
     @EventTarget
-    public void a(TickEvent event) {
+    public void onTick(TickEvent event) {
         TriggerBot trigger = Delta.getInstance().getModuleProcessor().t().X();
-        LivingEntity found = trigger.m() ? trigger.s() : r();
-        if (found != this.f) {
-            this.g = null;
+        LivingEntity found = trigger.m() ? trigger.getTarget() : findTarget();
+        if (found != this.target) {
+            this.targetPos = null;
         }
-        this.f = found;
+        this.target = found;
     }
 
     @EventTarget
-    public void a(LookEvent event) {
-        if (!a(this.f) || mc.player.isUsingItem()) {
+    public void onLook(LookEvent event) {
+        if (!isValidTarget(this.target) || mc.player.isUsingItem()) {
             return;
         }
-        if (!this.e.c().booleanValue() || s()) {
-            Vec3d position = AuraUtil.a(mc.player.getEyePos(), this.f, 3.0d, this.c.c().booleanValue());
+        if (!this.e.c().booleanValue() || hasWeapon()) {
+            Vec3d position = AuraUtil.a(mc.player.getEyePos(), this.target, 3.0d, this.c.c().booleanValue());
             if (position == Vec3d.ZERO) {
                 return;
             }
-            this.g = this.g == null ? position : this.g.lerp(position, 0.2000000448441151d);
-            float yaw = (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(this.g.z, this.g.x)) - 90.0d);
-            float pitch = (float) (-Math.toDegrees(Math.atan2(this.g.y, Math.hypot(this.g.x, this.g.z))));
+            this.targetPos = this.targetPos == null ? position : this.targetPos.lerp(position, 0.2000000448441151d);
+            float yaw = (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(this.targetPos.z, this.targetPos.x)) - 90.0d);
+            float pitch = (float) (-Math.toDegrees(Math.atan2(this.targetPos.y, Math.hypot(this.targetPos.x, this.targetPos.z))));
             float deltaYaw = MathHelper.wrapDegrees(yaw - mc.player.getYaw());
             float deltaPitch = pitch - mc.player.getPitch();
-            if (Math.abs(deltaPitch) <= 13.0f && Math.abs(deltaYaw) < 8.0f && AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), 3.0d, this.f, this.c.c().booleanValue())) {
+            if (Math.abs(deltaPitch) <= 13.0f && Math.abs(deltaYaw) < 8.0f && AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), 3.0d, this.target, this.c.c().booleanValue())) {
                 deltaPitch = 0.0f;
             }
             float frame = mc.getRenderTickCounter().getLastFrameDuration();
@@ -87,28 +87,28 @@ public class AimAssistant extends Module {
         }
     }
 
-    private LivingEntity r() {
+    private LivingEntity findTarget() {
         Vec3d eye = mc.player.getEyePos();
         Vec3d look = Vec3d.fromPolar(mc.player.getPitch(), mc.player.getYaw());
         return StreamSupport.stream(mc.world.getEntities().spliterator(), false)
                 .filter(LivingEntity.class::isInstance)
                 .map(LivingEntity.class::cast)
-                .filter(entity -> a(entity) && (this.c.c().booleanValue() || AuraUtil.a(eye, entity, 4.0d)))
+                .filter(entity -> isValidTarget(entity) && (this.c.c().booleanValue() || AuraUtil.a(eye, entity, 4.0d)))
                 .min(Comparator.comparingDouble(entity2 ->
                         Math.acos(MathHelper.clamp(look.dotProduct(entity2.getBoundingBox().getCenter().subtract(eye).normalize()), -1.0d, 1.0d))))
                 .orElse(null);
     }
 
-    private boolean s() {
+    private boolean hasWeapon() {
         Item item = mc.player.getMainHandStack().getItem();
         return (item instanceof SwordItem) || (item instanceof AxeItem) || (item instanceof MaceItem);
     }
 
-    private boolean a(LivingEntity entity) {
-        return entity != null && entity.isAlive() && !entity.isRemoved() && entity != mc.player && AuraUtil.a((Entity) entity, 4.0d + (mc.player.getVelocity().length() * 3.0d)) && b(entity);
+    private boolean isValidTarget(LivingEntity entity) {
+        return entity != null && entity.isAlive() && !entity.isRemoved() && entity != mc.player && AuraUtil.a((Entity) entity, 4.0d + (mc.player.getVelocity().length() * 3.0d)) && isTargetAllowed(entity);
     }
 
-    private boolean b(LivingEntity entity) {
+    private boolean isTargetAllowed(LivingEntity entity) {
         if (entity instanceof PlayerEntity player) {
             return this.b.a("Игроки").c().booleanValue() && (this.b.a("Друзья").c().booleanValue() || !Delta.getInstance().getModuleProcessor().e().d(player.getName().getString()));
         }

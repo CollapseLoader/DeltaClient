@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class EventManager {
-    private static final Map<Class<? extends IEvent>, List<a>> a = new HashMap<>();
+    private static final Map<Class<? extends Event>, List<a>> a = new HashMap<>();
 
     private EventManager() {
     }
@@ -23,7 +23,7 @@ public class EventManager {
         }
     }
 
-    public static void a(Object object, Class<? extends IEvent> eventClass) {
+    public static void a(Object object, Class<? extends Event> eventClass) {
         for (Method method : object.getClass().getDeclaredMethods()) {
             if (!a(method, eventClass)) {
                 a(method, object);
@@ -42,7 +42,7 @@ public class EventManager {
         a(true);
     }
 
-    public static void b(Object object, Class<? extends IEvent> eventClass) {
+    public static void b(Object object, Class<? extends Event> eventClass) {
         if (a.containsKey(eventClass)) {
             for (a data : a.get(eventClass)) {
                 if (data.a().equals(object)) {
@@ -69,12 +69,12 @@ public class EventManager {
             }
             if (!z) {
                 a.get(cls).add(aVar);
-                b((Class<? extends IEvent>) cls);
+                b((Class<? extends Event>) cls);
                 return;
             }
             return;
         }
-        a.put((Class<? extends IEvent>) cls, new CopyOnWriteArrayList<a>() {
+        a.put((Class<? extends Event>) cls, new CopyOnWriteArrayList<a>() {
             @Serial
             private static final long serialVersionUID = 666;
 
@@ -84,8 +84,8 @@ public class EventManager {
         });
     }
 
-    public static void a(Class<? extends IEvent> indexClass) {
-        Iterator<Map.Entry<Class<? extends IEvent>, List<a>>> mapIterator = a.entrySet().iterator();
+    public static void a(Class<? extends Event> indexClass) {
+        Iterator<Map.Entry<Class<? extends Event>, List<a>>> mapIterator = a.entrySet().iterator();
         while (mapIterator.hasNext()) {
             if (mapIterator.next().getKey().equals(indexClass)) {
                 mapIterator.remove();
@@ -95,7 +95,7 @@ public class EventManager {
     }
 
     public static void a(boolean onlyEmptyEntries) {
-        Iterator<Map.Entry<Class<? extends IEvent>, List<a>>> mapIterator = a.entrySet().iterator();
+        Iterator<Map.Entry<Class<? extends Event>, List<a>>> mapIterator = a.entrySet().iterator();
         while (mapIterator.hasNext()) {
             if (!onlyEmptyEntries || mapIterator.next().getValue().isEmpty()) {
                 mapIterator.remove();
@@ -103,7 +103,7 @@ public class EventManager {
         }
     }
 
-    private static void b(Class<? extends IEvent> indexClass) {
+    private static void b(Class<? extends Event> indexClass) {
         List<a> sortedList = new CopyOnWriteArrayList<>();
         for (byte priority : Priority.f) {
             for (a data : a.get(indexClass)) {
@@ -119,11 +119,11 @@ public class EventManager {
         return method.getParameterTypes().length != 1 || !method.isAnnotationPresent(EventTarget.class);
     }
 
-    private static boolean a(Method method, Class<? extends IEvent> eventClass) {
+    private static boolean a(Method method, Class<? extends Event> eventClass) {
         return a(method) || !method.getParameterTypes()[0].equals(eventClass);
     }
 
-    public static void a(IEvent event) {
+    public static void a(Event event) {
         List<a> dataList = a.get(event.getClass());
         if (dataList != null) {
             for (a data : dataList) {
@@ -132,7 +132,7 @@ public class EventManager {
         }
     }
 
-    private static void a(a data, IEvent argument) {
+    private static void a(a data, Event argument) {
         try {
             data.b().invoke(data.a(), argument);
         } catch (IllegalAccessException e) {

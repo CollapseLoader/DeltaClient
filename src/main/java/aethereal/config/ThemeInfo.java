@@ -11,19 +11,19 @@ public enum ThemeInfo {
     TEXT(new ThemeConstructor("typography_text", 255, 255, 255, 255), new ThemeConstructor("typography_text", 17, 18, 22, 255)),
     TEXT_DISABLED(new ThemeConstructor("typography_disabled", 67, 70, 81, 255), new ThemeConstructor("typography_disabled", InterfaceC0020Opcode.bv, InterfaceC0020Opcode.aD, InterfaceC0020Opcode.C, 255));
 
-    private final ThemeConstructor h;
-    private final ThemeConstructor i;
+    private final ThemeConstructor dark;
+    private final ThemeConstructor light;
 
     ThemeInfo(ThemeConstructor dark, ThemeConstructor light) {
-        this.h = dark;
-        this.i = light;
+        this.dark = dark;
+        this.light = light;
     }
 
     public ThemeConstructor a(ThemeType theme) {
-        return theme == ThemeType.LIGHT ? this.i : this.h;
+        return theme == ThemeType.LIGHT ? this.light : this.dark;
     }
 
     public ThemeConstructor a() {
-        return this.i;
+        return this.light;
     }
 }

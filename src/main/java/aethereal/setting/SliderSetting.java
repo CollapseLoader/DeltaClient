@@ -1,6 +1,6 @@
 package aethereal.setting;
 
-import aethereal.ui.element.Element_2;
+import aethereal.ui.element.Element;
 import aethereal.ui.element.SliderElement;
 
 public class SliderSetting extends Setting<Float> {
@@ -24,7 +24,7 @@ public class SliderSetting extends Setting<Float> {
     }
 
     @Override
-    public Element_2<?> createBooleanElement() {
+    public Element<?> createBooleanElement() {
         return new SliderElement(this);
     }
 }

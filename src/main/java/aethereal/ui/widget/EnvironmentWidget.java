@@ -44,7 +44,7 @@ public class EnvironmentWidget extends Widget implements Interface {
         this.g = new HashMap<>();
         this.h = new ArrayList<>();
         this.i = new UUID[2];
-        j().a(this);
+        j().setWidget(this);
         a(this.f);
     }
 
@@ -101,8 +101,8 @@ public class EnvironmentWidget extends Widget implements Interface {
     public void a(DrawEvent event) {
         d().a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
         float animation = a();
-        float x = j().a();
-        float y = j().b();
+        float x = j().getClampedX();
+        float y = j().getClampedY();
         Stream<UUID> stream = this.h.stream();
         Map<UUID, b> map = this.g;
         Objects.requireNonNull(map);
@@ -116,7 +116,7 @@ public class EnvironmentWidget extends Widget implements Interface {
             width = Math.max(width, Math.max(20.0f + Fonts.e.a(data.d + ((int) data.f) + "HP", 6.5f) + 34.0f,
                     (data.b.size() * 15.0f) - 2.0f));
         }
-        j().c(width);
+        j().setWidth(width);
         if (animation > 0.0f) {
             a(event, "x", "Окружение", width, animation);
         }
@@ -125,7 +125,7 @@ public class EnvironmentWidget extends Widget implements Interface {
         while (it.hasNext()) {
             contentY += a(event, it.next(), x, contentY, width, animation);
         }
-        j().d(Math.max(this.d, (contentY - y) - 2.0f));
+        j().setHeight(Math.max(this.d, (contentY - y) - 2.0f));
         super.a(event);
     }
 
@@ -193,12 +193,12 @@ public class EnvironmentWidget extends Widget implements Interface {
     public void a(GlobalEvent event) {
         PlayerEntity class_1657Var;
         if (mc.world != null && mc.player != null) {
-            PlayerEntity class_1657VarS = (PlayerEntity) Delta.getInstance().getModuleProcessor().t().B().s();
+            PlayerEntity class_1657VarS = (PlayerEntity) Delta.getInstance().getModuleProcessor().t().B().getTarget();
             if (class_1657VarS instanceof PlayerEntity) {
                 PlayerEntity aura = class_1657VarS;
                 class_1657Var = aura;
             } else {
-                PlayerEntity class_1657VarS2 = (PlayerEntity) Delta.getInstance().getModuleProcessor().t().X().s();
+                PlayerEntity class_1657VarS2 = (PlayerEntity) Delta.getInstance().getModuleProcessor().t().X().getTarget();
                 if (class_1657VarS2 instanceof PlayerEntity) {
                     PlayerEntity trigger = class_1657VarS2;
                     class_1657Var = trigger;

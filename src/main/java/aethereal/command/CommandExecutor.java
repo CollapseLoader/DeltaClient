@@ -18,12 +18,12 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class CommandExecutor {
 
-    private static final Logger a = LogManager.b(CommandExecutor.class);
-    private final ConcurrentHashMap<String, CompletableFuture<JsonObject>> b = new ConcurrentHashMap<>();
-    private final AtomicLong c = new AtomicLong();
-    private final AtomicBoolean d = new AtomicBoolean(false);
-    private final long e;
-    private final a f;
+    private static final Logger logger = LogManager.b(CommandExecutor.class);
+    private final ConcurrentHashMap<String, CompletableFuture<JsonObject>> pendingCommands = new ConcurrentHashMap<>();
+    private final AtomicLong nonceCounter = new AtomicLong();
+    private final AtomicBoolean shuttingDown = new AtomicBoolean(false);
+    private final long commandTimeoutMs;
+    private final a rateLimiter;
 
     public CommandExecutor(long commandTimeoutMs, int maxCommandsPerSecond) {
         if (commandTimeoutMs <= 0) {
@@ -32,23 +32,23 @@ public class CommandExecutor {
         if (maxCommandsPerSecond < 0) {
             throw new IllegalArgumentException("maxCommandsPerSecond must be >= 0");
         }
-        this.e = commandTimeoutMs;
-        this.f = maxCommandsPerSecond > 0 ? new a(maxCommandsPerSecond) : null;
+        this.commandTimeoutMs = commandTimeoutMs;
+        this.rateLimiter = maxCommandsPerSecond > 0 ? new a(maxCommandsPerSecond) : null;
     }
 
     public void a() {
-        this.d.set(true);
+        this.shuttingDown.set(true);
     }
 
     public void b() {
-        this.d.set(false);
+        this.shuttingDown.set(false);
     }
 
     public JsonObject a(Connection connection, String cmd, JsonObject args, String evt) throws IOException {
         c();
-        String nonce = String.valueOf(this.c.incrementAndGet());
+        String nonce = String.valueOf(this.nonceCounter.incrementAndGet());
         CompletableFuture<JsonObject> future = new CompletableFuture<>();
-        this.b.put(nonce, future);
+        this.pendingCommands.put(nonce, future);
         try {
             try {
                 try {
@@ -62,17 +62,17 @@ public class CommandExecutor {
                         payload.addProperty("evt", evt);
                     }
                     payload.addProperty("nonce", nonce);
-                    a.a("Sending command: {} (nonce: {})", cmd, nonce);
+                    logger.a("Sending command: {} (nonce: {})", cmd, nonce);
                     d();
                     a(nonce, future);
                     connection.a(new Frame(OpCode.FRAME, payload));
-                    JsonObject jsonObject = future.get(this.e, TimeUnit.MILLISECONDS);
-                    this.b.remove(nonce, future);
+                    JsonObject jsonObject = future.get(this.commandTimeoutMs, TimeUnit.MILLISECONDS);
+                    this.pendingCommands.remove(nonce, future);
                     return jsonObject;
                 } catch (CommandException e) {
                     throw e;
                 } catch (TimeoutException e2) {
-                    throw new IOException("Command timed out after " + this.e + " ms", e2);
+                    throw new IOException("Command timed out after " + this.commandTimeoutMs + " ms", e2);
                 }
             } catch (InterruptedException e3) {
                 Thread.currentThread().interrupt();
@@ -87,7 +87,7 @@ public class CommandExecutor {
                 throw new IOException("Command timeout or error", e5);
             }
         } catch (Throwable th) {
-            this.b.remove(nonce, future);
+            this.pendingCommands.remove(nonce, future);
             throw th;
         }
     }
@@ -95,7 +95,7 @@ public class CommandExecutor {
     public boolean a(JsonObject json) {
         CompletableFuture<JsonObject> future;
         String nonce = JsonUtils.a(json, "nonce").orElse(null);
-        if (nonce == null || (future = this.b.remove(nonce)) == null) {
+        if (nonce == null || (future = this.pendingCommands.remove(nonce)) == null) {
             return false;
         }
         String evt = JsonUtils.a(json, "evt").orElse(null);
@@ -111,35 +111,35 @@ public class CommandExecutor {
     }
 
     public void a(Throwable cause) {
-        this.d.set(false);
-        this.b.forEach((nonce, future) -> {
-            if (this.b.remove(nonce, future)) {
-                a.a("Cancelling pending command: {}", nonce);
+        this.shuttingDown.set(false);
+        this.pendingCommands.forEach((nonce, future) -> {
+            if (this.pendingCommands.remove(nonce, future)) {
+                logger.a("Cancelling pending command: {}", nonce);
                 future.completeExceptionally(cause);
             }
         });
     }
 
     private void c() throws IOException {
-        if (!this.d.get()) {
+        if (!this.shuttingDown.get()) {
             throw new IOException("Connection is not available");
         }
     }
 
     private void a(String nonce, CompletableFuture<JsonObject> future) throws IOException {
-        if (this.d.get()) {
+        if (this.shuttingDown.get()) {
             return;
         }
-        this.b.remove(nonce, future);
+        this.pendingCommands.remove(nonce, future);
         throw new IOException("Connection is not available");
     }
 
     private void d() throws IOException {
-        if (this.f == null) {
+        if (this.rateLimiter == null) {
             return;
         }
         try {
-            this.f.a();
+            this.rateLimiter.a();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new InterruptedIOException("Interrupted while waiting for command rate limiter");
@@ -147,23 +147,23 @@ public class CommandExecutor {
     }
 
     static final class a {
-        private final int a;
-        private double b;
-        private long c = System.nanoTime();
+        private final int capacity;
+        private double availableTokens;
+        private long lastRefillTime = System.nanoTime();
 
         a(int capacity) {
-            this.a = capacity;
-            this.b = capacity;
+            this.capacity = capacity;
+            this.availableTokens = capacity;
         }
 
         synchronized void a() throws InterruptedException {
             while (true) {
                 b();
-                if (this.b >= 1.0d) {
-                    this.b -= 1.0d;
+                if (this.availableTokens >= 1.0d) {
+                    this.availableTokens -= 1.0d;
                     return;
                 }
-                long waitNanos = (long) Math.ceil(((1.0d - this.b) / ((double) this.a)) * 1.0E9d);
+                long waitNanos = (long) Math.ceil(((1.0d - this.availableTokens) / ((double) this.capacity)) * 1.0E9d);
                 long waitMillis = Math.max(1L, waitNanos / 1000000);
                 int nanosPart = (int) Math.max(0L, waitNanos % 1000000);
                 wait(waitMillis, nanosPart);
@@ -172,9 +172,9 @@ public class CommandExecutor {
 
         private void b() {
             long now = System.nanoTime();
-            double elapsedSeconds = (now - this.c) / 1.0E9d;
-            this.b = Math.min(this.a, this.b + (elapsedSeconds * ((double) this.a)));
-            this.c = now;
+            double elapsedSeconds = (now - this.lastRefillTime) / 1.0E9d;
+            this.availableTokens = Math.min(this.capacity, this.availableTokens + (elapsedSeconds * ((double) this.capacity)));
+            this.lastRefillTime = now;
         }
     }
 }

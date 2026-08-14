@@ -5,8 +5,8 @@ import aethereal.event.InputEvent;
 import net.minecraft.util.math.MathHelper;
 
 public class MoveUtil implements Interface {
-    private static int b = Integer.MAX_VALUE;
-    private static float c;
+    private static int minPriority = Integer.MAX_VALUE;
+    private static float targetYaw;
 
     private MoveUtil() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
@@ -17,15 +17,15 @@ public class MoveUtil implements Interface {
     }
 
     public static void a(InputEvent event, float yaw, int priority) {
-        if (priority >= b) {
+        if (priority >= minPriority) {
             return;
         }
-        b = priority;
-        c = yaw;
+        minPriority = priority;
+        targetYaw = yaw;
     }
 
     public static void a(InputEvent event) {
-        if (b == Integer.MAX_VALUE) {
+        if (minPriority == Integer.MAX_VALUE) {
             return;
         }
         float forward = event.getForward();
@@ -33,7 +33,7 @@ public class MoveUtil implements Interface {
         if (forward == 0.0f && strafe == 0.0f) {
             return;
         }
-        float yaw = c;
+        float yaw = targetYaw;
         double angle = MathHelper.wrapDegrees(Math.toDegrees(a(yaw, forward, strafe)));
         float bestF = 0.0f;
         float bestS = 0.0f;
@@ -51,7 +51,7 @@ public class MoveUtil implements Interface {
                 }
             }
         }
-        b = Integer.MAX_VALUE;
+        minPriority = Integer.MAX_VALUE;
         event.setForward(bestF);
         event.setStrafe(bestS);
     }

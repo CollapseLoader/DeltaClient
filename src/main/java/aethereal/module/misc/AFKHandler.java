@@ -40,7 +40,7 @@ public class AFKHandler extends BaseHandler implements Interface {
         if (this.b > 0) {
             e.setForward(ThreadLocalRandom.current().nextBoolean() ? 1.0f : -1.0f);
             e.setStrafe(ThreadLocalRandom.current().nextBoolean() ? 1.0f : -1.0f);
-            Delta.getInstance().getModuleProcessor().k().a(new Rotation(mc.player.getYaw() + MathUtil.a(-2.0f, 2.0f), MathUtil.b(mc.player.getPitch() + MathUtil.a(-1.0f, 1.0f), -90.0f, 90.0f)), 150.0f, 10, 1);
+            Delta.getInstance().getModuleProcessor().k().startAiming(new Rotation(mc.player.getYaw() + MathUtil.a(-2.0f, 2.0f), MathUtil.b(mc.player.getPitch() + MathUtil.a(-1.0f, 1.0f), -90.0f, 90.0f)), 150.0f, 10, 1);
         }
     }
 }

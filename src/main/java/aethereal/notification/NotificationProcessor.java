@@ -3,7 +3,6 @@ package aethereal.notification;
 
 import aethereal.config.BaseProcessor;
 import aethereal.core.EventTarget;
-import aethereal.core.Interface;
 import aethereal.event.DrawEvent;
 import aethereal.event.TickEvent;
 import aethereal.render.EasingList;
@@ -12,7 +11,7 @@ import net.minecraft.client.gui.screen.ChatScreen;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationProcessor extends BaseProcessor implements Interface {
+public class NotificationProcessor extends BaseProcessor {
     private final Notification b = new Notification("o", "Пример отображения уведомления", 0);
     private final List<Notification> c = new ArrayList<>();
 

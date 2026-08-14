@@ -11,7 +11,7 @@ import java.util.List;
 public class StaffProcessor extends ConfigProcessor<StaffConstructor> {
     @Override
 
-    protected List<StaffConstructor> a(String json) throws Exception {
+    protected List<StaffConstructor> loadConfig(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
         ArrayList arrayList = new ArrayList<>();
         for (int i = 0; i < jSONArray.a(); i++) {
@@ -22,7 +22,7 @@ public class StaffProcessor extends ConfigProcessor<StaffConstructor> {
 
     @Override
 
-    protected String a(List<StaffConstructor> data) throws Exception {
+    protected String saveConfig(List<StaffConstructor> data) throws Exception {
         JSONArray jSONArray = new JSONArray();
         for (StaffConstructor staffConstructor : data) {
             JSONObject jSONObject = new JSONObject();
@@ -33,7 +33,7 @@ public class StaffProcessor extends ConfigProcessor<StaffConstructor> {
     }
 
     @Override
-    protected String b() {
+    protected String getConfigFileName() {
         return "staff.json";
     }
 

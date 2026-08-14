@@ -44,7 +44,7 @@ public abstract class LivingEntityMixin implements ILivingEntity {
     private void removePushFromEntity(CallbackInfoReturnable<Boolean> cir) {
         LivingEntity entity = (LivingEntity) (Object) this;
         if (entity instanceof ClientPlayerEntity) {
-            PushEvent event = new PushEvent(PushEvent.a.ENTITIES);
+            PushEvent event = new PushEvent(PushEvent.type.ENTITIES);
             EventManager.a(event);
             if (event.a()) {
                 cir.setReturnValue(false);

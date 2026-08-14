@@ -32,80 +32,80 @@ public class AuraHandler extends BaseHandler implements Interface {
     private final int[][] c = {new int[]{0, 4, 2}, new int[]{0, 3, 4}, new int[]{0, 5, 3}, new int[]{0, 2, 5}, new int[]{1, 2, 4}, new int[]{1, 4, 3}, new int[]{1, 3, 5}, new int[]{1, 5, 2}};
     private final float[] d = {1.0f, 0.8f, 0.6f, 0.9f, 0.7f, 0.5f, 0.4f, 0.6f};
     private final AnimationUtil e = new AnimationUtil();
-    private LivingEntity f;
+    private LivingEntity target;
 
-    public AnimationUtil a() {
+    public AnimationUtil getAnimation() {
         return this.e;
     }
 
     @EventTarget
-    public void a(DrawEvent event) {
+    public void onDraw(DrawEvent event) {
         this.e.a(0.0f, 1.0f, 0.2f, EasingList.g, event.g());
         float moving = ((System.currentTimeMillis() % 360000) / 2.5f) + this.e.c();
-        if (event.c() && this.f != null) {
+        if (event.c() && this.target != null) {
             float anim = this.e.c();
             if (anim > 0.0f) {
                 int themeColor = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor();
-                Vec3d renderPos = a(this.f);
-                float ringWidth = this.f.getWidth() * 1.5f;
+                Vec3d renderPos = getInterpolatedPosition(this.target);
+                float ringWidth = this.target.getWidth() * 1.5f;
                 float ringScale = 1.25f - (0.5f * anim);
-                b();
-                if (Delta.getInstance().getModuleProcessor().t().B().r().l("Круг")) {
-                    a(event.h(), renderPos, ColorUtil.applyAlphaToColor(themeColor, anim));
+                enableRenderState();
+                if (Delta.getInstance().getModuleProcessor().t().B().getVisualizationMode().l("Круг")) {
+                    drawCircle(event.h(), renderPos, ColorUtil.applyAlphaToColor(themeColor, anim));
                 } else {
-                    a(event.h(), renderPos, ringWidth, ringScale, moving, ColorUtil.applyAlphaToColor(themeColor, anim));
-                    a(event.h(), renderPos, ringWidth, ringScale, moving, ColorUtil.applyAlphaToColor(themeColor, anim * 0.2f), anim);
+                    drawRing(event.h(), renderPos, ringWidth, ringScale, moving, ColorUtil.applyAlphaToColor(themeColor, anim));
+                    drawBloom(event.h(), renderPos, ringWidth, ringScale, moving, ColorUtil.applyAlphaToColor(themeColor, anim * 0.2f), anim);
                 }
-                c();
+                disableRenderState();
             }
         }
     }
 
     @EventTarget
-    public void a(GlobalEvent event) {
+    public void onGlobalEvent(GlobalEvent event) {
         if (mc.player != null) {
             Delta.getInstance().getModuleProcessor().t().B().b++;
         }
     }
 
     @EventTarget
-    public void a(TickEvent event) {
+    public void onTick(TickEvent event) {
         Aura aura = Delta.getInstance().getModuleProcessor().t().B();
-        LivingEntity current = aura.s() != null ? aura.s() : Delta.getInstance().getModuleProcessor().t().X().s();
-        boolean changed = current != null && this.f != null && current != this.f;
+        LivingEntity current = aura.getTarget() != null ? aura.getTarget() : Delta.getInstance().getModuleProcessor().t().X().getTarget();
+        boolean changed = current != null && this.target != null && current != this.target;
         boolean visible = current != null && !changed;
         if (visible) {
-            this.f = current;
+            this.target = current;
         }
         this.e.a(visible);
         if (!visible && this.e.a() <= 0.0f) {
-            this.f = changed ? current : null;
+            this.target = changed ? current : null;
         }
     }
 
-    private void a(MatrixStack stack, Vec3d renderPos, float ringWidth, float ringScale, float moving, int color) {
+    private void drawRing(MatrixStack stack, Vec3d renderPos, float ringWidth, float ringScale, float moving, int color) {
         RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         BufferBuilder buffer = Tessellator.getInstance().begin(VertexFormat.DrawMode.TRIANGLES, VertexFormats.POSITION_COLOR);
         Vec3d cam = mc.getEntityRenderDispatcher().camera.getPos();
-        Vec3d targetCenter = this.f.getPos().add(0.0d, ((double) this.f.getHeight()) / 2.0d, 0.0d);
+        Vec3d targetCenter = this.target.getPos().add(0.0d, ((double) this.target.getHeight()) / 2.0d, 0.0d);
         for (int i = 0; i < 360; i += 20) {
             float angle = (float) Math.toRadians(i + (moving * 0.3f));
             float offsetX = ((float) Math.sin(angle)) * ringWidth * ringScale;
             float offsetZ = ((float) Math.cos(angle)) * ringWidth * ringScale;
-            float offsetY = 0.1f + (this.f.getHeight() * Math.abs((float) Math.sin(i)));
+            float offsetY = 0.1f + (this.target.getHeight() * Math.abs((float) Math.sin(i)));
             Vec3d crystalPos = renderPos.add(offsetX, offsetY, offsetZ);
             stack.push();
             stack.translate(crystalPos.getX() - cam.x, crystalPos.getY() - cam.y, crystalPos.getZ() - cam.z);
             stack.multiply(new Quaternionf().rotationTo(new Vector3f(0.0f, 1.0f, 0.0f), new Vector3f((float) (targetCenter.x - crystalPos.getX()), (float) (targetCenter.y - crystalPos.getY()), (float) (targetCenter.z - crystalPos.getZ())).normalize()));
             stack.scale(0.1f, 0.1f, 0.1f);
-            a(stack.peek().getPositionMatrix(), buffer, color);
+            drawCrystalVertices(stack.peek().getPositionMatrix(), buffer, color);
             stack.pop();
         }
         BufferRenderer.drawWithGlobalProgram(buffer.end());
     }
 
-    private void a(Matrix4f matrix, BufferBuilder buffer, int color) {
+    private void drawCrystalVertices(Matrix4f matrix, BufferBuilder buffer, int color) {
         int[] rgba = ColorUtil.b(color);
         int red = rgba[0];
         int green = rgba[1];
@@ -122,7 +122,7 @@ public class AuraHandler extends BaseHandler implements Interface {
         }
     }
 
-    private void a(MatrixStack stack, Vec3d renderPos, float ringWidth, float ringScale, float moving, int color, float anim) {
+    private void drawBloom(MatrixStack stack, Vec3d renderPos, float ringWidth, float ringScale, float moving, int color, float anim) {
         int[] rgba = ColorUtil.b(color);
         int red = rgba[0];
         int green = rgba[1];
@@ -130,12 +130,12 @@ public class AuraHandler extends BaseHandler implements Interface {
         int alpha = rgba[3];
         RenderSystem.setShaderTexture(0, Identifier.of("delta", "pictures/bloom.png"));
         RenderSystem.setShader(ShaderProgramKeys.POSITION_TEX_COLOR);
-        a(stack, renderPos, ringWidth, ringScale, moving, 1.5f * anim, red, green, blue, alpha);
-        a(stack, renderPos, ringWidth, ringScale, moving, 0.6f * anim, red, green, blue, alpha);
+        drawBloomQuads(stack, renderPos, ringWidth, ringScale, moving, 1.5f * anim, red, green, blue, alpha);
+        drawBloomQuads(stack, renderPos, ringWidth, ringScale, moving, 0.6f * anim, red, green, blue, alpha);
         RenderSystem.setShaderTexture(0, 0);
     }
 
-    private void a(MatrixStack stack, Vec3d renderPos, float ringWidth, float ringScale, float moving, float size, int red, int green, int blue, int alpha) {
+    private void drawBloomQuads(MatrixStack stack, Vec3d renderPos, float ringWidth, float ringScale, float moving, float size, int red, int green, int blue, int alpha) {
         BufferBuilder buffer = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE_COLOR);
         Quaternionf cameraRotation = mc.gameRenderer.getCamera().getRotation();
         Vec3d cam = mc.getEntityRenderDispatcher().camera.getPos();
@@ -144,7 +144,7 @@ public class AuraHandler extends BaseHandler implements Interface {
             float angle = (float) Math.toRadians(i + (moving * 0.3f));
             float offsetX = ((float) Math.sin(angle)) * ringWidth * ringScale;
             float offsetZ = ((float) Math.cos(angle)) * ringWidth * ringScale;
-            float offsetY = 0.1f + (this.f.getHeight() * Math.abs((float) Math.sin(i)));
+            float offsetY = 0.1f + (this.target.getHeight() * Math.abs((float) Math.sin(i)));
             stack.push();
             stack.translate((renderPos.getX() + ((double) offsetX)) - cam.x, (renderPos.getY() + ((double) offsetY)) - cam.y, (renderPos.getZ() + ((double) offsetZ)) - cam.z);
             stack.multiply(cameraRotation);
@@ -158,13 +158,13 @@ public class AuraHandler extends BaseHandler implements Interface {
         BufferRenderer.drawWithGlobalProgram(buffer.end());
     }
 
-    private void a(MatrixStack stack, Vec3d renderPos, int color) {
+    private void drawCircle(MatrixStack stack, Vec3d renderPos, int color) {
         RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         Matrix4f matrix = stack.peek().getPositionMatrix();
         Vec3d cam = mc.getEntityRenderDispatcher().camera.getPos();
-        float height = this.f.getHeight() + 0.15f;
-        float radius = this.f.getWidth() * 0.8f;
+        float height = this.target.getHeight() + 0.15f;
+        float radius = this.target.getWidth() * 0.8f;
         double time = System.currentTimeMillis() % 1750.0d;
         boolean inverted = time > 875.0d;
         double progress = time / 875.0d;
@@ -198,7 +198,7 @@ public class AuraHandler extends BaseHandler implements Interface {
         BufferRenderer.drawWithGlobalProgram(outline.end());
     }
 
-    private void b() {
+    private void enableRenderState() {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE);
         RenderSystem.disableCull();
@@ -206,14 +206,14 @@ public class AuraHandler extends BaseHandler implements Interface {
         RenderSystem.depthMask(false);
     }
 
-    private void c() {
+    private void disableRenderState() {
         RenderSystem.depthMask(true);
         RenderSystem.enableDepthTest();
         RenderSystem.enableCull();
         RenderSystem.disableBlend();
     }
 
-    private Vec3d a(LivingEntity target) {
+    private Vec3d getInterpolatedPosition(LivingEntity target) {
         float tickDelta = MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(false);
         return new Vec3d(MathHelper.lerp(tickDelta, target.prevX, target.getX()), MathHelper.lerp(tickDelta, target.prevY, target.getY()), MathHelper.lerp(tickDelta, target.prevZ, target.getZ()));
     }

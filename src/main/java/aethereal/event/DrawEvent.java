@@ -10,56 +10,56 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 
 public class DrawEvent extends Event implements Interface {
-    private final Draw2DProcessor b = Delta.getInstance().getModuleProcessor().i();
-    private final Draw3DProcessor c = Delta.getInstance().getModuleProcessor().j();
-    private final a d;
-    private final float e;
-    private final MatrixStack f;
-    private DrawContext g;
+    private final Draw2DProcessor draw2DProcessor = Delta.getInstance().getModuleProcessor().i();
+    private final Draw3DProcessor draw3DProcessor = Delta.getInstance().getModuleProcessor().j();
+    private final a type;
+    private final float tickDelta;
+    private final MatrixStack matrixStack;
+    private DrawContext drawContext;
 
     public DrawEvent(MatrixStack stack, float tickDelta, a type) {
-        this.f = stack;
-        this.e = tickDelta;
-        this.d = type;
+        this.matrixStack = stack;
+        this.tickDelta = tickDelta;
+        this.type = type;
     }
 
     public DrawEvent(DrawContext context, float tickDelta, a type) {
-        this.g = context;
-        this.f = context.getMatrices();
-        this.e = tickDelta;
-        this.d = type;
+        this.drawContext = context;
+        this.matrixStack = context.getMatrices();
+        this.tickDelta = tickDelta;
+        this.type = type;
     }
 
     public Draw2DProcessor d() {
-        return this.b;
+        return this.draw2DProcessor;
     }
 
     public Draw3DProcessor e() {
-        return this.c;
+        return this.draw3DProcessor;
     }
 
     public a f() {
-        return this.d;
+        return this.type;
     }
 
     public float g() {
-        return this.e;
+        return this.tickDelta;
     }
 
     public MatrixStack h() {
-        return this.f;
+        return this.matrixStack;
     }
 
     public DrawContext i() {
-        return this.g;
+        return this.drawContext;
     }
 
     public boolean b() {
-        return this.d == a.D2D;
+        return this.type == a.D2D;
     }
 
     public boolean c() {
-        return this.d == a.D3D;
+        return this.type == a.D3D;
     }
 
     public enum a {

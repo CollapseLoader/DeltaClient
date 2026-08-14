@@ -24,14 +24,14 @@ import java.util.Map;
 public class CooldownsWidget extends Widget implements Interface {
     public CooldownsWidget() {
         super(new DragInfo("Задержки", 0.0f, 0.0f, 0.0f, 0.0f));
-        j().a(this);
+        j().setWidget(this);
     }
 
     @Override
     public void a(DrawEvent event) {
         d().a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
-        float x = j().a();
-        float y = j().b();
+        float x = j().getClampedX();
+        float y = j().getClampedY();
         float targetWidth = 14.5f + Fonts.e.a("Cooldowns", this.e) + 5.0f + 2.0f;
         float contentY = y + this.d + 3.0f;
         ItemCooldownManagerAccessor accessor = (ItemCooldownManagerAccessor) mc.player.getItemCooldownManager();
@@ -46,8 +46,8 @@ public class CooldownsWidget extends Widget implements Interface {
                 targetWidth = Math.max(targetWidth, 19.0f + Fonts.e.a(item.getName().getString(), 6.5f) + 8.0f + Fonts.e.a(String.format("%.1fс", Float.valueOf(remaining / 20.0f)), 6.5f) + 5.0f + 2.0f);
             }
         }
-        float width = MathUtil.c(j().f(), targetWidth, 0.5f);
-        j().c(width);
+        float width = MathUtil.c(j().getWidth(), targetWidth, 0.5f);
+        j().setWidth(width);
         if (a() > 0.0f) {
             a(event, "d", "Cooldowns", width, a());
         }
@@ -74,7 +74,7 @@ public class CooldownsWidget extends Widget implements Interface {
                 contentY += 13.5f * animation;
             }
         }
-        j().d(active ? (contentY - y) - 2.0f : this.d);
+        j().setHeight(active ? (contentY - y) - 2.0f : this.d);
         super.a(event);
     }
 

@@ -27,7 +27,7 @@ public class AutoEat extends Module {
     public void b(int level) {
         int slot;
         if (mc.player != null && mc.player.getHungerManager().getFoodLevel() < level && (slot = q()) >= 0) {
-            Delta.getInstance().getModuleProcessor().v().k().a(slot);
+            Delta.getInstance().getModuleProcessor().v().getInteractHandler().addTask(slot);
         }
     }
 

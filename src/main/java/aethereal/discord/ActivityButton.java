@@ -6,8 +6,8 @@ import aethereal.util.UrlValidator;
 import com.google.gson.JsonObject;
 
 public final class ActivityButton {
-    private final String a;
-    private final String b;
+    private final String label;
+    private final String url;
 
     public ActivityButton(String label, String url) {
         if (label == null || label.isEmpty() || label.length() > 32) {
@@ -17,22 +17,22 @@ public final class ActivityButton {
             throw new IllegalArgumentException("Button URL must be at most 256 characters");
         }
         UrlValidator.a(url, "Button URL", 256);
-        this.a = label;
-        this.b = url;
+        this.label = label;
+        this.url = url;
     }
 
     public String b() {
-        return this.a;
+        return this.label;
     }
 
     public String c() {
-        return this.b;
+        return this.url;
     }
 
     public JsonObject a() {
         JsonObject json = new JsonObject();
-        json.addProperty("label", this.a);
-        json.addProperty("url", this.b);
+        json.addProperty("label", this.label);
+        json.addProperty("url", this.url);
         return json;
     }
 }

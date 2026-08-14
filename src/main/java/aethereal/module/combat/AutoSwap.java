@@ -29,7 +29,7 @@ public class AutoSwap extends Module {
                 return;
             }
             if (this.b.l("Двойной")) {
-                Delta.getInstance().getModuleProcessor().v().a().a(InventoryUtil.c(mc.player.getOffHandStack().getItem() == a(this.c) ? a(this.d) : a(this.c)), 45, 1);
+                Delta.getInstance().getModuleProcessor().v().getInventoryHandler().moveItem(InventoryUtil.c(mc.player.getOffHandStack().getItem() == a(this.c) ? a(this.d) : a(this.c)), 45, 1);
             } else if (this.b.l("Тройной")) {
                 mc.setScreen(this.e);
             }

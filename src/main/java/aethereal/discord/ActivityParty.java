@@ -8,18 +8,18 @@ import com.google.gson.JsonPrimitive;
 import java.util.Optional;
 
 public final class ActivityParty {
-    public static final int a = 0;
-    public static final int b = 1;
-    private final String c;
-    private final int d;
-    private final int e;
-    private final Integer f;
+    public static final int privacyUnknown = 0;
+    public static final int privacyPublic = 1;
+    private final String id;
+    private final int currentSize;
+    private final int maxSize;
+    private final Integer privacy;
 
     public ActivityParty(String id, int currentSize, int maxSize, Integer privacy) {
-        this.c = id;
-        this.d = currentSize;
-        this.e = maxSize;
-        this.f = privacy;
+        this.id = id;
+        this.currentSize = currentSize;
+        this.maxSize = maxSize;
+        this.privacy = privacy;
     }
 
     public static ActivityParty a(String id, int currentSize, int maxSize) {
@@ -40,33 +40,33 @@ public final class ActivityParty {
     }
 
     public String b() {
-        return this.c;
+        return this.id;
     }
 
     public int c() {
-        return this.d;
+        return this.currentSize;
     }
 
     public int d() {
-        return this.e;
+        return this.maxSize;
     }
 
     public Integer e() {
-        return this.f;
+        return this.privacy;
     }
 
     public JsonObject a() {
         JsonObject json = new JsonObject();
-        Optional.ofNullable(this.c).ifPresent(v -> {
+        Optional.ofNullable(this.id).ifPresent(v -> {
             json.addProperty("id", v);
         });
-        if (this.e > 0) {
+        if (this.maxSize > 0) {
             JsonArray sizeArr = new JsonArray();
-            sizeArr.add(new JsonPrimitive(Integer.valueOf(this.d)));
-            sizeArr.add(new JsonPrimitive(Integer.valueOf(this.e)));
+            sizeArr.add(new JsonPrimitive(Integer.valueOf(this.currentSize)));
+            sizeArr.add(new JsonPrimitive(Integer.valueOf(this.maxSize)));
             json.add("size", sizeArr);
         }
-        Optional.ofNullable(this.f).ifPresent(p -> {
+        Optional.ofNullable(this.privacy).ifPresent(p -> {
             json.addProperty("privacy", p);
         });
         return json;

@@ -6,25 +6,25 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 
 public class BlockChangeEvent extends Event {
-    private final BlockPos a;
-    private final BlockState b;
-    private final BlockState c;
+    private final BlockPos pos;
+    private final BlockState oldState;
+    private final BlockState newState;
 
     public BlockChangeEvent(BlockPos pos, BlockState oldState, BlockState state) {
-        this.a = pos;
-        this.b = oldState;
-        this.c = state;
+        this.pos = pos;
+        this.oldState = oldState;
+        this.newState = state;
     }
 
     public BlockPos b() {
-        return this.a;
+        return this.pos;
     }
 
     public BlockState c() {
-        return this.b;
+        return this.oldState;
     }
 
     public BlockState d() {
-        return this.c;
+        return this.newState;
     }
 }

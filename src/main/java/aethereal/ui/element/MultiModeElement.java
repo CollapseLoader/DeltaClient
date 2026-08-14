@@ -16,20 +16,20 @@ import org.joml.Vector4f;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class MultiModeElement extends Element_2<MultiModeSetting> {
-    private final AnimationUtil[] d;
+public class MultiModeElement extends Element<MultiModeSetting> {
+    private final AnimationUtil[] modeAnimations;
 
     public MultiModeElement(MultiModeSetting setting) {
         super(setting);
-        this.d = new AnimationUtil[setting.c().size()];
-        for (int i = 0; i < this.d.length; i++) {
-            this.d[i] = new AnimationUtil();
+        this.modeAnimations = new AnimationUtil[setting.c().size()];
+        for (int i = 0; i < this.modeAnimations.length; i++) {
+            this.modeAnimations[i] = new AnimationUtil();
         }
     }
 
     @Override
 
-    public boolean a(double mouseX, double mouseY, int button) {
+    public boolean onMouseClick(double mouseX, double mouseY, int button) {
         Vector4f vector4f = this.a;
         var setting = this.b;
         if (button != 0) {
@@ -84,7 +84,7 @@ public class MultiModeElement extends Element_2<MultiModeSetting> {
     }
 
     @Override
-    public void a(DrawContext context, double mouseX, double mouseY, float delta, float extend) {
+    public void render(DrawContext context, double mouseX, double mouseY, float delta, float extend) {
         MatrixStack matrices = context.getMatrices();
         Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
         ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
@@ -95,7 +95,7 @@ public class MultiModeElement extends Element_2<MultiModeSetting> {
         String counter = selectedCount + " из " + selectedCount;
         float counterWidth = Fonts.c.a(counter, 6.5f);
         boolean hovered = MathUtil.a(mouseX, mouseY, this.a.x, this.a.y, this.a.z, this.a.w) && extend >= 1.0f;
-        a(matrices, Fonts.c, this.b.i(), this.a.x, this.a.y, Fonts.c.a(6.5f) + 1.0f, 6.5f, theme.a(ThemeInfo.TEXT).toIntColor(), (this.a.z - counterWidth) - 4.0f, hovered, extend, delta);
+        drawLabel(matrices, Fonts.c, this.b.i(), this.a.x, this.a.y, Fonts.c.a(6.5f) + 1.0f, 6.5f, theme.a(ThemeInfo.TEXT).toIntColor(), (this.a.z - counterWidth) - 4.0f, hovered, extend, delta);
         Fonts.c.a(matrices, counter, (this.a.x + this.a.z) - counterWidth, this.a.y + 0.25f, 6.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), extend));
         float x = this.a.x;
         float y = this.a.y + Fonts.c.a(6.5f) + 5.0f;
@@ -106,9 +106,9 @@ public class MultiModeElement extends Element_2<MultiModeSetting> {
                 x = this.a.x;
                 y += 12.0f;
             }
-            this.d[i].a(mode.c().booleanValue());
-            this.d[i].a(0.0f, 1.0f, 0.3f, EasingList.i, delta);
-            float value = this.d[i].c();
+            this.modeAnimations[i].a(mode.c().booleanValue());
+            this.modeAnimations[i].a(0.0f, 1.0f, 0.3f, EasingList.i, delta);
+            float value = this.modeAnimations[i].c();
             draw.a(matrices, x, y, width, 9.0f, 2.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), ((5.0f + (65.0f * value)) / 255.0f) * extend));
             draw.a(matrices, x, y, width, 9.0f, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * extend));
             int color = ColorUtil.lerpColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), theme.a(ThemeInfo.TEXT).toIntColor(), value);

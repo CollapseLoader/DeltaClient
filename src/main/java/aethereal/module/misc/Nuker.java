@@ -23,7 +23,7 @@ public class Nuker extends Module {
     private final SliderSetting c = new SliderSetting("Дистанция копания", 4.0f, 1.0f, 6.0f, 0.5f);
     private final SliderSetting d = new SliderSetting("Скорость копания", 1.0f, 1.0f, 5.0f, 1.0f);
     private final BooleanSetting e = new BooleanSetting("Не копать под себя", true);
-    private BlockPos f;
+    private BlockPos targetPos;
 
     public Nuker() {
         a(this.b, this.c, this.d, this.e);
@@ -32,19 +32,19 @@ public class Nuker extends Module {
     @Override
     public void b() {
         super.b();
-        this.f = null;
+        this.targetPos = null;
     }
 
     @Override
     public void c() {
         super.c();
-        this.f = null;
+        this.targetPos = null;
     }
 
     @EventTarget
-    public void a(TickEvent event) {
+    public void onTick(TickEvent event) {
         MineAssistant assistant = Delta.getInstance().getModuleProcessor().t().ak();
-        this.f = null;
+        this.targetPos = null;
         ItemStack tool = mc.player.getMainHandStack();
         if (tool.isDamageable() && tool.getMaxDamage() - tool.getDamage() < 50) {
             ChatUtil.sendMessage("Работа прекращена во избежание поломки кирки.");
@@ -52,7 +52,7 @@ public class Nuker extends Module {
             return;
         }
         if (this.b.l("Шахта ФанТайм") && ServerUtil.a.a()) {
-            assistant.q();
+            assistant.detectMineArea();
         }
         boolean pickaxe = tool.getItem() instanceof PickaxeItem;
         int minY = this.e.c().booleanValue() ? mc.player.getBlockY() + ((pickaxe && InventoryUtil.a(tool, "Бульдозер")) ? 1 : 0) : Integer.MIN_VALUE;
@@ -63,7 +63,7 @@ public class Nuker extends Module {
         double bestScore = 1.7976922776554427E308d;
         Direction face = null;
         for (BlockPos pos : BlockPos.iterate(BlockPos.ofFloored(scan.minX, scan.minY, scan.minZ), BlockPos.ofFloored(scan.maxX, scan.maxY, scan.maxZ))) {
-            if (pos.getY() >= minY && a(pos, pickaxe, assistant.r())) {
+            if (pos.getY() >= minY && a(pos, pickaxe, assistant.getMineArea())) {
                 Vec3d center = pos.toCenterPos();
                 Vec3d diff = center.subtract(eye);
                 double along = diff.dotProduct(look);
@@ -72,18 +72,18 @@ public class Nuker extends Module {
                     double score = diff.subtract(look.multiply(along)).lengthSquared();
                     if (score < bestScore) {
                         bestScore = score;
-                        this.f = pos.toImmutable();
+                        this.targetPos = pos.toImmutable();
                         face = Direction.getFacing(hit.subtract(center));
                     }
                 }
             }
         }
-        if (this.f != null) {
-            Rotation base = Rotation.a(eye, this.f.toCenterPos());
-            Delta.getInstance().getModuleProcessor().k().a(new Rotation(MathHelper.wrapDegrees(base.c() + MathUtil.a(-3.0f, 3.0f)), MathHelper.clamp(base.d() + MathUtil.a(-3.0f, 3.0f), -90.0f, 90.0f)), 180.0f, 1, 1);
+        if (this.targetPos != null) {
+            Rotation base = Rotation.a(eye, this.targetPos.toCenterPos());
+            Delta.getInstance().getModuleProcessor().k().startAiming(new Rotation(MathHelper.wrapDegrees(base.c() + MathUtil.a(-3.0f, 3.0f)), MathHelper.clamp(base.d() + MathUtil.a(-3.0f, 3.0f), -90.0f, 90.0f)), 180.0f, 1, 1);
             if (Rotation.b().a(base) <= 20.0d) {
                 for (int i = 0; i < this.d.h().intValue(); i++) {
-                    mc.interactionManager.updateBlockBreakingProgress(this.f, face);
+                    mc.interactionManager.updateBlockBreakingProgress(this.targetPos, face);
                 }
                 mc.player.swingHand(Hand.MAIN_HAND);
             }
@@ -91,16 +91,16 @@ public class Nuker extends Module {
     }
 
     @EventTarget
-    public void a(InputEvent event) {
-        if (this.f != null) {
+    public void onInput(InputEvent event) {
+        if (this.targetPos != null) {
             MoveUtil.a(event, Look.b(), 5);
         }
     }
 
     @EventTarget
-    public void a(DrawEvent event) {
-        if (event.c() && this.f != null) {
-            event.e().a(event.h(), new Box(this.f), ColorUtil.convertToARGB(255, 0, 0, InterfaceC0020Opcode.aN), 2.0f);
+    public void onDraw(DrawEvent event) {
+        if (event.c() && this.targetPos != null) {
+            event.e().a(event.h(), new Box(this.targetPos), ColorUtil.convertToARGB(255, 0, 0, InterfaceC0020Opcode.aN), 2.0f);
         }
     }
 

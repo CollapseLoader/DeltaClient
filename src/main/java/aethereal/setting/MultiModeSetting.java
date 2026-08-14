@@ -1,6 +1,6 @@
 package aethereal.setting;
 
-import aethereal.ui.element.Element_2;
+import aethereal.ui.element.Element;
 import aethereal.ui.element.MultiModeElement;
 
 import java.util.Arrays;
@@ -12,7 +12,7 @@ public class MultiModeSetting extends Setting<List<BooleanSetting>> {
     }
 
     @Override
-    public Element_2<?> createBooleanElement() {
+    public Element<?> createBooleanElement() {
         return new MultiModeElement(this);
     }
 

@@ -24,7 +24,7 @@ import java.util.Locale;
 public class ItemsWidget extends Widget implements Interface {
     public ItemsWidget() {
         super(new DragInfo("Предметы", 0.0f, 0.0f, 0.0f, 0.0f));
-        j().a(this);
+        j().setWidget(this);
     }
 
     @Override
@@ -38,8 +38,8 @@ public class ItemsWidget extends Widget implements Interface {
             active |= provider.a().c() > 0.0f;
         }
         boolean example = !active && a() > 0.0f;
-        float y = j().b();
-        float x = j().a();
+        float y = j().getClampedY();
+        float x = j().getClampedX();
         float contentX = x;
         ItemCooldownManagerAccessor accessor = (ItemCooldownManagerAccessor) mc.player.getItemCooldownManager();
         int i = 0;
@@ -61,8 +61,8 @@ public class ItemsWidget extends Widget implements Interface {
             }
             i++;
         }
-        j().c(MathUtil.c(j().f(), Math.max(0.0f, (contentX - x) - 2.0f), 0.5f));
-        j().d((active || example) ? this.d : 0.0f);
+        j().setWidth(MathUtil.c(j().getWidth(), Math.max(0.0f, (contentX - x) - 2.0f), 0.5f));
+        j().setHeight((active || example) ? this.d : 0.0f);
         super.a(event);
     }
 

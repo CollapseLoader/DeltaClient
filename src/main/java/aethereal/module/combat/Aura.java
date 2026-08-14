@@ -65,18 +65,18 @@ public class Aura extends Module {
     final float[] c = {-1.0f, -1.0f, -1.0f, -1.0f, 0.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f};
     final int[] e = {-1, -1};
     boolean f = false;
-    private LivingEntity t;
+    private LivingEntity target;
 
     public Aura() {
         a(this.j, this.k, this.h, this.r, this.s, this.q, this.i, this.n, this.l, this.m, this.o, this.p);
     }
 
-    public ModeSetting r() {
+    public ModeSetting getVisualizationMode() {
         return this.s;
     }
 
-    public LivingEntity s() {
-        return this.t;
+    public LivingEntity getTarget() {
+        return this.target;
     }
 
     @Override
@@ -89,22 +89,22 @@ public class Aura extends Module {
         this.c[10] = 0.0f;
         this.c[11] = 0.0f;
         Arrays.fill(this.u, mc.player != null ? mc.player.getPitch() : 0.0f);
-        this.t = null;
+        this.target = null;
     }
 
     @Override
     public void c() {
         super.c();
         this.c[10] = 0.0f;
-        this.t = null;
+        this.target = null;
     }
 
     @EventTarget
-    public void a(InputEvent e) {
-        if (this.t != null) {
+    public void onInput(InputEvent e) {
+        if (this.target != null) {
             MoveUtil.a(e, !this.r.l("Фокус") ? Look.b() : this.c[1], 2);
         }
-        if (this.c[0] > 0.0f && this.t != null && AuraUtil.a(this.t, this.j.c().floatValue())) {
+        if (this.c[0] > 0.0f && this.target != null && AuraUtil.a(this.target, this.j.c().floatValue())) {
             e.setForward(0.0f);
             e.setStrafe(0.0f);
             float[] fArr = this.c;
@@ -113,36 +113,36 @@ public class Aura extends Module {
     }
 
     @EventTarget
-    public void a(GlobalEvent e) {
-        if (!b(this.t) || (MaceUtil.a() && !this.d
+    public void onGlobalEvent(GlobalEvent e) {
+        if (!isValidTarget(this.target) || (MaceUtil.a() && !this.d
                 && !mc.player.getItemCooldownManager().isCoolingDown(Items.MACE.getDefaultStack()))) {
-            LivingEntity prev = this.t;
-            boolean fresh = !b(prev);
-            this.t = (fresh && this.n.a("Враг за стеной").c().booleanValue()) ? d(false).or(() -> {
-                return d(true);
-            }).orElse(null) : v().orElse(null);
-            if (this.t != prev && this.t != null) {
+            LivingEntity prev = this.target;
+            boolean fresh = !isValidTarget(prev);
+            this.target = (fresh && this.n.a("Враг за стеной").c().booleanValue()) ? findTargetWithParam(false).or(() -> {
+                return findTargetWithParam(true);
+            }).orElse(null) : findTarget().orElse(null);
+            if (this.target != prev && this.target != null) {
                 this.c[10] = 0.0f;
                 this.c[11] = 0.0f;
                 Arrays.fill(this.u, mc.player != null ? mc.player.getPitch() : 0.0f);
             }
         }
-        t();
-        if (this.t != null) {
-            u();
-            w();
-            u();
+        restoreSelectedSlot();
+        if (this.target != null) {
+            performAttack();
+            rotateToTarget();
+            performAttack();
             return;
         }
         this.c[8] = 1.0f;
     }
 
     @EventTarget
-    public void a(WillLandEvent e) {
+    public void onWillLand(WillLandEvent e) {
         this.d = e.b() && !mc.player.isOnGround();
     }
 
-    private int a(int from, int to) {
+    private int findAxeSlot(int from, int to) {
         for (int i = from; i < to; i++) {
             if (mc.player.getInventory().getStack(i).getItem() instanceof AxeItem) {
                 return i;
@@ -151,31 +151,31 @@ public class Aura extends Module {
         return -1;
     }
 
-    private void t() {
-        if (this.o.c().booleanValue() && this.t != null && this.t.isBlocking()) {
+    private void restoreSelectedSlot() {
+        if (this.o.c().booleanValue() && this.target != null && this.target.isBlocking()) {
             return;
         }
         if (this.e[0] != -1) {
             mc.player.getInventory().selectedSlot = this.e[0];
             this.e[0] = -1;
         }
-        if (this.e[1] != -1 && Delta.getInstance().getModuleProcessor().v().a().a().isEmpty()) {
-            Delta.getInstance().getModuleProcessor().v().a().a(mc.player.getInventory().selectedSlot, this.e[1], 1);
+        if (this.e[1] != -1 && Delta.getInstance().getModuleProcessor().v().getInventoryHandler().a().isEmpty()) {
+            Delta.getInstance().getModuleProcessor().v().getInventoryHandler().moveItem(mc.player.getInventory().selectedSlot, this.e[1], 1);
             this.e[1] = -1;
         }
     }
 
-    private void u() {
-        if (!AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), this.j.c().floatValue(), this.t,
+    private void performAttack() {
+        if (!AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), this.j.c().floatValue(), this.target,
                 !this.n.a("Враг за стеной").c().booleanValue())) {
             return;
         }
-        if (this.o.c().booleanValue() && this.t.isBlocking()) {
+        if (this.o.c().booleanValue() && this.target.isBlocking()) {
             if (mc.player.getMainHandStack().getItem() instanceof AxeItem) {
-                mc.interactionManager.attackEntity(mc.player, this.t);
+                mc.interactionManager.attackEntity(mc.player, this.target);
                 mc.player.swingHand(Hand.MAIN_HAND);
             }
-            int hotbar = a(0, 9);
+            int hotbar = findAxeSlot(0, 9);
             if (hotbar != -1) {
                 if (mc.player.getInventory().selectedSlot != hotbar) {
                     if (this.e[0] == -1) {
@@ -184,16 +184,16 @@ public class Aura extends Module {
                     mc.player.getInventory().selectedSlot = hotbar;
                 }
             } else {
-                int inventory = a(9, 36);
+                int inventory = findAxeSlot(9, 36);
                 if (inventory != -1 && this.e[1] == -1
-                        && Delta.getInstance().getModuleProcessor().v().a().a().isEmpty()) {
+                        && Delta.getInstance().getModuleProcessor().v().getInventoryHandler().a().isEmpty()) {
                     this.e[1] = inventory;
-                    Delta.getInstance().getModuleProcessor().v().a().a(inventory, mc.player.getInventory().selectedSlot,
+                    Delta.getInstance().getModuleProcessor().v().getInventoryHandler().moveItem(inventory, mc.player.getInventory().selectedSlot,
                             1);
                 }
             }
         }
-        if (q()) {
+        if (canAttack()) {
             boolean skip = false;
             if ((Delta.getInstance().getModuleProcessor().t().H().e || (mc.player.fallDistance > 2.0f
                     && Delta.getInstance().getModuleProcessor().t().H().c.c().booleanValue()))
@@ -202,7 +202,7 @@ public class Aura extends Module {
                     return;
                 }
                 double landDist = MaceUtil.a(mc.player, mc.world).map(pos -> {
-                    return Double.valueOf(pos.distanceTo(this.t.getPos()));
+                    return Double.valueOf(pos.distanceTo(this.target.getPos()));
                 }).orElse(Double.valueOf(33.0d)).doubleValue();
                 boolean hitNow = landDist > 2.0d;
                 if ((!this.d && !MaceUtil.b() && Delta.getInstance().getModuleProcessor().t().H().b.c().booleanValue()
@@ -230,7 +230,7 @@ public class Aura extends Module {
             }
             if (mc.interactionManager != null) {
                 this.c[3] = 0.0f;
-                mc.interactionManager.attackEntity(mc.player, this.t);
+                mc.interactionManager.attackEntity(mc.player, this.target);
                 mc.player.swingHand(Hand.MAIN_HAND);
                 this.b = 0;
                 this.c[5] = MathUtil.a(8.0f, 10.0f);
@@ -244,7 +244,7 @@ public class Aura extends Module {
         }
     }
 
-    public boolean q() {
+    public boolean canAttack() {
         if (this.n.a("Используется предмет") != null && this.n.a("Используется предмет").c().booleanValue()
                 && mc.player.isUsingItem() && mc.player.getItemUseTimeLeft() > 0 && this.b >= 8) {
             this.b = 8;
@@ -252,7 +252,7 @@ public class Aura extends Module {
         }
         if ((this.n.a("Открыт контейнер") != null && this.n.a("Открыт контейнер").c().booleanValue()
                 && mc.currentScreen != null && !(mc.currentScreen instanceof GUIScreen)
-                && !(mc.currentScreen instanceof AssistantScreen)) || !AuraUtil.a(this.t, this.j.c().floatValue())) {
+                && !(mc.currentScreen instanceof AssistantScreen)) || !AuraUtil.a(this.target, this.j.c().floatValue())) {
             return false;
         }
         if (Delta.getInstance().getModuleProcessor().t().H().e) {
@@ -276,7 +276,7 @@ public class Aura extends Module {
                 || !AuraUtil.b();
     }
 
-    private boolean a(LivingEntity entity) {
+    private boolean isEntityReachable(LivingEntity entity) {
         if (Delta.getInstance().getModuleProcessor().t().G().m() && mc.player.isGliding()) {
             return true;
         }
@@ -290,11 +290,11 @@ public class Aura extends Module {
         }).orElse(false).booleanValue()) ? 10 : 0)));
     }
 
-    private Optional<LivingEntity> v() {
-        return d(true);
+    private Optional<LivingEntity> findTarget() {
+        return findTargetWithParam(true);
     }
 
-    private Optional<LivingEntity> d(boolean allowBehindWalls) {
+    private Optional<LivingEntity> findTargetWithParam(boolean allowBehindWalls) {
         Comparator<LivingEntity> comparatorComparingDouble;
         Comparator<LivingEntity> order;
         if (mc.world == null || mc.player == null) {
@@ -308,7 +308,7 @@ public class Aura extends Module {
             order = Comparator
                     .comparing((LivingEntity e) -> Boolean.valueOf(
                             !AuraUtil.a(eye, e, reach) && (landingEye == null || !AuraUtil.a(landingEye, e, reach))))
-                    .thenComparing((LivingEntity e2) -> Boolean.valueOf(mc.player.fallDistance > 1.0f && !c(e2)))
+                    .thenComparing((LivingEntity e2) -> Boolean.valueOf(mc.player.fallDistance > 1.0f && !hasArmor(e2)))
                     .thenComparingDouble((LivingEntity v0) -> AuraUtil.a(v0));
         } else {
             switch (this.q.c()) {
@@ -335,8 +335,8 @@ public class Aura extends Module {
                 .filter(LivingEntity.class::isInstance)
                 .map(LivingEntity.class::cast)
                 .filter(e4 -> e4 != mc.player && e4.isAlive())
-                .filter(this::a)
-                .filter(this::b);
+                .filter(this::isEntityReachable)
+                .filter(this::isValidTarget);
         if (!allowBehindWalls) {
             stream2 = stream2.filter(e5 -> {
                 return AuraUtil.a(eye, e5, reach);
@@ -345,8 +345,8 @@ public class Aura extends Module {
         return stream2.min(order);
     }
 
-    private boolean b(LivingEntity entity) {
-        if (entity == null || !entity.isAlive() || !a(entity)) {
+    private boolean isValidTarget(LivingEntity entity) {
+        if (entity == null || !entity.isAlive() || !isEntityReachable(entity)) {
             return false;
         }
         if (entity instanceof PlayerEntity) {
@@ -355,40 +355,40 @@ public class Aura extends Module {
                     .noneMatch(slot -> {
                         return entity.getEquippedStack(slot).getItem() instanceof ArmorItem;
                     });
-            if (!a("Игроки")) {
+            if (!isSettingEnabled("Игроки")) {
                 return false;
             }
             if (isFriend) {
-                return a("Друзья");
+                return isSettingEnabled("Друзья");
             }
-            return !naked || a("Без брони");
+            return !naked || isSettingEnabled("Без брони");
         }
         if ((entity instanceof HostileEntity) || (entity instanceof SlimeEntity) || (entity instanceof FlyingEntity)
                 || (entity instanceof EnderDragonEntity)) {
-            return a("Враждебные мобы");
+            return isSettingEnabled("Враждебные мобы");
         }
         if ((entity instanceof PassiveEntity) || (entity instanceof GolemEntity) || (entity instanceof AllayEntity)
                 || (entity instanceof AmbientEntity)) {
-            return a("Животные");
+            return isSettingEnabled("Животные");
         }
         return false;
     }
 
-    private boolean a(String name) {
+    private boolean isSettingEnabled(String name) {
         BooleanSetting setting = this.i.a(name);
         return setting != null && setting.c().booleanValue();
     }
 
-    private boolean c(LivingEntity entity) {
+    private boolean hasArmor(LivingEntity entity) {
         return Stream.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET)
                 .anyMatch(s -> {
                     return entity.getEquippedStack(s).getItem() instanceof ArmorItem;
                 });
     }
 
-    private void w() {
+    private void rotateToTarget() {
         Vec3d eye = mc.player.getEyePos();
-        LivingEntity target = this.t;
+        LivingEntity target = this.target;
         double reach = this.j.c().floatValue();
         boolean throughWalls = this.h.c().contains("ФанТайм") || !this.n.a("Враг за стеной").c().booleanValue();
         Vec3d targetPosition = AuraUtil.a(eye, target, reach, throughWalls);
@@ -400,9 +400,9 @@ public class Aura extends Module {
                 .toDegrees(Math.atan2(targetPosition.y, Math.hypot(targetPosition.x, targetPosition.z))));
         System.arraycopy(this.u, 0, this.u, 1, 29);
         this.u[0] = pitchToTarget;
-        if (this.t != null && this.b >= 2 && ((ServerUtil.a.a(this.t) > 6.0f || this.c[2] > 43.0f) && this.c[2] >= 33.0f
+        if (this.target != null && this.b >= 2 && ((ServerUtil.a.a(this.target) > 6.0f || this.c[2] > 43.0f) && this.c[2] >= 33.0f
                 && ((this.b == 4 || Math.random() > 0.5d)
-                && (!this.f || !AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), 3.0d, this.t, false))))) {
+                && (!this.f || !AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), 3.0d, this.target, false))))) {
             ((platform.inject.invokers.MinecraftClientInvoker) mc).invokeDoAttack();
             if (Math.random() > 0.5d) {
                 this.f = !this.f;
@@ -414,38 +414,38 @@ public class Aura extends Module {
                 || !(this.n.a("Открыт контейнер") == null || !this.n.a("Открыт контейнер").c().booleanValue()
                 || mc.currentScreen == null || (mc.currentScreen instanceof GUIScreen)
                 || (mc.currentScreen instanceof AssistantScreen));
-        if ((this.c[3] <= 0.0f && q()) || AuraUtil.a(this.b, this.t, skip)) {
+        if ((this.c[3] <= 0.0f && canAttack()) || AuraUtil.a(this.b, this.target, skip)) {
             this.c[3] = 1.0f;
             if (!mc.player.isTouchingWater() && this.p.c().booleanValue() && !mc.player.isOnGround()) {
                 this.c[0] = 1.0f;
             }
         }
-        if (Delta.getInstance().getModuleProcessor().t().F().m() && q() && AuraUtil.a(this.t, 3.0d)
+        if (Delta.getInstance().getModuleProcessor().t().F().m() && canAttack() && AuraUtil.a(this.target, 3.0d)
                 && mc.player.isGliding()) {
-            Delta.getInstance().getModuleProcessor().k().a(new Rotation(yawToTarget, pitchToTarget), 180.0f, 0, 3);
+            Delta.getInstance().getModuleProcessor().k().startAiming(new Rotation(yawToTarget, pitchToTarget), 180.0f, 0, 3);
         }
         if (!this.h.c().contains("ФанТайм")
                 && (InventoryUtil.b(Items.MACE) != -1 || (Delta.getInstance().getModuleProcessor().t().H().e
                 && mc.player.fallDistance > 3.0f && MaceUtil.a(mc.player, mc.world).map(pos -> {
             return Double.valueOf(pos.distanceTo(mc.player.getPos()));
         }).orElse(Double.valueOf(0.0d)).doubleValue() > 2.0d
-                && AuraUtil.a(this.t, 4.0d + (mc.player.getVelocity().length() * 3.0d))))) {
+                && AuraUtil.a(this.target, 4.0d + (mc.player.getVelocity().length() * 3.0d))))) {
             float time = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
             float smoothW = ((float) ((((Math.sin(time * 0.31f) * 0.5d)
                     + (Math.sin((time * 0.73f) + 1.1f) * 0.3000000314327426d))
                     + (Math.sin((time * 1.7f) + 2.6f) * 0.2000000098386085d)) * 8.0d)) / 8.0f;
             float finalYaw = AuraUtil.a(mc.player.getYaw(), yawToTarget, 0.8f);
             float finalPitch = AuraUtil.a(mc.player.getPitch(), pitchToTarget, 0.8f);
-            Delta.getInstance().getModuleProcessor().k().a(new Rotation(finalYaw + smoothW, finalPitch + smoothW),
+            Delta.getInstance().getModuleProcessor().k().startAiming(new Rotation(finalYaw + smoothW, finalPitch + smoothW),
                     180.0f, 1, 2);
         }
         switch (this.h.c()) {
             case "ФанТайм":
             case "ФанТайм ФОВ":
-                a(yawToTarget, pitchToTarget, targetPosition);
+                applyFantimeSmoothing(yawToTarget, pitchToTarget, targetPosition);
                 break;
             case "Легит":
-                b(yawToTarget, pitchToTarget, targetPosition);
+                applyLegitSmoothing(yawToTarget, pitchToTarget, targetPosition);
                 break;
         }
         float[] fArr = this.c;
@@ -455,10 +455,10 @@ public class Aura extends Module {
         float[] fArr3 = this.c;
         fArr3[8] = fArr3[8] - 1.0f;
         this.c[1] = (float) MathHelper.wrapDegrees(
-                Math.toDegrees(Math.atan2(this.t.getZ() - mc.player.getZ(), this.t.getX() - mc.player.getX())) - 90.0d);
+                Math.toDegrees(Math.atan2(this.target.getZ() - mc.player.getZ(), this.target.getX() - mc.player.getX())) - 90.0d);
     }
 
-    private void a(float yawToTarget, float pitchToTarget, Vec3d vec3d) {
+    private void applyFantimeSmoothing(float yawToTarget, float pitchToTarget, Vec3d vec3d) {
         float time = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
         float smoothW = (float) ((Math.sin(((double) time) * 0.4000000008323731d) * 3.0d)
                 + (Math.sin((((double) time) * 0.9500002390239708d) + 1.4000004888461306d) * 2.0d));
@@ -468,16 +468,16 @@ public class Aura extends Module {
                 this.u[MathHelper.clamp(10 - this.b, 0, 29)] + (smoothH * 1.5f), MathUtil.a(0.1f, 0.5f));
         float finalYaw = AuraUtil.a(mc.player.getYaw(), yawToTarget + smoothW, MathUtil.a(0.1f, 0.4f));
         if (this.c[3] >= 0.0f) {
-            if (!AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), this.j.c().floatValue(), this.t, true)
+            if (!AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), this.j.c().floatValue(), this.target, true)
                     && this.c[8] <= 0.0f) {
                 finalYaw = yawToTarget;
             }
-            if (!AuraUtil.a(yawToTarget, finalPitch, this.j.c().floatValue(), this.t, true) && this.c[8] <= 0.0f) {
+            if (!AuraUtil.a(yawToTarget, finalPitch, this.j.c().floatValue(), this.target, true) && this.c[8] <= 0.0f) {
                 finalPitch = pitchToTarget;
             }
-            if (!AuraUtil.a(mc.player.getYaw() + smoothW, mc.player.getYaw() + smoothH, this.j.c().floatValue(), this.t,
+            if (!AuraUtil.a(mc.player.getYaw() + smoothW, mc.player.getYaw() + smoothH, this.j.c().floatValue(), this.target,
                     true)
-                    && AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), this.j.c().floatValue(), this.t, true)) {
+                    && AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), this.j.c().floatValue(), this.target, true)) {
                 smoothW = MathHelper.clamp(smoothW, -0.05f, 0.05f);
                 smoothH = MathHelper.clamp(smoothH, -0.05f, 0.05f);
             }
@@ -485,12 +485,12 @@ public class Aura extends Module {
         if (this.b <= 4 && this.c[2] % 2.0f == 0.0f) {
             finalYaw = mc.player.getYaw();
         }
-        Delta.getInstance().getModuleProcessor().k().a(
+        Delta.getInstance().getModuleProcessor().k().startAiming(
                 new Rotation(finalYaw + smoothW, (this.h.c().equals("ФанТайм") ? finalPitch : Look.c()) + smoothH),
                 220.0f, 1, 1);
     }
 
-    private void b(float yawToTarget, float pitchToTarget, Vec3d vec3d) {
+    private void applyLegitSmoothing(float yawToTarget, float pitchToTarget, Vec3d vec3d) {
         float t = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
         float fSin = ((float) (((Math.sin(t * 0.31f) * 0.5d) + (Math.sin((t * 1.7f) + 2.6f) * 0.2000000098386085d))
                 * 8.0d)) / 4.0f;
@@ -502,12 +502,12 @@ public class Aura extends Module {
             finalPitch = AuraUtil.a(mc.player.getPitch(), pitchToTarget, 0.35f);
             smoothH /= 3.0f;
             smoothW /= 3.0f;
-            if (!AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), this.j.c().floatValue(), this.t, true)) {
+            if (!AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), this.j.c().floatValue(), this.target, true)) {
                 finalYaw = AuraUtil.a(mc.player.getYaw(), yawToTarget, MathUtil.a(0.7f, 1.0f));
             }
         }
-        if (!AuraUtil.a(finalYaw + smoothW, finalPitch + smoothH, this.j.c().floatValue(), this.t, true)
-                && AuraUtil.a(yawToTarget, pitchToTarget, this.j.c().floatValue(), this.t, true)) {
+        if (!AuraUtil.a(finalYaw + smoothW, finalPitch + smoothH, this.j.c().floatValue(), this.target, true)
+                && AuraUtil.a(yawToTarget, pitchToTarget, this.j.c().floatValue(), this.target, true)) {
             smoothW = MathHelper.clamp(smoothW, -0.15f, 0.15f);
             smoothH = MathHelper.clamp(smoothH, -0.15f, 0.15f);
         }
@@ -517,7 +517,7 @@ public class Aura extends Module {
                 finalPitch = AuraUtil.a(mc.player.getPitch(), -pitchToTarget, 0.05f);
             }
         }
-        Delta.getInstance().getModuleProcessor().k().a(new Rotation(finalYaw + smoothW, finalPitch + smoothH), 180.0f,
+        Delta.getInstance().getModuleProcessor().k().startAiming(new Rotation(finalYaw + smoothW, finalPitch + smoothH), 180.0f,
                 1, 1);
     }
 }

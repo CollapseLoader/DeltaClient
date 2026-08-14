@@ -1,6 +1,6 @@
 package aethereal.network;
 
-import aethereal.lib.jsoup.Connection_2;
+import aethereal.lib.jsoup.JsoupConnection;
 import aethereal.lib.jsoup.Element;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class OrderPoller {
-    private final List<String> a = new ArrayList<>();
+    private final List<String> a = new ArrayList();
     private final FunPay c;
     private List<OrderModel> b;
 
@@ -81,7 +81,7 @@ public class OrderPoller {
     private List<OrderModel> c() {
         List<OrderModel> result = new ArrayList<>();
         try {
-            Connection_2.e response = this.c.a("https://funpay.com/orders/trade");
+            JsoupConnection.e response = this.c.a("https://funpay.com/orders/trade");
             for (Element order : response.j().j(".tc-item")) {
                 try {
                     String status = Objects.requireNonNull(order.k(".tc-status")).ac();

@@ -4,114 +4,114 @@ import aethereal.notification.Notification;
 import aethereal.render.AnimationUtil;
 import aethereal.render.ColorUtil;
 import aethereal.setting.Setting;
-import aethereal.ui.element.Element_2;
+import aethereal.ui.element.Element;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Module implements Interface {
-    private final List<Element_2<?>> b = new ArrayList<>();
-    private final List<Setting<?>> c = new ObjectArrayList<>();
-    private final AnimationUtil d = new AnimationUtil();
-    private final AnimationUtil e = new AnimationUtil();
-    private final AnimationUtil f = new AnimationUtil();
-    private final AnimationUtil g = new AnimationUtil();
-    private final String h = getClass().getAnnotation(ModuleRegister.class).name();
-    private final String i = getClass().getAnnotation(ModuleRegister.class).description();
-    private final Category j = getClass().getAnnotation(ModuleRegister.class).category();
-    private boolean k;
-    private boolean l;
-    private boolean m;
-    private int n = -1;
+    private final List<Element<?>> elements = new ArrayList<>();
+    private final List<Setting<?>> settings = new ObjectArrayList<>();
+    private final AnimationUtil enableAnimation = new AnimationUtil();
+    private final AnimationUtil disableAnimation = new AnimationUtil();
+    private final AnimationUtil bindAnimation = new AnimationUtil();
+    private final AnimationUtil extendAnimation = new AnimationUtil();
+    private final String name = getClass().getAnnotation(ModuleRegister.class).name();
+    private final String description = getClass().getAnnotation(ModuleRegister.class).description();
+    private final Category category = getClass().getAnnotation(ModuleRegister.class).category();
+    private boolean enabled;
+    private boolean bound;
+    private boolean extended;
+    private int keyBind = -1;
 
     public void b(boolean bind) {
-        this.l = bind;
+        this.bound = bind;
     }
 
     public void c(boolean extended) {
-        this.m = extended;
+        this.extended = extended;
     }
 
     public void a(int key) {
-        this.n = key;
+        this.keyBind = key;
     }
 
-    public List<Element_2<?>> d() {
-        return this.b;
+    public List<Element<?>> d() {
+        return this.elements;
     }
 
     public List<Setting<?>> e() {
-        return this.c;
+        return this.settings;
     }
 
     public AnimationUtil f() {
-        return this.d;
+        return this.enableAnimation;
     }
 
     public AnimationUtil g() {
-        return this.e;
+        return this.disableAnimation;
     }
 
     public AnimationUtil h() {
-        return this.f;
+        return this.bindAnimation;
     }
 
     public AnimationUtil i() {
-        return this.g;
+        return this.extendAnimation;
     }
 
     public String j() {
-        return this.h;
+        return this.name;
     }
 
     public String k() {
-        return this.i;
+        return this.description;
     }
 
     public Category l() {
-        return this.j;
+        return this.category;
     }
 
     public boolean m() {
-        return this.k;
+        return this.enabled;
     }
 
     public boolean n() {
-        return this.l;
+        return this.bound;
     }
 
     public boolean o() {
-        return this.m;
+        return this.extended;
     }
 
     public int p() {
-        return this.n;
+        return this.keyBind;
     }
 
     public final void a() {
-        a(!this.k);
+        a(!this.enabled);
     }
 
     public final void a(boolean newState) {
-        if (this.k == newState) {
+        if (this.enabled == newState) {
             return;
         }
-        this.k = newState;
-        if (this.k) {
+        this.enabled = newState;
+        if (this.enabled) {
             b();
         } else {
             c();
         }
-        Delta.getInstance().getModuleProcessor().t().at().d(this.k);
+        Delta.getInstance().getModuleProcessor().t().at().d(this.enabled);
     }
 
     public final void a(Setting<?>... settings) {
         for (Setting<?> setting : settings) {
-            this.c.add(setting);
-            Element_2<?> element = setting.createBooleanElement();
+            this.settings.add(setting);
+            Element<?> element = setting.createBooleanElement();
             if (element != null) {
-                this.b.add(element);
+                this.elements.add(element);
             }
         }
     }

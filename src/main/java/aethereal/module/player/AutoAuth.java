@@ -14,7 +14,7 @@ import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 public class AutoAuth extends Module {
     private final StringSetting b = new StringSetting("Пароль авторизации", "").a();
     private final StringSetting c = new StringSetting("Пароль регистрации", "").a();
-    private String d;
+    private String password;
 
     public AutoAuth() {
         a(this.b, this.c);
@@ -29,7 +29,7 @@ public class AutoAuth extends Module {
     }
 
     public String s() {
-        return this.d;
+        return this.password;
     }
 
     @EventTarget
@@ -38,10 +38,10 @@ public class AutoAuth extends Module {
             if (eventPacket.d() instanceof GameMessageS2CPacket packet) {
                 String message = packet.content().getString();
                 if ((message.contains("Зарегистрируйтесь") || message.contains("/reg") || message.contains("/register")) && !this.c.c().isEmpty()) {
-                    this.d = "/reg " + this.c.c();
+                    this.password = "/reg " + this.c.c();
                 }
                 if ((message.contains("Авторизуйтесь") || message.contains("Войдите в игру") || message.contains("/login")) && !this.b.c().isEmpty()) {
-                    this.d = "/login " + this.b.c();
+                    this.password = "/login " + this.b.c();
                 }
             }
         }
@@ -49,12 +49,12 @@ public class AutoAuth extends Module {
 
     @EventTarget
     public void a(TickEvent tickEvent) {
-        if (this.d != null) {
+        if (this.password != null) {
             if (ServerUtil.a.a() && ServerUtil.a.c()) {
                 return;
             }
-            mc.player.networkHandler.sendChatMessage(this.d);
-            this.d = null;
+            mc.player.networkHandler.sendChatMessage(this.password);
+            this.password = null;
         }
     }
 }

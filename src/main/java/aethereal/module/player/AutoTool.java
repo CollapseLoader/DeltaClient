@@ -21,7 +21,7 @@ public class AutoTool extends Module {
     @EventTarget
     public void a(TickEvent event) {
         int bestSlot;
-        InventoryHandler handler = Delta.getInstance().getModuleProcessor().v().a();
+        InventoryHandler handler = Delta.getInstance().getModuleProcessor().v().getInventoryHandler();
         if (handler.a().isEmpty()) {
             if (mc.crosshairTarget instanceof BlockHitResult hit) {
                 if (mc.options.attackKey.isPressed()) {
@@ -31,7 +31,7 @@ public class AutoTool extends Module {
                     this.b[0] = mc.player.getInventory().selectedSlot;
                     if (bestSlot > 8) {
                         this.b[1] = bestSlot;
-                        handler.a(bestSlot, this.b[0], 1);
+                        handler.moveItem(bestSlot, this.b[0], 1);
                         return;
                     } else {
                         mc.player.getInventory().selectedSlot = bestSlot;
@@ -45,7 +45,7 @@ public class AutoTool extends Module {
             if (this.b[1] == -1) {
                 mc.player.getInventory().selectedSlot = this.b[0];
             } else {
-                handler.a(this.b[1], this.b[0], 1);
+                handler.moveItem(this.b[1], this.b[0], 1);
             }
             this.b[0] = -1;
             this.b[1] = -1;

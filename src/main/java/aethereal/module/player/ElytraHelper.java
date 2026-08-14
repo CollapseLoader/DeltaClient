@@ -39,7 +39,7 @@ public class ElytraHelper extends Module {
         });
         this.f = new BindSetting("Кнопка переключения", -1).a(() -> {
             int slot = mc.player.getEquippedStack(EquipmentSlot.CHEST).getItem() == Items.ELYTRA ? InventoryUtil.a() : InventoryUtil.b(Items.ELYTRA);
-            Delta.getInstance().getModuleProcessor().v().a().b(slot, 1, 1);
+            Delta.getInstance().getModuleProcessor().v().getInventoryHandler().moveToArmor(slot, 1, 1);
             if (this.b.c().booleanValue() && InventoryUtil.b(Items.ELYTRA) == slot) {
                 this.i = mc.player.age;
                 this.g = true;
@@ -137,7 +137,7 @@ public class ElytraHelper extends Module {
 
     private void z() {
         if (mc.player.isGliding()) {
-            Delta.getInstance().getModuleProcessor().v().b().a(Items.FIREWORK_ROCKET.getDefaultStack());
+            Delta.getInstance().getModuleProcessor().v().getUseableHandler().a(Items.FIREWORK_ROCKET.getDefaultStack());
         }
     }
 

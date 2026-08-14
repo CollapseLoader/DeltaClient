@@ -41,77 +41,77 @@ public class TriggerBot extends Module {
     boolean c;
     final BooleanSetting b = new BooleanSetting("Преследование цели", false);
     boolean e = false;
-    private int l;
+    private int stallTicks;
     private int m;
-    private float n;
-    private LivingEntity o;
+    private float targetYaw;
+    private LivingEntity target;
 
     public TriggerBot() {
         a(this.f, this.g, this.h, this.i, this.j, this.b);
     }
 
-    public int r() {
+    public int getAttackCount() {
         return this.d;
     }
 
-    public LivingEntity s() {
-        return this.o;
+    public LivingEntity getTarget() {
+        return this.target;
     }
 
     @Override
     public void c() {
         super.c();
-        this.o = null;
-        this.l = 0;
+        this.target = null;
+        this.stallTicks = 0;
         this.d = 0;
         this.k.b();
     }
 
     @EventTarget
-    public void a(InputEvent e) {
-        if (this.b.c().booleanValue() && this.o != null) {
-            MoveUtil.a(e, this.n, 3);
+    public void onInput(InputEvent e) {
+        if (this.b.c().booleanValue() && this.target != null) {
+            MoveUtil.a(e, this.targetYaw, 3);
         }
-        if (this.o != null) {
-            Vec3d targetPosition = AuraUtil.a(mc.player.getEyePos(), this.o, 3.0d, true);
-            this.n = targetPosition == Vec3d.ZERO ? Look.b() : (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(targetPosition.z, targetPosition.x)) - 90.0d);
+        if (this.target != null) {
+            Vec3d targetPosition = AuraUtil.a(mc.player.getEyePos(), this.target, 3.0d, true);
+            this.targetYaw = targetPosition == Vec3d.ZERO ? Look.b() : (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(targetPosition.z, targetPosition.x)) - 90.0d);
         }
-        if (this.i.l("Легитный") && this.l > 0) {
+        if (this.i.l("Легитный") && this.stallTicks > 0) {
             e.setForward(0.0f);
             e.setStrafe(0.0f);
-            this.l--;
+            this.stallTicks--;
         }
     }
 
     @EventTarget
-    public void a(TickEvent event) {
+    public void onTick(TickEvent event) {
         t();
     }
 
     @EventTarget
-    public void a(WillLandEvent e) {
+    public void onWillLand(WillLandEvent e) {
         this.c = e.b() && !mc.player.isOnGround();
     }
 
     private void t() {
         this.d++;
         v();
-        if (this.o != null && this.g.a("Случайные промахи").c().booleanValue() && this.d >= 2 && this.m >= 30 && (((Math.random() > 0.5d && this.d >= 1) || this.d == 4) && (!this.e || !AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), 3.0d, this.o, false)))) {
+        if (this.target != null && this.g.a("Случайные промахи").c().booleanValue() && this.d >= 2 && this.m >= 30 && (((Math.random() > 0.5d && this.d >= 1) || this.d == 4) && (!this.e || !AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), 3.0d, this.target, false)))) {
             ((platform.inject.invokers.MinecraftClientInvoker) mc).invokeDoAttack();
             this.e = !this.e;
             this.m = (int) MathUtil.a(-10.0f, 10.0f);
         }
-        if (this.o != null && AuraUtil.a(this.d, this.o, false)) {
-            this.l = 1;
+        if (this.target != null && AuraUtil.a(this.d, this.target, false)) {
+            this.stallTicks = 1;
         }
         u();
     }
 
     private void u() {
-        if (this.o == null || !q()) {
+        if (this.target == null || !q()) {
             return;
         }
-        if (!AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), 3.0d, this.o, !this.h.a("Враг за стеной").c().booleanValue())) {
+        if (!AuraUtil.a(mc.player.getYaw(), mc.player.getPitch(), 3.0d, this.target, !this.h.a("Враг за стеной").c().booleanValue())) {
             return;
         }
         boolean skip = false;
@@ -120,7 +120,7 @@ public class TriggerBot extends Module {
                 return;
             }
             double landDist = MaceUtil.a(mc.player, mc.world).map(pos -> {
-                return Double.valueOf(pos.distanceTo(this.o.getPos()));
+                return Double.valueOf(pos.distanceTo(this.target.getPos()));
             }).orElse(Double.valueOf(33.0d)).doubleValue();
             boolean hitNow = landDist > 2.0d;
             if ((!this.c && !MaceUtil.b() && Delta.getInstance().getModuleProcessor().t().H().b.c().booleanValue() && !hitNow) || !MaceUtil.a() || mc.player.isGliding()) {
@@ -130,7 +130,7 @@ public class TriggerBot extends Module {
             }
         }
         if (skip || !w()) {
-            mc.interactionManager.attackEntity(mc.player, this.o);
+            mc.interactionManager.attackEntity(mc.player, this.target);
             mc.player.swingHand(Hand.MAIN_HAND);
             if (Math.random() <= 0.899999737739563d) {
                 this.m++;
@@ -141,18 +141,18 @@ public class TriggerBot extends Module {
 
     private void v() {
         if (this.j.l("Фиксирующий")) {
-            if (!a(this.o) || (MaceUtil.a() && !this.c && !mc.player.getItemCooldownManager().isCoolingDown(Items.MACE.getDefaultStack()))) {
-                this.o = d(false);
+            if (!a(this.target) || (MaceUtil.a() && !this.c && !mc.player.getItemCooldownManager().isCoolingDown(Items.MACE.getDefaultStack()))) {
+                this.target = d(false);
                 return;
             }
             return;
         }
         LivingEntity aimed = d(true);
         if (aimed != null) {
-            this.o = aimed;
+            this.target = aimed;
             this.k.b();
-        } else if (this.o != null && this.k.a(1000L)) {
-            this.o = null;
+        } else if (this.target != null && this.k.a(1000L)) {
+            this.target = null;
         }
     }
 
@@ -183,10 +183,10 @@ public class TriggerBot extends Module {
             ((platform.inject.accessors.ClientPlayerEntityAccessor) mc.player).setWasSprinting(false);
             mc.player.setSprinting(false);
             mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.STOP_SPRINTING));
-            this.l = 1;
+            this.stallTicks = 1;
             return false;
         }
-        this.l = 1;
+        this.stallTicks = 1;
         return ((platform.inject.accessors.ClientPlayerEntityAccessor) mc.player).getWasSprinting();
     }
 
@@ -195,7 +195,7 @@ public class TriggerBot extends Module {
             this.d = 8;
             return false;
         }
-        if ((this.h.a("Открыт контейнер") != null && this.h.a("Открыт контейнер").c().booleanValue() && mc.currentScreen != null && !(mc.currentScreen instanceof GUIScreen) && !(mc.currentScreen instanceof AssistantScreen)) || !AuraUtil.a(this.o, 3.0d)) {
+        if ((this.h.a("Открыт контейнер") != null && this.h.a("Открыт контейнер").c().booleanValue() && mc.currentScreen != null && !(mc.currentScreen instanceof GUIScreen) && !(mc.currentScreen instanceof AssistantScreen)) || !AuraUtil.a(this.target, 3.0d)) {
             return false;
         }
         if (Delta.getInstance().getModuleProcessor().t().H().e) {

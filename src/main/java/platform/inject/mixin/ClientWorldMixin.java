@@ -18,7 +18,7 @@ public class ClientWorldMixin {
     @Inject(method = {"syncWorldEvent(Lnet/minecraft/entity/player/PlayerEntity;ILnet/minecraft/util/math/BlockPos;I)V"}, at = {@At("HEAD")})
     private void onSyncWorldEvent(PlayerEntity player, int eventId, BlockPos pos, int data, CallbackInfo ci) {
         if (eventId == 2002) {
-            EventManager.a(new PotionEvent(PotionEvent.a.PARTICLES, data, pos));
+            EventManager.a(new PotionEvent(PotionEvent.type.PARTICLES, data, pos));
         }
     }
 

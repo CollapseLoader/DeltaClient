@@ -2,47 +2,47 @@ package aethereal.setting;
 
 import aethereal.core.Action;
 import aethereal.ui.element.BindElement;
-import aethereal.ui.element.Element_2;
+import aethereal.ui.element.Element;
 
 public class BindSetting extends Setting<Integer> {
-    private final int c;
-    private Action a;
-    private Action b;
+    private final int bindType;
+    private Action pressAction;
+    private Action releaseAction;
 
     public BindSetting(String name, Integer defaultVal) {
         super(name, defaultVal);
-        this.c = 1;
+        this.bindType = 1;
     }
 
     public BindSetting(String name, Integer defaultVal, int type) {
         super(name, defaultVal);
-        this.c = type;
+        this.bindType = type;
     }
 
     public Action k() {
-        return this.a;
+        return this.pressAction;
     }
 
     public Action l() {
-        return this.b;
+        return this.releaseAction;
     }
 
     public int m() {
-        return this.c;
+        return this.bindType;
     }
 
     public BindSetting a(Action action) {
-        this.a = action;
+        this.pressAction = action;
         return this;
     }
 
     public BindSetting b(Action release) {
-        this.b = release;
+        this.releaseAction = release;
         return this;
     }
 
     @Override
-    public Element_2<?> createBooleanElement() {
+    public Element<?> createBooleanElement() {
         return new BindElement(this);
     }
 }

@@ -6,98 +6,98 @@ import aethereal.ui.widget.Widget;
 import aethereal.util.MathUtil;
 
 public class DragInfo implements Interface {
-    private final String i;
-    private Widget b;
-    private float c;
-    private float d;
-    private float e;
-    private float f;
-    private double g = 0.0d;
-    private double h = 0.0d;
-    private int j = 0;
+    private final String name;
+    private Widget widget;
+    private float x;
+    private float y;
+    private float width;
+    private float height;
+    private double offsetX = 0.0d;
+    private double offsetY = 0.0d;
+    private int dragStatus = 0;
 
     public DragInfo(String name, float x, float y, float width, float height) {
-        this.i = name;
-        this.c = x;
-        this.d = y;
-        this.e = width;
-        this.f = height;
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
         Delta.getInstance().getModuleProcessor().s().e().add(this);
     }
 
-    public void a(Widget widget) {
-        this.b = widget;
+    public void setWidget(Widget widget) {
+        this.widget = widget;
     }
 
-    public void a(float x) {
-        this.c = x;
+    public void setX(float x) {
+        this.x = x;
     }
 
-    public void b(float y) {
-        this.d = y;
+    public void setY(float y) {
+        this.y = y;
     }
 
-    public void c(float width) {
-        this.e = width;
+    public void setWidth(float width) {
+        this.width = width;
     }
 
-    public void d(float height) {
-        this.f = height;
+    public void setHeight(float height) {
+        this.height = height;
     }
 
-    public void a(double offsetX) {
-        this.g = offsetX;
+    public void setOffsetX(double offsetX) {
+        this.offsetX = offsetX;
     }
 
-    public void b(double offsetY) {
-        this.h = offsetY;
+    public void setOffsetY(double offsetY) {
+        this.offsetY = offsetY;
     }
 
-    public void a(int status) {
-        this.j = status;
+    public void setDragStatus(int status) {
+        this.dragStatus = status;
     }
 
-    public Widget e() {
-        return this.b;
+    public Widget getWidget() {
+        return this.widget;
     }
 
-    public float f() {
-        return this.e;
+    public float getWidth() {
+        return this.width;
     }
 
-    public float g() {
-        return this.f;
+    public float getHeight() {
+        return this.height;
     }
 
-    public double h() {
-        return this.g;
+    public double getOffsetX() {
+        return this.offsetX;
     }
 
-    public double i() {
-        return this.h;
+    public double getOffsetY() {
+        return this.offsetY;
     }
 
-    public String j() {
-        return this.i;
+    public String getName() {
+        return this.name;
     }
 
-    public int k() {
-        return this.j;
+    public int getDragStatus() {
+        return this.dragStatus;
     }
 
-    public float a() {
-        return MathUtil.b(this.c, 0.0f, (mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - this.e);
+    public float getClampedX() {
+        return MathUtil.b(this.x, 0.0f, (mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - this.width);
     }
 
-    public float b() {
-        return MathUtil.b(this.d, 0.0f, (mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - this.f);
+    public float getClampedY() {
+        return MathUtil.b(this.y, 0.0f, (mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - this.height);
     }
 
-    public float c() {
-        return this.c;
+    public float getX() {
+        return this.x;
     }
 
-    public float d() {
-        return this.d;
+    public float getY() {
+        return this.y;
     }
 }

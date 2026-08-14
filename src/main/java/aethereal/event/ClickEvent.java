@@ -5,14 +5,14 @@ import aethereal.core.Event;
 
 public class ClickEvent extends Event {
     private final a type;
-    private final double b;
-    private final double c;
-    private final int d;
+    private final double mouseX;
+    private final double mouseY;
+    private final int button;
 
     public ClickEvent(double mouseX, double mouseY, int button, a type) {
-        this.b = mouseX;
-        this.c = mouseY;
-        this.d = button;
+        this.mouseX = mouseX;
+        this.mouseY = mouseY;
+        this.button = button;
         this.type = type;
     }
 
@@ -21,15 +21,15 @@ public class ClickEvent extends Event {
     }
 
     public double f() {
-        return this.b;
+        return this.mouseX;
     }
 
     public double g() {
-        return this.c;
+        return this.mouseY;
     }
 
     public int h() {
-        return this.d;
+        return this.button;
     }
 
     public boolean b() {

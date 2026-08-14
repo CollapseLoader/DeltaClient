@@ -15,9 +15,9 @@ import java.util.List;
 public class MacrosProcessor extends ConfigProcessor<MacrosConstructor> {
     @Override
 
-    protected List<MacrosConstructor> a(String json) throws Exception {
+    protected List<MacrosConstructor> loadConfig(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
-        ArrayList arrayList = new ArrayList<>();
+        ArrayList<MacrosConstructor> arrayList = new ArrayList<>();
         for (int i = 0; i < jSONArray.a(); i++) {
             JSONObject jSONObjectJ = jSONArray.j(i);
             arrayList.add(new MacrosConstructor(jSONObjectJ.l("key"), jSONObjectJ.l("command")));
@@ -27,7 +27,7 @@ public class MacrosProcessor extends ConfigProcessor<MacrosConstructor> {
 
     @Override
 
-    protected String a(List<MacrosConstructor> data) throws Exception {
+    protected String saveConfig(List<MacrosConstructor> data) throws Exception {
         JSONArray jSONArray = new JSONArray();
         for (MacrosConstructor macrosConstructor : data) {
             JSONObject jSONObject = new JSONObject();
@@ -43,7 +43,7 @@ public class MacrosProcessor extends ConfigProcessor<MacrosConstructor> {
     }
 
     @Override
-    protected String b() {
+    protected String getConfigFileName() {
         return "macros.json";
     }
 

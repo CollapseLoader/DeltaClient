@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 @ModuleRegister(name = "Collector", description = "Автоматически собирает нужный инвентарь на FunTime", category = Category.Misc)
-public class Collector_2 extends Module {
+public class Collector extends Module {
     private final List<b> d = Delta.getInstance().getModuleProcessor().p().e();
     private final List<a> e = new ArrayList<>();
     private final CounterUtil f = new CounterUtil();
@@ -44,7 +44,7 @@ public class Collector_2 extends Module {
     private a i;
     private int j;
 
-    public Collector_2() {
+    public Collector() {
         ButtonSetting c = new ButtonSetting("Открыть редактор", () -> {
             mc.setScreen(new StationScreen(Text.literal(""), 0));
         });
@@ -52,12 +52,12 @@ public class Collector_2 extends Module {
             if (!m()) {
                 a();
             }
-            r();
+            startNextItem();
         });
         a(b, c);
     }
 
-    public List<b> q() {
+    public List<b> getCollectItems() {
         return this.d;
     }
 
@@ -67,7 +67,7 @@ public class Collector_2 extends Module {
         ChatUtil.sendMessage("Модуль ищет самые дешевые лоты среди тех которые есть, имейте это ввиду, и будьте осторожны!");
     }
 
-    private void r() {
+    private void startNextItem() {
         int start = this.h == null ? 0 : this.d.indexOf(this.h) + 1;
         this.i = null;
         this.e.clear();
@@ -93,11 +93,11 @@ public class Collector_2 extends Module {
     }
 
     @EventTarget
-    public void a(TickEvent event) {
+    public void onTick(TickEvent event) {
         if (this.h != null) {
             if (mc.player.getInventory().getEmptySlot() == -1) {
                 ChatUtil.sendMessage("Автоматическое отключение: нет свободных слотов в инвентаре, освободите место");
-                s();
+                closeScreen();
                 a();
                 return;
             }
@@ -111,14 +111,14 @@ public class Collector_2 extends Module {
     }
 
     @EventTarget
-    public void a(ContainerEvent event) {
+    public void onContainer(ContainerEvent event) {
         if (this.h != null && event.h() != ContainerEvent.Phase.PRE) {
             String title = event.b().getTitle().getString().replaceAll("§.", "").toLowerCase().trim();
             if (title.contains(this.h.j().toLowerCase())) {
                 if (this.f.a(300L, 80L) && a(this.h) >= a(this.h, false)) {
                     ChatUtil.sendMessage("Предмет " + this.h.j() + " приобретен, перехожу к следующему");
-                    r();
-                    s();
+                    startNextItem();
+                    closeScreen();
                     return;
                 }
                 if (this.g.a(1000L, 150L)) {
@@ -145,7 +145,7 @@ public class Collector_2 extends Module {
                                             return v0.c();
                                         })).orElse(null);
                                         if (this.i == null) {
-                                            s();
+                                            closeScreen();
                                         }
                                     }
                                 } else if (currentPage == this.i.a()) {
@@ -166,7 +166,7 @@ public class Collector_2 extends Module {
                                         ChatUtil.sendMessage("Оффер пропал, пересканирую");
                                         this.i = null;
                                         this.e.clear();
-                                        s();
+                                        closeScreen();
                                     }
                                 } else {
                                     a(event, currentPage < this.i.a() ? "следующая страница" : "предыдущая страница");
@@ -204,8 +204,8 @@ public class Collector_2 extends Module {
                                     int totalPages = Integer.parseInt(matcher2.group(2));
                                     if (totalPages == 1) {
                                         ChatUtil.sendMessage("Пропускаем предмет " + this.h.j() + ", ибо нету подходящего");
-                                        r();
-                                        s();
+                                        startNextItem();
+                                        closeScreen();
                                         return;
                                     }
                                     a(event, currentPage2 == 1 ? "следующая страница" : "предыдущая страница");
@@ -227,12 +227,12 @@ public class Collector_2 extends Module {
                 }
                 return;
             }
-            s();
+            closeScreen();
         }
     }
 
     @EventTarget
-    public void a(PacketEvent event) {
+    public void onPacket(PacketEvent event) {
         if (this.h != null && event.c()) {
             GameMessageS2CPacket packet = (GameMessageS2CPacket) event.d();
             if (packet instanceof GameMessageS2CPacket) {
@@ -246,7 +246,7 @@ public class Collector_2 extends Module {
                     a();
                     return;
                 } else if (message.contains("Данная команда недоступна в режиме AFK")) {
-                    Delta.getInstance().getModuleProcessor().v().g().a(10);
+                    Delta.getInstance().getModuleProcessor().v().getAFKHandler().a(10);
                 }
             }
             if ((event.d() instanceof OpenScreenS2CPacket) && !(mc.currentScreen instanceof GenericContainerScreen)) {
@@ -261,7 +261,7 @@ public class Collector_2 extends Module {
     }
 
     @EventTarget
-    public void a(InputEvent event) {
+    public void onInput(InputEvent event) {
         if (this.h != null && (mc.currentScreen instanceof HandledScreen)) {
             event.setForward(0.0f);
             event.setStrafe(0.0f);
@@ -269,7 +269,7 @@ public class Collector_2 extends Module {
     }
 
     @EventTarget
-    public void a(KeyEvent event) {
+    public void onKey(KeyEvent event) {
         if (this.h != null && (mc.currentScreen instanceof HandledScreen)) {
             event.a(true);
         }
@@ -287,7 +287,7 @@ public class Collector_2 extends Module {
         });
     }
 
-    private void s() {
+    private void closeScreen() {
         if (mc.currentScreen instanceof GenericContainerScreen) {
             mc.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(mc.player.currentScreenHandler.syncId));
             mc.player.closeScreen();

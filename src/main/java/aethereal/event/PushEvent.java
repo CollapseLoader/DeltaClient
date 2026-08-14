@@ -4,17 +4,17 @@ import aethereal.core.Event;
 
 
 public class PushEvent extends Event {
-    private final a a;
+    private final type a;
 
-    public PushEvent(a type) {
+    public PushEvent(type type) {
         this.a = type;
     }
 
-    public a b() {
+    public type b() {
         return this.a;
     }
 
-    public enum a {
+    public enum type {
         BLOCKS,
         FLUIDS,
         ENTITIES,

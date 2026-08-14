@@ -11,7 +11,7 @@ public class ThemeProcessor extends ConfigProcessor<ThemeConstructor> {
 
     @Override
 
-    protected List<ThemeConstructor> a(String json) throws Exception {
+    protected List<ThemeConstructor> loadConfig(String json) throws Exception {
         if (json == null || json.isBlank() || json.trim().startsWith("[")) {
             return createDefaultThemes();
         }
@@ -55,7 +55,7 @@ public class ThemeProcessor extends ConfigProcessor<ThemeConstructor> {
 
     @Override
 
-    protected String a(List<ThemeConstructor> data) throws Exception {
+    protected String saveConfig(List<ThemeConstructor> data) throws Exception {
         JSONObject jSONObject = new JSONObject();
         jSONObject.c("type", this.e.name());
         jSONObject.b("primary", a(ThemeInfo.PRIMARY).toIntColor());
@@ -81,7 +81,7 @@ public class ThemeProcessor extends ConfigProcessor<ThemeConstructor> {
     }
 
     @Override
-    protected String b() {
+    protected String getConfigFileName() {
         return "theme.json";
     }
 

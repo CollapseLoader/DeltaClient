@@ -12,19 +12,19 @@ import net.minecraft.util.math.Direction;
 
 @ModuleRegister(name = "Clan Upgrader", description = "Быстро прокачивает клан с помощью редстоуна и факела", category = Category.Misc)
 public class ClanUpgrader extends Module {
-    private int b;
+    private int upgradeCount;
 
     @Override
     public void c() {
         super.c();
-        if (this.b != -1) {
-            mc.player.getInventory().selectedSlot = this.b;
-            this.b = -1;
+        if (this.upgradeCount != -1) {
+            mc.player.getInventory().selectedSlot = this.upgradeCount;
+            this.upgradeCount = -1;
         }
     }
 
     @EventTarget
-    public void a(TickEvent event) {
+    public void onTick(TickEvent event) {
         int redstone = InventoryUtil.a(Items.REDSTONE, true);
         int torch = InventoryUtil.a(Items.TORCH, true);
         int target = redstone != -1 ? redstone : torch;
@@ -35,9 +35,9 @@ public class ClanUpgrader extends Module {
         }
         float randomPitch = ((float) (Math.sin(System.currentTimeMillis() / 1220.0d) * ((double) (Math.abs(90.0f - mc.player.getPitch()) / 8.0f)))) + MathUtil.a(-0.1f, 0.1f);
         Rotation rotation = new Rotation(Look.b() + MathUtil.a(-1.0f, 1.0f), MathUtil.b(88.0f + randomPitch, -90.0f, 90.0f));
-        Delta.getInstance().getModuleProcessor().k().a(rotation, 90.0f, 1, 1);
-        if (this.b == -1) {
-            this.b = mc.player.getInventory().selectedSlot;
+        Delta.getInstance().getModuleProcessor().k().startAiming(rotation, 90.0f, 1, 1);
+        if (this.upgradeCount == -1) {
+            this.upgradeCount = mc.player.getInventory().selectedSlot;
         }
         if (mc.player.getInventory().selectedSlot != target) {
             mc.player.getInventory().selectedSlot = target;

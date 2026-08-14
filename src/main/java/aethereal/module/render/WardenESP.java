@@ -30,9 +30,9 @@ public class WardenESP extends Module {
     private final List<a> c = new ArrayList<>();
 
     @EventTarget
-    public void a(DrawEvent event) {
+    public void onDraw(DrawEvent event) {
         if (mc.world.getRegistryKey().getValue().toString().equals("minecraft:overworld")) {
-            List<BlockPos> chests = q();
+            List<BlockPos> chests = scanChests();
             if (event.b()) {
                 for (ArmorStandEntity stand : mc.world.getEntitiesByClass(ArmorStandEntity.class, mc.player.getBoundingBox().expand(256.0), e -> true)) {
                     Matcher matcher = b.matcher(stand.getName().getString());
@@ -40,11 +40,11 @@ public class WardenESP extends Module {
                         int minutes = Integer.parseInt(matcher.group(1));
                         int seconds = Integer.parseInt(matcher.group(2));
                         long ms = ((((long) minutes) * 60) + ((long) seconds)) * 1000;
-                        BlockPos nearest = a(chests, stand.getBlockPos());
+                        BlockPos nearest = findNearestChest(chests, stand.getBlockPos());
                         if (nearest != null) {
-                            a existing = b(nearest);
+                            a existing = findTrackedInfo(nearest);
                             if (existing != null) {
-                                existing.a(ms);
+                                existing.updateTimer(ms);
                             } else {
                                 this.c.add(new a(nearest, ms));
                             }
@@ -52,24 +52,24 @@ public class WardenESP extends Module {
                     }
                 }
                 this.c.removeIf(info -> {
-                    return info.a() <= 0;
+                    return info.getRemainingTime() <= 0;
                 });
-                a(event, chests);
+                drawHudOverlay(event, chests);
             }
             if (event.c()) {
-                b(event, chests);
+                drawChests(event, chests);
             }
         }
     }
 
-    private void a(DrawEvent event, List<BlockPos> chests) {
+    private void drawHudOverlay(DrawEvent event, List<BlockPos> chests) {
         int background = ColorUtil.convertToARGB(11, 11, 13, InterfaceC0020Opcode.cR);
         for (BlockPos coord : chests) {
-            a info = b(coord);
+            a info = findTrackedInfo(coord);
             if (info != null) {
                 Vector2f screen = ProjectUtil.project(((double) coord.getX()) + 0.5d, coord.getY() + 1, ((double) coord.getZ()) + 0.5d);
                 if (ProjectUtil.isOnScreen(screen)) {
-                    int totalSec = (int) (info.a() / 1000);
+                    int totalSec = (int) (info.getRemainingTime() / 1000);
                     Text text = Text.literal(String.format(Locale.US, "%02d:%02d", Integer.valueOf(totalSec / 60), Integer.valueOf(totalSec % 60)));
                     float width = 16.5f + Fonts.e.a(text, 6.5f);
                     float x = screen.x() - (width / 2.0f);
@@ -82,15 +82,15 @@ public class WardenESP extends Module {
         }
     }
 
-    private void b(DrawEvent event, List<BlockPos> chests) {
+    private void drawChests(DrawEvent event, List<BlockPos> chests) {
         for (BlockPos coord : chests) {
-            if (b(coord) == null) {
+            if (findTrackedInfo(coord) == null) {
                 event.e().a(event.h(), new Box(coord.getX(), coord.getY(), coord.getZ(), coord.getX() + 1, coord.getY() + 1, coord.getZ() + 1), ColorUtil.convertToARGB(255, 100, 100, 255), 1.0f);
             }
         }
     }
 
-    private BlockPos a(List<BlockPos> chests, BlockPos standPos) {
+    private BlockPos findNearestChest(List<BlockPos> chests, BlockPos standPos) {
         for (BlockPos coord : chests) {
             if (standPos.getX() == coord.getX() && standPos.getZ() == coord.getZ()) {
                 return coord;
@@ -99,17 +99,17 @@ public class WardenESP extends Module {
         return null;
     }
 
-    private a b(BlockPos pos) {
+    private a findTrackedInfo(BlockPos pos) {
         int currentAnarchy = ServerUtil.a.d();
         for (a info : this.c) {
-            if (info.c().equals(pos) && info.e() == currentAnarchy) {
+            if (info.getChestPos().equals(pos) && info.getAnarchy() == currentAnarchy) {
                 return info;
             }
         }
         return null;
     }
 
-    public long a(BlockPos pos) {
+    public long getRemainingTime(BlockPos pos) {
         for (ArmorStandEntity stand : mc.world.getEntitiesByClass(ArmorStandEntity.class, mc.player.getBoundingBox().expand(256.0), e -> true)) {
             if (stand.getBlockPos().getX() == pos.getX() && stand.getBlockPos().getZ() == pos.getZ()) {
                 Matcher matcher = b.matcher(stand.getName().getString());
@@ -118,14 +118,14 @@ public class WardenESP extends Module {
                 }
             }
         }
-        a info = b(pos);
+        a info = findTrackedInfo(pos);
         if (info == null) {
             return -1L;
         }
-        return info.a();
+        return info.getRemainingTime();
     }
 
-    public List<BlockPos> q() {
+    public List<BlockPos> scanChests() {
         BlockEntity blockEntity;
         BlockEntityType<?> type;
         List<BlockPos> result = new ArrayList<>();
@@ -150,31 +150,31 @@ public class WardenESP extends Module {
             this.a.b();
         }
 
-        public CounterUtil b() {
+        public CounterUtil getCounter() {
             return this.a;
         }
 
-        public BlockPos c() {
+        public BlockPos getChestPos() {
             return this.b;
         }
 
-        public long d() {
+        public long getTime() {
             return this.c;
         }
 
-        public int e() {
+        public int getAnarchy() {
             return this.d;
         }
 
-        public void a(long current) {
-            if (Math.abs((current / 1000) - (a() / 1000)) > 5) {
+        public void updateTimer(long current) {
+            if (Math.abs((current / 1000) - (getRemainingTime() / 1000)) > 5) {
                 this.c = current;
                 this.a.b();
                 this.d = ServerUtil.a.d();
             }
         }
 
-        public long a() {
+        public long getRemainingTime() {
             return Math.max(0L, this.c - this.a.c());
         }
     }

@@ -77,14 +77,14 @@ public class AutoTotem extends Module {
         if (this.d.a("Возвращать предмет").c().booleanValue() && this.h == -1 && !offhand.isEmpty()) {
             this.h = slot;
         }
-        Delta.getInstance().getModuleProcessor().v().a().a(slot, 40, 1);
+        Delta.getInstance().getModuleProcessor().v().getInventoryHandler().moveItem(slot, 40, 1);
         return true;
     }
 
     private boolean r() {
         ItemStack offhand = mc.player.getOffHandStack();
         if (this.d.a("Возвращать предмет").c().booleanValue() && this.h != -1 && (offhand.isEmpty() || a(offhand))) {
-            Delta.getInstance().getModuleProcessor().v().a().a(this.h, 40, 1);
+            Delta.getInstance().getModuleProcessor().v().getInventoryHandler().moveItem(this.h, 40, 1);
         }
         this.h = -1;
         return false;

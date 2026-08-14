@@ -4,17 +4,17 @@ import aethereal.core.Event;
 
 
 public class RatioEvent extends Event {
-    private float a;
+    private float ratio;
 
     public RatioEvent(float ratio) {
-        this.a = ratio;
+        this.ratio = ratio;
     }
 
     public void a(float ratio) {
-        this.a = ratio;
+        this.ratio = ratio;
     }
 
     public float b() {
-        return this.a;
+        return this.ratio;
     }
 }

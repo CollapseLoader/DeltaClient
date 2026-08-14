@@ -8,13 +8,13 @@ public enum Category {
     Player("L"),
     Misc("D");
 
-    private final String f;
+    private final String icon;
 
     Category(String icon) {
-        this.f = icon;
+        this.icon = icon;
     }
 
     public String a() {
-        return this.f;
+        return this.icon;
     }
 }

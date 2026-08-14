@@ -10,14 +10,14 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntry.Reference;
 import net.minecraft.text.Text;
 
 public class EnchantmentCondition implements Condition {
-    private final AnimationUtil a;
-    private final RegistryKey<Enchantment> b;
-    private ItemType c;
-    private int d;
+    private final AnimationUtil animation;
+    private final RegistryKey<Enchantment> enchantmentKey;
+    private ItemType type;
+    private int requiredLevel;
 
     public EnchantmentCondition(RegistryKey<Enchantment> key) {
         this(key, 0, ItemType.ON);
@@ -28,83 +28,85 @@ public class EnchantmentCondition implements Condition {
     }
 
     public EnchantmentCondition(RegistryKey<Enchantment> key, int requiredLevel, ItemType type) {
-        this.a = new AnimationUtil();
-        this.b = key;
-        this.c = type;
-        this.d = type == ItemType.ON ? c(requiredLevel) : requiredLevel;
+        this.animation = new AnimationUtil();
+        this.enchantmentKey = key;
+        this.type = type;
+        this.requiredLevel = type == ItemType.ON ? c(requiredLevel) : requiredLevel;
     }
 
     @Override
     public AnimationUtil a() {
-        return this.a;
+        return this.animation;
     }
 
     public RegistryKey<Enchantment> i() {
-        return this.b;
+        return this.enchantmentKey;
     }
 
     @Override
     public void a(ItemType type) {
-        this.c = type;
+        this.type = type;
     }
 
     @Override
     public ItemType h() {
-        return this.c;
+        return this.type;
     }
 
     @Override
     public void a(int requiredLevel) {
-        this.d = requiredLevel;
+        this.requiredLevel = requiredLevel;
     }
 
     @Override
     public int g() {
-        return this.d;
+        return this.requiredLevel;
     }
 
     @Override
     public String f() {
-        return this.b.getValue().toString();
+        return this.enchantmentKey.getValue().toString();
     }
 
     @Override
     public boolean b() {
-        return this.c != ItemType.OFF;
+        return this.type != ItemType.OFF;
     }
 
     @Override
     public void a(boolean enabled) {
-        this.c = enabled ? ItemType.ON : ItemType.OFF;
+        this.type = enabled ? ItemType.ON : ItemType.OFF;
     }
 
     @Override
     public boolean c() {
-        return this.d > 0;
+        return this.requiredLevel > 0;
     }
 
     @Override
     public boolean d() {
-        return this.c == ItemType.DENY;
+        return this.type == ItemType.DENY;
     }
 
     @Override
     public void b(int delta) {
-        if (this.c != ItemType.ON || this.d == 0) {
+        if (this.type != ItemType.ON || this.requiredLevel == 0) {
             return;
         }
-        this.d = Math.max(1, c(this.d + delta));
+        this.requiredLevel = Math.max(1, c(this.requiredLevel + delta));
     }
 
     public boolean a(ItemStack stack) {
-        if (this.c == ItemType.OFF) {
+        if (this.type == ItemType.OFF) {
             return true;
         }
-        RegistryEntry.Reference class_6883VarMethod_46747 = Interface.mc.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(this.b);
-        ItemEnchantmentsComponent enchantments = stack.getOrDefault(DataComponentTypes.ENCHANTMENTS, ItemEnchantmentsComponent.DEFAULT);
+        Reference<Enchantment> class_6883VarMethod_46747 = Interface.mc.world.getRegistryManager()
+                .getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(this.enchantmentKey);
+        ItemEnchantmentsComponent enchantments = stack.getOrDefault(DataComponentTypes.ENCHANTMENTS,
+                ItemEnchantmentsComponent.DEFAULT);
         int level = enchantments.getLevel(class_6883VarMethod_46747);
-        int threshold = this.d == 0 ? 1 : this.d;
-        if (this.c == ItemType.DENY) {
+        int threshold = this.requiredLevel == 0 ? 1 : this.requiredLevel;
+        if (this.type == ItemType.DENY) {
             return level < threshold;
         }
         return !enchantments.isEmpty() && level >= threshold;
@@ -112,7 +114,10 @@ public class EnchantmentCondition implements Condition {
 
     @Override
     public String e() {
-        return Text.translatable("enchantment." + this.b.getValue().getNamespace() + "." + this.b.getValue().getPath().replace("/", ".")).getString() + (this.d == 0 ? "" : " " + this.d);
+        return Text
+                .translatable("enchantment." + this.enchantmentKey.getValue().getNamespace() + "."
+                        + this.enchantmentKey.getValue().getPath().replace("/", "."))
+                .getString() + (this.requiredLevel == 0 ? "" : " " + this.requiredLevel);
     }
 
     private int c(int level) {
@@ -120,13 +125,16 @@ public class EnchantmentCondition implements Condition {
         if (level <= 0) {
             return 0;
         }
-        if (Interface.mc.world == null || !Interface.mc.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).contains(this.b)) {
+        if (Interface.mc.world == null
+                || !Interface.mc.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).contains(this.enchantmentKey)) {
             return level;
         }
-        if (this.b.equals(Enchantments.SHARPNESS)) {
+        if (this.enchantmentKey.equals(Enchantments.SHARPNESS)) {
             iMethod_8183 = 7;
         } else {
-            iMethod_8183 = (this.b.equals(Enchantments.PROTECTION) || this.b.equals(Enchantments.UNBREAKING)) ? 5 : Interface.mc.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(this.b).value().getMaxLevel();
+            iMethod_8183 = (this.enchantmentKey.equals(Enchantments.PROTECTION) || this.enchantmentKey.equals(Enchantments.UNBREAKING)) ? 5
+                    : Interface.mc.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(this.enchantmentKey)
+                            .value().getMaxLevel();
         }
         return Math.max(1, Math.min(iMethod_8183, level));
     }

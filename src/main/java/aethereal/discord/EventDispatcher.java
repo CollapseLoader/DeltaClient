@@ -1,6 +1,6 @@
 package aethereal.discord;
 
-import aethereal.core.User_2;
+import aethereal.core.DiscordUser;
 import aethereal.lib.log4j.LogManager;
 import aethereal.lib.log4j.Logger;
 import aethereal.util.JsonUtils;
@@ -22,7 +22,7 @@ public class EventDispatcher {
         this.b.remove(listener);
     }
 
-    public void a(User_2 user) {
+    public void a(DiscordUser user) {
         a("READY", listener -> {
             listener.a(user);
         });
@@ -65,7 +65,7 @@ public class EventDispatcher {
             case "ACTIVITY_JOIN_REQUEST":
                 JsonUtils.b(data, "user").ifPresent(userJson -> {
                     try {
-                        User_2 user = User_2.a(userJson);
+                        DiscordUser user = DiscordUser.a(userJson);
                         a(eventName, listener -> {
                             listener.b(user);
                         });

@@ -27,19 +27,19 @@ public class Pointers extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Визуальные настройки", new BooleanSetting("Фильтр по друзьям", false), new BooleanSetting("Трассировка до игрока", true), new BooleanSetting("Навигационная стрелка", true));
     private final SliderSetting c = new SliderSetting("Размер стрелки", 7.0f, 5.0f, 15.0f, 1.0f);
     private final SliderSetting d = new SliderSetting("Отступ от центра", 30.0f, 20.0f, 50.0f, 1.0f);
-    private float e;
+    private float opacity;
 
     public Pointers() {
         a(this.b, this.c, this.d);
     }
 
     @EventTarget
-    public void a(DrawEvent event) {
+    public void onDraw(DrawEvent event) {
         if (event.c() && this.b.a("Трассировка до игрока").c().booleanValue()) {
             Vec3d cam = mc.getEntityRenderDispatcher().camera.getPos();
             Vec3d start = new Vec3d(0.0d, 0.0d, 27.0d).rotateX((float) (-Math.toRadians(mc.getEntityRenderDispatcher().camera.getPitch()))).rotateY((float) (-Math.toRadians(mc.getEntityRenderDispatcher().camera.getYaw()))).add(cam);
             Matrix4f matrix = event.h().peek().getPositionMatrix();
-            BufferBuilder buffer = q();
+            BufferBuilder buffer = createLineBuffer();
             boolean any = false;
             for (Entity entity : mc.world.getEntities()) {
                 if (!(entity instanceof PlayerEntity target)) continue;
@@ -53,10 +53,10 @@ public class Pointers extends Module {
                     }
                 }
             }
-            a(buffer, any);
+            finishLineBuffer(buffer, any);
         }
         if (event.b() && this.b.a("Навигационная стрелка").c().booleanValue()) {
-            this.e = MathUtil.c(this.e, this.e + MathHelper.wrapDegrees(Look.b() - this.e), 2.0f);
+            this.opacity = MathUtil.c(this.opacity, this.opacity + MathHelper.wrapDegrees(Look.b() - this.opacity), 2.0f);
             for (Entity entity : mc.world.getEntities()) {
                 if (!(entity instanceof PlayerEntity target)) continue;
                 if (target != mc.player && target.isAlive()) {
@@ -64,7 +64,7 @@ public class Pointers extends Module {
                     if (!this.b.a("Фильтр по друзьям").c().booleanValue() || isFriend) {
                         Vec3d pos = MathUtil.a(target, event.g());
                         Vec3d eye = MathUtil.a(mc.player, event.g());
-                        float angle = MathHelper.wrapDegrees(((float) Math.toDegrees(Math.atan2(eye.x - pos.getX(), pos.getZ() - eye.z))) - this.e);
+                        float angle = MathHelper.wrapDegrees(((float) Math.toDegrees(Math.atan2(eye.x - pos.getX(), pos.getZ() - eye.z))) - this.opacity);
                         float radians = (float) Math.toRadians(angle);
                         MatrixStack stack = event.h();
                         stack.push();
@@ -78,7 +78,7 @@ public class Pointers extends Module {
         }
     }
 
-    private BufferBuilder q() {
+    private BufferBuilder createLineBuffer() {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
         RenderSystem.disableCull();
@@ -87,7 +87,7 @@ public class Pointers extends Module {
         return Tessellator.getInstance().begin(VertexFormat.DrawMode.DEBUG_LINES, VertexFormats.POSITION_COLOR);
     }
 
-    private void a(BufferBuilder buffer, boolean draw) {
+    private void finishLineBuffer(BufferBuilder buffer, boolean draw) {
         if (draw) {
             BufferRenderer.drawWithGlobalProgram(buffer.end());
         } else {

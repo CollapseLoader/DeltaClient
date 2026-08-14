@@ -2,7 +2,7 @@ package aethereal.network;
 
 import aethereal.lib.jsoup.Element;
 import aethereal.lib.jsoup.Jsoup;
-import aethereal.util.Marker_2;
+import aethereal.util.Marker;
 import aethereal.util.MathUtil;
 import aethereal.util.ProcessIdUtil;
 import aethereal.util.ServerUtil;
@@ -70,7 +70,7 @@ public class ChatPoller {
                                                 model.a(ChatModel.a.CONFIRM_NICKNAME);
                                                 this.b.b(model.b(), "✅ Отлично! Давайте проверим данные:\n\n📝 Ваш никнейм: " + nickname + "\n📦 Количество: " + (order != null ? order.g() : 0) + " шт.\n\n✔️ Всё верно? Напишите «Да» или «+»\n✏️ Нужно исправить? Напишите «Нет» или «-»");
                                             } else if (model.f() == ChatModel.a.CONFIRM_NICKNAME) {
-                                                if (answer.equals("да") || answer.equals("da") || content.contains(Marker_2.b)) {
+                                                if (answer.equals("да") || answer.equals("da") || content.contains(Marker.b)) {
                                                     this.b.b(model.b(), "✅ Отлично! Данные подтверждены.\n\n🟢 Для получения валюты зайдите на Анархию: " + ServerUtil.a.d() + "\n\n⚡ У вас есть 20 секунд для получения валюты, иначе потребуется указать никнейм заново.");
                                                     model.a(ChatModel.a.DELIVERY);
                                                     model.a().b();

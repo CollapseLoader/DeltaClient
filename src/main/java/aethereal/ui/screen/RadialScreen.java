@@ -10,7 +10,7 @@ import aethereal.render.ColorUtil;
 import aethereal.render.EasingList;
 import aethereal.render.Fonts;
 import aethereal.util.InventoryUtil;
-import aethereal.util.Marker_2;
+import aethereal.util.Marker;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gl.ShaderProgramKeys;
 import net.minecraft.client.gui.DrawContext;
@@ -133,7 +133,7 @@ public class RadialScreen implements Interface {
                         Fonts.e.a(context.getMatrices(), label, (iconX + 8.0f) - Fonts.e.a(label, 10.0f), (iconY + 10.0f) - Fonts.e.a(10.0f), 10.0f, ColorUtil.convertToARGB(255, 255, 255, amount > 0 ? 235 : InterfaceC0020Opcode.al));
                     }
                 } else {
-                    Fonts.e.a(context.getMatrices(), Marker_2.b, iconX - (Fonts.e.a(Marker_2.b, 14.0f) / 2.0f), iconY - (Fonts.e.a(14.0f) / 2.0f), 14.0f, ColorUtil.convertToARGB(255, 255, 255, 255));
+                    Fonts.e.a(context.getMatrices(), Marker.b, iconX - (Fonts.e.a(Marker.b, 14.0f) / 2.0f), iconY - (Fonts.e.a(14.0f) / 2.0f), 14.0f, ColorUtil.convertToARGB(255, 255, 255, 255));
                 }
             }
             slot++;

@@ -20,25 +20,25 @@ import java.util.List;
 public class XRay extends Module {
     private final List<BlockPos> b = new ArrayList<>();
     private final CounterUtil c = new CounterUtil();
-    private boolean d;
+    private boolean showOverlay;
 
-    public List<BlockPos> s() {
+    public List<BlockPos> getDebrisList() {
         return this.b;
     }
 
-    public CounterUtil q() {
+    public CounterUtil getTimer() {
         return this.c;
     }
 
     public boolean r() {
-        return this.d;
+        return this.showOverlay;
     }
 
     @Override
     public void c() {
         super.c();
         this.b.clear();
-        this.d = false;
+        this.showOverlay = false;
         this.c.b();
     }
 
@@ -46,12 +46,12 @@ public class XRay extends Module {
     public void b() {
         super.b();
         this.b.clear();
-        this.d = false;
+        this.showOverlay = false;
         this.c.b();
     }
 
     @EventTarget
-    public void a(DrawEvent draw) {
+    public void onDraw(DrawEvent draw) {
         if (draw.c()) {
             this.b.removeIf(blockPos -> {
                 return mc.world.getBlockState(blockPos).getBlock().equals(Blocks.AIR) || blockPos.getSquaredDistance(mc.player.getPos()) >= 6400.0d || !mc.world.getChunkManager().isChunkLoaded(blockPos.getX() >> 4, blockPos.getZ() >> 4);
@@ -63,7 +63,7 @@ public class XRay extends Module {
     }
 
     @EventTarget
-    public void a(PacketEvent packet) {
+    public void onPacket(PacketEvent packet) {
         ChunkDeltaUpdateS2CPacket chunkDeltaPacket = (ChunkDeltaUpdateS2CPacket) packet.d();
         if (chunkDeltaPacket instanceof ChunkDeltaUpdateS2CPacket) {
             chunkDeltaPacket.visitUpdates((blockPos, blockState) -> {
@@ -71,7 +71,7 @@ public class XRay extends Module {
                     BlockPos add = blockPos.toImmutable();
                     if (!this.b.contains(add)) {
                         this.b.add(add);
-                        this.d = true;
+                        this.showOverlay = true;
                         this.c.b();
                     }
                 }
@@ -80,11 +80,11 @@ public class XRay extends Module {
     }
 
     @EventTarget
-    public void a(TickEvent e) {
+    public void onTick(TickEvent e) {
         this.c.a();
-        if (this.d && this.c.b(5L)) {
+        if (this.showOverlay && this.c.b(5L)) {
             ChatUtil.sendMessage("Обнаружено &c" + this.b.size() + "&7 древних обломков ");
-            this.d = false;
+            this.showOverlay = false;
         }
     }
 }

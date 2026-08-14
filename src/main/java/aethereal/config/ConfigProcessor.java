@@ -11,29 +11,29 @@ public abstract class ConfigProcessor<T> extends BaseProcessor {
     protected final File c = new File(new File(mc.runDirectory, "configs"), "general");
     protected final List<T> d = new ArrayList<>();
 
-    protected abstract String b();
+    protected abstract String getConfigFileName();
 
     @Override
 
     public void setup() {
         try {
             List<T> list = this.d;
-            if (b() == null) {
+            if (getConfigFileName() == null) {
                 return;
             }
             File fileD = d();
             if (!fileD.exists()) {
                 fileD.mkdirs();
             }
-            File file = new File(fileD, b());
+            File file = new File(fileD, getConfigFileName());
             String string = file.exists() ? Files.readString(file.toPath()) : "";
-            List<T> listA = a(string.isEmpty() ? "[]" : string);
+            List<T> listA = loadConfig(string.isEmpty() ? "[]" : string);
             if (listA != null) {
                 list.clear();
                 list.addAll(listA);
             }
             if (string.isEmpty()) {
-                Files.writeString(file.toPath(), a(list));
+                Files.writeString(file.toPath(), saveConfig(list));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -41,10 +41,10 @@ public abstract class ConfigProcessor<T> extends BaseProcessor {
     }
 
 
-    protected abstract List<T> a(String str) throws Exception;
+    protected abstract List<T> loadConfig(String str) throws Exception;
 
 
-    protected abstract String a(List<T> list) throws Exception;
+    protected abstract String saveConfig(List<T> list) throws Exception;
 
     public File c() {
         return this.b;
@@ -60,10 +60,10 @@ public abstract class ConfigProcessor<T> extends BaseProcessor {
 
     @Override
     public void unSetup() {
-        if (b() != null) {
+        if (getConfigFileName() != null) {
             try {
-                File file = new File(d(), b());
-                Files.writeString(file.toPath(), a(this.d));
+                File file = new File(d(), getConfigFileName());
+                Files.writeString(file.toPath(), saveConfig(this.d));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

@@ -16,24 +16,24 @@ import net.minecraft.screen.slot.SlotActionType;
 
 @ModuleRegister(name = "Auc Reissue", description = "Автоматически перевыставляет предметы на аукционе", category = Category.Player)
 public class AucReissue extends Module {
-    private boolean b;
+    private boolean isActive;
 
     @Override
     public void b() {
         super.b();
-        this.b = false;
+        this.isActive = false;
     }
 
     @Override
     public void c() {
         super.c();
-        this.b = false;
+        this.isActive = false;
     }
 
     @EventTarget
     public void a(TickEvent event) {
         if (!ServerUtil.e() && ((ServerUtil.a.d() != -1 || ServerUtil.d.b() != -1) && mc.player.age >= 220
-                && !Delta.getInstance().getModuleProcessor().v().g().a()
+                && !Delta.getInstance().getModuleProcessor().v().getAFKHandler().a()
                 && !mc.player.getItemCooldownManager().isCoolingDown(Items.CLOCK.getDefaultStack()))) {
             if (mc.currentScreen instanceof HandledScreen<?> handledScreen) {
                 if (handledScreen instanceof GenericContainerScreen) {
@@ -60,9 +60,9 @@ public class AucReissue extends Module {
                 mc.player.networkHandler.sendChatCommand("ah");
             }
         }
-        if (this.b && (mc.currentScreen instanceof GenericContainerScreen)) {
+        if (this.isActive && (mc.currentScreen instanceof GenericContainerScreen)) {
             mc.player.closeHandledScreen();
-            this.b = false;
+            this.isActive = false;
         }
     }
 
@@ -73,7 +73,7 @@ public class AucReissue extends Module {
                 if (eventPacket.d() instanceof GameMessageS2CPacket packet) {
                     String msg = packet.content().getString();
                     if (msg.equals("Данная команда недоступна в режиме AFK")) {
-                        Delta.getInstance().getModuleProcessor().v().g().a(10);
+                        Delta.getInstance().getModuleProcessor().v().getAFKHandler().a(10);
                     }
                     if (msg.equals("[☃] В хранилище отсутствуют предметы для перевыставления.")) {
                         ChatUtil.sendMessage("Авто-выключение: в хранилище отсутствуют предметы для перевыставления");
@@ -82,12 +82,12 @@ public class AucReissue extends Module {
                     if (msg.contains("[☃] Предметы успешно перевыставлены ")
                             || msg.contains("[✔] Предметы успешно перевыставлены!")) {
                         mc.player.getItemCooldownManager().set(Items.CLOCK.getDefaultStack(), 1200);
-                        this.b = true;
+                        this.isActive = true;
                     }
                     if (msg.contains("[☃] Вы можете переставлять предметы раз в минуту! Подождите ")) {
                         int seconds = Integer.parseInt(msg.replaceAll(".*Подождите (\\d+) сек\\..*", "$1"));
                         mc.player.getItemCooldownManager().set(Items.CLOCK.getDefaultStack(), (seconds * 20) + 20);
-                        this.b = true;
+                        this.isActive = true;
                     }
                 }
             }

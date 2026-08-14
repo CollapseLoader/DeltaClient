@@ -6,12 +6,12 @@ import com.google.gson.JsonObject;
 import java.util.Optional;
 
 public final class ActivityTimestamps {
-    private final Long a;
-    private final Long b;
+    private final Long start;
+    private final Long end;
 
     public ActivityTimestamps(Long start, Long end) {
-        this.a = start;
-        this.b = end;
+        this.start = start;
+        this.end = end;
     }
 
     public static ActivityTimestamps a(long epochSeconds) {
@@ -23,19 +23,19 @@ public final class ActivityTimestamps {
     }
 
     public Long b() {
-        return this.a;
+        return this.start;
     }
 
     public Long c() {
-        return this.b;
+        return this.end;
     }
 
     public JsonObject a() {
         JsonObject json = new JsonObject();
-        Optional.ofNullable(this.a).ifPresent(s -> {
+        Optional.ofNullable(this.start).ifPresent(s -> {
             json.addProperty("start", s);
         });
-        Optional.ofNullable(this.b).ifPresent(e -> {
+        Optional.ofNullable(this.end).ifPresent(e -> {
             json.addProperty("end", e);
         });
         return json;

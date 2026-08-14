@@ -41,8 +41,8 @@ public class WatermarkWidget extends Widget implements Interface {
         this.m = new BooleanSetting("Координаты", true);
         this.n = new BooleanSetting("Задержка сервера", true);
         this.o = new BooleanSetting("Скорость игрока", true);
-        j().a(this);
-        j().a(2);
+        j().setWidget(this);
+        j().setDragStatus(2);
         a(this.g, this.h, this.i, this.j, this.k, this.l, this.m, this.n, this.o);
     }
 
@@ -69,10 +69,10 @@ public class WatermarkWidget extends Widget implements Interface {
         }
         float y = 5.0f + fMethod_4476;
         float bottomX = this.g.c().booleanValue() ? x : x + ((topWidth - bottomWidth) / 2.0f);
-        j().a(x);
-        j().b(y);
-        j().c(topWidth);
-        j().d(bottomSections.length > 0 ? this.d + 3.0f + this.d : this.d);
+        j().setX(x);
+        j().setY(y);
+        j().setWidth(topWidth);
+        j().setHeight(bottomSections.length > 0 ? this.d + 3.0f + this.d : this.d);
         int primaryColor = ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), 1.0f);
         a(event, x, y, topWidth, topSections, true, primaryColor, iconSize, logoSize, 5.0f, sectionGap, 3.0f, 4.0f, -0.5f);
         if (bottomSections.length > 0) {
@@ -173,7 +173,7 @@ public class WatermarkWidget extends Widget implements Interface {
             sections.add(new String[]{"b", "x " + ((int) mc.player.getX()) + " y " + ((int) mc.player.getY()) + " z " + ((int) mc.player.getZ())});
         }
         if (this.n.c().booleanValue()) {
-            sections.add(new String[]{"g", String.format("%.1f TPS", Float.valueOf(Delta.getInstance().getModuleProcessor().v().j().a()))});
+            sections.add(new String[]{"g", String.format("%.1f TPS", Float.valueOf(Delta.getInstance().getModuleProcessor().v().getTPSHandler().a()))});
         }
         if (this.o.c().booleanValue()) {
             sections.add(new String[]{"e", String.format("%.2f BPS", Double.valueOf(ServerUtil.c()))});

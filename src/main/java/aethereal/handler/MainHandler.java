@@ -30,23 +30,23 @@ import java.util.stream.StreamSupport;
 
 
 public class MainHandler extends BaseHandler implements Interface {
-    private ServerInfo b;
-    private String c;
+    private ServerInfo serverInfo;
+    private String confirmMessage;
 
     public void a(ServerInfo serverInfo) {
-        this.b = serverInfo;
+        this.serverInfo = serverInfo;
     }
 
     public ServerInfo a() {
-        return this.b;
+        return this.serverInfo;
     }
 
     public void a(String confirm) {
-        this.c = confirm;
+        this.confirmMessage = confirm;
     }
 
     public String b() {
-        return this.c;
+        return this.confirmMessage;
     }
 
     @EventTarget
@@ -144,14 +144,14 @@ public class MainHandler extends BaseHandler implements Interface {
                 String trimmed = message.trim();
                 boolean dangerous = trimmed.toLowerCase().startsWith("hub") || trimmed.toLowerCase().startsWith("an");
                 if (!ServerUtil.e() || !dangerous) {
-                    this.c = null;
+                    this.confirmMessage = null;
                     return;
                 }
-                if (trimmed.equals(this.c)) {
-                    this.c = null;
+                if (trimmed.equals(this.confirmMessage)) {
+                    this.confirmMessage = null;
                     return;
                 }
-                this.c = trimmed;
+                this.confirmMessage = trimmed;
                 ChatUtil.sendMessage("&cВы находитесь в PvP режиме! &7Чтобы отправить эту команду, повторите её");
                 Delta.getInstance().getModuleProcessor().u().f().d();
                 event.a(true);

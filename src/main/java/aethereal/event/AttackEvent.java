@@ -6,13 +6,13 @@ import aethereal.core.Event;
 import net.minecraft.entity.Entity;
 
 public class AttackEvent extends Event {
-    private final Entity a;
+    private final Entity entity;
 
     public AttackEvent(Entity entity) {
-        this.a = entity;
+        this.entity = entity;
     }
 
     public Entity b() {
-        return this.a;
+        return this.entity;
     }
 }

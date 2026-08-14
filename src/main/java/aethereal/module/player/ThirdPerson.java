@@ -15,18 +15,18 @@ import net.minecraft.client.option.Perspective;
 @ModuleRegister(name = "Third Person", description = "Свободный обзор от третьего лица без изменения направления движения", category = Category.Player)
 public class ThirdPerson extends Module {
     private final ModeSetting b = new ModeSetting("Режим активации осмотра", "По нажатию", "По нажатию", "По зажатию");
-    private boolean c;
-    private Rotation e;
+    private boolean isActive;
+    private Rotation rotation;
 
     public ThirdPerson() {
         BindSetting d = new BindSetting("Кнопка осмотра", Integer.valueOf(TokenId.Q_), 0).a(() -> {
             if (this.b.l("По зажатию")) {
                 d(true);
             } else {
-                d(!this.c);
+                d(!this.isActive);
             }
         }).b(() -> {
-            if (this.c && this.b.l("По зажатию")) {
+            if (this.isActive && this.b.l("По зажатию")) {
                 d(false);
             }
         });
@@ -35,18 +35,18 @@ public class ThirdPerson extends Module {
 
     @EventTarget
     public void a(KeyEvent event) {
-        if (this.c && event.getKey() == mc.options.togglePerspectiveKey.getDefaultKey().getCode()) {
+        if (this.isActive && event.getKey() == mc.options.togglePerspectiveKey.getDefaultKey().getCode()) {
             event.a(true);
         }
     }
 
     @EventTarget
     public void a(TickEvent event) {
-        if (this.c) {
+        if (this.isActive) {
             if (mc.currentScreen != null) {
                 d(false);
             } else {
-                Delta.getInstance().getModuleProcessor().k().a(
+                Delta.getInstance().getModuleProcessor().k().startAiming(
                         new Rotation(mc.player.getYaw(), MathUtil.b(mc.player.getPitch(), -89.0f, 89.0f)), 360.0f, 0,
                         1);
             }
@@ -55,12 +55,12 @@ public class ThirdPerson extends Module {
 
     private void d(boolean active) {
         if (active) {
-            this.e = new Rotation(Look.b(), Look.c());
+            this.rotation = new Rotation(Look.b(), Look.c());
         } else {
-            Look.a(this.e.c());
-            Look.b(this.e.d());
+            Look.a(this.rotation.c());
+            Look.b(this.rotation.d());
         }
         mc.options.setPerspective(active ? Perspective.THIRD_PERSON_BACK : Perspective.FIRST_PERSON);
-        this.c = active;
+        this.isActive = active;
     }
 }

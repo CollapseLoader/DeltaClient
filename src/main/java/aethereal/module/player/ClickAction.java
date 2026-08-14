@@ -13,7 +13,7 @@ import net.minecraft.util.hit.EntityHitResult;
 @ModuleRegister(name = "Click Action", description = "Выполняет действие, привязанное к выбранной клавише", category = Category.Player)
 public class ClickAction extends Module {
     private final BindSetting b = new BindSetting("Эндер-жемчуг", -1).a(() -> {
-        Delta.getInstance().getModuleProcessor().v().b().a(Items.ENDER_PEARL.getDefaultStack());
+        Delta.getInstance().getModuleProcessor().v().getUseableHandler().a(Items.ENDER_PEARL.getDefaultStack());
     });
     private final BindSetting c = new BindSetting("Добавление друга", -1).a(() -> {
         EntityHitResult hit = mc.crosshairTarget instanceof EntityHitResult ehr ? ehr : null;

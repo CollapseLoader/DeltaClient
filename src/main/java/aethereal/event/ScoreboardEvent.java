@@ -6,17 +6,17 @@ import aethereal.core.Event;
 import net.minecraft.text.Text;
 
 public class ScoreboardEvent extends Event {
-    private Text a;
+    private Text title;
 
     public ScoreboardEvent(Text title) {
-        this.a = title;
+        this.title = title;
     }
 
     public void a(Text title) {
-        this.a = title;
+        this.title = title;
     }
 
     public Text b() {
-        return this.a;
+        return this.title;
     }
 }

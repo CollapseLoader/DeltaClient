@@ -26,7 +26,7 @@ public class Velocity extends Module {
         return Boolean.valueOf(this.b.l("Легитный"));
     });
     private Vec3d e = Vec3d.ZERO;
-    private int f;
+    private int tickTimer;
 
     public Velocity() {
         a(this.b, this.c, this.d);
@@ -36,7 +36,7 @@ public class Velocity extends Module {
     public void c() {
         super.c();
         this.e = Vec3d.ZERO;
-        this.f = 0;
+        this.tickTimer = 0;
     }
 
     @EventTarget
@@ -49,7 +49,7 @@ public class Velocity extends Module {
             if (damage.entityId() == mc.player.getId()) {
                 DamageSource source = damage.createDamageSource(mc.world);
                 boolean player = source.getAttacker() instanceof PlayerEntity;
-                this.f = player ? mc.player.age : 0;
+                this.tickTimer = player ? mc.player.age : 0;
                 if (!player) {
                     this.e = Vec3d.ZERO;
                 }
@@ -75,7 +75,7 @@ public class Velocity extends Module {
             this.e = Vec3d.ZERO;
             return;
         }
-        if (!this.b.l("Легитный") || this.e.lengthSquared() == 0.0d || mc.player.age - this.f > 10) {
+        if (!this.b.l("Легитный") || this.e.lengthSquared() == 0.0d || mc.player.age - this.tickTimer > 10) {
             return;
         }
         double angle = MathHelper.wrapDegrees((Math.toDegrees(Math.atan2(-this.e.z, -this.e.x)) - 90.0d) - ((double) Look.b()));

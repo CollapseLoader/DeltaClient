@@ -18,7 +18,7 @@ public class FunDeliver extends Module {
     private final SliderSetting c = new SliderSetting("Триггер цены обработки товара", 1.0f, 0.5f, 10.0f, 0.01f, true);
     private final SliderSetting d = new SliderSetting("Продавать при сумме от (кк)", 10.0f, 1.0f, 50.0f, 1.0f, true);
     private final ScheduledExecutorService e = Executors.newSingleThreadScheduledExecutor();
-    private FunPay f;
+    private FunPay funPay;
 
     public FunDeliver() {
         a(this.b, this.c, this.d);
@@ -29,7 +29,7 @@ public class FunDeliver extends Module {
     }
 
     @EventTarget
-    public void a(TickEvent event) {
+    public void onTick(TickEvent event) {
     }
 
     private void t() {

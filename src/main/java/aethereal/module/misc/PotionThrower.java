@@ -31,9 +31,9 @@ public class PotionThrower extends Module {
         });
         a(this.b, d);
         for (AutoBuyEntry potion : AutoBuyEntry.values()) {
-            if (potion.d() == Items.SPLASH_POTION) {
-                a(new BindSetting(potion.b(), -1).a(() -> {
-                    Delta.getInstance().getModuleProcessor().v().b().a(potion.a());
+            if (potion.getItem() == Items.SPLASH_POTION) {
+                a(new BindSetting(potion.getDisplayName(), -1).a(() -> {
+                    Delta.getInstance().getModuleProcessor().v().getUseableHandler().a(potion.a());
                 }).a(() -> {
                     return Boolean.valueOf(this.b.l("Клавиша"));
                 }));

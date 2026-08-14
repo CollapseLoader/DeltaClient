@@ -39,7 +39,7 @@ public class ScreenWalk extends Module {
     @EventTarget(a = 0)
     public void a(PacketEvent event) {
         boolean isShulker;
-        StopHandler stopHandler = Delta.getInstance().getModuleProcessor().v().c();
+        StopHandler stopHandler = Delta.getInstance().getModuleProcessor().v().getStopHandler();
         if (event.b()) {
             if (mc.currentScreen instanceof InventoryScreen) {
                 ClickSlotC2SPacket click = (ClickSlotC2SPacket) event.d();

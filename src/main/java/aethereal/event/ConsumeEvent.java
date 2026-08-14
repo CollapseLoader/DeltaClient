@@ -6,13 +6,13 @@ import aethereal.core.Event;
 import net.minecraft.item.ItemStack;
 
 public class ConsumeEvent extends Event {
-    private final ItemStack a;
+    private final ItemStack stack;
 
     public ConsumeEvent(ItemStack stack) {
-        this.a = stack;
+        this.stack = stack;
     }
 
     public ItemStack b() {
-        return this.a;
+        return this.stack;
     }
 }

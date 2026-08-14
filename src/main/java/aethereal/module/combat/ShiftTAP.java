@@ -11,25 +11,25 @@ import net.minecraft.entity.player.PlayerEntity;
 
 @ModuleRegister(name = "Shift TAP", description = "Автоматически приседает в момент удара по игроку", category = Category.Combat)
 public class ShiftTAP extends Module {
-    private int b;
+    private int cooldownTicks;
 
     @EventTarget
-    public void a(AttackEvent event) {
+    public void onAttack(AttackEvent event) {
         if (event.b() instanceof PlayerEntity) {
-            this.b = 2;
+            this.cooldownTicks = 2;
         }
     }
 
     @EventTarget
-    public void a(TickEvent event) {
-        if (this.b > 0) {
-            this.b--;
+    public void onTick(TickEvent event) {
+        if (this.cooldownTicks > 0) {
+            this.cooldownTicks--;
         }
     }
 
     @EventTarget
-    public void a(InputEvent event) {
-        if (this.b > 0) {
+    public void onInput(InputEvent event) {
+        if (this.cooldownTicks > 0) {
             event.setSneak(true);
         }
     }

@@ -59,14 +59,14 @@ public class ItemHelper extends Module {
                 if (from != -1 && from != target) {
                     this.d = from;
                     this.c = target;
-                    Delta.getInstance().getModuleProcessor().v().a().a(from, target, 1);
+                    Delta.getInstance().getModuleProcessor().v().getInventoryHandler().moveItem(from, target, 1);
                 }
             }
         }
 
         private void g() {
             if (this.d != -1) {
-                Delta.getInstance().getModuleProcessor().v().a().a(this.d, this.c, 1);
+                Delta.getInstance().getModuleProcessor().v().getInventoryHandler().moveItem(this.d, this.c, 1);
                 this.d = -1;
                 this.c = -1;
             }

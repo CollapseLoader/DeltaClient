@@ -16,7 +16,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import org.joml.Vector4f;
 
-public class BooleanElement extends Element_2<BooleanSetting> {
+public class BooleanElement extends Element<BooleanSetting> {
     public BooleanElement(BooleanSetting setting) {
         super(setting);
         this.a.w = 11.0f;
@@ -24,7 +24,7 @@ public class BooleanElement extends Element_2<BooleanSetting> {
 
     @Override
 
-    public boolean a(double mouseX, double mouseY, int button) {
+    public boolean onMouseClick(double mouseX, double mouseY, int button) {
         Vector4f vector4f = this.a;
         var setting = this.b;
         if (!MathUtil.a(mouseX, mouseY, vector4f.x, vector4f.y, vector4f.z, vector4f.w)) {
@@ -53,17 +53,17 @@ public class BooleanElement extends Element_2<BooleanSetting> {
     }
 
     @Override
-    public void a(DrawContext context, double mouseX, double mouseY, float delta, float extend) {
+    public void render(DrawContext context, double mouseX, double mouseY, float delta, float extend) {
         MatrixStack matrices = context.getMatrices();
         Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
         ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
-        b().a(this.b.c().booleanValue());
-        b().a(0.0f, 1.0f, 0.5f, EasingList.i, delta);
-        float enabled = b().c();
+        getActivationAnimation().a(this.b.c().booleanValue());
+        getActivationAnimation().a(0.0f, 1.0f, 0.5f, EasingList.i, delta);
+        float enabled = getActivationAnimation().c();
         float disabled = 1.0f - enabled;
         float centerY = this.a.y + (this.a.w / 2.0f) + 0.5f;
         boolean hovered = MathUtil.a(mouseX, mouseY, this.a.x, this.a.y, this.a.z, this.a.w) && extend >= 1.0f;
-        a(matrices, Fonts.c, this.b.i(), this.a.x, this.a.y, this.a.w, 6.5f, theme.a(ThemeInfo.TEXT).toIntColor(), (this.a.z - 11.0f) - 4.0f, hovered, extend, delta);
+        drawLabel(matrices, Fonts.c, this.b.i(), this.a.x, this.a.y, this.a.w, 6.5f, theme.a(ThemeInfo.TEXT).toIntColor(), (this.a.z - 11.0f) - 4.0f, hovered, extend, delta);
         float boxX = (this.a.x + this.a.z) - 11.0f;
         float boxY = centerY - 5.5f;
         draw.a(matrices, boxX, boxY, 11.0f, 11.0f, 3.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.039215688f * extend));
@@ -77,9 +77,9 @@ public class BooleanElement extends Element_2<BooleanSetting> {
     }
 
     @Override
-    public void a(DrawEvent event, float x, float y, float width, float animation) {
-        b().a(this.b.c().booleanValue());
-        b().a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
+    public void onDrawEvent(DrawEvent event, float x, float y, float width, float animation) {
+        getActivationAnimation().a(this.b.c().booleanValue());
+        getActivationAnimation().a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
         ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
         float textX = x + 19.5f;
         float toggleX = ((x + width) - 11.0f) - 5.0f;
@@ -88,7 +88,7 @@ public class BooleanElement extends Element_2<BooleanSetting> {
         Fonts.a.a(event.h(), "g", x + 5.0f, y + ((12.0f - Fonts.a.a(6.5f)) / 2.0f), 6.5f, ColorUtil.applyAlphaToColor(primary, animation));
         event.d().a(event.i().getMatrices(), x + 15.5f, y + 3.0f, 0.75f, 6.0f, 0.0f, ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(InterfaceC0020Opcode.aN, InterfaceC0020Opcode.aN, InterfaceC0020Opcode.aN, 255), 0.5f * animation));
         Fonts.e.a(event.h(), this.b.i(), textX, (y + ((12.0f - Fonts.e.a(6.5f)) / 2.0f)) - 0.5f, 6.5f, ColorUtil.applyAlphaToColor(-1, animation));
-        float value = b().c();
+        float value = getActivationAnimation().c();
         event.d().a(event.h(), toggleX, toggleY, 11.0f, 7.5f, 2.5f, ColorUtil.applyAlphaToColor(primary, value * animation));
         event.d().a(event.h(), toggleX, toggleY, 11.0f, 7.5f, 2.5f, 0.3f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * animation));
         event.d().a(event.h(), toggleX + 1.5f + (3.5f * value), toggleY + 1.5f, 4.5f, 4.5f, 1.25f, ColorUtil.applyAlphaToColor(ColorUtil.lerpColor(ColorUtil.convertToARGB(InterfaceC0020Opcode.ap, InterfaceC0020Opcode.ap, InterfaceC0020Opcode.bk, 255), ColorUtil.convertToARGB(255, 255, 255, 255), value), animation));

@@ -18,14 +18,14 @@ import net.minecraft.client.network.PlayerListEntry;
 public class StaffWidget extends Widget implements Interface {
     public StaffWidget() {
         super(new DragInfo("Стафф", 0.0f, 0.0f, 0.0f, 0.0f));
-        j().a(this);
+        j().setWidget(this);
     }
 
     @Override
     public void a(DrawEvent event) {
         d().a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
-        float x = j().a();
-        float y = j().b();
+        float x = j().getClampedX();
+        float y = j().getClampedY();
         float targetWidth = 14.5f + Fonts.e.a("Staff-list", this.e) + 5.0f + 2.0f;
         float contentY = y + this.d + 3.0f;
         boolean active = false;
@@ -35,8 +35,8 @@ public class StaffWidget extends Widget implements Interface {
                 active = true;
             }
         }
-        float width = MathUtil.c(j().f(), targetWidth, 0.5f);
-        j().c(width);
+        float width = MathUtil.c(j().getWidth(), targetWidth, 0.5f);
+        j().setWidth(width);
         if (a() > 0.0f) {
             a(event, "i", "Staff-list", width, a());
         }
@@ -65,7 +65,7 @@ public class StaffWidget extends Widget implements Interface {
                 contentY += 13.5f * animation;
             }
         }
-        j().d(active ? (contentY - y) - 2.0f : this.d);
+        j().setHeight(active ? (contentY - y) - 2.0f : this.d);
         super.a(event);
     }
 

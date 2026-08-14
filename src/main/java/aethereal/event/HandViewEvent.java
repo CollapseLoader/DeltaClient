@@ -7,25 +7,25 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 
 public class HandViewEvent extends Event {
-    private final MatrixStack a;
-    private final ItemStack b;
-    private final Hand c;
+    private final MatrixStack matrices;
+    private final ItemStack stack;
+    private final Hand hand;
 
     public HandViewEvent(MatrixStack matrices, ItemStack stack, Hand hand) {
-        this.a = matrices;
-        this.b = stack;
-        this.c = hand;
+        this.matrices = matrices;
+        this.stack = stack;
+        this.hand = hand;
     }
 
     public MatrixStack b() {
-        return this.a;
+        return this.matrices;
     }
 
     public ItemStack c() {
-        return this.b;
+        return this.stack;
     }
 
     public Hand d() {
-        return this.c;
+        return this.hand;
     }
 }

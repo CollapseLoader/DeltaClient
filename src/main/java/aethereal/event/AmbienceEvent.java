@@ -11,143 +11,143 @@ import net.minecraft.world.biome.Biome;
 public class AmbienceEvent {
 
     public static class c extends Event {
-        private long a;
+        private long time;
 
         public c(long time) {
-            this.a = time;
+            this.time = time;
         }
 
         public void a(long time) {
-            this.a = time;
+            this.time = time;
         }
 
         public long b() {
-            return this.a;
+            return this.time;
         }
     }
 
     public static class a extends Event {
-        private float a;
-        private float b;
-        private float c;
-        private float d;
+        private float red;
+        private float green;
+        private float blue;
+        private float alpha;
 
         public a(float red, float green, float blue, float alpha) {
-            this.a = red;
-            this.b = green;
-            this.c = blue;
-            this.d = alpha;
+            this.red = red;
+            this.green = green;
+            this.blue = blue;
+            this.alpha = alpha;
         }
 
         public void a(float red) {
-            this.a = red;
+            this.red = red;
         }
 
         public void b(float green) {
-            this.b = green;
+            this.green = green;
         }
 
         public void c(float blue) {
-            this.c = blue;
+            this.blue = blue;
         }
 
         public void d(float alpha) {
-            this.d = alpha;
+            this.alpha = alpha;
         }
 
         public float b() {
-            return this.a;
+            return this.red;
         }
 
         public float c() {
-            return this.b;
+            return this.green;
         }
 
         public float d() {
-            return this.c;
+            return this.blue;
         }
 
         public float e() {
-            return this.d;
+            return this.alpha;
         }
     }
 
     public static class b extends Event {
-        private Camera a;
-        private float b;
-        private Fog c;
+        private Camera camera;
+        private float viewDistance;
+        private Fog fog;
 
         public b(Camera camera, float viewDistance, Fog fog) {
-            this.a = camera;
-            this.b = viewDistance;
-            this.c = fog;
+            this.camera = camera;
+            this.viewDistance = viewDistance;
+            this.fog = fog;
         }
 
         public void a(Camera camera) {
-            this.a = camera;
+            this.camera = camera;
         }
 
         public void a(float viewDistance) {
-            this.b = viewDistance;
+            this.viewDistance = viewDistance;
         }
 
         public void a(Fog fog) {
-            this.c = fog;
+            this.fog = fog;
         }
 
         public Camera b() {
-            return this.a;
+            return this.camera;
         }
 
         public float c() {
-            return this.b;
+            return this.viewDistance;
         }
 
         public Fog d() {
-            return this.c;
+            return this.fog;
         }
 
         public void a(float start, float end, FogShape shape, float red, float green, float blue, float alpha) {
-            this.c = new Fog(start, end, shape, red, green, blue, alpha);
+            this.fog = new Fog(start, end, shape, red, green, blue, alpha);
         }
     }
 
     public static class d extends Event {
-        private final aethereal.event.AmbienceEvent.d.a a;
-        private float b;
-        private Biome.Precipitation c;
+        private final aethereal.event.AmbienceEvent.d.type a;
+        private float value;
+        private Biome.Precipitation precipitation;
 
-        public d(aethereal.event.AmbienceEvent.d.a type, float value) {
+        public d(aethereal.event.AmbienceEvent.d.type type, float value) {
             this.a = type;
-            this.b = value;
+            this.value = value;
         }
 
-        public d(aethereal.event.AmbienceEvent.d.a type, Biome.Precipitation value) {
+        public d(aethereal.event.AmbienceEvent.d.type type, Biome.Precipitation value) {
             this.a = type;
-            this.c = value;
+            this.precipitation = value;
         }
 
-        public aethereal.event.AmbienceEvent.d.a b() {
+        public aethereal.event.AmbienceEvent.d.type b() {
             return this.a;
         }
 
         public float c() {
-            return this.b;
+            return this.value;
         }
 
         public void a(float floatValue) {
-            this.b = floatValue;
+            this.value = floatValue;
         }
 
         public Biome.Precipitation d() {
-            return this.c;
+            return this.precipitation;
         }
 
         public void a(Biome.Precipitation precipitationValue) {
-            this.c = precipitationValue;
+            this.precipitation = precipitationValue;
         }
 
-        public enum a {
+        public enum type {
             RAIN_GRADIENT,
             THUNDER_GRADIENT,
             PRECIPITATION_PARTICLES,

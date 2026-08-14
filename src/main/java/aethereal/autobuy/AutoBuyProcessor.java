@@ -16,7 +16,7 @@ public class AutoBuyProcessor extends ConfigProcessor<AutoBuyEntry> {
 
     @Override
 
-    protected List<AutoBuyEntry> a(String str) {
+    protected List<AutoBuyEntry> loadConfig(String str) {
         if (this.d.isEmpty()) {
             this.d.addAll(Arrays.asList(AutoBuyEntry.values()));
         }
@@ -28,12 +28,12 @@ public class AutoBuyProcessor extends ConfigProcessor<AutoBuyEntry> {
                 if (!(obj instanceof AutoBuyEntry aVar)) {
                     throw new ClassCastException();
                 }
-                if (aVar.b().equals(strL)) {
+                if (aVar.getDisplayName().equals(strL)) {
                     if (jSONObjectJ.m("status")) {
-                        aVar.a(jSONObjectJ.b("status"));
+                        aVar.setActive(jSONObjectJ.b("status"));
                     }
                     if (jSONObjectJ.m("price")) {
-                        aVar.a(jSONObjectJ.e("price"));
+                        aVar.setPrice(jSONObjectJ.e("price"));
                     }
                 }
             }
@@ -43,7 +43,7 @@ public class AutoBuyProcessor extends ConfigProcessor<AutoBuyEntry> {
 
     @Override
 
-    protected String a(List<AutoBuyEntry> data) {
+    protected String saveConfig(List<AutoBuyEntry> data) {
         JSONArray jSONArray = new JSONArray();
         for (AutoBuyEntry aVar : data) {
             JSONObject jSONObject = new JSONObject();
@@ -51,7 +51,7 @@ public class AutoBuyProcessor extends ConfigProcessor<AutoBuyEntry> {
                 throw new ClassCastException();
             }
             AutoBuyEntry aVar2 = aVar;
-            jSONObject.c("name", aVar2.b());
+            jSONObject.c("name", aVar2.getDisplayName());
             jSONObject.b("status", aVar2.l());
             jSONObject.b("price", aVar2.k());
             jSONArray.a(jSONObject);
@@ -60,7 +60,7 @@ public class AutoBuyProcessor extends ConfigProcessor<AutoBuyEntry> {
     }
 
     @Override
-    protected String b() {
+    protected String getConfigFileName() {
         return "autobuy.json";
     }
 }

@@ -8,16 +8,16 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class HeadFeatureEvent extends Event {
-    private MatrixStack a;
-    private VertexConsumerProvider b;
-    private PlayerEntity c;
-    private ModelWithHead d;
+    private MatrixStack matrixStack;
+    private VertexConsumerProvider vertexConsumerProvider;
+    private PlayerEntity player;
+    private ModelWithHead model;
 
     public HeadFeatureEvent(MatrixStack matrix, VertexConsumerProvider vertexConsumerProvider, PlayerEntity player, ModelWithHead model) {
-        this.a = matrix;
-        this.b = vertexConsumerProvider;
-        this.c = player;
-        this.d = model;
+        this.matrixStack = matrix;
+        this.vertexConsumerProvider = vertexConsumerProvider;
+        this.player = player;
+        this.model = model;
     }
 
     public boolean equals(Object o) {
@@ -82,19 +82,19 @@ public class HeadFeatureEvent extends Event {
     }
 
     public void a(MatrixStack matrix) {
-        this.a = matrix;
+        this.matrixStack = matrix;
     }
 
     public void a(VertexConsumerProvider vertexConsumerProvider) {
-        this.b = vertexConsumerProvider;
+        this.vertexConsumerProvider = vertexConsumerProvider;
     }
 
     public void a(PlayerEntity player) {
-        this.c = player;
+        this.player = player;
     }
 
     public void a(ModelWithHead model) {
-        this.d = model;
+        this.model = model;
     }
 
     public String toString() {
@@ -102,18 +102,18 @@ public class HeadFeatureEvent extends Event {
     }
 
     public MatrixStack b() {
-        return this.a;
+        return this.matrixStack;
     }
 
     public VertexConsumerProvider c() {
-        return this.b;
+        return this.vertexConsumerProvider;
     }
 
     public PlayerEntity d() {
-        return this.c;
+        return this.player;
     }
 
     public ModelWithHead e() {
-        return this.d;
+        return this.model;
     }
 }

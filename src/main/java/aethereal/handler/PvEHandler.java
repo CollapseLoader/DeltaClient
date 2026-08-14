@@ -22,35 +22,35 @@ import java.util.Deque;
 
 
 public class PvEHandler extends BaseHandler implements Interface {
-    private final Deque<b> b = new ArrayDeque();
+    private final Deque<b> b = new ArrayDeque<>();
 
-    static double a(ItemStack stack) {
+    static double getDurabilityPercentage(ItemStack stack) {
         if (!stack.isDamageable() || stack.getMaxDamage() <= 0) {
             return 100.0d;
         }
         return (1.0d - (((double) stack.getDamage()) / ((double) stack.getMaxDamage()))) * 100.0d;
     }
 
-    public Deque<b> a() {
+    public Deque<b> getTaskQueue() {
         return this.b;
     }
 
     @EventTarget
-    public void a(TickEvent event) {
-        if (!this.b.isEmpty() && this.b.peek().a()) {
+    public void onTickEvent(TickEvent event) {
+        if (!this.b.isEmpty() && this.b.peek().isComplete()) {
             this.b.poll();
         }
     }
 
     @EventTarget(a = 4)
-    public void a(InputEvent event) {
+    public void onInputEvent(InputEvent event) {
         if (!this.b.isEmpty()) {
             MoveUtil.b(event);
         }
     }
 
     @EventTarget
-    public void a(PacketEvent event) {
+    public void onPacketEvent(PacketEvent event) {
         if (this.b.isEmpty() || !event.c()) {
             return;
         }
@@ -58,19 +58,19 @@ public class PvEHandler extends BaseHandler implements Interface {
         if (class_7439VarD instanceof GameMessageS2CPacket) {
             GameMessageS2CPacket gameMsg = class_7439VarD;
             if (gameMsg.content().getString().equals("Данная команда недоступна в режиме AFK")) {
-                Delta.getInstance().getModuleProcessor().v().g().a(7);
+                Delta.getInstance().getModuleProcessor().v().getAFKHandler().a(7);
             }
         }
     }
 
-    public boolean a(ItemStack tool, double startPct, double endPct) {
+    public boolean startMendingTask(ItemStack tool, double startPct, double endPct) {
         ItemStack class_1799VarMethod_7972;
         for (b task : this.b) {
             if (task instanceof c) {
                 return false;
             }
         }
-        if (a(tool) > startPct) {
+        if (getDurabilityPercentage(tool) > startPct) {
             return true;
         }
         if (!InventoryUtil.a(tool, Enchantments.MENDING, 1)) {
@@ -90,103 +90,103 @@ public class PvEHandler extends BaseHandler implements Interface {
     }
 
     interface b {
-        boolean a();
+        boolean isComplete();
     }
 
     static final class c implements Interface, b {
-        private final Item b;
-        private final double c;
-        private final int d;
-        private final ItemStack e;
-        private int f;
-        private int g;
+        private final Item tool;
+        private final double endPct;
+        private final int toolBarSlot;
+        private final ItemStack restore;
+        private int phase;
+        private int ticks;
 
         c(Item tool, double endPct, int toolBarSlot, ItemStack restore) {
-            this.b = tool;
-            this.c = endPct;
-            this.d = toolBarSlot;
-            this.e = restore;
+            this.tool = tool;
+            this.endPct = endPct;
+            this.toolBarSlot = toolBarSlot;
+            this.restore = restore;
         }
 
         @Override
-        public boolean a() {
-            InventoryHandler handler = Delta.getInstance().getModuleProcessor().v().a();
+        public boolean isComplete() {
+            InventoryHandler handler = Delta.getInstance().getModuleProcessor().v().getInventoryHandler();
             ItemStack offHand = mc.player.getOffHandStack();
             ItemStack mainHand = mc.player.getMainHandStack();
-            switch (this.f) {
+            switch (this.phase) {
                 case 0:
                     if (mc.currentScreen != null) {
                         mc.currentScreen.close();
                     }
-                    int i = this.g + 1;
-                    this.g = i;
+                    int i = this.ticks + 1;
+                    this.ticks = i;
                     if (i >= 3 && handler.a().isEmpty()) {
-                        handler.a(this.d, 40, 1);
-                        this.f = 1;
+                        handler.moveItem(this.toolBarSlot, 40, 1);
+                        this.phase = 1;
                         return false;
                     }
                     return false;
                 case 1:
-                    if (!handler.a().isEmpty() || offHand.getItem() != this.b) {
+                    if (!handler.a().isEmpty() || offHand.getItem() != this.tool) {
                         return false;
                     }
-                    if (PvEHandler.a(offHand) >= this.c) {
-                        this.f = 3;
+                    if (PvEHandler.getDurabilityPercentage(offHand) >= this.endPct) {
+                        this.phase = 3;
                         return false;
                     }
                     int onBar = InventoryUtil.a(Items.EXPERIENCE_BOTTLE, true);
                     if (onBar != -1) {
                         mc.player.getInventory().selectedSlot = onBar;
-                        this.f = 2;
+                        this.phase = 2;
                         return false;
                     }
                     int inStorage = InventoryUtil.b(Items.EXPERIENCE_BOTTLE);
                     if (inStorage != -1) {
-                        handler.a(inStorage, this.d, 1);
-                        this.f = 2;
+                        handler.moveItem(inStorage, this.toolBarSlot, 1);
+                        this.phase = 2;
                         return false;
                     }
-                    Delta.getInstance().getModuleProcessor().v().i().a().addFirst(new a(Items.EXPERIENCE_BOTTLE, 128, 2000));
+                    Delta.getInstance().getModuleProcessor().v().getPvEHandler().getTaskQueue().addFirst(new a(Items.EXPERIENCE_BOTTLE, 128, 2000));
                     return false;
                 case 2:
-                    if (!handler.a().isEmpty() || offHand.getItem() != this.b) {
+                    if (!handler.a().isEmpty() || offHand.getItem() != this.tool) {
                         return false;
                     }
-                    if (PvEHandler.a(offHand) >= this.c) {
-                        this.g = 0;
-                        this.f = 3;
+                    if (PvEHandler.getDurabilityPercentage(offHand) >= this.endPct) {
+                        this.ticks = 0;
+                        this.phase = 3;
                         return false;
                     }
                     if (mainHand.isEmpty()) {
-                        this.f = 1;
+                        this.phase = 1;
                         return false;
                     }
                     if (mainHand.getItem() != Items.EXPERIENCE_BOTTLE) {
                         int bar = InventoryUtil.a(Items.EXPERIENCE_BOTTLE, true);
-                        mc.player.getInventory().selectedSlot = bar != -1 ? bar : this.d;
+                        mc.player.getInventory().selectedSlot = bar != -1 ? bar : this.toolBarSlot;
                         return false;
                     }
-                    Delta.getInstance().getModuleProcessor().k().a(new Rotation(mc.player.getYaw(), 90.0f), 360.0f, 1, 1);
+                    Delta.getInstance().getModuleProcessor().k().startAiming(new Rotation(mc.player.getYaw(), 90.0f), 360.0f, 1, 1);
                     mc.interactionManager.interactItem(mc.player, Hand.MAIN_HAND);
                     return false;
                 case 3:
-                    int i2 = this.g + 1;
-                    this.g = i2;
+                    int i2 = this.ticks + 1;
+                    this.ticks = i2;
                     if (i2 >= 3) {
-                        handler.a(this.d, 40, 1);
-                        this.g = 0;
-                        this.f = 4;
+                        handler.moveItem(this.toolBarSlot, 40, 1);
+                        this.ticks = 0;
+                        this.phase = 4;
                         return false;
                     }
                     return false;
                 case 4:
-                    int i3 = this.g + 1;
-                    this.g = i3;
+                    int i3 = this.ticks + 1;
+                    this.ticks = i3;
                     if (i3 >= 3) {
-                        if (this.e.isEmpty() || InventoryUtil.a(this.e, false) == -1) {
+                        if (this.restore.isEmpty() || InventoryUtil.a(this.restore, false) == -1) {
                             return true;
                         }
-                        handler.a(InventoryUtil.a(this.e, false), 40, 1);
+                        handler.moveItem(InventoryUtil.a(this.restore, false), 40, 1);
                         return true;
                     }
                     return false;
@@ -210,7 +210,7 @@ public class PvEHandler extends BaseHandler implements Interface {
         }
 
         @Override
-        public boolean a() {
+        public boolean isComplete() {
             switch (this.e) {
                 case 0:
                     if (mc.currentScreen != null) {

@@ -19,30 +19,30 @@ import net.minecraft.util.math.MathHelper;
 import java.util.List;
 
 public class RotationProcessor extends BaseProcessor implements Interface {
-    private static a c;
-    private static float d;
-    private static int e;
-    private static int f;
-    private static int g;
-    private static int h;
-    private static int i;
+    private static a state;
+    private static float resetSpeed;
+    private static int priority;
+    private static int lookMode;
+    private static int maxTicks;
+    private static int currentTick;
+    private static int minResetTicks;
 
     static {
-        c = a.IDLE;
+        state = a.IDLE;
     }
 
-    private final Look b = new Look();
+    private final Look currentLook = new Look();
 
-    public static a b() {
-        return c;
+    public static a getState() {
+        return state;
     }
 
-    public static int c() {
-        return i;
+    public static int getMinResetTicks() {
+        return minResetTicks;
     }
 
-    private static boolean e() {
-        List<UseableHandler.a> tasks = Delta.getInstance().getModuleProcessor().v().b().a();
+    private static boolean isUsingUseableItem() {
+        List<UseableHandler.UseableTask> tasks = Delta.getInstance().getModuleProcessor().v().getUseableHandler().a();
         if (tasks.isEmpty() || tasks.getFirst().d() >= 1) {
             return false;
         }
@@ -50,18 +50,18 @@ public class RotationProcessor extends BaseProcessor implements Interface {
         return item == Items.WIND_CHARGE || item == Items.ENDER_PEARL || item == Items.SNOWBALL || item == Items.SPLASH_POTION || item == Items.DRIED_KELP;
     }
 
-    private static Rotation f() {
-        return a(new Rotation(Look.b(), Look.c()));
+    private static Rotation getDefaultWobbleRotation() {
+        return addSinusoidalWobble(new Rotation(Look.b(), Look.c()));
     }
 
-    public static Rotation a(Rotation rotation) {
+    public static Rotation addSinusoidalWobble(Rotation rotation) {
         float t = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
         float sw = ((float) ((((Math.sin(t * 0.8f) * 11.0d) + (Math.sin((((double) t) * 0.04000001502137623d) + 17.200010267039897d) * 1.5d)) + (Math.sin((((double) t) * 0.10999997113093289d) + 5.8000000238651515d) * 3.0d)) + (Math.sin((((double) t) * 0.07000004685868849d) + 12.300000009313816d)))) / 6.0f;
         float sh = ((float) (Math.sin(((double) t) * 0.09999998815548458d) + (Math.sin((((double) t) * 0.029999993539464892d) + 54.10000012300467d) * 0.5d))) / 4.0f;
         return new Rotation(rotation.c() + MathHelper.clamp(sw, -0.15f, 0.15f), rotation.d() + MathHelper.clamp(sh, -0.15f, 0.15f));
     }
 
-    private static int b(int mode) {
+    private static int getMaxTicksForMode(int mode) {
         switch (mode) {
             case 0:
                 return 1;
@@ -74,7 +74,7 @@ public class RotationProcessor extends BaseProcessor implements Interface {
         }
     }
 
-    private static Rotation a(int mode, int idleTicks) {
+    private static Rotation calculateModeRotation(int mode, int idleTicks) {
         float baseYaw = Look.b();
         float basePitch = Look.c();
         float t = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
@@ -99,7 +99,7 @@ public class RotationProcessor extends BaseProcessor implements Interface {
         }
     }
 
-    public static float a(float lastYaw, float current) {
+    public static float snapToGCD(float lastYaw, float current) {
         double sens = (mc.options.getMouseSensitivity().getValue().doubleValue() * 0.6000000498956214d) + 0.19999998556632664d;
         double gcd = sens * sens * sens * 8.0d;
         return (float) (((double) lastYaw) + (Math.ceil((((double) (current - lastYaw)) / gcd) / 0.15000006556510925d) * gcd * 0.15000006556510925d));
@@ -110,8 +110,8 @@ public class RotationProcessor extends BaseProcessor implements Interface {
     public void setup() {
     }
 
-    public Look a() {
-        return this.b;
+    public Look getCurrentLook() {
+        return this.currentLook;
     }
 
     @Override
@@ -119,64 +119,64 @@ public class RotationProcessor extends BaseProcessor implements Interface {
     }
 
     @EventTarget
-    private void a(InputEvent e2) {
-        if (d()) {
+    private void onInputEvent(InputEvent e2) {
+        if (isRotating()) {
             MoveUtil.a(e2, Look.b(), 10);
         }
     }
 
     @EventTarget
-    private void a(GlobalEvent e2) {
-        h++;
-        if (d()) {
-            if (e()) {
-                a(f(), d, false);
+    private void onGlobalEvent(GlobalEvent e2) {
+        currentTick++;
+        if (isRotating()) {
+            if (isUsingUseableItem()) {
+                applyRotationStep(getDefaultWobbleRotation(), resetSpeed, false);
             } else {
-                a(a(f, h), d, false);
+                applyRotationStep(calculateModeRotation(lookMode, currentTick), resetSpeed, false);
             }
         }
-        if (c == a.AIM && h > g) {
-            c = a.RESET;
+        if (state == a.AIM && currentTick > maxTicks) {
+            state = a.RESET;
         }
-        if (c == a.RESET && a(Rotation.a(), d, true)) {
-            this.b.a(false);
-            c = a.IDLE;
-            e = 0;
+        if (state == a.RESET && applyRotationStep(Rotation.a(), resetSpeed, true)) {
+            this.currentLook.a(false);
+            state = a.IDLE;
+            priority = 0;
         }
     }
 
-    private boolean d() {
-        return h >= 2 && h <= g && c != a.IDLE;
+    private boolean isRotating() {
+        return currentTick >= 2 && currentTick <= maxTicks && state != a.IDLE;
     }
 
-    public void a(int ticks) {
-        i = Math.max(ticks, 0);
+    public void setMinResetTicks(int ticks) {
+        minResetTicks = Math.max(ticks, 0);
     }
 
-    public void a(Rotation rotation, float turnSpeed, int lookMode, int priority) {
-        a(rotation, turnSpeed, turnSpeed, lookMode, priority);
+    public void startAiming(Rotation rotation, float turnSpeed, int lookMode, int priority) {
+        startAimingWithSpeeds(rotation, turnSpeed, turnSpeed, lookMode, priority);
     }
 
-    public void a(Rotation rotation, float aimSpeed, float resetSpeed, int lookMode, int priority) {
-        if (e > priority) {
+    public void startAimingWithSpeeds(Rotation rotation, float aimSpeed, float resetSpeed, int lookMode, int priority) {
+        if (priority > priority) {
             return;
         }
-        if (c != a.IDLE && e()) {
-            rotation = f();
+        if (state != a.IDLE && isUsingUseableItem()) {
+            rotation = getDefaultWobbleRotation();
         }
-        if (c == a.IDLE) {
-            this.b.a(true);
+        if (state == a.IDLE) {
+            this.currentLook.a(true);
         }
-        d = resetSpeed;
-        f = lookMode;
-        g = b(lookMode);
-        e = priority;
-        c = a.AIM;
-        h = 0;
-        a(rotation, aimSpeed, true);
+        resetSpeed = resetSpeed;
+        lookMode = lookMode;
+        maxTicks = getMaxTicksForMode(lookMode);
+        priority = priority;
+        state = a.AIM;
+        currentTick = 0;
+        applyRotationStep(rotation, aimSpeed, true);
     }
 
-    private boolean a(Rotation rotation, float turnSpeed, boolean bait) {
+    private boolean applyRotationStep(Rotation rotation, float turnSpeed, boolean bait) {
         Rotation currentRotation = new Rotation(mc.player);
         float yawDelta = MathHelper.wrapDegrees(rotation.c() - currentRotation.c());
         float pitchDelta = rotation.d() - currentRotation.d();
@@ -185,18 +185,18 @@ public class RotationProcessor extends BaseProcessor implements Interface {
         float pitchSpeed = totalDelta == 0.0f ? 0.0f : Math.abs(pitchDelta / totalDelta) * turnSpeed;
         float newYaw = mc.player.getYaw() + MathHelper.clamp(yawDelta, -yawSpeed, yawSpeed);
         float newPitch = mc.player.getPitch() + MathHelper.clamp(pitchDelta, -pitchSpeed, pitchSpeed);
-        float newYaw2 = a(mc.player.getYaw(), newYaw);
-        float newPitch2 = MathHelper.clamp(a(mc.player.getPitch(), newPitch), -90.0f, 90.0f);
-        if (i > 0) {
+        float newYaw2 = snapToGCD(mc.player.getYaw(), newYaw);
+        float newPitch2 = MathHelper.clamp(snapToGCD(mc.player.getPitch(), newPitch), -90.0f, 90.0f);
+        if (minResetTicks > 0) {
             newPitch2 = mc.player.getPitch();
             newYaw2 = mc.player.getYaw();
-            i--;
+            minResetTicks--;
         }
         mc.player.setYaw(newYaw2);
         mc.player.setPitch(newPitch2);
         Rotation finalRotation = new Rotation(mc.player);
         if (bait) {
-            h = 0;
+            currentTick = 0;
         }
         return finalRotation.a(rotation) < ((double) turnSpeed);
     }

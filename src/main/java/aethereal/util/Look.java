@@ -8,46 +8,46 @@ import aethereal.event.RotationEvent;
 import net.minecraft.util.math.MathHelper;
 
 public class Look implements Interface {
-    private static float c;
-    private static float d;
-    private boolean b;
+    private static float freeYaw;
+    private static float freePitch;
+    private boolean active;
 
     public Look() {
         EventManager.a(this);
     }
 
     public static float b() {
-        return c;
+        return freeYaw;
     }
 
     public static float c() {
-        return d;
+        return freePitch;
     }
 
-    public static void a(float freeYaw) {
-        c = freeYaw;
+    public static void a(float newFreeYaw) {
+        freeYaw = newFreeYaw;
     }
 
-    public static void b(float freePitch) {
-        d = freePitch;
+    public static void b(float newFreePitch) {
+        freePitch = newFreePitch;
     }
 
     private static void d() {
         if (mc.player != null) {
             float py = mc.player.getYaw();
-            float fy = c;
+            float fy = freeYaw;
             mc.player.setYaw(py + MathHelper.wrapDegrees(fy - py));
-            mc.player.setPitch(d);
+            mc.player.setPitch(freePitch);
         }
     }
 
     public boolean a() {
-        return this.b;
+        return this.active;
     }
 
     @EventTarget
     private void a(LookEvent e) {
-        if (this.b) {
+        if (this.active) {
             a(e.a, e.b);
             e.a(true);
         }
@@ -55,18 +55,18 @@ public class Look implements Interface {
 
     @EventTarget
     private void a(RotationEvent e) {
-        if (this.b) {
-            e.a(c);
-            e.b(d);
+        if (this.active) {
+            e.a(freeYaw);
+            e.b(freePitch);
         } else {
-            c = e.b();
-            d = e.c();
+            freeYaw = e.b();
+            freePitch = e.c();
         }
     }
 
     public void a(boolean state) {
-        if (this.b != state) {
-            this.b = state;
+        if (this.active != state) {
+            this.active = state;
             d();
         }
     }
@@ -74,8 +74,8 @@ public class Look implements Interface {
     private void a(double yaw, double pitch) {
         double d0 = pitch * 0.15000001238751678d;
         double d1 = yaw * 0.15000001238751678d;
-        d = (float) (((double) d) + d0);
-        c = (float) (((double) c) + d1);
-        d = MathHelper.clamp(d, -90.0f, 90.0f);
+        freePitch = (float) (((double) freePitch) + d0);
+        freeYaw = (float) (((double) freeYaw) + d1);
+        freePitch = MathHelper.clamp(freePitch, -90.0f, 90.0f);
     }
 }

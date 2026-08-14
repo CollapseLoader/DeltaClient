@@ -2,14 +2,14 @@ package aethereal.discord;
 
 
 public final class FailureInfo {
-    private final String a;
-    private final String b;
+    private final String type;
+    private final String message;
 
     public FailureInfo(String type, String message) {
         String type2 = (type == null || type.isBlank()) ? "unknown" : type;
         String message2 = message == null ? "" : message;
-        this.a = type2;
-        this.b = message2;
+        this.type = type2;
+        this.message = message2;
     }
 
     public static FailureInfo a(Throwable throwable) {
@@ -24,10 +24,10 @@ public final class FailureInfo {
     }
 
     public String a() {
-        return this.a;
+        return this.type;
     }
 
     public String b() {
-        return this.b;
+        return this.message;
     }
 }

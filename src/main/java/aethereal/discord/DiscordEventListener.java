@@ -1,9 +1,9 @@
 package aethereal.discord;
 
-import aethereal.core.User_2;
+import aethereal.core.DiscordUser;
 
 public interface DiscordEventListener {
-    default void a(User_2 user) {
+    default void a(DiscordUser user) {
     }
 
     default void a(String secret) {
@@ -12,7 +12,7 @@ public interface DiscordEventListener {
     default void b(String secret) {
     }
 
-    default void b(User_2 user) {
+    default void b(DiscordUser user) {
     }
 
     default void a(int errorCode, String message) {

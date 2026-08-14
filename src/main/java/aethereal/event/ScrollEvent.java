@@ -4,19 +4,19 @@ import aethereal.core.Event;
 
 
 public class ScrollEvent extends Event {
-    private final double a;
-    private final double b;
+    private final double horizontal;
+    private final double vertical;
 
     public ScrollEvent(double horizontal, double vertical) {
-        this.a = horizontal;
-        this.b = vertical;
+        this.horizontal = horizontal;
+        this.vertical = vertical;
     }
 
     public double b() {
-        return this.a;
+        return this.horizontal;
     }
 
     public double c() {
-        return this.b;
+        return this.vertical;
     }
 }

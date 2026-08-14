@@ -4,64 +4,64 @@ import aethereal.core.Interface;
 import aethereal.util.MathUtil;
 
 public class AnimationUtil implements Interface {
-    private float b;
-    private float c;
-    private float d;
-    private float g;
-    private float e = 0.0f;
-    private float f = 1.0f;
-    private long h = System.currentTimeMillis();
+    private float currentValue;
+    private float previousValue;
+    private float animationSpeed;
+    private float animationValue;
+    private float fromValue = 0.0f;
+    private float toValue = 1.0f;
+    private long lastUpdateTime = System.currentTimeMillis();
 
     public void c(float value) {
-        this.b = value;
+        this.currentValue = value;
     }
 
     public void d(float prevValue) {
-        this.c = prevValue;
+        this.previousValue = prevValue;
     }
 
     public float a() {
-        return this.b;
+        return this.currentValue;
     }
 
     public float b() {
-        return this.c;
+        return this.previousValue;
     }
 
     public float c() {
-        return this.g;
+        return this.animationValue;
     }
 
     public void e(float animationValue) {
-        this.g = animationValue;
+        this.animationValue = animationValue;
     }
 
     public void a(boolean expanding) {
-        this.c = this.b;
+        this.previousValue = this.currentValue;
         float direction = expanding ? 1.0f : -1.0f;
-        this.b = MathUtil.b(this.b + (direction * this.d * 20.0f * d()), this.e, this.f);
+        this.currentValue = MathUtil.b(this.currentValue + (direction * this.animationSpeed * 20.0f * d()), this.fromValue, this.toValue);
     }
 
     public void a(float fromValue, float toValue, float animationSpeed, EasingList.a easing, float partialTicks) {
-        this.d = animationSpeed;
-        this.e = fromValue;
-        this.f = toValue;
-        this.g = MathUtil.a(this.c, this.b, partialTicks);
+        this.animationSpeed = animationSpeed;
+        this.fromValue = fromValue;
+        this.toValue = toValue;
+        this.animationValue = MathUtil.a(this.previousValue, this.currentValue, partialTicks);
     }
 
     public void a(float amount) {
-        this.f += amount;
+        this.toValue += amount;
     }
 
     public void b(float value) {
-        this.f = value;
-        this.b = value;
+        this.toValue = value;
+        this.currentValue = value;
     }
 
     public float a(float min, float max, float speed) {
-        this.f = MathUtil.b(this.f, min, max);
-        this.b = MathUtil.c(this.b, this.f, speed);
-        return this.b;
+        this.toValue = MathUtil.b(this.toValue, min, max);
+        this.currentValue = MathUtil.c(this.currentValue, this.toValue, speed);
+        return this.currentValue;
     }
 
     public float a(float target, float speed) {
@@ -70,8 +70,8 @@ public class AnimationUtil implements Interface {
 
     private float d() {
         long now = System.currentTimeMillis();
-        float delta = (now - this.h) / 1000.0f;
-        this.h = now;
+        float delta = (now - this.lastUpdateTime) / 1000.0f;
+        this.lastUpdateTime = now;
         return delta;
     }
 }

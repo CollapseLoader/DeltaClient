@@ -1,27 +1,27 @@
 package aethereal.setting;
 
-import aethereal.ui.element.Element_2;
+import aethereal.ui.element.Element;
 import aethereal.ui.element.StringElement;
 
 public class StringSetting extends Setting<String> {
-    private final boolean a;
+    private final boolean allowNumbers;
 
     public StringSetting(String name, String defaultVal) {
         super(name, defaultVal);
-        this.a = false;
+        this.allowNumbers = false;
     }
 
     public StringSetting(String name, String defaultVal, boolean numbers) {
         super(name, defaultVal);
-        this.a = numbers;
+        this.allowNumbers = numbers;
     }
 
     public boolean k() {
-        return this.a;
+        return this.allowNumbers;
     }
 
     @Override
-    public Element_2<?> createBooleanElement() {
+    public Element<?> createBooleanElement() {
         return new StringElement(this);
     }
 }

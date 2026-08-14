@@ -24,14 +24,14 @@ public class ElytraTarget extends Module {
         Aura aura = Delta.getInstance().getModuleProcessor().t().B();
         if (aura.m() && mc.player.isGliding()) {
             if (mc.player.getOffHandStack().getItem() != Items.FIREWORK_ROCKET && !Delta.getInstance().getModuleProcessor().t().V().b) {
-                if (Delta.getInstance().getModuleProcessor().v().a().a().isEmpty()) {
-                    Delta.getInstance().getModuleProcessor().v().a().a(Items.FIREWORK_ROCKET, 45, 1);
+                if (Delta.getInstance().getModuleProcessor().v().getInventoryHandler().a().isEmpty()) {
+                    Delta.getInstance().getModuleProcessor().v().getInventoryHandler().moveItemByType(Items.FIREWORK_ROCKET, 45, 1);
                 }
             } else if ((this.b.a(150L) && mc.player.getVelocity().length() < 1.5d) || aura.b == 1) {
                 mc.interactionManager.interactItem(mc.player, Hand.OFF_HAND);
                 this.b.b();
             }
-            LivingEntity target = aura.s();
+            LivingEntity target = aura.getTarget();
             if (target == null) {
                 return;
             }
@@ -47,7 +47,7 @@ public class ElytraTarget extends Module {
             Rotation aimRotation = Rotation.a(eye, aim);
             float Yaw = AuraUtil.a(mc.player.getYaw(), aimRotation.c(), 1.0f);
             float Pitch = AuraUtil.a(mc.player.getPitch(), aura.b <= 3 ? 0.0f : aimRotation.d(), aura.b <= 3 ? 1.0f : Math.clamp(aura.b / 10.0f, 0.0f, 1.0f));
-            Delta.getInstance().getModuleProcessor().k().a(new Rotation(Yaw, Pitch), 180.0f, 1, 1);
+            Delta.getInstance().getModuleProcessor().k().startAiming(new Rotation(Yaw, Pitch), 180.0f, 1, 1);
         }
     }
 

@@ -4,17 +4,17 @@ import aethereal.core.Event;
 
 
 public class TextVisitEvent extends Event {
-    private String a;
+    private String text;
 
     public TextVisitEvent(String text) {
-        this.a = text;
+        this.text = text;
     }
 
     public void a(String text) {
-        this.a = text;
+        this.text = text;
     }
 
     public String b() {
-        return this.a;
+        return this.text;
     }
 }

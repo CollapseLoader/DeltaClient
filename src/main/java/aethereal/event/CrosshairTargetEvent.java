@@ -6,22 +6,22 @@ import aethereal.core.Event;
 import net.minecraft.util.hit.HitResult;
 
 public class CrosshairTargetEvent extends Event {
-    private final float a;
-    private HitResult b;
+    private final float tickDelta;
+    private HitResult target;
 
     public CrosshairTargetEvent(float tickDelta) {
-        this.a = tickDelta;
+        this.tickDelta = tickDelta;
     }
 
     public void a(HitResult target) {
-        this.b = target;
+        this.target = target;
     }
 
     public float b() {
-        return this.a;
+        return this.tickDelta;
     }
 
     public HitResult c() {
-        return this.b;
+        return this.target;
     }
 }

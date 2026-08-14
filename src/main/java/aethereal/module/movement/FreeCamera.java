@@ -20,13 +20,13 @@ public class FreeCamera extends Module {
     private final SliderSetting b = new SliderSetting("Скорость движения XZ", 1.0f, 0.1f, 5.0f, 0.1f);
     private final SliderSetting c = new SliderSetting("Скорость движения Y", 1.0f, 0.1f, 5.0f, 0.1f);
     private final BooleanSetting d = new BooleanSetting("Замораживать пакеты в полете", true);
-    private Vec3d e;
-    private Vec3d f;
-    private Vec3d g;
-    private float h;
-    private float i;
-    private boolean j;
-    private boolean k;
+    private Vec3d cameraPos;
+    private Vec3d eyePos;
+    private Vec3d playerPos;
+    private float cameraPitch;
+    private float cameraYaw;
+    private boolean isFlying;
+    private boolean freezePackets;
 
     public FreeCamera() {
         a(this.d, this.b, this.c);
@@ -40,10 +40,10 @@ public class FreeCamera extends Module {
             a();
             return;
         }
-        this.f = mc.player.getEyePos();
-        this.e = mc.player.getEyePos();
+        this.eyePos = mc.player.getEyePos();
+        this.cameraPos = mc.player.getEyePos();
         if (this.d.c().booleanValue()) {
-            this.g = mc.player.getPos();
+            this.playerPos = mc.player.getPos();
         }
         d(false);
     }
@@ -56,12 +56,12 @@ public class FreeCamera extends Module {
 
     @EventTarget
     public void a(CameraPositionEvent event) {
-        if (this.e != null && mc.player.isAlive()) {
+        if (this.cameraPos != null && mc.player.isAlive()) {
             if (mc.options.getPerspective() != Perspective.FIRST_PERSON) {
                 mc.options.setPerspective(Perspective.FIRST_PERSON);
             }
-            Vec3d basePrev = this.f != null ? this.f : this.e;
-            Vec3d interpolated = new Vec3d(basePrev.x + ((this.e.x - basePrev.x) * ((double) mc.getRenderTickCounter().getTickDelta(false))), basePrev.y + ((this.e.y - basePrev.y) * ((double) mc.getRenderTickCounter().getTickDelta(false))), basePrev.z + ((this.e.z - basePrev.z) * ((double) mc.getRenderTickCounter().getTickDelta(false))));
+            Vec3d basePrev = this.eyePos != null ? this.eyePos : this.cameraPos;
+            Vec3d interpolated = new Vec3d(basePrev.x + ((this.cameraPos.x - basePrev.x) * ((double) mc.getRenderTickCounter().getTickDelta(false))), basePrev.y + ((this.cameraPos.y - basePrev.y) * ((double) mc.getRenderTickCounter().getTickDelta(false))), basePrev.z + ((this.cameraPos.z - basePrev.z) * ((double) mc.getRenderTickCounter().getTickDelta(false))));
             event.a(interpolated);
             event.a(true);
         }
@@ -69,8 +69,8 @@ public class FreeCamera extends Module {
 
     @EventTarget
     public void a(CrosshairTargetEvent event) {
-        if (this.e != null && mc.player.isAlive()) {
-            event.a(mc.world.raycast(new RaycastContext(this.e, this.e.add(mc.player.getRotationVec(event.b()).multiply(mc.player.getBlockInteractionRange())), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player)));
+        if (this.cameraPos != null && mc.player.isAlive()) {
+            event.a(mc.world.raycast(new RaycastContext(this.cameraPos, this.cameraPos.add(mc.player.getRotationVec(event.b()).multiply(mc.player.getBlockInteractionRange())), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mc.player)));
             event.a(true);
         }
     }
@@ -79,33 +79,33 @@ public class FreeCamera extends Module {
     public void a(TickEvent eventTick) {
         float f;
         float f2;
-        if (this.e != null && mc.player.isAlive()) {
+        if (this.cameraPos != null && mc.player.isAlive()) {
             if (mc.currentScreen == null) {
                 if (mc.options.forwardKey.isPressed()) {
                     f = 1.0f;
                 } else {
                     f = mc.options.backKey.isPressed() ? -1.0f : 0.0f;
                 }
-                this.h = f;
+                this.cameraPitch = f;
                 if (InputUtil.isKeyPressed(mc.getWindow().getHandle(), 65)) {
                     f2 = 1.0f;
                 } else {
                     f2 = InputUtil.isKeyPressed(mc.getWindow().getHandle(), 68) ? -1.0f : 0.0f;
                 }
-                this.i = f2;
-                this.j = mc.options.jumpKey.isPressed();
-                this.k = mc.options.sneakKey.isPressed();
+                this.cameraYaw = f2;
+                this.isFlying = mc.options.jumpKey.isPressed();
+                this.freezePackets = mc.options.sneakKey.isPressed();
             } else {
                 d(false);
             }
             if (this.d.c().booleanValue() && !mc.player.isOnGround()) {
                 mc.player.setVelocity(0.0d, 0.0d, 0.0d);
-                if (this.g != null) {
-                    mc.player.setPosition(this.g.x, this.g.y, this.g.z);
+                if (this.playerPos != null) {
+                    mc.player.setPosition(this.playerPos.x, this.playerPos.y, this.playerPos.z);
                 }
             }
-            this.f = this.e;
-            this.e = this.e.add(((((double) this.h) * (-Math.sin(Math.toRadians(Look.b())))) + (((double) this.i) * Math.cos(Math.toRadians(Look.b())))) * ((double) this.b.c().floatValue()), (this.j ? this.c.c().floatValue() : 0.0d) - (this.k ? this.c.c().floatValue() : 0.0d), ((((double) this.h) * Math.cos(Math.toRadians(Look.b()))) + (((double) this.i) * Math.sin(Math.toRadians(Look.b())))) * ((double) this.b.c().floatValue()));
+            this.eyePos = this.cameraPos;
+            this.cameraPos = this.cameraPos.add(((((double) this.cameraPitch) * (-Math.sin(Math.toRadians(Look.b())))) + (((double) this.cameraYaw) * Math.cos(Math.toRadians(Look.b())))) * ((double) this.b.c().floatValue()), (this.isFlying ? this.c.c().floatValue() : 0.0d) - (this.freezePackets ? this.c.c().floatValue() : 0.0d), ((((double) this.cameraPitch) * Math.cos(Math.toRadians(Look.b()))) + (((double) this.cameraYaw) * Math.sin(Math.toRadians(Look.b())))) * ((double) this.b.c().floatValue()));
         }
     }
 
@@ -113,7 +113,7 @@ public class FreeCamera extends Module {
     public void a(InputEvent event) {
         float f;
         float f2;
-        if (this.e != null && mc.player.isAlive()) {
+        if (this.cameraPos != null && mc.player.isAlive()) {
             if (mc.currentScreen != null) {
                 event.setForward(0.0f);
                 event.setStrafe(0.0f);
@@ -140,7 +140,7 @@ public class FreeCamera extends Module {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (event.b() && this.d.c().booleanValue() && this.e != null && !mc.player.isOnGround() && mc.player.isAlive()) {
+        if (event.b() && this.d.c().booleanValue() && this.cameraPos != null && !mc.player.isOnGround() && mc.player.isAlive()) {
             if ((event.d() instanceof PlayerInputC2SPacket) || (event.d() instanceof ClientCommandC2SPacket)) {
                 event.a(true);
             }
@@ -149,14 +149,14 @@ public class FreeCamera extends Module {
 
     private void d(boolean clearPositions) {
         if (clearPositions) {
-            this.e = null;
-            this.f = null;
-            this.g = null;
+            this.cameraPos = null;
+            this.eyePos = null;
+            this.playerPos = null;
         } else {
-            this.i = 0.0f;
-            this.h = 0.0f;
-            this.k = false;
-            this.j = false;
+            this.cameraYaw = 0.0f;
+            this.cameraPitch = 0.0f;
+            this.freezePackets = false;
+            this.isFlying = false;
         }
     }
 }

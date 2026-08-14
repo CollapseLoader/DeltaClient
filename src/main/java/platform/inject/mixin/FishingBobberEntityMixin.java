@@ -16,7 +16,7 @@ public class FishingBobberEntityMixin {
     @Inject(method = {"pullHookedEntity"}, at = {@At("HEAD")}, cancellable = true)
     private void pullHookedEntity(Entity entity, CallbackInfo ci) {
         if (entity instanceof ClientPlayerEntity) {
-            PushEvent event = new PushEvent(PushEvent.a.FISHING_HOOK);
+            PushEvent event = new PushEvent(PushEvent.type.FISHING_HOOK);
             EventManager.a(event);
             if (event.a()) {
                 ci.cancel();

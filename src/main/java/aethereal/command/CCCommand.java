@@ -11,7 +11,7 @@ import net.minecraft.command.CommandSource;
 
 @Command(name = "ccc")
 public class CCCommand extends BaseCommand {
-    private int c;
+    private int cooldownTick;
 
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
@@ -22,7 +22,7 @@ public class CCCommand extends BaseCommand {
                     name.append("абвгдежзийклмнопрстуфхцчшщъыьэюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".charAt((int) (Math.random() * ((double) "абвгдежзийклмнопрстуфхцчшщъыьэюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".length()))));
                 }
                 mc.player.networkHandler.sendChatMessage("/clan create " + name);
-                this.c = mc.player.age + 2;
+                this.cooldownTick = mc.player.age + 2;
                 return 1;
             }
             return 1;
@@ -31,7 +31,7 @@ public class CCCommand extends BaseCommand {
 
     @EventTarget
     public void a(TickEvent eventTick) {
-        if (this.c >= mc.player.age) {
+        if (this.cooldownTick >= mc.player.age) {
             for (FriendConstructor constructor : Delta.getInstance().getModuleProcessor().e().e()) {
                 PlayerListEntry entry = mc.player.networkHandler.getPlayerList().stream().filter(listEntry -> {
                     return listEntry.getProfile().getName().equalsIgnoreCase(constructor.a());
@@ -40,7 +40,7 @@ public class CCCommand extends BaseCommand {
                     mc.player.networkHandler.sendChatMessage("/clan invite " + constructor.a());
                 }
             }
-            this.c = -3;
+            this.cooldownTick = -3;
         }
     }
 }

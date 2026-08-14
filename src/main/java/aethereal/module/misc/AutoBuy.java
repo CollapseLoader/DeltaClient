@@ -41,11 +41,11 @@ public class AutoBuy extends Module {
     private final BooleanSetting b = new BooleanSetting("Авто-перевыставление вещей", false);
     private final List<ItemStack> d = new ArrayList<>();
     private final CounterUtil e = new CounterUtil();
-    private int f;
-    private int g;
-    private ItemStack i;
-    private boolean j;
-    private boolean k;
+    private int tickCounter;
+    private int statePhase;
+    private ItemStack pendingItem;
+    private boolean screenReady;
+    private boolean ahPending;
     private int h = -1;
 
     public AutoBuy() {
@@ -55,33 +55,33 @@ public class AutoBuy extends Module {
         a(c, this.b);
     }
 
-    public boolean q() {
-        return this.j;
+    public boolean isScreenReady() {
+        return this.screenReady;
     }
 
-    public boolean r() {
-        return this.k;
+    public boolean isAhPending() {
+        return this.ahPending;
     }
 
     public void d(boolean status) {
-        this.j = status;
+        this.screenReady = status;
     }
 
     public void e(boolean ah) {
-        this.k = ah;
+        this.ahPending = ah;
     }
 
     @EventTarget
-    public void a(TickEvent event) {
-        if (mc.player.age >= 220 && this.k && !(mc.currentScreen instanceof GenericContainerScreen) && this.j && mc.player.age % 20 == 0) {
+    public void onTick(TickEvent event) {
+        if (mc.player.age >= 220 && this.ahPending && !(mc.currentScreen instanceof GenericContainerScreen) && this.screenReady && mc.player.age % 20 == 0) {
             mc.player.networkHandler.sendCommand("ah");
-            this.k = false;
+            this.ahPending = false;
         }
-        this.f++;
-        this.g++;
+        this.tickCounter++;
+        this.statePhase++;
         GenericContainerScreen screen = (GenericContainerScreen) mc.currentScreen;
         if (screen instanceof GenericContainerScreen) {
-            if (this.j) {
+            if (this.screenReady) {
                 ScreenHandler handler = screen.getScreenHandler();
                 String title = screen.getTitle().getString().replaceAll("§.", "").toLowerCase().trim();
                 boolean buy = mc.player.age % 2 == 0;
@@ -107,7 +107,7 @@ public class AutoBuy extends Module {
                         }).findFirst().orElse(null);
                         if (find != null && buy) {
                             found = true;
-                            this.i = stack.copy();
+                            this.pendingItem = stack.copy();
                             a(handler, slot.id, SlotActionType.QUICK_MOVE);
                             break;
                         }
@@ -126,17 +126,17 @@ public class AutoBuy extends Module {
                             if (title.matches(".*а.*у.*к.*ц.*и.*о.*н.*")) {
                                 if (mc.player.age % 10 == 0) {
                                     a(handledScreen.getScreenHandler(), 46, SlotActionType.PICKUP);
-                                    this.g = 0;
+                                    this.statePhase = 0;
                                 }
                             } else if (title.matches(".*х.*р.*а.*н.*и.*л.*и.*щ.*е.*")) {
-                                if (this.g % 20 == 10) {
+                                if (this.statePhase % 20 == 10) {
                                     a(handledScreen.getScreenHandler(), 52, SlotActionType.PICKUP);
-                                } else if (this.g % 20 == 0 && this.g > 0) {
+                                } else if (this.statePhase % 20 == 0 && this.statePhase > 0) {
                                     a(handledScreen.getScreenHandler(), 46, SlotActionType.PICKUP);
                                     this.e.b();
                                 }
                             }
-                            this.f = 0;
+                            this.tickCounter = 0;
                         }
                     }
                 }
@@ -145,43 +145,43 @@ public class AutoBuy extends Module {
     }
 
     @EventTarget
-    public void a(PacketEvent event) {
+    public void onPacket(PacketEvent event) {
         if (event.c()) {
-            if (this.j) {
+            if (this.screenReady) {
                 InventoryS2CPacket inventoryPacket = (InventoryS2CPacket) event.d();
                 if (inventoryPacket instanceof InventoryS2CPacket) {
-                    if (inventoryPacket.getContents().size() == 90 && this.f >= 7) {
+                    if (inventoryPacket.getContents().size() == 90 && this.tickCounter >= 7) {
                         int anarchy = (int) (MathUtil.a(0.0f, 100.0f) <= 50.0f ? MathUtil.a(205.0f, 231.0f) : MathUtil.a(305.0f, 325.0f));
                         mc.player.networkHandler.sendChatCommand("an" + anarchy);
                         ChatUtil.sendMessage("Обнаружили замедление аукциона, переходим на " + anarchy + " анархию");
-                        this.f = 0;
-                        this.k = true;
+                        this.tickCounter = 0;
+                        this.ahPending = true;
                     }
                 }
                 GameMessageS2CPacket messagePacket = (GameMessageS2CPacket) event.d();
                 if (messagePacket instanceof GameMessageS2CPacket) {
-                    if (this.i != null && messagePacket.content().getString().contains("Вы успешно купили")) {
-                        if (this.d.isEmpty() || !ItemStack.areEqual(this.d.getFirst(), this.i)) {
+                    if (this.pendingItem != null && messagePacket.content().getString().contains("Вы успешно купили")) {
+                        if (this.d.isEmpty() || !ItemStack.areEqual(this.d.getFirst(), this.pendingItem)) {
                             Client clientF = Delta.getInstance().f();
                             Object[] objArr = new Object[2];
                             objArr[0] = "message";
                             Object[] objArr2 = new Object[3];
-                            objArr2[0] = this.i.getName().getString() + (this.i.getCount() > 1 ? " ×" + this.i.getCount() : "");
-                            objArr2[1] = String.format(Locale.US, "%,d", Integer.valueOf(ServerUtil.a.a(this.i)));
+                            objArr2[0] = this.pendingItem.getName().getString() + (this.pendingItem.getCount() > 1 ? " ×" + this.pendingItem.getCount() : "");
+                            objArr2[1] = String.format(Locale.US, "%,d", Integer.valueOf(ServerUtil.a.a(this.pendingItem)));
                             objArr2[2] = String.format(Locale.US, "%,d", Long.valueOf(ServerUtil.a.e()));
                             objArr[1] = "🛒 AutoBuy — Успешная покупка!\n\n📦 Предмет: %s\n💰 Цена: %s $\n💳 Баланс: %s $\n".formatted(objArr2);
                             clientF.a(false, "telegram", objArr);
-                            ChatUtil.sendMessage("Успешно куплен предмет &c" + this.i.getName().getString() + " &7за &c" + ServerUtil.a.a(this.i));
-                            this.d.addFirst(this.i);
+                            ChatUtil.sendMessage("Успешно куплен предмет &c" + this.pendingItem.getName().getString() + " &7за &c" + ServerUtil.a.a(this.pendingItem));
+                            this.d.addFirst(this.pendingItem);
                         }
-                        this.i = null;
+                        this.pendingItem = null;
                     }
                 }
             }
             OpenScreenS2CPacket openScreenPacket = (OpenScreenS2CPacket) event.d();
             if (openScreenPacket instanceof OpenScreenS2CPacket) {
                 if (!(mc.currentScreen instanceof GenericContainerScreen)) {
-                    this.f = 0;
+                    this.tickCounter = 0;
                 }
                 this.h = openScreenPacket.getSyncId();
             }
@@ -196,7 +196,7 @@ public class AutoBuy extends Module {
     }
 
     @EventTarget
-    public void a(ContainerEvent event) {
+    public void onContainer(ContainerEvent event) {
         if (event.h() == ContainerEvent.Phase.POST) {
             String title = event.b().getTitle().getString().replaceAll("§.", "").toLowerCase().trim();
             if (title.contains("аукцион")) {
@@ -228,6 +228,6 @@ public class AutoBuy extends Module {
 
     private void a(ScreenHandler handler, int slot, SlotActionType action) {
         mc.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handler.syncId, handler.getRevision(), slot, 0, action, handler.getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
-        this.f = 0;
+        this.tickCounter = 0;
     }
 }

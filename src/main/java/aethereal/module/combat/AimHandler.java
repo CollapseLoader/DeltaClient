@@ -20,18 +20,18 @@ import org.joml.Vector2f;
 
 public class AimHandler extends BaseHandler implements Interface {
     private final AnimationUtil b = new AnimationUtil();
-    private LivingEntity c;
+    private LivingEntity target;
 
-    public AnimationUtil a() {
+    public AnimationUtil getAnimation() {
         return this.b;
     }
 
     @EventTarget
-    public void a(DrawEvent event) {
+    public void onDraw(DrawEvent event) {
         this.b.a(0.0f, 1.0f, 0.25f, EasingList.g, event.g());
         float alpha = this.b.c();
-        if (event.b() && this.c != null && alpha > 0.0f) {
-            Vec3d real = a(this.c, event.g());
+        if (event.b() && this.target != null && alpha > 0.0f) {
+            Vec3d real = getInterpolatedPosition(this.target, event.g());
             Vector2f screen = ProjectUtil.project(real.x, real.y, real.z);
             if (!ProjectUtil.isOnScreen(screen)) {
                 return;
@@ -50,23 +50,23 @@ public class AimHandler extends BaseHandler implements Interface {
     }
 
     @EventTarget
-    public void a(TickEvent event) {
+    public void onTick(TickEvent event) {
         ProjectileHelper projectile = Delta.getInstance().getModuleProcessor().t().D();
         LivingEntity current = null;
-        if (projectile.m() && projectile.r()) {
-            current = projectile.q();
+        if (projectile.m() && projectile.isChargingProjectile()) {
+            current = projectile.getPrimaryTarget();
         }
         boolean visible = current != null;
         if (visible) {
-            this.c = current;
+            this.target = current;
         }
         this.b.a(visible);
         if (!visible && this.b.a() <= 0.0f) {
-            this.c = null;
+            this.target = null;
         }
     }
 
-    private Vec3d a(LivingEntity entity, float delta) {
+    private Vec3d getInterpolatedPosition(LivingEntity entity, float delta) {
         return new Vec3d(MathHelper.lerp(delta, entity.prevX, entity.getX()),
                 MathHelper.lerp(delta, entity.prevY, entity.getY()) + (((double) entity.getHeight()) / 2.0d),
                 MathHelper.lerp(delta, entity.prevZ, entity.getZ()));

@@ -6,17 +6,17 @@ import aethereal.core.Event;
 import net.minecraft.util.math.Vec3d;
 
 public class CameraPositionEvent extends Event {
-    private Vec3d a;
+    private Vec3d position;
 
     public CameraPositionEvent(Vec3d position) {
-        this.a = position;
+        this.position = position;
     }
 
     public void a(Vec3d position) {
-        this.a = position;
+        this.position = position;
     }
 
     public Vec3d b() {
-        return this.a;
+        return this.position;
     }
 }

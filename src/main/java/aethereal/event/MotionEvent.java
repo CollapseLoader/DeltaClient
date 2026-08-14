@@ -4,24 +4,24 @@ import aethereal.core.Event;
 
 
 public class MotionEvent extends Event {
-    private double a;
-    private double b;
-    private double c;
-    private float d;
-    private float e;
-    private boolean f;
-    private boolean g;
-    private boolean h;
+    private double x;
+    private double y;
+    private double z;
+    private float yaw;
+    private float pitch;
+    private boolean onGround;
+    private boolean isCrouching;
+    private boolean isSprinting;
 
     public MotionEvent(double x, double y, double z, float yaw, float pitch, boolean onGround, boolean isCrouching, boolean isSprinting) {
-        this.a = x;
-        this.b = y;
-        this.c = z;
-        this.d = yaw;
-        this.e = pitch;
-        this.f = onGround;
-        this.g = isCrouching;
-        this.h = isSprinting;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.yaw = yaw;
+        this.pitch = pitch;
+        this.onGround = onGround;
+        this.isCrouching = isCrouching;
+        this.isSprinting = isSprinting;
     }
 
     public boolean equals(Object o) {
@@ -49,35 +49,35 @@ public class MotionEvent extends Event {
     }
 
     public void a(double x) {
-        this.a = x;
+        this.x = x;
     }
 
     public void b(double y) {
-        this.b = y;
+        this.y = y;
     }
 
     public void c(double z) {
-        this.c = z;
+        this.z = z;
     }
 
     public void a(float yaw) {
-        this.d = yaw;
+        this.yaw = yaw;
     }
 
     public void b(float pitch) {
-        this.e = pitch;
+        this.pitch = pitch;
     }
 
     public void b(boolean onGround) {
-        this.f = onGround;
+        this.onGround = onGround;
     }
 
     public void c(boolean isCrouching) {
-        this.g = isCrouching;
+        this.isCrouching = isCrouching;
     }
 
     public void d(boolean isSprinting) {
-        this.h = isSprinting;
+        this.isSprinting = isSprinting;
     }
 
     public String toString() {
@@ -93,34 +93,34 @@ public class MotionEvent extends Event {
     }
 
     public double b() {
-        return this.a;
+        return this.x;
     }
 
     public double c() {
-        return this.b;
+        return this.y;
     }
 
     public double d() {
-        return this.c;
+        return this.z;
     }
 
     public float e() {
-        return this.d;
+        return this.yaw;
     }
 
     public float f() {
-        return this.e;
+        return this.pitch;
     }
 
     public boolean g() {
-        return this.f;
+        return this.onGround;
     }
 
     public boolean h() {
-        return this.g;
+        return this.isCrouching;
     }
 
     public boolean i() {
-        return this.h;
+        return this.isSprinting;
     }
 }

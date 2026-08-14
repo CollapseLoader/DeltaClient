@@ -6,23 +6,23 @@ import aethereal.core.Event;
 import net.minecraft.item.ItemStack;
 
 public class SyncEvent extends Event {
-    private final int a;
-    private ItemStack b;
+    private final int slot;
+    private ItemStack stack;
 
     public SyncEvent(int slot, ItemStack stack) {
-        this.a = slot;
-        this.b = stack;
+        this.slot = slot;
+        this.stack = stack;
     }
 
     public void a(ItemStack stack) {
-        this.b = stack;
+        this.stack = stack;
     }
 
     public int b() {
-        return this.a;
+        return this.slot;
     }
 
     public ItemStack c() {
-        return this.b;
+        return this.stack;
     }
 }

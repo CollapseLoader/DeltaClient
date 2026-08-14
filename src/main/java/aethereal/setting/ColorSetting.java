@@ -1,7 +1,7 @@
 package aethereal.setting;
 
 import aethereal.ui.element.ColorElement;
-import aethereal.ui.element.Element_2;
+import aethereal.ui.element.Element;
 
 public class ColorSetting extends Setting<Integer> {
     public ColorSetting(String name, Integer defaultVal) {
@@ -9,7 +9,7 @@ public class ColorSetting extends Setting<Integer> {
     }
 
     @Override
-    public Element_2<?> createBooleanElement() {
+    public Element<?> createBooleanElement() {
         return new ColorElement(this);
     }
 }

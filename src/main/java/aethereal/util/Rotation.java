@@ -9,20 +9,20 @@ import platform.inject.accessors.ClientPlayerEntityAccessor;
 import java.util.Objects;
 
 public class Rotation implements Interface {
-    private float b;
-    private float c;
+    private float yaw;
+    private float pitch;
 
     public Rotation() {
     }
 
     public Rotation(float yaw, float pitch) {
-        this.b = yaw;
-        this.c = pitch;
+        this.yaw = yaw;
+        this.pitch = pitch;
     }
 
     public Rotation(Entity entity) {
-        this.b = entity.getYaw();
-        this.c = entity.getPitch();
+        this.yaw = entity.getYaw();
+        this.pitch = entity.getPitch();
     }
 
     public static Rotation a() {
@@ -48,27 +48,27 @@ public class Rotation implements Interface {
     }
 
     public void a(float yaw) {
-        this.b = yaw;
+        this.yaw = yaw;
     }
 
     public void b(float pitch) {
-        this.c = pitch;
+        this.pitch = pitch;
     }
 
     public float c() {
-        return this.b;
+        return this.yaw;
     }
 
     public float d() {
-        return this.c;
+        return this.pitch;
     }
 
     public double a(Rotation targetRotation) {
         if (targetRotation == null) {
             return 0.0d;
         }
-        double yawDelta = MathHelper.wrapDegrees(targetRotation.c() - this.b);
-        double pitchDelta = MathHelper.wrapDegrees(targetRotation.d() - this.c);
+        double yawDelta = MathHelper.wrapDegrees(targetRotation.c() - this.yaw);
+        double pitchDelta = MathHelper.wrapDegrees(targetRotation.d() - this.pitch);
         return Math.hypot(Math.abs(yawDelta), Math.abs(pitchDelta));
     }
 }

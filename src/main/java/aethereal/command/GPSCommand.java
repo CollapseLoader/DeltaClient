@@ -9,20 +9,20 @@ import net.minecraft.util.math.Vec3d;
 
 @Command(name = "gps")
 public class GPSCommand extends BaseCommand {
-    private Vec3d c;
+    private Vec3d target;
 
     public Vec3d c() {
-        return this.c;
+        return this.target;
     }
 
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
         builder.then(a(BooleanUtils.c).executes(context -> {
-            if (this.c == null) {
+            if (this.target == null) {
                 ChatUtil.sendMessage("GPS-метка сейчас отсутствует");
                 return 1;
             }
-            this.c = null;
+            this.target = null;
             ChatUtil.sendMessage("GPS-метка больше не отображается");
             return 1;
         })).then(e("x").executes(context2 -> {
@@ -45,7 +45,7 @@ public class GPSCommand extends BaseCommand {
     }
 
     public void a(Vec3d pos) {
-        this.c = pos;
+        this.target = pos;
         ChatUtil.sendMessage("GPS-метка установлена: " + ((int) pos.getX()) + ", " + ((int) pos.getY()) + ", " + ((int) pos.getZ()));
     }
 }

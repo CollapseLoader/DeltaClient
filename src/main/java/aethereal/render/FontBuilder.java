@@ -18,15 +18,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class FontBuilder implements Interface {
-    private final Gson b = new Gson();
-    private Identifier c;
-    private Identifier d;
-    private String e;
+    private final Gson gson = new Gson();
+    private Identifier fontJsonId;
+    private Identifier fontTextureId;
+    private String fontName;
 
     public FontBuilder a(String fontName) {
-        this.e = fontName;
-        this.c = Identifier.of("delta", "fonts/" + fontName + ".json");
-        this.d = Identifier.of("delta", "fonts/" + fontName + ".png");
+        this.fontName = fontName;
+        this.fontJsonId = Identifier.of("delta", "fonts/" + fontName + ".json");
+        this.fontTextureId = Identifier.of("delta", "fonts/" + fontName + ".png");
         return this;
     }
 
@@ -35,19 +35,19 @@ public class FontBuilder implements Interface {
         AbstractTexture texture = c();
         Map<Integer, MsdfGlyph> glyphs = a(data);
         Map<Integer, Map<Integer, Float>> kernings = b(data);
-        return new Font(this.e, texture, data.atlas(), data.metrics(), glyphs, kernings);
+        return new Font(this.fontName, texture, data.atlas(), data.metrics(), glyphs, kernings);
     }
 
     private FontData b() {
-        FontData data = this.b.fromJson(a(this.c), FontData.class);
+        FontData data = this.gson.fromJson(a(this.fontJsonId), FontData.class);
         if (data == null) {
-            throw new RuntimeException("Failed to read font data file: " + this.c + ". Are you sure this is a valid JSON file? Check its syntax.");
+            throw new RuntimeException("Failed to read font data file: " + this.fontJsonId + ". Are you sure this is a valid JSON file? Check its syntax.");
         }
         return data;
     }
 
     private AbstractTexture c() {
-        AbstractTexture texture = MinecraftClient.getInstance().getTextureManager().getTexture(this.d);
+        AbstractTexture texture = MinecraftClient.getInstance().getTextureManager().getTexture(this.fontTextureId);
         RenderSystem.recordRenderCall(() -> {
             texture.setFilter(true, false);
         });

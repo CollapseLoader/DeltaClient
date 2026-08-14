@@ -27,7 +27,7 @@ import java.util.List;
 
 @ModuleRegister(name = "Captcha Solver", description = "!! ЭТОТ МОДУЛЬ НЕ РАБОТАЕТ, ТАК КАК ОН ЗАВЯЗАН С БЭКЕНДОМ !!", category = Category.Player)
 public class CaptchaSolver extends Module {
-    private byte[] b;
+    private byte[] imageData;
 
     @EventTarget
     public void a(TickEvent event) {
@@ -112,8 +112,8 @@ public class CaptchaSolver extends Module {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             ImageIO.write(image, "png", stream);
             byte[] bytes = stream.toByteArray();
-            if (!Arrays.equals(bytes, this.b)) {
-                this.b = bytes;
+            if (!Arrays.equals(bytes, this.imageData)) {
+                this.imageData = bytes;
                 Delta.getInstance().f().a(false, "captcha", "bytes", java.util.Base64.getEncoder().encodeToString(bytes));
             }
         } catch (Exception e) {

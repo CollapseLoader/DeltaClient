@@ -9,124 +9,124 @@ import java.util.List;
 import java.util.Optional;
 
 public final class Activity {
-    private final ActivityType a;
-    private final String b;
-    private final String c;
-    private final String d;
-    private final ActivityTimestamps e;
-    private final ActivityAssets f;
-    private final ActivityParty g;
-    private final ActivitySecrets h;
-    private final List<ActivityButton> i;
-    private final Boolean j;
+    private final ActivityType type;
+    private final String state;
+    private final String details;
+    private final String url;
+    private final ActivityTimestamps timestamps;
+    private final ActivityAssets assets;
+    private final ActivityParty party;
+    private final ActivitySecrets secrets;
+    private final List<ActivityButton> buttons;
+    private final Boolean instance;
 
     public Activity(ActivityType type, String state, String details, String url, ActivityTimestamps timestamps, ActivityAssets assets, ActivityParty party, ActivitySecrets secrets, List<ActivityButton> buttons, Boolean instance) {
-        this.a = type != null ? type : ActivityType.PLAYING;
-        this.b = state;
-        this.c = details;
-        this.d = url;
-        this.e = timestamps;
-        this.f = assets;
-        this.g = party;
-        this.h = secrets;
-        this.i = buttons != null ? List.copyOf(buttons) : null;
-        this.j = instance;
-        if (this.b != null && (this.b.length() < 2 || this.b.length() > 128)) {
-            throw new IllegalArgumentException("Activity state must be 2-128 characters, got " + this.b.length());
+        this.type = type != null ? type : ActivityType.PLAYING;
+        this.state = state;
+        this.details = details;
+        this.url = url;
+        this.timestamps = timestamps;
+        this.assets = assets;
+        this.party = party;
+        this.secrets = secrets;
+        this.buttons = buttons != null ? List.copyOf(buttons) : null;
+        this.instance = instance;
+        if (this.state != null && (this.state.length() < 2 || this.state.length() > 128)) {
+            throw new IllegalArgumentException("Activity state must be 2-128 characters, got " + this.state.length());
         }
-        if (this.c != null && (this.c.length() < 2 || this.c.length() > 128)) {
-            throw new IllegalArgumentException("Activity details must be 2-128 characters, got " + this.c.length());
+        if (this.details != null && (this.details.length() < 2 || this.details.length() > 128)) {
+            throw new IllegalArgumentException("Activity details must be 2-128 characters, got " + this.details.length());
         }
-        if (this.i != null && this.i.size() > 2) {
-            throw new IllegalArgumentException("Activity supports a maximum of 2 buttons, got " + this.i.size());
+        if (this.buttons != null && this.buttons.size() > 2) {
+            throw new IllegalArgumentException("Activity supports a maximum of 2 buttons, got " + this.buttons.size());
         }
-        if (this.a == ActivityType.STREAMING && this.d == null) {
+        if (this.type == ActivityType.STREAMING && this.url == null) {
             throw new IllegalArgumentException("Streaming activity type requires a URL");
         }
-        if (this.a == ActivityType.STREAMING) {
-            UrlValidator.a(this.d, "Streaming URL", -1);
+        if (this.type == ActivityType.STREAMING) {
+            UrlValidator.a(this.url, "Streaming URL", -1);
         }
     }
 
     public ActivityType k() {
-        return this.a;
+        return this.type;
     }
 
     public String l() {
-        return this.b;
+        return this.state;
     }
 
     public String m() {
-        return this.c;
+        return this.details;
     }
 
     public String n() {
-        return this.d;
+        return this.url;
     }
 
     public ActivityTimestamps o() {
-        return this.e;
+        return this.timestamps;
     }
 
     public ActivityAssets p() {
-        return this.f;
+        return this.assets;
     }
 
     public ActivityParty q() {
-        return this.g;
+        return this.party;
     }
 
     public ActivitySecrets r() {
-        return this.h;
+        return this.secrets;
     }
 
     public List<ActivityButton> s() {
-        return this.i;
+        return this.buttons;
     }
 
     public Boolean t() {
-        return this.j;
+        return this.instance;
     }
 
     public Optional<String> a() {
-        return Optional.ofNullable(this.b);
+        return Optional.ofNullable(this.state);
     }
 
     public Optional<String> b() {
-        return Optional.ofNullable(this.c);
+        return Optional.ofNullable(this.details);
     }
 
     public Optional<String> c() {
-        return Optional.ofNullable(this.d);
+        return Optional.ofNullable(this.url);
     }
 
     public Optional<ActivityTimestamps> d() {
-        return Optional.ofNullable(this.e);
+        return Optional.ofNullable(this.timestamps);
     }
 
     public Optional<ActivityAssets> e() {
-        return Optional.ofNullable(this.f);
+        return Optional.ofNullable(this.assets);
     }
 
     public Optional<ActivityParty> f() {
-        return Optional.ofNullable(this.g);
+        return Optional.ofNullable(this.party);
     }
 
     public Optional<ActivitySecrets> g() {
-        return Optional.ofNullable(this.h);
+        return Optional.ofNullable(this.secrets);
     }
 
     public Optional<List<ActivityButton>> h() {
-        return Optional.ofNullable(this.i);
+        return Optional.ofNullable(this.buttons);
     }
 
     public Optional<Boolean> i() {
-        return Optional.ofNullable(this.j);
+        return Optional.ofNullable(this.instance);
     }
 
     public JsonObject j() {
         JsonObject json = new JsonObject();
-        json.addProperty("type", Integer.valueOf(this.a.a()));
+        json.addProperty("type", Integer.valueOf(this.type.a()));
         a().ifPresent(s -> {
             json.addProperty("state", s);
         });

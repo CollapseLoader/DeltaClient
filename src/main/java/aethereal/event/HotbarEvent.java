@@ -4,13 +4,13 @@ import aethereal.core.Event;
 
 
 public class HotbarEvent extends Event {
-    private final int a;
+    private final int slot;
 
     public HotbarEvent(int slot) {
-        this.a = slot;
+        this.slot = slot;
     }
 
     public int b() {
-        return this.a;
+        return this.slot;
     }
 }

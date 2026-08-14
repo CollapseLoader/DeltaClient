@@ -2,7 +2,7 @@ package aethereal.network;
 
 import aethereal.command.CommandExecutor;
 import aethereal.core.InterfaceC0020Opcode;
-import aethereal.core.User_2;
+import aethereal.core.DiscordUser;
 import aethereal.discord.*;
 import aethereal.lib.javassist.CloseFrame;
 import aethereal.lib.javassist.Frame;
@@ -37,7 +37,7 @@ public class ConnectionManager {
     private final PipePathProvider i;
     private final ConnectionFactory j;
     private volatile Connection k;
-    private volatile User_2 l;
+    private volatile DiscordUser l;
     private volatile DiscordBuild m;
     private volatile Future<?> n;
     private Consumer<ConnectionState> o;
@@ -112,7 +112,7 @@ public class ConnectionManager {
         return this.k;
     }
 
-    public User_2 p() {
+    public DiscordUser p() {
         return this.l;
     }
 
@@ -431,7 +431,7 @@ public class ConnectionManager {
         }).orElseThrow(() -> {
             return new ConnectionException("No user in handshake response");
         });
-        User_2 user = b(userJson);
+        DiscordUser user = b(userJson);
         String endpoint = JsonUtils.b(responseData, "config").flatMap(cfg -> {
             return JsonUtils.a(cfg, "api_endpoint");
         }).orElse(null);
@@ -491,9 +491,9 @@ public class ConnectionManager {
         return this.d.get() == generationToken;
     }
 
-    private User_2 b(JsonObject userJson) {
+    private DiscordUser b(JsonObject userJson) {
         try {
-            User_2 user = User_2.a(userJson);
+            DiscordUser user = DiscordUser.a(userJson);
             if (user.k() == null || user.k().isBlank()) {
                 throw new ConnectionException("Handshake user is missing id");
             }
@@ -520,6 +520,6 @@ public class ConnectionManager {
         }
     }
 
-    record a(Connection a, User_2 b, DiscordBuild c) {
+    record a(Connection a, DiscordUser b, DiscordBuild c) {
     }
 }

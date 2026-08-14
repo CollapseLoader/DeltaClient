@@ -6,31 +6,31 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Hand;
 
 public class HandAnimationEvent extends Event {
-    private final MatrixStack a;
-    private final Hand b;
-    private final float c;
-    private final int d;
+    private final MatrixStack matrices;
+    private final Hand hand;
+    private final float swingProgress;
+    private final int armX;
 
     public HandAnimationEvent(MatrixStack matrices, Hand hand, float swingProgress, int armX) {
-        this.a = matrices;
-        this.b = hand;
-        this.c = swingProgress;
-        this.d = armX;
+        this.matrices = matrices;
+        this.hand = hand;
+        this.swingProgress = swingProgress;
+        this.armX = armX;
     }
 
     public MatrixStack b() {
-        return this.a;
+        return this.matrices;
     }
 
     public Hand c() {
-        return this.b;
+        return this.hand;
     }
 
     public float d() {
-        return this.c;
+        return this.swingProgress;
     }
 
     public int e() {
-        return this.d;
+        return this.armX;
     }
 }

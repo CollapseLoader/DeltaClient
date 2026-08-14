@@ -5,24 +5,24 @@ import aethereal.util.DateUtils;
 import java.util.List;
 
 public class DiscordIPCConfig {
-    private final long a;
-    private final List<DiscordBuild> b;
-    private final boolean c;
-    private final int d;
-    private final long e;
-    private final long f;
-    private final long g;
-    private final int h;
+    private final long clientId;
+    private final List<DiscordBuild> preferredBuilds;
+    private final boolean reconnect;
+    private final int maxReconnectAttempts;
+    private final long reconnectBaseDelayMs;
+    private final long reconnectMaxDelayMs;
+    private final long commandTimeoutMs;
+    private final int maxCommandsPerSecond;
 
     DiscordIPCConfig(long clientId, List<DiscordBuild> preferredBuilds, boolean reconnect, int maxReconnectAttempts, long reconnectBaseDelayMs, long reconnectMaxDelayMs, long commandTimeoutMs, int maxCommandsPerSecond) {
-        this.a = clientId;
-        this.b = preferredBuilds;
-        this.c = reconnect;
-        this.d = maxReconnectAttempts;
-        this.e = reconnectBaseDelayMs;
-        this.f = reconnectMaxDelayMs;
-        this.g = commandTimeoutMs;
-        this.h = maxCommandsPerSecond;
+        this.clientId = clientId;
+        this.preferredBuilds = preferredBuilds;
+        this.reconnect = reconnect;
+        this.maxReconnectAttempts = maxReconnectAttempts;
+        this.reconnectBaseDelayMs = reconnectBaseDelayMs;
+        this.reconnectMaxDelayMs = reconnectMaxDelayMs;
+        this.commandTimeoutMs = commandTimeoutMs;
+        this.maxCommandsPerSecond = maxCommandsPerSecond;
     }
 
     static List<DiscordBuild> j() {
@@ -58,35 +58,35 @@ public class DiscordIPCConfig {
     }
 
     public long b() {
-        return this.a;
+        return this.clientId;
     }
 
     public List<DiscordBuild> c() {
-        return this.b;
+        return this.preferredBuilds;
     }
 
     public boolean d() {
-        return this.c;
+        return this.reconnect;
     }
 
     public int e() {
-        return this.d;
+        return this.maxReconnectAttempts;
     }
 
     public long f() {
-        return this.e;
+        return this.reconnectBaseDelayMs;
     }
 
     public long g() {
-        return this.f;
+        return this.reconnectMaxDelayMs;
     }
 
     public long h() {
-        return this.g;
+        return this.commandTimeoutMs;
     }
 
     public int i() {
-        return this.h;
+        return this.maxCommandsPerSecond;
     }
 
     public static class a {
@@ -210,8 +210,6 @@ public class DiscordIPCConfig {
             int i = this.g;
             long j2 = this.i;
             long j3 = this.k;
-            long j4 = this.m;
-            int i2 = this.o;
             return "DiscordIPCConfig.DiscordIPCConfigBuilder(clientId=" + j + ", preferredBuilds$value=" + j + ", reconnect$value=" + list + ", maxReconnectAttempts$value=" + z + ", reconnectBaseDelayMs$value=" + i + ", reconnectMaxDelayMs$value=" + j2 + ", commandTimeoutMs$value=" + j + ", maxCommandsPerSecond$value=" + j3 + ")";
         }
     }

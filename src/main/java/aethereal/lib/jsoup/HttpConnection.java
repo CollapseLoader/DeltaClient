@@ -10,15 +10,15 @@ public final class HttpConnection {
     }
 
     public static class c {
-        private final URL a;
+        private final URL url;
         private final CookieManager b = new CookieManager();
 
         public c(URL url) {
-            this.a = url;
+            this.url = url;
         }
 
         public URL a() {
-            return a;
+            return url;
         }
 
         public CookieManager r() {

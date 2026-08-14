@@ -1,7 +1,7 @@
 package aethereal.network;
 
 import aethereal.discord.Session;
-import aethereal.lib.jsoup.Connection_2;
+import aethereal.lib.jsoup.JsoupConnection;
 import aethereal.lib.jsoup.Document;
 import aethereal.lib.jsoup.Element;
 import aethereal.lib.jsoup.Jsoup;
@@ -43,7 +43,7 @@ public class FunPay {
             return true;
         }
         try {
-            Connection_2.e response = Jsoup.b("https://funpay.com/").c("golden_key", this.d.q().c()).a(5000).e();
+            JsoupConnection.e response = Jsoup.b("https://funpay.com/").c("golden_key", this.d.q().c()).a(5000).e();
             Map<String, String> cookies = response.e();
             Document document = response.j();
             Element usernameElement = document.k(".user-link-name");
@@ -68,20 +68,20 @@ public class FunPay {
         this.c.a();
     }
 
-    public Connection_2.e a(String objectsJson, String requestJson) throws Exception {
+    public JsoupConnection.e a(String objectsJson, String requestJson) throws Exception {
         return Jsoup.b("https://funpay.com/runner/")
                 .c(Map.of("golden_key", this.d.q().c(), "PHPSESSID", this.a.c(), "golden_seal", this.a.d()))
                 .b(Map.of("accept", "*/*", "content-type", "application/x-www-form-urlencoded; charset=UTF-8",
                         "x-requested-with", "XMLHttpRequest"))
-                .a(Connection_2.c.POST)
+                .a(JsoupConnection.c.POST)
                 .a(Map.of("objects", objectsJson == null ? "" : objectsJson, "request",
                         requestJson == null ? "" : requestJson, "csrf_token", this.a.e() == null ? "" : this.a.e()))
                 .c(true).a(5000).e();
     }
 
-    public Connection_2.e a(String url) throws Exception {
+    public JsoupConnection.e a(String url) throws Exception {
         return Jsoup.b(url).c(Map.of("golden_key", this.d.q().c(), "PHPSESSID", this.a.c(), "golden_seal", this.a.d()))
-                .b(Map.of("accept", "*/*", "x-requested-with", "XMLHttpRequest")).a(Connection_2.c.POST).c(true).a(5000)
+                .b(Map.of("accept", "*/*", "x-requested-with", "XMLHttpRequest")).a(JsoupConnection.c.POST).c(true).a(5000)
                 .e();
     }
 
@@ -94,11 +94,11 @@ public class FunPay {
             if (form == null) {
                 return;
             }
-            Connection_2 refund = Jsoup
+            JsoupConnection refund = Jsoup
                     .b(form.a_("action").startsWith("http") ? form.a_("action")
                             : "https://funpay.com" + form.a_("action"))
                     .c(Map.of("golden_key", this.d.q().c(), "PHPSESSID", this.a.c(), "golden_seal", this.a.d()))
-                    .a(Connection_2.c.POST).c(true).a(5000);
+                    .a(JsoupConnection.c.POST).c(true).a(5000);
             form.select("input[type=hidden]").forEach(node -> {
                 refund.a(node.attr("name"), node.attr("value"));
             });
@@ -107,7 +107,7 @@ public class FunPay {
         }
     }
 
-    public Connection_2.e c(String nodeId) throws Exception {
+    public JsoupConnection.e c(String nodeId) throws Exception {
         JsonObject objects = new JsonObject();
         objects.addProperty("type", "chat_node");
         objects.addProperty("id", nodeId);

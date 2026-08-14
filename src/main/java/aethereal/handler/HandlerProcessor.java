@@ -33,54 +33,54 @@ public class HandlerProcessor extends BaseProcessor {
     public void setup() {
     }
 
-    public InventoryHandler a() {
+    public InventoryHandler getInventoryHandler() {
         return this.c;
     }
 
-    public UseableHandler b() {
+    public UseableHandler getUseableHandler() {
         return this.d;
     }
 
-    public StopHandler c() {
+    public StopHandler getStopHandler() {
         return this.e;
     }
 
-    public AuraHandler d() {
+    public AuraHandler getAuraHandler() {
         return this.f;
     }
 
-    public AimHandler e() {
+    public AimHandler getAimHandler() {
         return this.g;
     }
 
-    public ANFindHandler f() {
+    public ANFindHandler getANFindHandler() {
         return this.h;
     }
 
-    public AFKHandler g() {
+    public AFKHandler getAFKHandler() {
         return this.i;
     }
 
-    public MainHandler h() {
+    public MainHandler getMainHandler() {
         return this.j;
     }
 
-    public PvEHandler i() {
+    public PvEHandler getPvEHandler() {
         return this.k;
     }
 
-    public TPSHandler j() {
+    public TPSHandler getTPSHandler() {
         return this.l;
     }
 
-    public InteractHandler k() {
+    public InteractHandler getInteractHandler() {
         return this.m;
     }
 
-    public void l() {
+    public void performNoOperation() {
     }
 
-    public DistributionHandler m() {
+    public DistributionHandler getDistributionHandler() {
         return this.o;
     }
 

@@ -15,7 +15,7 @@ import aethereal.render.EasingList;
 import aethereal.render.Fonts;
 import aethereal.setting.Setting;
 import aethereal.ui.element.DragInfo;
-import aethereal.ui.element.Element_2;
+import aethereal.ui.element.Element;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.item.ItemStack;
@@ -28,7 +28,7 @@ public class Widget {
     protected final AnimationUtil b = new AnimationUtil();
     protected final AnimationUtil c = new AnimationUtil();
     private final List<Setting<?>> f = new ObjectArrayList<>();
-    private final List<Element_2<?>> g = new ObjectArrayList<>();
+    private final List<Element<?>> g = new ObjectArrayList<>();
     private final DragInfo i;
     protected final float d = 12.5f;
     protected final float e = 7.0f;
@@ -36,14 +36,14 @@ public class Widget {
 
     public Widget(DragInfo dragInfo) {
         this.i = dragInfo;
-        dragInfo.a(this);
+        dragInfo.setWidget(this);
     }
 
     public List<Setting<?>> b() {
         return this.f;
     }
 
-    public List<Element_2<?>> c() {
+    public List<Element<?>> c() {
         return this.g;
     }
 
@@ -96,7 +96,7 @@ public class Widget {
     }
 
     public void a(GlobalEvent event) {
-        e().a(this.i == Delta.getInstance().getModuleProcessor().s().g());
+        e().a(this.i == Delta.getInstance().getModuleProcessor().s().getActiveDragInfo());
     }
 
     public void a(PacketEvent event) {
@@ -106,29 +106,29 @@ public class Widget {
     }
 
     protected void b(DrawEvent event) {
-        List<Element_2<?>> visible = this.g.stream().filter(e -> {
-            return e.e().e().get().booleanValue();
+        List<Element<?>> visible = this.g.stream().filter(e -> {
+            return e.getSetting().e().get().booleanValue();
         }).toList();
         if (!visible.isEmpty()) {
             float panelWidth = visible.stream().map(e2 -> {
-                return Float.valueOf(19.5f + Fonts.e.a(e2.e().i(), 6.5f) + 25.0f);
+                return Float.valueOf(19.5f + Fonts.e.a(e2.getSetting().i(), 6.5f) + 25.0f);
             }).reduce(Float.valueOf(0.0f), (v0, v1) -> {
                 return Math.max(v0, v1);
             }).floatValue();
             float totalHeight = (12.0f * visible.size()) + (visible.size() - 1);
             float anim = this.c.c() * a();
-            float baseX = (this.i.b() - totalHeight) - 2.0f >= 0.0f
-                    ? (this.i.a() + (this.i.f() / 2.0f)) - (panelWidth / 2.0f)
-                    : this.i.a() + this.i.f() + 2.0f;
-            float baseY = (this.i.b() - totalHeight) - 2.0f >= 0.0f ? (this.i.b() - totalHeight) - 2.0f : this.i.b();
+            float baseX = (this.i.getClampedY() - totalHeight) - 2.0f >= 0.0f
+                    ? (this.i.getClampedX() + (this.i.getWidth() / 2.0f)) - (panelWidth / 2.0f)
+                    : this.i.getClampedX() + this.i.getWidth() + 2.0f;
+            float baseY = (this.i.getClampedY() - totalHeight) - 2.0f >= 0.0f ? (this.i.getClampedY() - totalHeight) - 2.0f : this.i.getClampedY();
             float baseX2 = Math.min(Math.max(baseX, 0.0f),
                     (Interface.mc.getWindow().getScaledWidth() - panelWidth) - 2.0f);
             float baseY2 = Math.min(Math.max(baseY, 0.0f), Interface.mc.getWindow().getScaledHeight() - totalHeight);
             a(event, baseX2, baseY2, panelWidth, totalHeight, true, anim);
             float y = baseY2;
-            for (Element_2<?> element : visible) {
-                element.d().set(baseX2, y, panelWidth, 12.0f);
-                element.a(event, baseX2, y, panelWidth, anim);
+            for (Element<?> element : visible) {
+                element.getBounds().set(baseX2, y, panelWidth, 12.0f);
+                element.onDrawEvent(event, baseX2, y, panelWidth, anim);
                 y += 12.0f + 1.0f;
                 if (element != visible.getLast()) {
                     event.d().a(event.i().getMatrices(), baseX2, y - 1.0f, panelWidth, 0.75f, 0.0f, ColorUtil.applyAlphaToColor(
@@ -144,7 +144,7 @@ public class Widget {
     }
 
     protected void a(DrawEvent event, String icon, Object title, float width, float animation, int iconColor) {
-        a(event, this.i.a(), this.i.b(), icon, title, width, animation, iconColor);
+        a(event, this.i.getClampedX(), this.i.getClampedY(), icon, title, width, animation, iconColor);
     }
 
     protected void a(DrawEvent event, float x, float y, String icon, Object title, float width, float animation,

@@ -8,7 +8,7 @@ import aethereal.command.LayoutCommand;
 import aethereal.core.Delta;
 import aethereal.core.EventTarget;
 import aethereal.core.Module;
-import aethereal.core.Processor_2;
+import aethereal.core.Processor;
 import aethereal.event.KeyEvent;
 import aethereal.lib.json.JSONArray;
 import aethereal.lib.json.JSONObject;
@@ -122,7 +122,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
     private final PortalBypass aG = new PortalBypass();
     private final CaptchaSolver aH = new CaptchaSolver();
     private final FastEXP aI = new FastEXP();
-    private final Collector_2 aJ = new Collector_2();
+    private final Collector aJ = new Collector();
     private final ItemHelper aK = new ItemHelper();
     private final Pointers aL = new Pointers();
     private final Nuker aM = new Nuker();
@@ -175,7 +175,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
 
     @Override
 
-    protected List<Module> a(String json) {
+    protected List<Module> loadConfig(String json) {
         PotionThrower potionThrower = this.aZ;
         if (json == null || json.isBlank() || json.trim().startsWith("[")) {
             return null;
@@ -217,7 +217,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
             if (deltaH == null) {
                 throw new NullPointerException();
             }
-            Processor_2 processor_2D = deltaH.getModuleProcessor();
+            Processor processor_2D = deltaH.getModuleProcessor();
             if (processor_2D == null) {
                 throw new NullPointerException();
             }
@@ -292,7 +292,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
 
     @Override
 
-    protected String a(List<Module> data) {
+    protected String saveConfig(List<Module> data) {
         PotionThrower potionThrower = this.aZ;
         JSONArray jSONArray = new JSONArray();
         if (data == null) {
@@ -345,7 +345,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
         if (deltaH == null) {
             throw new NullPointerException();
         }
-        Processor_2 processor_2D = deltaH.getModuleProcessor();
+        Processor processor_2D = deltaH.getModuleProcessor();
         if (processor_2D == null) {
             throw new NullPointerException();
         }
@@ -771,7 +771,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
         return this.aI;
     }
 
-    public Collector_2 aJ() {
+    public Collector aJ() {
         return this.aJ;
     }
 
@@ -866,7 +866,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
     }
 
     @Override
-    protected String b() {
+    protected String getConfigFileName() {
         return "default.json";
     }
 
@@ -900,7 +900,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
             if (!dir.exists()) {
                 dir.mkdirs();
             }
-            Files.writeString(new File(dir, configName + ".json").toPath(), a((List<Module>) this.d));
+            Files.writeString(new File(dir, configName + ".json").toPath(), saveConfig((List<Module>) this.d));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -912,7 +912,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
             if (!file.exists()) {
                 return false;
             }
-            List<Module> listA = a(Files.readString(file.toPath()));
+            List<Module> listA = loadConfig(Files.readString(file.toPath()));
             if (listA != null) {
                 this.d.clear();
                 this.d.addAll(listA);
@@ -926,7 +926,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
 
     public boolean d(String configName) {
         File configFile = new File(d(), configName + ".json");
-        if (configFile.exists() && !configName.equals(b())) {
+        if (configFile.exists() && !configName.equals(getConfigFileName())) {
             return configFile.delete();
         }
         return false;

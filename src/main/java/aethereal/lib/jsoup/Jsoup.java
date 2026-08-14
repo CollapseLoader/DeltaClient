@@ -8,7 +8,7 @@ public final class Jsoup {
         return new Document(org.jsoup.Jsoup.parse(html));
     }
 
-    public static Connection_2 b(String url) {
-        return Connection_2.b(url);
+    public static JsoupConnection b(String url) {
+        return JsoupConnection.b(url);
     }
 }

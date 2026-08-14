@@ -14,7 +14,7 @@ public class Delta {
 
     private static Delta instance;
     private static volatile Delta instanceRef;
-    private Processor_2 moduleProcessor;
+    private Processor moduleProcessor;
     private GUIScreen currentScreen;
     private Client networkClient;
     private User currentUser;
@@ -43,7 +43,7 @@ public class Delta {
         instance = this;
         instanceRef = this;
 
-        this.moduleProcessor = new Processor_2();
+        this.moduleProcessor = new Processor();
         this.networkClient = new Client(false);
 
         ClientLifecycleEvents.CLIENT_STOPPING.register(client -> this.a());
@@ -61,7 +61,7 @@ public class Delta {
         return null;
     }
 
-    public Processor_2 getModuleProcessor() {
+    public Processor getModuleProcessor() {
         return this.moduleProcessor;
     }
 
@@ -89,7 +89,7 @@ public class Delta {
         return getDeveloperName();
     }
 
-    public void a(Processor_2 processor) {
+    public void a(Processor processor) {
         this.moduleProcessor = processor;
     }
 

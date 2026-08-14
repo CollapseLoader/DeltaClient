@@ -32,13 +32,13 @@ public class AutoBuySection extends Section implements Interface {
 
     public AutoBuySection() {
         super("h", "auto-buy section");
-        this.b = new TextField(TextField.a.GUI_SETTING, true);
+        this.b = new TextField(TextField.type.GUI_SETTING, true);
         this.c = new AnimationUtil();
         this.d = new Vector4f();
         this.e = new Vector4f();
         this.f = new Vector4f();
         this.g = new Vector4f();
-        this.b.a("Цена предмета");
+        this.b.setPlaceholder("Цена предмета");
     }
 
     @Override
@@ -50,12 +50,12 @@ public class AutoBuySection extends Section implements Interface {
         a(context, frame, settingsX, top, mouseX, mouseY, delta);
     }
 
-    private void a(AutoBuyEntry item) {
+    private void selectEntry(AutoBuyEntry item) {
         this.h = item;
-        this.b.g().setLength(0);
+        this.b.getTextBuffer().setLength(0);
         this.b.a(false);
         if (item != null && item.k() > 0.0d) {
-            this.b.g().append((long) item.k());
+            this.b.getTextBuffer().append((long) item.k());
         }
     }
 
@@ -72,7 +72,7 @@ public class AutoBuySection extends Section implements Interface {
         this.j = 0.0f;
         this.i = null;
         if (this.h == null && !items.isEmpty()) {
-            a(items.getFirst());
+            selectEntry(items.getFirst());
         }
         ScissorUtil.a(matrices, frame.x, top, frame.z, bottom - top);
         for (int i = 0; i < items.size(); i++) {
@@ -84,11 +84,11 @@ public class AutoBuySection extends Section implements Interface {
                 if (MathUtil.a(mouseX, mouseY, slotX, slotY, slot, slot)) {
                     this.i = item;
                 }
-                item.j().a(item.l());
-                item.j().a(0.0f, 1.0f, 0.4f, EasingList.i, delta);
+                item.getAnimation().a(item.l());
+                item.getAnimation().a(0.0f, 1.0f, 0.4f, EasingList.i, delta);
                 draw.a(matrices, slotX, slotY, slot, slot, 4.0f, ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(255, 255, 255, 255), 0.023529412f * (item == this.h ? 1.0f : this.i == item ? 0.5f : 0.0f)));
                 draw.a(matrices, slotX, slotY, slot, slot, 4.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b()));
-                float on = item.j().c();
+                float on = item.getAnimation().c();
                 draw3d.a(context, item.a(), slotX + offset, slotY + offset, 0, 0.5f + (0.5f * on), scale, false);
             }
         }
@@ -108,14 +108,14 @@ public class AutoBuySection extends Section implements Interface {
         float rowX = settingsX + 8.0f;
         float rowW = width - 16.0f;
         float center = y + 10.0f;
-        this.h.j().a(this.h.l());
-        this.h.j().a(0.0f, 1.0f, 0.4f, EasingList.i, delta);
-        float active = this.h.j().c();
+        this.h.getAnimation().a(this.h.l());
+        this.h.getAnimation().a(0.0f, 1.0f, 0.4f, EasingList.i, delta);
+        float active = this.h.getAnimation().c();
         this.g.set(((rowX + rowW) - 6.0f) - 14.0f, center - 4.25f, 14.0f, 8.5f);
         this.d.set((this.g.x - 4.0f) - 10.0f, center - 5.0f, 10.0f, 10.0f);
         float nameX = rowX + 20.0f;
         draw3d.a(context, this.h.a(), rowX, center - 6.0f, 0, 0.35f + (0.65f * active), 0.75f, false);
-        Fonts.c.c(matrices, this.h.b(), nameX, (center - (Fonts.c.a(7.5f) / 2.0f)) - 0.75f, 7.5f, ColorUtil.lerpColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), theme.a(ThemeInfo.TEXT).toIntColor(), active), (this.d.x - 6.0f) - nameX);
+        Fonts.c.c(matrices, this.h.getDisplayName(), nameX, (center - (Fonts.c.a(7.5f) / 2.0f)) - 0.75f, 7.5f, ColorUtil.lerpColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), theme.a(ThemeInfo.TEXT).toIntColor(), active), (this.d.x - 6.0f) - nameX);
         this.c.a(MathUtil.a(mouseX, mouseY, this.d.x, this.d.y, this.d.z, this.d.w));
         this.c.a(0.0f, 1.0f, 0.4f, EasingList.i, delta);
         float searchValue = this.c.c();
@@ -125,7 +125,7 @@ public class AutoBuySection extends Section implements Interface {
         draw.a(matrices, this.g.x + 1.5f + (5.5f * active), this.g.y + 1.5f, 5.5f, 5.5f, 1.75f, ColorUtil.lerpColor(ColorUtil.convertToARGB(InterfaceC0020Opcode.ap, InterfaceC0020Opcode.ap, InterfaceC0020Opcode.bk, 255), ColorUtil.convertToARGB(255, 255, 255, 255), active));
         this.f.set((rowX + rowW) - 14.0f, y + 20.0f + 8.0f, 14.0f, 14.0f);
         this.e.set((this.f.x - 4.0f) - 14.0f, y + 20.0f + 8.0f, 14.0f, 14.0f);
-        String digits = this.b.g().toString().replace(",", "");
+        String digits = this.b.getTextBuffer().toString().replace(",", "");
         if (digits.isEmpty()) {
             str = "";
         } else {
@@ -135,16 +135,16 @@ public class AutoBuySection extends Section implements Interface {
             str = String.format(locale, "%,d", objArr);
         }
         String formatted = str;
-        if (!formatted.contentEquals(this.b.g())) {
-            this.b.g().setLength(0);
-            this.b.g().append(formatted);
-            this.b.a(this.b.j());
+        if (!formatted.contentEquals(this.b.getTextBuffer())) {
+            this.b.getTextBuffer().setLength(0);
+            this.b.getTextBuffer().append(formatted);
+            this.b.a(this.b.isFocused());
         }
         float fieldWidth = (this.e.x - 4.0f) - rowX;
-        this.b.b(new Vector2f(fieldWidth, 14.0f));
-        this.b.a(new Vector2f(rowX, y + 20.0f + 8.0f));
-        this.b.a(context, mouseX, mouseY, delta, 1.0f);
-        this.h.a(digits.isEmpty() ? 0.0d : Double.parseDouble(digits));
+        this.b.setSize(new Vector2f(fieldWidth, 14.0f));
+        this.b.setPosition(new Vector2f(rowX, y + 20.0f + 8.0f));
+        this.b.render(context, mouseX, mouseY, delta, 1.0f);
+        this.h.setPrice(digits.isEmpty() ? 0.0d : Double.parseDouble(digits));
         boolean saveHover = MathUtil.a(mouseX, mouseY, this.e.x, this.e.y, this.e.z, this.e.w);
         boolean loadHover = MathUtil.a(mouseX, mouseY, this.f.x, this.f.y, this.f.z, this.f.w);
         draw.a(matrices, this.e.x, this.e.y, this.e.z, this.e.w, 4.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), (10.0f + (20.0f * (saveHover ? 1.0f : 0.0f))) / 255.0f));
@@ -165,25 +165,25 @@ public class AutoBuySection extends Section implements Interface {
         if (button == 0 && MathUtil.a(mouseX, mouseY, this.f.x, this.f.y, this.f.z, this.f.w)) {
             Delta.getInstance().getModuleProcessor().q().setup();
             ChatUtil.sendMessage("Конфигурация авто-закупки успешно загружена");
-            a(this.h);
+            selectEntry(this.h);
             return true;
         }
         if (this.h != null && MathUtil.a(mouseX, mouseY, this.d.x, this.d.y, this.d.z, this.d.w)) {
-            mc.player.networkHandler.sendChatCommand("ah search " + this.h.b().replaceAll("\\[\\d+x\\d+]", "").replace("⚡", "").replace("xxx", "").replace("[", "").replace("]", "").replace("★", "").trim().replaceAll("\\s+", StringUtils.a));
+            mc.player.networkHandler.sendChatCommand("ah search " + this.h.getDisplayName().replaceAll("\\[\\d+x\\d+]", "").replace("⚡", "").replace("xxx", "").replace("[", "").replace("]", "").replace("★", "").trim().replaceAll("\\s+", StringUtils.a));
             return true;
         }
         if (this.h != null && MathUtil.a(mouseX, mouseY, this.g.x, this.g.y, this.g.z, this.g.w)) {
-            this.h.a(!this.h.l());
+            this.h.setActive(!this.h.l());
             return true;
         }
         if (this.h != null) {
-            this.b.a(mouseX, mouseY, button);
-            if (this.b.j()) {
+            this.b.onMouseClick(mouseX, mouseY, button);
+            if (this.b.isFocused()) {
                 return true;
             }
         }
         if (this.i != null && this.i != this.h) {
-            a(this.i);
+            selectEntry(this.i);
             return true;
         }
         return false;
@@ -191,13 +191,13 @@ public class AutoBuySection extends Section implements Interface {
 
     @Override
     public boolean a(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-        this.b.b(mouseX, mouseY, button);
-        return this.b.j();
+        this.b.onMouseDrag(mouseX, mouseY, button);
+        return this.b.isFocused();
     }
 
     @Override
     public boolean a(int keyCode, int scanCode, int modifiers) {
-        if (this.b.j()) {
+        if (this.b.isFocused()) {
             this.b.a(keyCode, scanCode, modifiers);
             return true;
         }
@@ -206,7 +206,7 @@ public class AutoBuySection extends Section implements Interface {
 
     @Override
     public boolean a(char chr, int modifiers) {
-        if (this.b.j()) {
+        if (this.b.isFocused()) {
             this.b.a(chr, modifiers);
             return true;
         }

@@ -28,7 +28,7 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
 
     @Override
 
-    protected List<DragInfo> a(String json) throws Exception {
+    protected List<DragInfo> loadConfig(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
         for (int i = 0; i < jSONArray.a(); i++) {
             JSONObject jSONObjectJ = jSONArray.j(i);
@@ -38,15 +38,15 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
                     throw new ClassCastException();
                 }
                 DragInfo dragInfo2 = dragInfo;
-                if (dragInfo2.j().equals(strL)) {
-                    dragInfo2.a(jSONObjectJ.f("x"));
-                    dragInfo2.b(jSONObjectJ.f("y"));
-                    dragInfo2.c(jSONObjectJ.f("width"));
-                    dragInfo2.d(jSONObjectJ.f("height"));
+                if (dragInfo2.getName().equals(strL)) {
+                    dragInfo2.setX(jSONObjectJ.f("x"));
+                    dragInfo2.setY(jSONObjectJ.f("y"));
+                    dragInfo2.setWidth(jSONObjectJ.f("width"));
+                    dragInfo2.setHeight(jSONObjectJ.f("height"));
                     if (jSONObjectJ.m("settings")) {
-                        dragInfo2.e();
+                        dragInfo2.getWidget();
                         JSONObject jSONObjectJ2 = jSONObjectJ.j("settings");
-                        for (Setting<?> setting : dragInfo2.e().b()) {
+                        for (Setting<?> setting : dragInfo2.getWidget().b()) {
                             if (!(setting instanceof Setting)) {
                                 throw new ClassCastException();
                             }
@@ -65,7 +65,7 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
 
     @Override
 
-    protected String a(List<DragInfo> data) throws Exception {
+    protected String saveConfig(List<DragInfo> data) throws Exception {
         JSONArray jSONArray = new JSONArray();
         for (DragInfo dragInfo : data) {
             JSONObject jSONObject = new JSONObject();
@@ -73,14 +73,14 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
                 throw new ClassCastException();
             }
             DragInfo dragInfo2 = dragInfo;
-            jSONObject.c("name", dragInfo2.j());
-            jSONObject.b("x", dragInfo2.c());
-            jSONObject.b("y", dragInfo2.d());
-            jSONObject.b("width", dragInfo2.f());
-            jSONObject.b("height", dragInfo2.g());
-            dragInfo2.e();
+            jSONObject.c("name", dragInfo2.getName());
+            jSONObject.b("x", dragInfo2.getX());
+            jSONObject.b("y", dragInfo2.getY());
+            jSONObject.b("width", dragInfo2.getWidth());
+            jSONObject.b("height", dragInfo2.getHeight());
+            dragInfo2.getWidget();
             JSONObject jSONObject2 = new JSONObject();
-            for (Setting<?> setting : dragInfo2.e().b()) {
+            for (Setting<?> setting : dragInfo2.getWidget().b()) {
                 if (!(setting instanceof Setting)) {
                     throw new ClassCastException();
                 }
@@ -93,49 +93,49 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
         return jSONArray.E(2);
     }
 
-    public b a() {
+    public b getSnapGuideX() {
         return this.e;
     }
 
-    public b f() {
+    public b getSnapGuideY() {
         return this.f;
     }
 
-    public DragInfo g() {
+    public DragInfo getActiveDragInfo() {
         return this.g;
     }
 
     @Override
-    protected String b() {
+    protected String getConfigFileName() {
         return "drag.json";
     }
 
     @EventTarget
-    public void a(ClickEvent event) {
+    public void onClick(ClickEvent event) {
         if (mc.currentScreen instanceof ChatScreen) {
             if (event.b() && event.h() == 0) {
                 for (DragInfo dragInfo : e()) {
-                    if (dragInfo.k() != 2 && MathUtil.a(event.f(), event.g(), dragInfo.a(), dragInfo.b(), dragInfo.f(), dragInfo.g())) {
+                    if (dragInfo.getDragStatus() != 2 && MathUtil.a(event.f(), event.g(), dragInfo.getClampedX(), dragInfo.getClampedY(), dragInfo.getWidth(), dragInfo.getHeight())) {
                         CursorUtil.a(CursorUtil.a.HAND);
                         this.g = dragInfo;
-                        this.g.a(event.f() - ((double) dragInfo.a()));
-                        this.g.b(event.g() - ((double) dragInfo.b()));
+                        this.g.setOffsetX(event.f() - ((double) dragInfo.getClampedX()));
+                        this.g.setOffsetY(event.g() - ((double) dragInfo.getClampedY()));
                         break;
                     }
                 }
             } else if (event.c() && event.h() == 0) {
-                h();
+                resetDrag();
             } else if (event.d() && this.g != null && event.h() == 0) {
-                a((float) (event.f() - this.g.h()), (float) (event.g() - this.g.i()), this.g);
+                updateDragPosition((float) (event.f() - this.g.getOffsetX()), (float) (event.g() - this.g.getOffsetY()), this.g);
             }
             for (DragInfo dragInfo2 : e()) {
                 if (event.h() == 1 && event.b()) {
-                    if (MathUtil.a(event.f(), event.g(), dragInfo2.a(), dragInfo2.b(), dragInfo2.f(), dragInfo2.g())) {
-                        dragInfo2.e().a(!dragInfo2.e().g());
+                    if (MathUtil.a(event.f(), event.g(), dragInfo2.getClampedX(), dragInfo2.getClampedY(), dragInfo2.getWidth(), dragInfo2.getHeight())) {
+                        dragInfo2.getWidget().a(!dragInfo2.getWidget().g());
                     }
-                } else if (event.h() == 0 && event.c() && dragInfo2.e().g()) {
-                    for (Element_2<?> element : dragInfo2.e().c()) {
-                        element.a(event.f(), event.g(), event.h());
+                } else if (event.h() == 0 && event.c() && dragInfo2.getWidget().g()) {
+                    for (Element<?> element : dragInfo2.getWidget().c()) {
+                        element.onMouseClick(event.f(), event.g(), event.h());
                     }
                 }
             }
@@ -143,11 +143,11 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
     }
 
     @EventTarget(a = 4)
-    public void a(DrawEvent event) {
+    public void onDraw(DrawEvent event) {
         if (event.b()) {
             if (mc.currentScreen instanceof ChatScreen) {
                 if (this.g == null && !this.e.a() && !this.f.a()) {
-                    h();
+                    resetDrag();
                 }
                 this.e.a(this.g != null, event.g());
                 this.f.a(this.g != null, event.g());
@@ -158,16 +158,16 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
                 return;
             }
             for (DragInfo dragInfo : e()) {
-                dragInfo.e().a(false);
+                dragInfo.getWidget().a(false);
             }
             if (this.g != null) {
-                h();
+                resetDrag();
             }
         }
     }
 
-    private void a(float x, float y, DragInfo dragInfo) {
-        int status = dragInfo.k();
+    private void updateDragPosition(float x, float y, DragInfo dragInfo) {
+        int status = dragInfo.getDragStatus();
         if (status == 2) {
             this.e.a(null);
             this.f.a(null);
@@ -175,21 +175,21 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
         }
         boolean onlyY = status == 1;
         if (onlyY) {
-            x = dragInfo.a();
+            x = dragInfo.getClampedX();
         }
-        float x2 = MathUtil.b(x, 0.0f, (mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - dragInfo.f());
-        float y2 = MathUtil.b(y, 0.0f, (mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - dragInfo.g());
+        float x2 = MathUtil.b(x, 0.0f, (mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - dragInfo.getWidth());
+        float y2 = MathUtil.b(y, 0.0f, (mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - dragInfo.getHeight());
         if (!onlyY) {
-            x2 = a(a.X, x2, dragInfo);
+            x2 = snapToGuide(a.X, x2, dragInfo);
         } else {
             this.e.a(null);
         }
-        float y3 = a(a.Y, y2, dragInfo);
-        dragInfo.a(MathUtil.b(x2, 0.0f, (mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - dragInfo.f()));
-        dragInfo.b(MathUtil.b(y3, 0.0f, (mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - dragInfo.g()));
+        float y3 = snapToGuide(a.Y, y2, dragInfo);
+        dragInfo.setX(MathUtil.b(x2, 0.0f, (mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - dragInfo.getWidth()));
+        dragInfo.setY(MathUtil.b(y3, 0.0f, (mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont())) - dragInfo.getHeight()));
     }
 
-    private float a(a axis, float pos, DragInfo dragInfo) {
+    private float snapToGuide(a axis, float pos, DragInfo dragInfo) {
         float f;
         float size = axis.b(dragInfo);
         float[] points = {pos, pos + (size / 2.0f), pos + size};
@@ -197,7 +197,7 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
         float bestDistance = 25.0f;
         Float bestGuide = null;
         float snappedPos = pos;
-        Iterator<Float> it = a(axis, dragInfo).iterator();
+        Iterator<Float> it = getGuidePoints(axis, dragInfo).iterator();
         while (it.hasNext()) {
             float guidePos = it.next().floatValue();
             int i = 0;
@@ -225,13 +225,13 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
         return pos;
     }
 
-    private List<Float> a(a axis, DragInfo currentElement) {
+    private List<Float> getGuidePoints(a axis, DragInfo currentElement) {
         List<Float> guides = new ArrayList<>();
         guides.add(Float.valueOf(0.0f));
         guides.add(Float.valueOf(axis.a() / 2.0f));
         guides.add(Float.valueOf(axis.a()));
         for (DragInfo other : e()) {
-            if (other != currentElement && (other.f() != 0.0f || other.g() != 0.0f)) {
+            if (other != currentElement && (other.getWidth() != 0.0f || other.getHeight() != 0.0f)) {
                 float pos = axis.a(other);
                 float size = axis.b(other);
                 guides.add(Float.valueOf(pos));
@@ -251,7 +251,7 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
         }
     }
 
-    private void h() {
+    private void resetDrag() {
         CursorUtil.a(CursorUtil.a.DEFAULT);
         this.g = null;
         this.f.a(null);
@@ -267,11 +267,11 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
         }
 
         float a(DragInfo info) {
-            return this == X ? info.a() : info.b();
+            return this == X ? info.getClampedX() : info.getClampedY();
         }
 
         float b(DragInfo info) {
-            return this == X ? info.f() : info.g();
+            return this == X ? info.getWidth() : info.getHeight();
         }
     }
 

@@ -11,20 +11,20 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import org.joml.Vector4f;
 
-public class ModeElement extends Element_2<ModeSetting> {
-    private final AnimationUtil[] d;
+public class ModeElement extends Element<ModeSetting> {
+    private final AnimationUtil[] modeAnimations;
 
     public ModeElement(ModeSetting setting) {
         super(setting);
-        this.d = new AnimationUtil[setting.k().size()];
-        for (int i = 0; i < this.d.length; i++) {
-            this.d[i] = new AnimationUtil();
+        this.modeAnimations = new AnimationUtil[setting.k().size()];
+        for (int i = 0; i < this.modeAnimations.length; i++) {
+            this.modeAnimations[i] = new AnimationUtil();
         }
     }
 
     @Override
 
-    public boolean a(double mouseX, double mouseY, int button) {
+    public boolean onMouseClick(double mouseX, double mouseY, int button) {
         Vector4f vector4f = this.a;
         var setting = this.b;
         if (button != 0) {
@@ -63,7 +63,7 @@ public class ModeElement extends Element_2<ModeSetting> {
     }
 
     @Override
-    public void a(DrawContext context, double mouseX, double mouseY, float delta, float extend) {
+    public void render(DrawContext context, double mouseX, double mouseY, float delta, float extend) {
         MatrixStack matrices = context.getMatrices();
         Draw2DProcessor draw = Delta.getInstance().getModuleProcessor().i();
         ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
@@ -77,9 +77,9 @@ public class ModeElement extends Element_2<ModeSetting> {
                 x = this.a.x;
                 y += 12.0f;
             }
-            this.d[i].a(this.b.l(mode));
-            this.d[i].a(0.0f, 1.0f, 0.3f, EasingList.i, delta);
-            float value = this.d[i].c();
+            this.modeAnimations[i].a(this.b.l(mode));
+            this.modeAnimations[i].a(0.0f, 1.0f, 0.3f, EasingList.i, delta);
+            float value = this.modeAnimations[i].c();
             draw.a(matrices, x, y, width, 9.0f, 2.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), ((5.0f + (65.0f * value)) / 255.0f) * extend));
             draw.a(matrices, x, y, width, 9.0f, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * extend));
             int color = ColorUtil.lerpColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), theme.a(ThemeInfo.TEXT).toIntColor(), value);

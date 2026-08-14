@@ -78,7 +78,7 @@ public abstract class BaseCommand implements Interface {
             if (mc.player.networkHandler == null) {
                 return builder.buildFuture();
             }
-            Stream streamFilter = mc.player.networkHandler.getPlayerList().stream().map(entry -> {
+            Stream<String> streamFilter = mc.player.networkHandler.getPlayerList().stream().map(entry -> {
                 return entry.getProfile().getName();
             }).filter(name -> {
                 if (name != null) {
@@ -87,7 +87,7 @@ public abstract class BaseCommand implements Interface {
                 return false;
             });
             Objects.requireNonNull(builder);
-            streamFilter.forEach(s -> builder.suggest((String) s));
+            streamFilter.forEach(s -> builder.suggest(s));
             return builder.buildFuture();
         };
     }
@@ -106,9 +106,9 @@ public abstract class BaseCommand implements Interface {
     protected <T> SuggestionProvider<CommandSource> a(java.util.function.Supplier<Collection<T>> itemsSupplier, Function<T, String> mapper) {
         return (context, builder) -> {
             String remaining = builder.getRemainingLowerCase() == null ? "" : builder.getRemainingLowerCase();
-            Iterator it = ((Collection) itemsSupplier.get()).iterator();
+            Iterator<T> it = ((Collection<T>) itemsSupplier.get()).iterator();
             while (it.hasNext()) {
-                String name = mapper.apply((T) it.next());
+                String name = mapper.apply(it.next());
                 if (name != null && name.toLowerCase().startsWith(remaining)) {
                     builder.suggest(name);
                 }

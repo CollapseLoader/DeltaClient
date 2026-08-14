@@ -6,13 +6,13 @@ import aethereal.core.Event;
 import net.minecraft.entity.LivingEntity;
 
 public class JumpEvent extends Event {
-    private final LivingEntity a;
+    private final LivingEntity livingEntity;
 
     public JumpEvent(LivingEntity livingEntity) {
-        this.a = livingEntity;
+        this.livingEntity = livingEntity;
     }
 
     public LivingEntity b() {
-        return this.a;
+        return this.livingEntity;
     }
 }

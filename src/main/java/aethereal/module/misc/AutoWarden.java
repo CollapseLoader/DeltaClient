@@ -259,7 +259,7 @@ public class AutoWarden extends Module {
         if (mc.world.getBlockState(mc.player.getBlockPos()).isIn(BlockTags.CANDLES) || mc.world.getBlockState(mc.player.getBlockPos().down()).isIn(BlockTags.CANDLES)) {
             return true;
         }
-        return !isWardenAggro() && this.state == State.COLLECTING && isInFarmArea() && mc.currentScreen == null && !isMoving() && !Delta.getInstance().getModuleProcessor().v().k().a() && isInsideBlock();
+        return !isWardenAggro() && this.state == State.COLLECTING && isInFarmArea() && mc.currentScreen == null && !isMoving() && !Delta.getInstance().getModuleProcessor().v().getInteractHandler().hasTasks() && isInsideBlock();
     }
 
     private boolean isInsideBlock() {
@@ -273,7 +273,7 @@ public class AutoWarden extends Module {
     }
 
     private boolean isNearChest(double range) {
-        for (BlockPos chest : Delta.getInstance().getModuleProcessor().t().i().q()) {
+        for (BlockPos chest : Delta.getInstance().getModuleProcessor().t().i().scanChests()) {
             if (mc.player.squaredDistanceTo(Vec3d.ofCenter(chest)) <= range * range) {
                 return true;
             }
@@ -338,7 +338,7 @@ public class AutoWarden extends Module {
             return;
         }
         Delta.getInstance().getModuleProcessor().t().aV().b(18);
-        if (Delta.getInstance().getModuleProcessor().v().k().a()) {
+        if (Delta.getInstance().getModuleProcessor().v().getInteractHandler().hasTasks()) {
             if (isMoving()) {
                 cancelPathing();
                 return;
@@ -421,7 +421,7 @@ public class AutoWarden extends Module {
             if (speedSlot < 0) {
                 handleChest();
             } else {
-                Delta.getInstance().getModuleProcessor().v().k().a(speedSlot);
+                Delta.getInstance().getModuleProcessor().v().getInteractHandler().addTask(speedSlot);
             }
         }
     }
@@ -461,7 +461,7 @@ public class AutoWarden extends Module {
             return;
         }
         BlockPos near = findNearestChest();
-        if ((mc.currentScreen instanceof GenericContainerScreen) || (near != null && Delta.getInstance().getModuleProcessor().t().i().a(near) < 0 && mc.player.getEyePos().squaredDistanceTo(Vec3d.ofCenter(near)) <= 16.0d)) {
+        if ((mc.currentScreen instanceof GenericContainerScreen) || (near != null && Delta.getInstance().getModuleProcessor().t().i().getRemainingTime(near) < 0 && mc.player.getEyePos().squaredDistanceTo(Vec3d.ofCenter(near)) <= 16.0d)) {
             handleChest();
             return;
         }
@@ -509,7 +509,7 @@ public class AutoWarden extends Module {
 
     private void debugOutput() {
         baritone.api.IBaritone.PathingBehavior pathing = BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior();
-        ChatUtil.sendMessage((Object) ("&7[AW] состояние &f" + this.state + " &7| анархия &f" + ServerUtil.a.d() + "&7, нужна &f" + currentAnarchy() + " &7(список: &f" + this.anarchyList.size() + "&7) | в зоне фермы &f" + isInFarmArea() + " &7| сундуков у ESP &f" + Delta.getInstance().getModuleProcessor().t().i().q().size() + " &7| варден &f" + isWardenAggro() + " &7| пвп &f" + ServerUtil.e() + " &7| baritone: &f" + (pathing.hasPath() ? "идёт" : "стоит")));
+        ChatUtil.sendMessage((Object) ("&7[AW] состояние &f" + this.state + " &7| анархия &f" + ServerUtil.a.d() + "&7, нужна &f" + currentAnarchy() + " &7(список: &f" + this.anarchyList.size() + "&7) | в зоне фермы &f" + isInFarmArea() + " &7| сундуков у ESP &f" + Delta.getInstance().getModuleProcessor().t().i().scanChests().size() + " &7| варден &f" + isWardenAggro() + " &7| пвп &f" + ServerUtil.e() + " &7| baritone: &f" + (pathing.hasPath() ? "идёт" : "стоит")));
         ChatUtil.sendMessage((Object) ("&7[AW] застрял(r) &c" + isStuck() + " &7| двигаюсь(L) &f" + isMoving() + " &7| в блоке(s) &f" + isInsideBlock() + " &7| свечи &f" + (mc.world.getBlockState(mc.player.getBlockPos()).isIn(BlockTags.CANDLES) || mc.world.getBlockState(mc.player.getBlockPos().down()).isIn(BlockTags.CANDLES))));
         BlockPos reach = findChestInHand(true);
         BlockPos far = findNearestReceiver();
@@ -587,7 +587,7 @@ public class AutoWarden extends Module {
         if (pick == null) {
             pick = findBestChest();
         }
-        boolean stay = (pick == null || this.targetChest == null || pick.equals(this.targetChest) || Delta.getInstance().getModuleProcessor().t().i().a(this.targetChest) <= 25000) ? false : true;
+        boolean stay = (pick == null || this.targetChest == null || pick.equals(this.targetChest) || Delta.getInstance().getModuleProcessor().t().i().getRemainingTime(this.targetChest) <= 25000) ? false : true;
         if (!stay) {
             this.counter.b();
         }
@@ -599,7 +599,7 @@ public class AutoWarden extends Module {
             this.state = State.ESCAPE;
             this.died = true;
         }
-        long remaining = Delta.getInstance().getModuleProcessor().t().i().a(target);
+        long remaining = Delta.getInstance().getModuleProcessor().t().i().getRemainingTime(target);
         if (target != null && remaining > 1000 && isPlayerNear(target, 7.0d)) {
             BlockPos spot = findStandSpot(target);
             if (spot != null) {
@@ -645,8 +645,8 @@ public class AutoWarden extends Module {
         WardenESP esp = Delta.getInstance().getModuleProcessor().t().i();
         BlockPos best = null;
         long bestMs = 45000;
-        for (BlockPos chest : esp.q()) {
-            long remaining = esp.a(chest);
+        for (BlockPos chest : esp.scanChests()) {
+            long remaining = esp.getRemainingTime(chest);
             if (remaining >= 0 && remaining < bestMs && hasStandSpot(chest) && !isNearWarden(chest) && !isArmoredPlayerNear(chest)) {
                 bestMs = remaining;
                 best = chest;
@@ -660,10 +660,10 @@ public class AutoWarden extends Module {
         BlockPos best = null;
         int bestTier = 99;
         double bestSq = 1.7976922776554316E308d;
-        for (BlockPos chest : esp.q()) {
+        for (BlockPos chest : esp.scanChests()) {
             if (hasStandSpot(chest) && !isArmoredPlayerNear(chest)) {
                 double distSq = mc.player.getEyePos().squaredDistanceTo(Vec3d.ofCenter(chest));
-                long remaining = esp.a(chest);
+                long remaining = esp.getRemainingTime(chest);
                 if (!isNearWarden(chest) || (remaining < 0 && distSq <= 16.0d)) {
                     if (remaining >= 0 || this.chestOpenCounts.getOrDefault(chest, 0).intValue() < 3) {
                         int tier = -1;
@@ -803,7 +803,7 @@ public class AutoWarden extends Module {
     private void drinkInvisibilityPotion() {
         int slot = findSlot(this::isInvisibilityPotion);
         if (slot >= 0 && mc.player.age > 20) {
-            Delta.getInstance().getModuleProcessor().v().k().a(slot);
+            Delta.getInstance().getModuleProcessor().v().getInteractHandler().addTask(slot);
         }
     }
 
@@ -845,7 +845,7 @@ public class AutoWarden extends Module {
         Rotation target = Rotation.a(eye, aim);
         float t = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
         float sw = (float) (((Math.sin(t * 0.31f) * 0.5d) + (Math.sin((t * 0.73f) + 1.1f) * 0.3000000317022817d) + (Math.sin((t * 1.7f) + 2.6f) * 0.1999999860971588d)) * 8.0d);
-        Delta.getInstance().getModuleProcessor().k().a(new Rotation(target.c() + sw, MathUtil.b(target.d() + (sw / 4.0f), -90.0f, 90.0f)), 120.0f, 1, 1);
+        Delta.getInstance().getModuleProcessor().k().startAiming(new Rotation(target.c() + sw, MathUtil.b(target.d() + (sw / 4.0f), -90.0f, 90.0f)), 120.0f, 1, 1);
         if (mc.player.age % rate != 0 || Rotation.b().a(target) > 5.0d) {
             return false;
         }
@@ -878,7 +878,7 @@ public class AutoWarden extends Module {
                     cancelPathing();
                 }
                 if (mc.player.age % 10 == 4) {
-                    Delta.getInstance().getModuleProcessor().v().a().a(mc.player.getInventory().selectedSlot, i2, 1);
+                    Delta.getInstance().getModuleProcessor().v().getInventoryHandler().moveItem(mc.player.getInventory().selectedSlot, i2, 1);
                     return;
                 }
                 return;

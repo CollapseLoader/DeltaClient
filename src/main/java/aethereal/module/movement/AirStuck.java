@@ -15,7 +15,7 @@ import net.minecraft.util.math.Vec3d;
 @ModuleRegister(name = "Air Stuck", description = "Позволяет зависнуть в воздухе на месте", category = Category.Movement)
 public class AirStuck extends Module {
     private final ModeSetting b = new ModeSetting("Режим зависания", "Обычный", "Обычный", "Удаляющий игрока");
-    private Vec3d c;
+    private Vec3d stuckPos;
 
     public AirStuck() {
         a(this.b);
@@ -25,7 +25,7 @@ public class AirStuck extends Module {
     public void b() {
         super.b();
         if (mc.player != null) {
-            this.c = mc.player.getPos();
+            this.stuckPos = mc.player.getPos();
             if (this.b.l("Удаляющий игрока")) {
                 mc.player.setRemoved(Entity.RemovalReason.DISCARDED);
             }
@@ -38,16 +38,16 @@ public class AirStuck extends Module {
         if (mc.player != null && this.b.l("Удаляющий игрока")) {
             ((platform.inject.accessors.EntityInvoker) mc.player).unset();
             mc.world.addEntity(mc.player);
-            mc.player.refreshPositionAfterTeleport(this.c);
+            mc.player.refreshPositionAfterTeleport(this.stuckPos);
         }
-        this.c = null;
+        this.stuckPos = null;
     }
 
     @EventTarget
     public void a(TickEvent event) {
-        if (this.c != null) {
+        if (this.stuckPos != null) {
             mc.player.setVelocity(0.0d, 0.0d, 0.0d);
-            mc.player.setPosition(this.c.x, this.c.y, this.c.z);
+            mc.player.setPosition(this.stuckPos.x, this.stuckPos.y, this.stuckPos.z);
         }
     }
 

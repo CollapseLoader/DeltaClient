@@ -12,14 +12,14 @@ import org.spongepowered.asm.mixin.injection.At;
 public class WorldMixin {
     @ModifyReturnValue(method = {"getRainGradient"}, at = {@At("RETURN")})
     private float onGetRainGradient(float original) {
-        AmbienceEvent.d event = new AmbienceEvent.d(AmbienceEvent.d.a.RAIN_GRADIENT, original);
+        AmbienceEvent.d event = new AmbienceEvent.d(AmbienceEvent.d.type.RAIN_GRADIENT, original);
         EventManager.a(event);
         return event.c();
     }
 
     @ModifyReturnValue(method = {"getThunderGradient"}, at = {@At("RETURN")})
     private float onGetThunderGradient(float original) {
-        AmbienceEvent.d event = new AmbienceEvent.d(AmbienceEvent.d.a.THUNDER_GRADIENT, original);
+        AmbienceEvent.d event = new AmbienceEvent.d(AmbienceEvent.d.type.THUNDER_GRADIENT, original);
         EventManager.a(event);
         return event.c();
     }

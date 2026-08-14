@@ -31,8 +31,8 @@ public class NotificationWidget extends Widget implements Interface {
         super(new DragInfo("Уведомления", 0.0f, 0.0f, 0.0f, 0.0f));
         this.f = new BooleanSetting("Оповещать о поднятии донат-предметов", true);
         this.g = new BooleanSetting("Обновления и уведомления друзей", true);
-        j().a(this);
-        j().a(1);
+        j().setWidget(this);
+        j().setDragStatus(1);
         a(this.g, this.f);
     }
 
@@ -46,7 +46,7 @@ public class NotificationWidget extends Widget implements Interface {
     public void a(DrawEvent event) {
         float fA;
         d().a(0.0f, 1.0f, 0.3f, EasingList.g, event.g());
-        float contentY = j().b();
+        float contentY = j().getClampedY();
         for (Notification notification : Delta.getInstance().getModuleProcessor().m().b()) {
             float animation = notification.a().c() * a();
             if (animation > 0.0f) {
@@ -65,9 +65,9 @@ public class NotificationWidget extends Widget implements Interface {
                 } else {
                     a(event, x, contentY, (String) notification.d(), message, width, animation, color);
                 }
-                j().a(x);
-                j().c(width);
-                j().d(this.d);
+                j().setX(x);
+                j().setWidth(width);
+                j().setHeight(this.d);
                 contentY += (this.d + 3.5f) * animation;
             }
         }

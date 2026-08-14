@@ -4,17 +4,17 @@ import aethereal.core.Event;
 
 
 public class PortalEvent extends Event {
-    private boolean a;
+    private boolean inPortal;
 
     public PortalEvent(boolean inPortal) {
-        this.a = inPortal;
+        this.inPortal = inPortal;
     }
 
     public void b(boolean inPortal) {
-        this.a = inPortal;
+        this.inPortal = inPortal;
     }
 
     public boolean b() {
-        return this.a;
+        return this.inPortal;
     }
 }
