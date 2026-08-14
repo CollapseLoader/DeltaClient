@@ -47,11 +47,8 @@ public class AHCommand extends BaseCommand {
 
     @EventTarget
     public void a(PacketEvent event) {
-        if (this.searchRequest != null && this.pendingCommand == null && event.isReceive()) {
-            InventoryS2CPacket class_2649VarD = (InventoryS2CPacket) event.getPacket();
-            if (class_2649VarD instanceof InventoryS2CPacket) {
-                InventoryS2CPacket packet = class_2649VarD;
-                if (packet.getSyncId() != 0) {
+        if (this.searchRequest != null && this.pendingCommand == null && event.isReceive() && event.getPacket() instanceof InventoryS2CPacket packet) {
+            if (packet.getSyncId() != 0) {
                     List<ItemStack> contents = packet.getContents();
                     List<Integer> prices = contents.subList(0, Math.max(0, contents.size() - 36)).stream().filter(stack -> {
                         return this.searchRequest.a().a(stack) && stack.getTooltip(Item.TooltipContext.DEFAULT, mc.player, TooltipType.BASIC).stream().noneMatch(line -> {
@@ -72,7 +69,6 @@ public class AHCommand extends BaseCommand {
                         a(this.searchRequest, cheapest);
                     }
                     this.searchRequest = null;
-                }
             }
         }
     }
@@ -105,8 +101,8 @@ public class AHCommand extends BaseCommand {
         if (cached != null) {
             a(request, cached.b());
         } else {
-            mc.player.networkHandler.sendChatCommand("ah search " + a(stack));
             this.searchRequest = request;
+            mc.player.networkHandler.sendChatCommand("ah search " + a(stack));
         }
     }
 
@@ -119,11 +115,14 @@ public class AHCommand extends BaseCommand {
 
     private String a(ItemStack stack) {
         this.translationStorage = this.translationStorage == null ? TranslationStorage.load(mc.getResourceManager(), List.of("ru_ru"), false) : this.translationStorage;
-        String name = Delta.getInstance().getModuleProcessor().q().e().stream().filter(item -> {
-            return item.a(stack);
-        }).findFirst().map((v0) -> {
-            return v0.getDisplayName();
-        }).orElse(this.translationStorage.get(stack.getItem().getTranslationKey()));
+        String name = stack.getName().getString();
+        if (name.isBlank()) {
+            name = this.translationStorage.get(stack.getItem().getTranslationKey());
+        }
+        name = name.replaceAll("(?i)\\bxxx\\b", "").replaceAll("[^\\p{L}\\p{N}\\s]", " ");
+        if (name != null) {
+            return name.trim().replaceAll("\\s+", " ");
+        }
         return name.replaceAll("\\[\\d+x\\d+]", "").replace("⚡", "").replace("xxx", "").replace("[", "").replace("]", "").replace("★", "").trim().replaceAll("\\s+", StringUtils.a);
     }
 
