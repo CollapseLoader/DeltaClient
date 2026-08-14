@@ -64,7 +64,7 @@ public class AuraHandler extends BaseHandler implements Interface {
     @EventTarget
     public void onGlobalEvent(GlobalEvent event) {
         if (mc.player != null) {
-            Delta.getInstance().getModuleProcessor().t().B().b++;
+            Delta.getInstance().getModuleProcessor().t().B().attackCooldown++;
         }
     }
 

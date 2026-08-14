@@ -27,7 +27,7 @@ public class ElytraTarget extends Module {
                 if (Delta.getInstance().getModuleProcessor().v().getInventoryHandler().a().isEmpty()) {
                     Delta.getInstance().getModuleProcessor().v().getInventoryHandler().moveItemByType(Items.FIREWORK_ROCKET, 45, 1);
                 }
-            } else if ((this.b.a(150L) && mc.player.getVelocity().length() < 1.5d) || aura.b == 1) {
+            } else if ((this.b.a(150L) && mc.player.getVelocity().length() < 1.5d) || aura.attackCooldown == 1) {
                 mc.interactionManager.interactItem(mc.player, Hand.OFF_HAND);
                 this.b.b();
             }
@@ -46,7 +46,7 @@ public class ElytraTarget extends Module {
             Vec3d aim = new Vec3d(enemy.x + (nx * 4.0d), enemy.y + lift, enemy.z + (nz * 4.0d));
             Rotation aimRotation = Rotation.a(eye, aim);
             float Yaw = AuraUtil.a(mc.player.getYaw(), aimRotation.c(), 1.0f);
-            float Pitch = AuraUtil.a(mc.player.getPitch(), aura.b <= 3 ? 0.0f : aimRotation.d(), aura.b <= 3 ? 1.0f : Math.clamp(aura.b / 10.0f, 0.0f, 1.0f));
+            float Pitch = AuraUtil.a(mc.player.getPitch(), aura.attackCooldown <= 3 ? 0.0f : aimRotation.d(), aura.attackCooldown <= 3 ? 1.0f : Math.clamp(aura.attackCooldown / 10.0f, 0.0f, 1.0f));
             Delta.getInstance().getModuleProcessor().k().startAiming(new Rotation(Yaw, Pitch), 180.0f, 1, 1);
         }
     }

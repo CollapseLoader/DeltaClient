@@ -1,11 +1,9 @@
 package aethereal.handler;
 
-
 import aethereal.config.BaseProcessor;
 import aethereal.core.Delta;
 import aethereal.core.EventTarget;
 import aethereal.core.GlobalEvent;
-import aethereal.core.Interface;
 import aethereal.event.InputEvent;
 import aethereal.module.combat.AuraUtil;
 import aethereal.util.Look;
@@ -18,8 +16,8 @@ import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
 
-public class RotationProcessor extends BaseProcessor implements Interface {
-    private static a state;
+public class RotationProcessor extends BaseProcessor {
+    private static rotationState state;
     private static float resetSpeed;
     private static int priority;
     private static int lookMode;
@@ -28,12 +26,12 @@ public class RotationProcessor extends BaseProcessor implements Interface {
     private static int minResetTicks;
 
     static {
-        state = a.IDLE;
+        state = rotationState.IDLE;
     }
 
     private final Look currentLook = new Look();
 
-    public static a getState() {
+    public static rotationState getState() {
         return state;
     }
 
@@ -45,13 +43,21 @@ public class RotationProcessor extends BaseProcessor implements Interface {
         minResetTicks = Math.max(ticks, 0);
     }
 
+    public void reset() {
+        this.currentLook.a(false);
+        state = rotationState.IDLE;
+        priority = 0;
+        currentTick = 0;
+    }
+
     private static boolean isUsingUseableItem() {
         List<UseableHandler.UseableTask> tasks = Delta.getInstance().getModuleProcessor().v().getUseableHandler().a();
         if (tasks.isEmpty() || tasks.getFirst().d() >= 1) {
             return false;
         }
         Item item = tasks.getFirst().a().getItem();
-        return item == Items.WIND_CHARGE || item == Items.ENDER_PEARL || item == Items.SNOWBALL || item == Items.SPLASH_POTION || item == Items.DRIED_KELP;
+        return item == Items.WIND_CHARGE || item == Items.ENDER_PEARL || item == Items.SNOWBALL
+                || item == Items.SPLASH_POTION || item == Items.DRIED_KELP;
     }
 
     private static Rotation getDefaultWobbleRotation() {
@@ -60,9 +66,14 @@ public class RotationProcessor extends BaseProcessor implements Interface {
 
     public static Rotation addSinusoidalWobble(Rotation rotation) {
         float t = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
-        float sw = ((float) ((((Math.sin(t * 0.8f) * 11.0d) + (Math.sin((((double) t) * 0.04000001502137623d) + 17.200010267039897d) * 1.5d)) + (Math.sin((((double) t) * 0.10999997113093289d) + 5.8000000238651515d) * 3.0d)) + (Math.sin((((double) t) * 0.07000004685868849d) + 12.300000009313816d)))) / 6.0f;
-        float sh = ((float) (Math.sin(((double) t) * 0.09999998815548458d) + (Math.sin((((double) t) * 0.029999993539464892d) + 54.10000012300467d) * 0.5d))) / 4.0f;
-        return new Rotation(rotation.c() + MathHelper.clamp(sw, -0.15f, 0.15f), rotation.d() + MathHelper.clamp(sh, -0.15f, 0.15f));
+        float sw = ((float) ((((Math.sin(t * 0.8f) * 11.0d)
+                + (Math.sin((((double) t) * 0.04000001502137623d) + 17.200010267039897d) * 1.5d))
+                + (Math.sin((((double) t) * 0.10999997113093289d) + 5.8000000238651515d) * 3.0d))
+                + (Math.sin((((double) t) * 0.07000004685868849d) + 12.300000009313816d)))) / 6.0f;
+        float sh = ((float) (Math.sin(((double) t) * 0.09999998815548458d)
+                + (Math.sin((((double) t) * 0.029999993539464892d) + 54.10000012300467d) * 0.5d))) / 4.0f;
+        return new Rotation(rotation.c() + MathHelper.clamp(sw, -0.15f, 0.15f),
+                rotation.d() + MathHelper.clamp(sh, -0.15f, 0.15f));
     }
 
     private static int getMaxTicksForMode(int mode) {
@@ -82,7 +93,8 @@ public class RotationProcessor extends BaseProcessor implements Interface {
         float baseYaw = Look.b();
         float basePitch = Look.c();
         float t = mc.player.age + mc.getRenderTickCounter().getTickDelta(false);
-        float sw = ((float) ((((Math.sin(t * 0.31f) * 0.5d) + (Math.sin((t * 0.73f) + 1.1f) * 0.3000000002422922d)) + (Math.sin((t * 1.7f) + 2.6f) * 0.19999998556632664d)) * 12.0d)) / 4.0f;
+        float sw = ((float) ((((Math.sin(t * 0.31f) * 0.5d) + (Math.sin((t * 0.73f) + 1.1f) * 0.3000000002422922d))
+                + (Math.sin((t * 1.7f) + 2.6f) * 0.19999998556632664d)) * 12.0d)) / 4.0f;
         switch (mode) {
             case 1:
                 float baseYaw2 = AuraUtil.a(mc.player.getYaw(), Look.b(), MathUtil.a(0.1f, 0.45f));
@@ -93,7 +105,8 @@ public class RotationProcessor extends BaseProcessor implements Interface {
                     idleTicks = 25;
                 }
                 if (idleTicks <= 20) {
-                    return new Rotation(mc.player.getYaw() + sw, MathHelper.clamp(mc.player.getPitch() + sw, -90.0f, 90.0f));
+                    return new Rotation(mc.player.getYaw() + sw,
+                            MathHelper.clamp(mc.player.getPitch() + sw, -90.0f, 90.0f));
                 }
                 float baseYaw3 = AuraUtil.a(mc.player.getYaw(), Look.b(), MathUtil.a(0.2f, 0.35f));
                 float basePitch3 = AuraUtil.a(mc.player.getPitch(), Look.c(), MathUtil.a(0.2f, 0.35f));
@@ -104,9 +117,11 @@ public class RotationProcessor extends BaseProcessor implements Interface {
     }
 
     public static float snapToGCD(float lastYaw, float current) {
-        double sens = (mc.options.getMouseSensitivity().getValue().doubleValue() * 0.6000000498956214d) + 0.19999998556632664d;
+        double sens = (mc.options.getMouseSensitivity().getValue().doubleValue() * 0.6000000498956214d)
+                + 0.19999998556632664d;
         double gcd = sens * sens * sens * 8.0d;
-        return (float) (((double) lastYaw) + (Math.ceil((((double) (current - lastYaw)) / gcd) / 0.15000006556510925d) * gcd * 0.15000006556510925d));
+        return (float) (((double) lastYaw) + (Math.ceil((((double) (current - lastYaw)) / gcd) / 0.15000006556510925d)
+                * gcd * 0.15000006556510925d));
     }
 
     @Override
@@ -139,18 +154,18 @@ public class RotationProcessor extends BaseProcessor implements Interface {
                 applyRotationStep(calculateModeRotation(lookMode, currentTick), resetSpeed, false);
             }
         }
-        if (state == a.AIM && currentTick > maxTicks) {
-            state = a.RESET;
+        if (state == rotationState.AIM && currentTick > maxTicks) {
+            state = rotationState.RESET;
         }
-        if (state == a.RESET && applyRotationStep(Rotation.a(), resetSpeed, true)) {
+        if (state == rotationState.RESET && applyRotationStep(Rotation.a(), resetSpeed, true)) {
             this.currentLook.a(false);
-            state = a.IDLE;
+            state = rotationState.IDLE;
             priority = 0;
         }
     }
 
     private boolean isRotating() {
-        return currentTick >= 2 && currentTick <= maxTicks && state != a.IDLE;
+        return currentTick >= 2 && currentTick <= maxTicks && state != rotationState.IDLE;
     }
 
     public void startAiming(Rotation rotation, float turnSpeed, int lookMode, int priority) {
@@ -158,20 +173,20 @@ public class RotationProcessor extends BaseProcessor implements Interface {
     }
 
     public void startAimingWithSpeeds(Rotation rotation, float aimSpeed, float resetSpeed, int lookMode, int priority) {
-        if (priority > priority) {
+        if (priority > RotationProcessor.priority) {
             return;
         }
-        if (state != a.IDLE && isUsingUseableItem()) {
+        if (state != rotationState.IDLE && isUsingUseableItem()) {
             rotation = getDefaultWobbleRotation();
         }
-        if (state == a.IDLE) {
+        if (state == rotationState.IDLE) {
             this.currentLook.a(true);
         }
-        resetSpeed = resetSpeed;
-        lookMode = lookMode;
+        RotationProcessor.resetSpeed = resetSpeed;
+        RotationProcessor.lookMode = lookMode;
         maxTicks = getMaxTicksForMode(lookMode);
-        priority = priority;
-        state = a.AIM;
+        RotationProcessor.priority = priority;
+        state = rotationState.AIM;
         currentTick = 0;
         applyRotationStep(rotation, aimSpeed, true);
     }
@@ -201,7 +216,7 @@ public class RotationProcessor extends BaseProcessor implements Interface {
         return finalRotation.a(rotation) < ((double) turnSpeed);
     }
 
-    public enum a {
+    public enum rotationState {
         AIM,
         RESET,
         IDLE
