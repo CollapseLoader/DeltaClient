@@ -115,9 +115,8 @@ public class CommandProcessor extends BaseProcessor {
             try {
                 ParseResults<CommandSource> results = this.c.parse(command, this.j);
                 for (ParsedCommandNode<CommandSource> parsed : results.getContext().getNodes()) {
-                    LiteralCommandNode<CommandSource> node = (LiteralCommandNode<CommandSource>) parsed.getNode();
-                    if (node instanceof LiteralCommandNode) {
-                        LiteralCommandNode<CommandSource> literal = node;
+                    if (parsed.getNode() instanceof LiteralCommandNode) {
+                        LiteralCommandNode<CommandSource> literal = (LiteralCommandNode<CommandSource>) parsed.getNode();
                         int typedLength = parsed.getRange().getLength();
                         if (typedLength != literal.getLiteral().length()) {
                             return;
@@ -128,6 +127,9 @@ public class CommandProcessor extends BaseProcessor {
                 ci.cancel();
             } catch (CommandSyntaxException e) {
                 System.out.println("Failure command: " + e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Command error: " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }

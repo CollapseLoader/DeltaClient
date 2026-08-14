@@ -992,7 +992,11 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
 
     public void b(String configName) {
         try {
-            Files.writeString(new File(d(), configName + ".json").toPath(), a((List<Module>) this.d));
+            File dir = d();
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            Files.writeString(new File(dir, configName + ".json").toPath(), a((List<Module>) this.d));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

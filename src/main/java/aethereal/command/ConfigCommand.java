@@ -11,9 +11,6 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.util.Util;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 @Command(name = "cfg")
 public class ConfigCommand extends BaseCommand {
@@ -28,37 +25,35 @@ public class ConfigCommand extends BaseCommand {
         builder.then(a("save").executes(context -> {
             ChatUtil.sendMessage("Использование: .cfg save <имя>");
             return 1;
-        }).then(b("имя").executes(context2 -> {
-            String configName = a(context2, "имя");
+        }).then(b("имя").executes(context -> {
+            String configName = a(context, "имя");
             processor.b(configName);
             ChatUtil.sendMessage("Конфиг " + configName + " был успешно сохранен.");
             return 1;
-        }))).then(a("load").executes(context3 -> {
+        }))).then(a("load").executes(context -> {
             ChatUtil.sendMessage("Использование: .cfg load <имя>");
             return 1;
-        }).then(b("имя").suggests(c()).executes(context4 -> {
-            String configName = a(context4, "имя");
+        }).then(b("имя").suggests(c()).executes(context -> {
+            String configName = a(context, "имя");
             if (processor.c(configName)) {
                 ChatUtil.sendMessage("Конфиг " + configName + " был успешно загружен.");
                 return 1;
             }
             ChatUtil.sendMessage("Конфиг " + configName + " не найден.");
             return 1;
-        }))).then(a("list").executes(context5 -> {
+        }))).then(a("list").executes(context -> {
             File configDir = processor.d();
-            File[] files = configDir.listFiles((dir, name) -> {
-                return name.endsWith(".json");
-            });
-            if (files == null || files.length == 0) {
+            File[] configFiles = configDir.listFiles((dir, name) -> name.endsWith(".json"));
+            if (configFiles == null || configFiles.length == 0) {
                 ChatUtil.sendMessage("Список конфигов пуст.");
                 return 1;
             }
-            ChatUtil.sendMessage("Список конфигов (" + files.length + "):");
-            for (File file : files) {
-                ChatUtil.sendMessage("  - " + file.getName());
+            ChatUtil.sendMessage("Список конфигов (" + configFiles.length + "):");
+            for (File configFile : configFiles) {
+                ChatUtil.sendMessage("  - " + configFile.getName());
             }
             return 1;
-        })).then(a("reset").executes(context6 -> {
+        })).then(a("reset").executes(context -> {
             for (Module module : processor.e()) {
                 module.a(false);
                 module.a(-1);
@@ -70,21 +65,26 @@ public class ConfigCommand extends BaseCommand {
             }
             ChatUtil.sendMessage("Все модули были сброшены в состояние по умолчанию.");
             return 1;
-        })).then(a("remove").executes(context7 -> {
+        })).then(a("remove").executes(context -> {
             ChatUtil.sendMessage("Использование: .cfg remove <имя>");
             return 1;
-        }).then(b("имя").suggests(c()).executes(context8 -> {
-            String configName = a(context8, "имя");
+        }).then(b("имя").suggests(c()).executes(context -> {
+            String configName = a(context, "имя");
             if (processor.d(configName)) {
                 ChatUtil.sendMessage("Конфиг " + configName + " был успешно удален.");
                 return 1;
             }
             ChatUtil.sendMessage("Конфиг " + configName + " не найден.");
             return 1;
-        }))).then(a("dir").executes(context9 -> {
-            Util.getOperatingSystem().open(processor.d());
+        }))).then(a("dir").executes(context -> {
+            File configDir = processor.d();
+            if (!configDir.exists()) {
+                configDir.mkdirs();
+            }
+            ChatUtil.sendMessage("Папка конфигов: " + configDir.getAbsolutePath());
+            Util.getOperatingSystem().open(configDir);
             return 1;
-        })).executes(context10 -> {
+        })).executes(context -> {
             ChatUtil.sendMessage("Использование: .cfg <load|save|list|reset|remove|dir>");
             return 1;
         });
@@ -92,19 +92,14 @@ public class ConfigCommand extends BaseCommand {
 
     private SuggestionProvider<CommandSource> c() {
         return (context, builder) -> {
-            File[] files;
             ModuleProcessor processor = Delta.h().d().t();
             File configDir = processor.d();
-            if (configDir.exists() && (files = configDir.listFiles((dir, name) -> {
-                return name.endsWith(".json");
-            })) != null) {
-                Stream map = Arrays.stream(files).map((v0) -> {
-                    return v0.getName();
-                }).map(name2 -> {
-                    return name2.substring(0, name2.length() - 5);
-                });
-                Objects.requireNonNull(builder);
-                map.forEach(s -> builder.suggest((String) s));
+            File[] configFiles = configDir.exists() ? configDir.listFiles((dir, name) -> name.endsWith(".json")) : null;
+            if (configFiles != null) {
+                for (File configFile : configFiles) {
+                    String name = configFile.getName();
+                    builder.suggest(name.substring(0, name.length() - 5));
+                }
             }
             return builder.buildFuture();
         };

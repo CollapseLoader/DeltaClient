@@ -35,7 +35,7 @@ public class GUIPanel {
     public boolean a(final double mouseX, final double mouseY, final int button) {
         for (Module module : this.e) {
             if (module.n()) {
-                module.a(-97);
+                module.a(-100 + button);
                 module.b(false);
                 return true;
             }

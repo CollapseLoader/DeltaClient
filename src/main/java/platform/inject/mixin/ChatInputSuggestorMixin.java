@@ -3,9 +3,6 @@ package platform.inject.mixin;
 
 import aethereal.command.CommandProcessor;
 import aethereal.core.Delta;
-import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.suggestion.Suggestions;
@@ -18,7 +15,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -33,6 +29,9 @@ public abstract class ChatInputSuggestorMixin {
     boolean completingSuggestions;
 
     @Shadow
+    private ParseResults<CommandSource> parse;
+
+    @Shadow
     private CompletableFuture<Suggestions> pendingSuggestions;
 
     @Shadow
@@ -41,33 +40,28 @@ public abstract class ChatInputSuggestorMixin {
     @Shadow
     protected abstract void showCommandSuggestions();
 
-    @WrapMethod(method = {"refresh"})
-    private void refresh(Operation<Void> original) {
+    @Inject(method = {"refresh"}, at = {@At("HEAD")}, cancellable = true)
+    private void onRefresh(CallbackInfo ci) {
         try {
-            original.call();
-        } catch (Throwable th) {
-        }
-    }
-
-    @Inject(method = {"refresh"}, at = {@At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false)}, cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
-    public void onRefresh(CallbackInfo callbackInfo, @Local StringReader reader) {
-        CommandProcessor commandProcessor = Delta.h().d().u();
-        String prefix = commandProcessor.i();
-        if (reader.canRead(prefix.length()) && reader.getString().startsWith(prefix, reader.getCursor())) {
             String text = this.textField.getText();
-            int cursor = this.textField.getCursor();
-            StringReader reading = new StringReader(text);
-            reading.setCursor(prefix.length());
-            ParseResults<CommandSource> parse = commandProcessor.a().parse(reading, commandProcessor.h());
-            if (cursor >= prefix.length() && (this.window == null || !this.completingSuggestions)) {
-                this.pendingSuggestions = commandProcessor.a().getCompletionSuggestions(parse, cursor);
-                this.pendingSuggestions.thenRun(() -> {
-                    if (this.pendingSuggestions.isDone()) {
-                        showCommandSuggestions();
-                    }
-                });
+            CommandProcessor commandProcessor = Delta.h().d().u();
+            String prefix = commandProcessor.i();
+            if (text.startsWith(prefix)) {
+                int cursor = this.textField.getCursor();
+                StringReader reading = new StringReader(text);
+                reading.setCursor(prefix.length());
+                this.parse = commandProcessor.a().parse(reading, commandProcessor.h());
+                if (cursor >= prefix.length() && (this.window == null || !this.completingSuggestions)) {
+                    this.pendingSuggestions = commandProcessor.a().getCompletionSuggestions(this.parse, cursor);
+                    this.pendingSuggestions.thenRun(() -> {
+                        if (this.pendingSuggestions.isDone()) {
+                            showCommandSuggestions();
+                        }
+                    });
+                }
+                ci.cancel();
             }
-            callbackInfo.cancel();
+        } catch (Throwable th) {
         }
     }
 }

@@ -138,17 +138,17 @@ public enum KeyUtil {
     WORLD_1(InterfaceC0020Opcode.bu, "World 1"),
     WORLD_2(InterfaceC0020Opcode.br, "World 2");
 
-    private final int bz;
-    private final String bA;
+    private final int keyCode;
+    private final String keyLabel;
 
     KeyUtil(int code, String label) {
-        this.bz = code;
-        this.bA = label;
+        this.keyCode = code;
+        this.keyLabel = label;
     }
 
     public static KeyUtil a(int code) {
         for (KeyUtil key : values()) {
-            if (key.bz == code) {
+            if (key.keyCode == code) {
                 return key;
             }
         }
@@ -159,24 +159,61 @@ public enum KeyUtil {
         if (name == null) {
             return UNKNOWN;
         }
+        String n = name.toUpperCase(Locale.ROOT);
+        switch (n) {
+            case "ЛКМ":
+            case "LEFT":
+            case "LEFT_BUTTON":
+                return LMB;
+            case "ПКМ":
+            case "RIGHT":
+            case "RIGHT_BUTTON":
+                return RMB;
+            case "СКМ":
+            case "MIDDLE":
+            case "WHEEL":
+            case "MIDDLE_BUTTON":
+                return MMB;
+            case "MB4":
+            case "SIDE1":
+            case "BACK":
+            case "MOUSE4":
+                return M1;
+            case "MB5":
+            case "SIDE2":
+            case "FORWARD":
+            case "MOUSE5":
+                return M2;
+            case "MB6":
+            case "MOUSE6":
+                return M3;
+            case "MB7":
+            case "MOUSE7":
+                return M4;
+            case "MB8":
+            case "MOUSE8":
+                return M5;
+            default:
+                break;
+        }
         try {
-            return valueOf(name.toUpperCase(Locale.ROOT));
+            return valueOf(n);
         } catch (IllegalArgumentException e) {
             return UNKNOWN;
         }
     }
 
     public static String b(int code) {
-        return a(code).bA;
+        return a(code).keyLabel;
     }
 
     @Generated
     public int a() {
-        return this.bz;
+        return this.keyCode;
     }
 
     @Generated
     public String b() {
-        return this.bA;
+        return this.keyLabel;
     }
 }

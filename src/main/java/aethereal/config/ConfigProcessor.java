@@ -11,7 +11,7 @@ import java.util.List;
 
 public abstract class ConfigProcessor<T> extends BaseProcessor {
     protected final File b = new File(aM_.runDirectory, "configs");
-    protected final File c = new File(aM_.runDirectory, "configs\\general");
+    protected final File c = new File(new File(aM_.runDirectory, "configs"), "general");
     protected final List<T> d = new ArrayList();
 
     protected abstract String b();

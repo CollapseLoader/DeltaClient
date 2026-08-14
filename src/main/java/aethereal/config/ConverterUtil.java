@@ -7,6 +7,13 @@ public final class ConverterUtil {
     }
 
     public static Object a(Setting<?> setting) {
+        if (setting instanceof MultiModeSetting multiModeSetting) {
+            org.json.JSONObject obj = new org.json.JSONObject();
+            for (BooleanSetting child : multiModeSetting.c()) {
+                obj.put(child.i(), child.c());
+            }
+            return obj;
+        }
         return setting.c();
     }
 
