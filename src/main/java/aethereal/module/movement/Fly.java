@@ -7,7 +7,7 @@ import aethereal.core.ModuleRegister;
 import aethereal.event.TickEvent;
 import aethereal.setting.SliderSetting;
 
-@ModuleRegister(a = "Fly", b = "Позволяет свободно летать по миру", c = Category.Movement)
+@ModuleRegister(name = "Fly", description = "Позволяет свободно летать по миру", category = Category.Movement)
 public class Fly extends Module {
     private final SliderSetting b = new SliderSetting("Скорость X и Z", 1.0f, 0.1f, 5.0f, 0.1f);
     private final SliderSetting c = new SliderSetting("Скорость Y", 1.0f, 0.1f, 5.0f, 0.1f);

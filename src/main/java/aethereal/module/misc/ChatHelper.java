@@ -9,7 +9,7 @@ import aethereal.setting.BooleanSetting;
 import aethereal.util.ServerUtil;
 import lombok.Generated;
 
-@ModuleRegister(a = "Chat Helper", b = "Расширяет возможности чата и его настройки", c = Category.Misc)
+@ModuleRegister(name = "Chat Helper", description = "Расширяет возможности чата и его настройки", category = Category.Misc)
 public class ChatHelper extends Module {
     private final BooleanSetting b = new BooleanSetting("Ширина под сообщение", false);
     private final BooleanSetting c = new BooleanSetting("Автоматическое /event delay", false);

@@ -14,7 +14,7 @@ import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.option.Perspective;
 
-@ModuleRegister(a = "Animations", b = "Анимирует выбранные элементы игры", c = Category.Render)
+@ModuleRegister(name = "Animations", description = "Анимирует выбранные элементы игры", category = Category.Render)
 public class Animations extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Выберите что анимировать", new BooleanSetting("TAB", true), new BooleanSetting("Открытие инвентаря", true), new BooleanSetting("Смена перспективы", true), new BooleanSetting("Поднятие хотбара", true), new BooleanSetting("Слот хотбара", true), new BooleanSetting("Появление сообщений", true), new BooleanSetting("Предметы", true));
     private final AnimationUtil c = new AnimationUtil();

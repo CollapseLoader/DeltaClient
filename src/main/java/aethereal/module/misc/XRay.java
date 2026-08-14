@@ -17,7 +17,7 @@ import net.minecraft.util.math.Box;
 import java.util.ArrayList;
 import java.util.List;
 
-@ModuleRegister(a = "X Ray", b = "Подсвечивает найденные древние обломки при взрыве динамита", c = Category.Misc)
+@ModuleRegister(name = "X Ray", description = "Подсвечивает найденные древние обломки при взрыве динамита", category = Category.Misc)
 public class XRay extends Module implements Interface {
     private final List<BlockPos> b = new ArrayList();
     private final CounterUtil c = new CounterUtil();

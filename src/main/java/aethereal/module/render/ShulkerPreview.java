@@ -21,7 +21,7 @@ import org.joml.Vector2f;
 
 import java.util.List;
 
-@ModuleRegister(a = "Shulker Preview", b = "Показывает содержимое шалкеров в инвентаре зажав ALT (и на земле, без зажатия, если античит слабый)", c = Category.Render)
+@ModuleRegister(name = "Shulker Preview", description = "Показывает содержимое шалкеров в инвентаре зажав ALT (и на земле, без зажатия, если античит слабый)", category = Category.Render)
 public class ShulkerPreview extends Module {
     private final Vector2f b = new Vector2f(175.0f, 70.0f);
 

@@ -17,7 +17,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.world.RaycastContext;
 
-@ModuleRegister(a = "Nuker", b = "Автоматически разрушает блоки в радиусе досягаемости", c = Category.Misc)
+@ModuleRegister(name = "Nuker", description = "Автоматически разрушает блоки в радиусе досягаемости", category = Category.Misc)
 public class Nuker extends Module {
     private final ModeSetting b = new ModeSetting("Режим копания территории", "Шахта ФанТайм", "Шахта ФанТайм", "Общий");
     private final SliderSetting c = new SliderSetting("Дистанция копания", 4.0f, 1.0f, 6.0f, 0.5f);

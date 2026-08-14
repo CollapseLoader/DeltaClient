@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@ModuleRegister(a = "Use Tracker", b = "Отслеживает выбранные использования и уведомляет о них", c = Category.Player)
+@ModuleRegister(name = "Use Tracker", description = "Отслеживает выбранные использования и уведомляет о них", category = Category.Player)
 public class UseTracker extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Отслеживать использования", new BooleanSetting("Тотема", true), new BooleanSetting("Зелья", true), new BooleanSetting("Предмета", true));
 

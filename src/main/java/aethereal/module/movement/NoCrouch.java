@@ -7,7 +7,7 @@ import aethereal.core.ModuleRegister;
 import aethereal.event.InputEvent;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 
-@ModuleRegister(a = "No Crouch", b = "Убирает замедление от приседания на вашей стороне", c = Category.Movement)
+@ModuleRegister(name = "No Crouch", description = "Убирает замедление от приседания на вашей стороне", category = Category.Movement)
 public class NoCrouch extends Module {
     private boolean b;
 

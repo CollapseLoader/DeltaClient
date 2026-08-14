@@ -9,7 +9,7 @@ import aethereal.util.ServerUtil;
 import lombok.Generated;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 
-@ModuleRegister(a = "Auto Auth", b = "Автоматически вводит пароль при авторизации и регистрации", c = Category.Player)
+@ModuleRegister(name = "Auto Auth", description = "Автоматически вводит пароль при авторизации и регистрации", category = Category.Player)
 public class AutoAuth extends Module implements Interface {
     private final StringSetting b = new StringSetting("Пароль авторизации", "").a();
     private final StringSetting c = new StringSetting("Пароль регистрации", "").a();

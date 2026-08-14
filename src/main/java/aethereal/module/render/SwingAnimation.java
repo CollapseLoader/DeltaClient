@@ -11,7 +11,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.RotationAxis;
 
-@ModuleRegister(a = "Swing Animation", b = "Настраивает анимацию взмаха руки", c = Category.Render)
+@ModuleRegister(name = "Swing Animation", description = "Настраивает анимацию взмаха руки", category = Category.Render)
 public class SwingAnimation extends Module {
     private final BooleanSetting b = new BooleanSetting("Учитывать включённую Aura", true);
     private final ModeSetting c = new ModeSetting("Режим анимации", "Мод 1", "Мод 1", "Мод 2", "Мод 3", "Мод 4", "Мод 5");

@@ -18,9 +18,9 @@ public class Module implements Interface {
     private final AnimationUtil e = new AnimationUtil();
     private final AnimationUtil f = new AnimationUtil();
     private final AnimationUtil g = new AnimationUtil();
-    private final String h = getClass().getAnnotation(ModuleRegister.class).a();
-    private final String i = getClass().getAnnotation(ModuleRegister.class).b();
-    private final Category j = getClass().getAnnotation(ModuleRegister.class).c();
+    private final String h = getClass().getAnnotation(ModuleRegister.class).name();
+    private final String i = getClass().getAnnotation(ModuleRegister.class).description();
+    private final Category j = getClass().getAnnotation(ModuleRegister.class).category();
     private boolean k;
     private boolean l;
     private boolean m;
@@ -135,11 +135,13 @@ public class Module implements Interface {
 
     public void b() {
         EventManager.a(this);
-        Delta.h().d().m().a(new Notification("Q", ColorUtil.a(InterfaceC0020Opcode.bW, 220, InterfaceC0020Opcode.bv, 255), j() + " активирован", 1500));
+        Delta.h().d().m().a(new Notification("Q",
+                ColorUtil.a(InterfaceC0020Opcode.bW, 220, InterfaceC0020Opcode.bv, 255), j() + " активирован", 1500));
     }
 
     public void c() {
         EventManager.b(this);
-        Delta.h().d().m().a(new Notification("Q", ColorUtil.a(230, InterfaceC0020Opcode.bW, InterfaceC0020Opcode.bW, 255), j() + " деактивирован", 1500));
+        Delta.h().d().m().a(new Notification("Q",
+                ColorUtil.a(230, InterfaceC0020Opcode.bW, InterfaceC0020Opcode.bW, 255), j() + " деактивирован", 1500));
     }
 }

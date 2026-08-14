@@ -7,7 +7,7 @@ import aethereal.core.ModuleRegister;
 import aethereal.event.PacketEvent;
 import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
 
-@ModuleRegister(a = "No Server Desync", b = "Не даёт серверу принудительно сбрасывать поворот вашей камеры", c = Category.Combat)
+@ModuleRegister(name = "No Server Desync", description = "Не даёт серверу принудительно сбрасывать поворот вашей камеры", category = Category.Combat)
 public class NoServerDesync extends Module {
     @EventTarget
     public void a(PacketEvent event) {

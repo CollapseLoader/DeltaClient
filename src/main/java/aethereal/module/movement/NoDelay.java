@@ -7,7 +7,7 @@ import aethereal.setting.BooleanSetting;
 import aethereal.setting.MultiModeSetting;
 import net.minecraft.item.BlockItem;
 
-@ModuleRegister(a = "No Delay", b = "Убирает задержку у выбранных действий", c = Category.Movement)
+@ModuleRegister(name = "No Delay", description = "Убирает задержку у выбранных действий", category = Category.Movement)
 public class NoDelay extends Module {
     public final MultiModeSetting b = new MultiModeSetting("Отключить задержку на", new BooleanSetting("Поставку блоков", true), new BooleanSetting("Прыжки", true));
 

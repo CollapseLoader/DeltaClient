@@ -40,7 +40,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-@ModuleRegister(a = "Predictions", b = "Прогнозирует и отображает траекторию полёта трезубца, стрел и зелий", c = Category.Render)
+@ModuleRegister(name = "Predictions", description = "Прогнозирует и отображает траекторию полёта трезубца, стрел и зелий", category = Category.Render)
 public class Predictions extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Отслеживаемые предметы", new BooleanSetting("Стрелы", true), new BooleanSetting("Трезубцы", true), new BooleanSetting("Эндер жемчуг", true), new BooleanSetting("Зелья", true));
     private final BooleanSetting c = new BooleanSetting("Радужный цвет", false);

@@ -32,7 +32,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-@ModuleRegister(a = "Communication", b = "Связывает вас с другими игроками через групповые и глобальные сообщения (party, IRC и др.)", c = Category.Misc)
+@ModuleRegister(name = "Communication", description = "Связывает вас с другими игроками через групповые и глобальные сообщения (party, IRC и др.)", category = Category.Misc)
 public class Communication extends Module implements Interface {
     private final BooleanSetting c = new BooleanSetting("Клиентский чат", false);
     private final List<a> d = new ArrayList();

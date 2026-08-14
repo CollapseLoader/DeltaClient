@@ -7,7 +7,7 @@ import aethereal.core.ModuleRegister;
 import aethereal.event.TickEvent;
 import aethereal.util.ChatUtil;
 
-@ModuleRegister(a = "Death Coords", b = "Выводит координаты последней смерти", c = Category.Player)
+@ModuleRegister(name = "Death Coords", description = "Выводит координаты последней смерти", category = Category.Player)
 public class DeathCoords extends Module {
     @EventTarget
     public void a(TickEvent event) {

@@ -7,7 +7,7 @@ import aethereal.setting.BooleanSetting;
 import aethereal.setting.MultiModeSetting;
 import lombok.Generated;
 
-@ModuleRegister(a = "Removals", b = "Убирает выбранные визуальные эффекты и элементы игры", c = Category.Render)
+@ModuleRegister(name = "Removals", description = "Убирает выбранные визуальные эффекты и элементы игры", category = Category.Render)
 public class Removals extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Отключённые элементы", new BooleanSetting("Тряска при уроне", true), new BooleanSetting("Скорбоард", false), new BooleanSetting("Боссбар", false), new BooleanSetting("Эффект портала", true), new BooleanSetting("Огонь", true), new BooleanSetting("Обрезка камеры", true), new BooleanSetting("Частицы разрушения", false), new BooleanSetting("Чёрные сердца", true), new BooleanSetting("Частицы погоды", false), new BooleanSetting("Погружение воды/лавы", false), new BooleanSetting("Тошнота", true), new BooleanSetting("Слепота", true), new BooleanSetting("Тыква", true), new BooleanSetting("Свечение", true), new BooleanSetting("Тьма", true));
 

@@ -10,7 +10,7 @@ import aethereal.setting.SliderSetting;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Hand;
 
-@ModuleRegister(a = "View Model", b = "Изменяет положение и размер предметов в руке", c = Category.Render)
+@ModuleRegister(name = "View Model", description = "Изменяет положение и размер предметов в руке", category = Category.Render)
 public class ViewModel extends Module {
     private final SliderSetting b = new SliderSetting("Основная рука X", 0.0f, -2.0f, 2.0f, 0.1f);
     private final SliderSetting c = new SliderSetting("Основная рука Y", 0.0f, -2.0f, 2.0f, 0.1f);

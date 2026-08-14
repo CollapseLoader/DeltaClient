@@ -13,7 +13,7 @@ import java.io.BufferedInputStream;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@ModuleRegister(a = "Sounds", b = "Воспроизводит выбранные звуки при определённых игровых событиях", c = Category.Misc)
+@ModuleRegister(name = "Sounds", description = "Воспроизводит выбранные звуки при определённых игровых событиях", category = Category.Misc)
 public class Sounds extends Module {
     private final ModeSetting b = new ModeSetting("Звук для воспроизведения", "Тип 1", "Тип 1", "Тип 2", "Тип 3", "Тип 4").a(selected -> {
         a(e(true));

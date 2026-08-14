@@ -15,7 +15,7 @@ import platform.inject.accessors.ItemCooldownManagerAccessor;
 
 import java.util.List;
 
-@ModuleRegister(a = "Mace Helper", b = "Автоматизирует действия при использовании булавы", c = Category.Combat)
+@ModuleRegister(name = "Mace Helper", description = "Автоматизирует действия при использовании булавы", category = Category.Combat)
 public class MaceHelper extends Module {
     public int d;
     public boolean e;

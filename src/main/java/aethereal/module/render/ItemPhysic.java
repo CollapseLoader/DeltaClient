@@ -6,7 +6,7 @@ import aethereal.core.ModuleRegister;
 import aethereal.setting.BooleanSetting;
 import lombok.Generated;
 
-@ModuleRegister(a = "Item Physic", b = "Добавляет физику предметам, лежащим на земле", c = Category.Render)
+@ModuleRegister(name = "Item Physic", description = "Добавляет физику предметам, лежащим на земле", category = Category.Render)
 public class ItemPhysic extends Module {
     private final BooleanSetting b = new BooleanSetting("Уменьшить размер предметов", false);
 

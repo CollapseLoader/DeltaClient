@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@ModuleRegister(a = "Anti Bot", b = "Скрывает фальшивых игроков, появляющихся в мире", c = Category.Combat)
+@ModuleRegister(name = "Anti Bot", description = "Скрывает фальшивых игроков, появляющихся в мире", category = Category.Combat)
 public class AntiBot extends Module {
     private final List<UUID> b = new ArrayList();
 

@@ -13,7 +13,7 @@ import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 
-@ModuleRegister(a = "Auto Fish", b = "Автоматически ловит рыбу в AFK-режиме", c = Category.Player)
+@ModuleRegister(name = "Auto Fish", description = "Автоматически ловит рыбу в AFK-режиме", category = Category.Player)
 public class AutoFish extends Module implements Interface {
     private final CounterUtil b = new CounterUtil();
     private boolean c;

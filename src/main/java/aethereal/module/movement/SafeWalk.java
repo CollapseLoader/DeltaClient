@@ -6,7 +6,7 @@ import aethereal.core.Module;
 import aethereal.core.ModuleRegister;
 import aethereal.event.InputEvent;
 
-@ModuleRegister(a = "Safe Walk", b = "Не даёт упасть с края блоков", c = Category.Movement)
+@ModuleRegister(name = "Safe Walk", description = "Не даёт упасть с края блоков", category = Category.Movement)
 public class SafeWalk extends Module {
     @EventTarget
     public void a(InputEvent event) {

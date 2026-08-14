@@ -6,7 +6,7 @@ import aethereal.core.ModuleRegister;
 import aethereal.setting.BooleanSetting;
 import lombok.Generated;
 
-@ModuleRegister(a = "No Interact", b = "Блокирует случайное взаимодействие с контейнерами и блоками", c = Category.Misc)
+@ModuleRegister(name = "No Interact", description = "Блокирует случайное взаимодействие с контейнерами и блоками", category = Category.Misc)
 public class NoInteract extends Module {
     private final BooleanSetting b = new BooleanSetting("Учитывать включённую Aura", true);
 

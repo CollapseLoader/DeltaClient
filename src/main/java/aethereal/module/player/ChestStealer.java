@@ -12,7 +12,7 @@ import net.minecraft.client.gui.screen.ingame.ShulkerBoxScreen;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 
-@ModuleRegister(a = "Chest Stealer", b = "Автоматически забирает предметы из открытого сундука", c = Category.Player)
+@ModuleRegister(name = "Chest Stealer", description = "Автоматически забирает предметы из открытого сундука", category = Category.Player)
 public class ChestStealer extends Module implements Interface {
     private final BooleanSetting b = new BooleanSetting("Игнорировать сущностей", true);
     private final BooleanSetting c = new BooleanSetting("Авто-закрытие сундука", true);

@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-@ModuleRegister(a = "Captcha Solver", b = "Автоматически решает капчу при входе на сервер FunTime", c = Category.Player)
+@ModuleRegister(name = "Captcha Solver", description = "Автоматически решает капчу при входе на сервер FunTime", category = Category.Player)
 public class CaptchaSolver extends Module {
     private byte[] b;
 

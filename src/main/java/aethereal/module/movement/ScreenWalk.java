@@ -26,7 +26,7 @@ import platform.inject.accessors.ClientConnectionAccessor;
 import java.util.ArrayList;
 import java.util.List;
 
-@ModuleRegister(a = "Screen Walk", b = "Позволяет двигаться с открытым контейнером, задерживая пакеты инвентаря", c = Category.Movement)
+@ModuleRegister(name = "Screen Walk", description = "Позволяет двигаться с открытым контейнером, задерживая пакеты инвентаря", category = Category.Movement)
 public class ScreenWalk extends Module {
     private final ModeSetting b = new ModeSetting("Обход перемещения предметов", "Ускоренный", "Ускоренный", "Медленный");
     private final List<a> c = new ArrayList();

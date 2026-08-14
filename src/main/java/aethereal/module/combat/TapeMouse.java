@@ -9,7 +9,7 @@ import aethereal.setting.SliderSetting;
 import aethereal.util.CounterUtil;
 import lombok.Generated;
 
-@ModuleRegister(a = "Tape Mouse", b = "Автоматически кликает выбранной кнопкой мыши через заданные промежутки времени", c = Category.Combat)
+@ModuleRegister(name = "Tape Mouse", description = "Автоматически кликает выбранной кнопкой мыши через заданные промежутки времени", category = Category.Combat)
 public class TapeMouse extends Module implements Interface {
     private final SliderSetting b = new SliderSetting("Задержка между кликами", 1000.0f, 10.0f, 5000.0f, 10.0f);
     private final BooleanSetting c = new BooleanSetting("Не кликать во время еды", true);

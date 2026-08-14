@@ -18,7 +18,7 @@ import platform.inject.accessors.ClientConnectionAccessor;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-@ModuleRegister(a = "Fake Lags", b = "Задерживает отправку пакетов, имитируя лаги на сервере", c = Category.Player)
+@ModuleRegister(name = "Fake Lags", description = "Задерживает отправку пакетов, имитируя лаги на сервере", category = Category.Player)
 public class FakeLags extends Module implements Interface {
     private final SliderSetting b = new SliderSetting("Задержка симуляции", 20.0f, 1.0f, 40.0f, 1.0f);
     private final BooleanSetting c = new BooleanSetting("Отображать серв-позицию", false);

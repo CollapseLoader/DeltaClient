@@ -15,7 +15,7 @@ import lombok.Generated;
 import java.util.ArrayList;
 import java.util.List;
 
-@ModuleRegister(a = "Interface", b = "Отображает выбранные элементы интерфейса на экране", c = Category.Render)
+@ModuleRegister(name = "Interface", description = "Отображает выбранные элементы интерфейса на экране", category = Category.Render)
 public class Interface_2 extends Module {
     private final ColorSetting b = new ColorSetting("Глобальный цвет интерфейса", Integer.valueOf(Delta.h().d().o().a(ThemeInfo.PRIMARY).a()));
     private final MultiModeSetting c = new MultiModeSetting("Элементы интерфейса", new BooleanSetting("Клавиши", true), new BooleanSetting("Таргет-худ", true), new BooleanSetting("Задержки", true), new BooleanSetting("Инфо-панель", true), new BooleanSetting("Уведомления", true), new BooleanSetting("Зелья", true), new BooleanSetting("Предметы", true), new BooleanSetting("Броня", true), new BooleanSetting("Стафф", true), new BooleanSetting("Окружение", true));

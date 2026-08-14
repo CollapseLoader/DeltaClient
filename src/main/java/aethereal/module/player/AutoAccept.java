@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-@ModuleRegister(a = "Auto Accept", b = "Автоматически принимает выбранные запросы", c = Category.Player)
+@ModuleRegister(name = "Auto Accept", description = "Автоматически принимает выбранные запросы", category = Category.Player)
 public class AutoAccept extends Module {
     public final MultiModeSetting b = new MultiModeSetting("Принимать запросы", new BooleanSetting("В клановую команду", true), new BooleanSetting("Телепортации", true));
     private final BooleanSetting c = new BooleanSetting("Принимать только друзей", true);

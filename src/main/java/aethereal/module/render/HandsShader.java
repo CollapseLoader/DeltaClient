@@ -9,7 +9,7 @@ import aethereal.setting.SliderSetting;
 import aethereal.ui.shader.NoiseShader;
 import net.minecraft.client.option.Perspective;
 
-@ModuleRegister(a = "Hands Shader", b = "Накладывает шейдер на руку от первого лица", c = Category.Render)
+@ModuleRegister(name = "Hands Shader", description = "Накладывает шейдер на руку от первого лица", category = Category.Render)
 public class HandsShader extends Module {
     private final SliderSetting b = new SliderSetting("Непрозрачность", 0.6f, 0.0f, 1.0f, 0.05f);
 

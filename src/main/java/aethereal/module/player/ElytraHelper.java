@@ -15,7 +15,7 @@ import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 
 import java.util.Objects;
 
-@ModuleRegister(a = "Elytra Helper", b = "Выполняет действия с элитрой по нажатию назначенной клавиши", c = Category.Player)
+@ModuleRegister(name = "Elytra Helper", description = "Выполняет действия с элитрой по нажатию назначенной клавиши", category = Category.Player)
 public class ElytraHelper extends Module implements Interface {
     private final BooleanSetting b = new BooleanSetting("Автостарт после свапа", false);
     private final BooleanSetting c;

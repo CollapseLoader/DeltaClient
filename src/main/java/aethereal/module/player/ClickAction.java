@@ -9,7 +9,7 @@ import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.util.hit.EntityHitResult;
 
-@ModuleRegister(a = "Click Action", b = "Выполняет действие, привязанное к выбранной клавише", c = Category.Player)
+@ModuleRegister(name = "Click Action", description = "Выполняет действие, привязанное к выбранной клавише", category = Category.Player)
 public class ClickAction extends Module implements Interface {
     private final BindSetting b = new BindSetting("Эндер-жемчуг", -1).a(() -> {
         Delta.h().d().v().b().a(Items.ENDER_PEARL.getDefaultStack());

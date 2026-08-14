@@ -6,7 +6,7 @@ import aethereal.core.Module;
 import aethereal.core.ModuleRegister;
 import aethereal.event.PortalEvent;
 
-@ModuleRegister(a = "Portal Bypass", b = "Позволяет открывать окна, находясь в портале", c = Category.Misc)
+@ModuleRegister(name = "Portal Bypass", description = "Позволяет открывать окна, находясь в портале", category = Category.Misc)
 public class PortalBypass extends Module {
     @EventTarget
     public void a(PortalEvent event) {

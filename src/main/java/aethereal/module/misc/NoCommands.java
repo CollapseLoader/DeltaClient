@@ -4,6 +4,6 @@ import aethereal.core.Category;
 import aethereal.core.Module;
 import aethereal.core.ModuleRegister;
 
-@ModuleRegister(a = "No Commands", b = "Отключает обработку клиентских команд", c = Category.Misc)
+@ModuleRegister(name = "No Commands", description = "Отключает обработку клиентских команд", category = Category.Misc)
 public class NoCommands extends Module {
 }

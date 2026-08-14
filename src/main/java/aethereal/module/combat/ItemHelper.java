@@ -10,7 +10,7 @@ import net.minecraft.item.Items;
 
 import java.util.List;
 
-@ModuleRegister(a = "Item Helper", b = "Перемещает нужный предмет и возвращает его обратно по нажатию клавиши", c = Category.Combat)
+@ModuleRegister(name = "Item Helper", description = "Перемещает нужный предмет и возвращает его обратно по нажатию клавиши", category = Category.Combat)
 public class ItemHelper extends Module implements Interface {
     public ItemHelper() {
         List.of(new a(this, "Зачарованное яблоко", Items.ENCHANTED_GOLDEN_APPLE), new a(this, "Золотое яблоко", Items.GOLDEN_APPLE), new a(this, "Плод хоруса", Items.CHORUS_FRUIT), new a(this, "Арбалет", Items.CROSSBOW)).forEach(item -> {

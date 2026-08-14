@@ -21,7 +21,7 @@ import org.joml.Vector2f;
 import java.util.ArrayList;
 import java.util.List;
 
-@ModuleRegister(a = "Sound ESP", b = "Отображает место, где был воспроизведён выбранный звук", c = Category.Render)
+@ModuleRegister(name = "Sound ESP", description = "Отображает место, где был воспроизведён выбранный звук", category = Category.Render)
 public class SoundESP extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Отслеживать звуки", new BooleanSetting("Трезубец", true), new BooleanSetting("Фейерверк", true), new BooleanSetting("Взрывы", true));
     private final List<a> c = new ArrayList();

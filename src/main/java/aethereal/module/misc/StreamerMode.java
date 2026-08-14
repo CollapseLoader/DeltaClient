@@ -14,7 +14,7 @@ import net.minecraft.text.Text;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-@ModuleRegister(a = "Streamer Mode", b = "Скрывает личные данные при стриминге и записи", c = Category.Misc)
+@ModuleRegister(name = "Streamer Mode", description = "Скрывает личные данные при стриминге и записи", category = Category.Misc)
 public class StreamerMode extends Module {
     private final BooleanSetting b = new BooleanSetting("Скрывать скины игроков", true);
     private final BooleanSetting c = new BooleanSetting("Скрывать имена друзей", true);

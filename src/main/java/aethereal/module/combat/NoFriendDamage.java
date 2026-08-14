@@ -4,7 +4,7 @@ import aethereal.core.*;
 import aethereal.core.Module;
 import aethereal.event.AttackEvent;
 
-@ModuleRegister(a = "No Friend Damage", b = "Не позволяет наносить урон вашим друзьям", c = Category.Combat)
+@ModuleRegister(name = "No Friend Damage", description = "Не позволяет наносить урон вашим друзьям", category = Category.Combat)
 public class NoFriendDamage extends Module {
     @EventTarget
     public void a(AttackEvent event) {

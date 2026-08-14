@@ -11,7 +11,7 @@ import lombok.Generated;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-@ModuleRegister(a = "Fun Deliver", b = "Автоматическая выдача валюты по заказам FunPay", c = Category.Misc)
+@ModuleRegister(name = "Fun Deliver", description = "Автоматическая выдача валюты по заказам FunPay", category = Category.Misc)
 public class FunDeliver extends Module implements Interface {
     private final StringSetting b = new StringSetting("Укажите ваш Golden-Key", "").a();
     private final SliderSetting c = new SliderSetting("Триггер цены обработки товара", 1.0f, 0.5f, 10.0f, 0.01f, true);

@@ -17,7 +17,7 @@ import net.minecraft.util.Formatting;
 import java.util.Locale;
 import java.util.Optional;
 
-@ModuleRegister(a = "Board Spoofer", b = "Подменяет значения доната, монет и токенов в Scoreboard", c = Category.Render)
+@ModuleRegister(name = "Board Spoofer", description = "Подменяет значения доната, монет и токенов в Scoreboard", category = Category.Render)
 public class BoardSpoofer extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Элементы настройки", new BooleanSetting("Ранг", true), new BooleanSetting("Монеты", true), new BooleanSetting("Токены", true));
     private final ModeSetting c = new ModeSetting("Выберите привилегию", "Игрок", "Игрок", "Барон", "Страж", "Герой", "Аспид", "Сквид", "Глава", "Элита", "Титан", "Принц", "Князь", "Герцог").a(() -> {

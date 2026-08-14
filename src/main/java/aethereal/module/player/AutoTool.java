@@ -14,7 +14,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import java.util.Comparator;
 import java.util.stream.IntStream;
 
-@ModuleRegister(a = "Auto Tool", b = "Автоматически выбирает подходящий инструмент для блока", c = Category.Player)
+@ModuleRegister(name = "Auto Tool", description = "Автоматически выбирает подходящий инструмент для блока", category = Category.Player)
 public class AutoTool extends Module implements Interface {
     private final int[] b = {-1, -1};
 

@@ -28,7 +28,7 @@ import org.joml.Vector2f;
 
 import java.util.*;
 
-@ModuleRegister(a = "Structures", b = "Отображает время до исчезновения структур трапки и пласта", c = Category.Player)
+@ModuleRegister(name = "Structures", description = "Отображает время до исчезновения структур трапки и пласта", category = Category.Player)
 public class Structures extends Module {
     private final List<Block> allowedBlocks = java.util.Arrays.asList(Blocks.QUARTZ_BLOCK, Blocks.DEAD_TUBE_CORAL_BLOCK, Blocks.INFESTED_MOSSY_STONE_BRICKS, Blocks.PURPUR_PILLAR, Blocks.END_STONE_BRICKS, Blocks.NETHER_BRICKS, Blocks.GILDED_BLACKSTONE, Blocks.PRISMARINE_BRICKS, Blocks.ICE, Blocks.NETHER_WART_BLOCK, Blocks.RESPAWN_ANCHOR, Blocks.NETHERITE_BLOCK, Blocks.WHITE_STAINED_GLASS, Blocks.BLACK_CONCRETE, Blocks.POLISHED_BASALT);
     private final List<a> c = new ObjectArrayList();

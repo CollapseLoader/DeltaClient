@@ -22,7 +22,7 @@ import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
 
-@ModuleRegister(a = "Pointers", b = "Указывает лучами направление к игрокам", c = Category.Render)
+@ModuleRegister(name = "Pointers", description = "Указывает лучами направление к игрокам", category = Category.Render)
 public class Pointers extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Визуальные настройки", new BooleanSetting("Фильтр по друзьям", false), new BooleanSetting("Трассировка до игрока", true), new BooleanSetting("Навигационная стрелка", true));
     private final SliderSetting c = new SliderSetting("Размер стрелки", 7.0f, 5.0f, 15.0f, 1.0f);

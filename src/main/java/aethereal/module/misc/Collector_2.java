@@ -35,7 +35,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
-@ModuleRegister(a = "Collector", b = "Автоматически собирает нужный инвентарь на FunTime", c = Category.Misc)
+@ModuleRegister(name = "Collector", description = "Автоматически собирает нужный инвентарь на FunTime", category = Category.Misc)
 public class Collector_2 extends Module {
     private final List<b> d = Delta.h().d().p().e();
     private final List<a> e = new ArrayList();

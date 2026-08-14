@@ -10,7 +10,7 @@ import lombok.Generated;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 
-@ModuleRegister(a = "Potion Thrower", b = "Быстрое метание бафов через колесо или по клавише", c = Category.Misc)
+@ModuleRegister(name = "Potion Thrower", description = "Быстрое метание бафов через колесо или по клавише", category = Category.Misc)
 public class PotionThrower extends Module implements Interface {
     private final ModeSetting b = new ModeSetting("Способ использования зелий", "Колесо выбора", "Колесо выбора", "Клавиша");
     private final AssistantScreen c = new AssistantScreen(Text.literal("Potion Thrower"));

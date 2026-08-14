@@ -10,7 +10,7 @@ import aethereal.setting.MultiModeSetting;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.util.Hand;
 
-@ModuleRegister(a = "Anti AFK", b = "Не даёт серверу кикнуть вас за бездействие", c = Category.Player)
+@ModuleRegister(name = "Anti AFK", description = "Не даёт серверу кикнуть вас за бездействие", category = Category.Player)
 public class AntiAFK extends Module {
     private final ModeSetting b = new ModeSetting("Режим использования", "Обычный", "Обычный", "FunTime");
     private final MultiModeSetting c = new MultiModeSetting("Выполнять действия", new BooleanSetting("Прыжок", true), new BooleanSetting("Взмах", true), new BooleanSetting("Движение", true)).a(() -> {

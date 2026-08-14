@@ -16,7 +16,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import org.joml.Matrix4f;
 
-@ModuleRegister(a = "China Hat", b = "Надевает китайскую шляпу на голову вашего персонажа", c = Category.Render)
+@ModuleRegister(name = "China Hat", description = "Надевает китайскую шляпу на голову вашего персонажа", category = Category.Render)
 public class ChinaHat extends Module {
     private final ColorSetting b = new ColorSetting("Цвет визуализации шляпы", Integer.valueOf(ColorUtil.a(InterfaceC0020Opcode.aS, InterfaceC0020Opcode.bh, 255, 255)));
 

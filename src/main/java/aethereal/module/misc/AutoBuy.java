@@ -37,7 +37,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-@ModuleRegister(a = "Auto Buy", b = "Автоматически скупает выбранные предметы по заданной цене", c = Category.Misc)
+@ModuleRegister(name = "Auto Buy", description = "Автоматически скупает выбранные предметы по заданной цене", category = Category.Misc)
 public class AutoBuy extends Module implements Interface {
     private final BooleanSetting b = new BooleanSetting("Авто-перевыставление вещей", false);
     private final List<ItemStack> d = new ArrayList();

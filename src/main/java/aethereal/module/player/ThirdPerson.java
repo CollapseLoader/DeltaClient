@@ -12,7 +12,7 @@ import aethereal.util.MathUtil;
 import aethereal.util.Rotation;
 import net.minecraft.client.option.Perspective;
 
-@ModuleRegister(a = "Third Person", b = "Свободный обзор от третьего лица без изменения направления движения", c = Category.Player)
+@ModuleRegister(name = "Third Person", description = "Свободный обзор от третьего лица без изменения направления движения", category = Category.Player)
 public class ThirdPerson extends Module {
     private final ModeSetting b = new ModeSetting("Режим активации осмотра", "По нажатию", "По нажатию", "По зажатию");
     private boolean c;

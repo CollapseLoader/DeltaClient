@@ -9,7 +9,7 @@ import aethereal.event.InputEvent;
 import aethereal.event.TickEvent;
 import net.minecraft.entity.player.PlayerEntity;
 
-@ModuleRegister(a = "Shift TAP", b = "Автоматически приседает в момент удара по игроку", c = Category.Combat)
+@ModuleRegister(name = "Shift TAP", description = "Автоматически приседает в момент удара по игроку", category = Category.Combat)
 public class ShiftTAP extends Module {
     private int b;
 

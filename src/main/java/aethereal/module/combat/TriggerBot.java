@@ -30,7 +30,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-@ModuleRegister(a = "Trigger Bot", b = "Автоматически наносит удар при наведении прицела на цель", c = Category.Combat)
+@ModuleRegister(name = "Trigger Bot", description = "Автоматически наносит удар при наведении прицела на цель", category = Category.Combat)
 public class TriggerBot extends Module {
     private final MultiModeSetting f = new MultiModeSetting("Цели для атаки", new BooleanSetting("Игроки", true), new BooleanSetting("Животные", false), new BooleanSetting("Мобы", false), new BooleanSetting("Друзья", true));
     private final MultiModeSetting g = new MultiModeSetting("Дополнительно", new BooleanSetting("Только критические удары", true), new BooleanSetting("Адаптивные удары", true), new BooleanSetting("Случайные промахи", true));

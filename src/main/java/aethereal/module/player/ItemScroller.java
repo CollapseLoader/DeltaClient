@@ -7,7 +7,7 @@ import aethereal.setting.SliderSetting;
 import aethereal.util.CounterUtil;
 import lombok.Generated;
 
-@ModuleRegister(a = "Item Scroller", b = "Позволяет быстро перекладывать предметы в окнах прокруткой", c = Category.Player)
+@ModuleRegister(name = "Item Scroller", description = "Позволяет быстро перекладывать предметы в окнах прокруткой", category = Category.Player)
 public class ItemScroller extends Module {
     private final SliderSetting b = new SliderSetting("Задержка между слотами", 50.0f, 0.0f, 100.0f, 1.0f);
     private final CounterUtil c = new CounterUtil();

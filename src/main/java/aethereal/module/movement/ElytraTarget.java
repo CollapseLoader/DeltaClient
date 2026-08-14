@@ -15,7 +15,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 
-@ModuleRegister(a = "Elytra Target", b = "Наводит на врага в полёте на элитре и ускоряется фейерверком из второй руки", c = Category.Movement)
+@ModuleRegister(name = "Elytra Target", description = "Наводит на врага в полёте на элитре и ускоряется фейерверком из второй руки", category = Category.Movement)
 public class ElytraTarget extends Module {
     private final CounterUtil b = new CounterUtil();
 

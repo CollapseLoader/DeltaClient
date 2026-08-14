@@ -10,7 +10,7 @@ import aethereal.setting.ModeSetting;
 import aethereal.setting.MultiModeSetting;
 import aethereal.setting.SliderSetting;
 
-@ModuleRegister(a = "Sound Reducer", b = "Уменьшает громкость выбранных игровых звуков", c = Category.Player)
+@ModuleRegister(name = "Sound Reducer", description = "Уменьшает громкость выбранных игровых звуков", category = Category.Player)
 public class SoundReducer extends Module {
     private final ModeSetting b = new ModeSetting("Способ обработки звуков", "Приглушение", "Приглушение", "Отключение");
     private final SliderSetting c = new SliderSetting("Громкость производящего звука", 0.5f, 0.0f, 1.0f, 0.01f).a(() -> {

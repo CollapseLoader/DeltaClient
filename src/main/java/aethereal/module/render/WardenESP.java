@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@ModuleRegister(a = "Warden ESP", b = "Отображает сундуки в городе варденов с таймером возрождения", c = Category.Render)
+@ModuleRegister(name = "Warden ESP", description = "Отображает сундуки в городе варденов с таймером возрождения", category = Category.Render)
 public class WardenESP extends Module {
     private static final Pattern b = Pattern.compile("(\\d{2}):(\\d{2})");
     private final List<a> c = new ArrayList();

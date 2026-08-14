@@ -13,7 +13,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-@ModuleRegister(a = "Auto Totem", b = "Берёт тотем бессмертия в руку при падении здоровья ниже заданного значения", c = Category.Combat)
+@ModuleRegister(name = "Auto Totem", description = "Берёт тотем бессмертия в руку при падении здоровья ниже заданного значения", category = Category.Combat)
 public class AutoTotem extends Module implements Interface {
     private final SliderSetting c = new SliderSetting("Порог здоровья", 6.0f, 1.0f, 20.0f, 0.5f);
     private final MultiModeSetting d = new MultiModeSetting("Дополнительные опции", new BooleanSetting("Возвращать предмет", true), new BooleanSetting("Сначала обычные тотемы", true), new BooleanSetting("Не во время еды", false));

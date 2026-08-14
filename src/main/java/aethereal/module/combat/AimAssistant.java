@@ -23,7 +23,7 @@ import net.minecraft.util.math.Vec3d;
 import java.util.Comparator;
 import java.util.stream.StreamSupport;
 
-@ModuleRegister(a = "Aim Assistant", b = "Доводит прицел до цели", c = Category.Combat)
+@ModuleRegister(name = "Aim Assistant", description = "Доводит прицел до цели", category = Category.Combat)
 public class AimAssistant extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Цели для наведения", new BooleanSetting("Игроки", true), new BooleanSetting("Животные", false), new BooleanSetting("Мобы", false), new BooleanSetting("Друзья", true));
     private final BooleanSetting c = new BooleanSetting("Наводить за стеной", false);

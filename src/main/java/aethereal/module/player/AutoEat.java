@@ -11,7 +11,7 @@ import net.minecraft.item.Items;
 
 import java.util.Set;
 
-@ModuleRegister(a = "Auto Eat", b = "Автоматически утоляет голод при его падении", c = Category.Player)
+@ModuleRegister(name = "Auto Eat", description = "Автоматически утоляет голод при его падении", category = Category.Player)
 public class AutoEat extends Module {
     private final SliderSetting b = new SliderSetting("Есть при голоде", 16.0f, 1.0f, 20.0f, 1.0f);
 

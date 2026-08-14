@@ -10,7 +10,7 @@ import aethereal.util.ChatUtil;
 import aethereal.util.ServerUtil;
 import net.minecraft.entity.player.PlayerEntity;
 
-@ModuleRegister(a = "Auto Leave", b = "Автоматически выходит в хаб по триггерам", c = Category.Player)
+@ModuleRegister(name = "Auto Leave", description = "Автоматически выходит в хаб по триггерам", category = Category.Player)
 public class AutoLeave extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Условия срабатывания", new BooleanSetting("Малое ХП", true), new BooleanSetting("Игроки рядом", true));
     private final SliderSetting c = new SliderSetting("Минимум ХП", 8.0f, 1.0f, 20.0f, 0.5f).a(() -> {

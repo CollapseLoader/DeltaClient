@@ -16,7 +16,7 @@ import net.minecraft.network.packet.s2c.play.EntityVelocityUpdateS2CPacket;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
-@ModuleRegister(a = "Velocity", b = "Не позволяет игрокам откидывать вас", c = Category.Combat)
+@ModuleRegister(name = "Velocity", description = "Не позволяет игрокам откидывать вас", category = Category.Combat)
 public class Velocity extends Module {
     private final ModeSetting b = new ModeSetting("Режим анти-отбрасывания", "Легитный", "Обычный", "Легитный");
     private final BooleanSetting c = new BooleanSetting("Прыгать в легит", true).a(() -> {

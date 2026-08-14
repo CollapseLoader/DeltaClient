@@ -4,6 +4,6 @@ import aethereal.core.Category;
 import aethereal.core.Module;
 import aethereal.core.ModuleRegister;
 
-@ModuleRegister(a = "No Server Pack", b = "Блокирует принудительную загрузку серверного ресурс-пака", c = Category.Combat)
+@ModuleRegister(name = "No Server Pack", description = "Блокирует принудительную загрузку серверного ресурс-пака", category = Category.Combat)
 public class NoServerPack extends Module {
 }

@@ -41,7 +41,7 @@ import net.minecraft.text.Style;
 import net.minecraft.text.MutableText;
 import org.joml.Vector2f;
 
-@ModuleRegister(a = "Entity ESP", b = "Отображает информацию о сущностях над их головой", c = Category.Render)
+@ModuleRegister(name = "Entity ESP", description = "Отображает информацию о сущностях над их головой", category = Category.Render)
 public class EntityESP extends Module {
     private final MultiModeSetting trackedEntities = new MultiModeSetting("Отслеживаемые сущности", new BooleanSetting("Игроки", true), new BooleanSetting("Животные", false), new BooleanSetting("Мобы", false), new BooleanSetting("Предметы", false));
     private final List<Tracker> trackers = new ArrayList();

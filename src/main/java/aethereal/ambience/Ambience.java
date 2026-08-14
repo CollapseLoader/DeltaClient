@@ -17,7 +17,7 @@ import net.minecraft.world.biome.Biome;
 
 import java.util.Objects;
 
-@ModuleRegister(a = "Ambience", b = "Настраивает атмосферу и окружение игрового мира", c = Category.Render)
+@ModuleRegister(name = "Ambience", description = "Настраивает атмосферу и окружение игрового мира", category = Category.Render)
 public class Ambience extends Module {
     public final ModeSetting b = new ModeSetting("Погода в мире", "Без изменений", "Без изменений", "Солнечно", "Дождь", "Снег", "Гроза");
     private final ModeSetting c = new ModeSetting("Время в мире", "Без изменений", "Без изменений", "Рассвет", "День", "Полдень", "Закат", "Ночь", "Полночь");

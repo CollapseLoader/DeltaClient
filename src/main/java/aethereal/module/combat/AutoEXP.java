@@ -11,7 +11,7 @@ import aethereal.util.Rotation;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 
-@ModuleRegister(a = "Auto EXP", b = "Бросает бутылочки опыта под себя, пока удерживается заданная клавиша", c = Category.Combat)
+@ModuleRegister(name = "Auto EXP", description = "Бросает бутылочки опыта под себя, пока удерживается заданная клавиша", category = Category.Combat)
 public class AutoEXP extends Module {
     private final int[] d = {-1, -1};
     private boolean c;

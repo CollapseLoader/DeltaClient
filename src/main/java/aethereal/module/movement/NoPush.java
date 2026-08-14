@@ -9,7 +9,7 @@ import aethereal.setting.BooleanSetting;
 import aethereal.setting.MultiModeSetting;
 import lombok.Generated;
 
-@ModuleRegister(a = "No Push", b = "Отключает отталкивание от выбранных объектов", c = Category.Movement)
+@ModuleRegister(name = "No Push", description = "Отключает отталкивание от выбранных объектов", category = Category.Movement)
 public class NoPush extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Отключить коллизию для", new BooleanSetting("Воды и лавы", false), new BooleanSetting("Блоков", false), new BooleanSetting("Энтити", false), new BooleanSetting("Граница", false), new BooleanSetting("Удочки", false));
 

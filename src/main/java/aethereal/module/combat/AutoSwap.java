@@ -11,7 +11,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 
-@ModuleRegister(a = "Auto Swap", b = "Мгновенно перекладывает выбранные предметы во вторую руку по нажатию клавиши", c = Category.Combat)
+@ModuleRegister(name = "Auto Swap", description = "Мгновенно перекладывает выбранные предметы во вторую руку по нажатию клавиши", category = Category.Combat)
 public class AutoSwap extends Module implements Interface {
     private final ModeSetting b = new ModeSetting("Режим перемещения", "Двойной", "Двойной", "Тройной");
     private final ModeSetting c = new ModeSetting("Первый предмет", "Сфера", "Сфера", "Тотем", "Золотое яблоко", "Щит").a(() -> {

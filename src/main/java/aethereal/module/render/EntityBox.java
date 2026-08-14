@@ -20,7 +20,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
 
-@ModuleRegister(a = "Entity Box", b = "Отображает боксы вокруг сущностей", c = Category.Render)
+@ModuleRegister(name = "Entity Box", description = "Отображает боксы вокруг сущностей", category = Category.Render)
 public class EntityBox extends Module {
     private final ModeSetting visualMode = new ModeSetting("Тип визуализации", "Квадрат", "Квадрат", "Углы", "Заливка", "Отключен");
     private final ModeSetting colorSource = new ModeSetting("Источник цвета", "Клиентский", "Клиентский", "Статичный");

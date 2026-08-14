@@ -30,7 +30,7 @@ import net.minecraft.world.RaycastContext;
 
 import java.util.*;
 
-@ModuleRegister(a = "Scaffold", b = "Автоматически ставит блоки под вами", c = Category.Movement)
+@ModuleRegister(name = "Scaffold", description = "Автоматически ставит блоки под вами", category = Category.Movement)
 public class Scaffold extends Module {
     private final BooleanSetting b = new BooleanSetting("Избегать падения", false);
     private final int[] e = {-1, -1, -1};

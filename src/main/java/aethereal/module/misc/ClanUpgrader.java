@@ -10,7 +10,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 
-@ModuleRegister(a = "Clan Upgrader", b = "Быстро прокачивает клан с помощью редстоуна и факела", c = Category.Misc)
+@ModuleRegister(name = "Clan Upgrader", description = "Быстро прокачивает клан с помощью редстоуна и факела", category = Category.Misc)
 public class ClanUpgrader extends Module {
     private int b;
 

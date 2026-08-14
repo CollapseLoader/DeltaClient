@@ -17,7 +17,7 @@ import net.minecraft.world.RaycastContext;
 
 import java.util.Set;
 
-@ModuleRegister(a = "Open Walls", b = "Позволяет открывать хранилища сквозь стены", c = Category.Player)
+@ModuleRegister(name = "Open Walls", description = "Позволяет открывать хранилища сквозь стены", category = Category.Player)
 public class OpenWalls extends Module {
     private final Set<Class<?>> b = Set.of(new Class[]{AbstractChestBlock.class, FurnaceBlock.class, CraftingTableBlock.class, SpawnerBlock.class, ShulkerBoxBlock.class, AnvilBlock.class, BeaconBlock.class, BlastFurnaceBlock.class, BrewingStandBlock.class, CampfireBlock.class, CartographyTableBlock.class, GrindstoneBlock.class, LecternBlock.class, LoomBlock.class, SmokerBlock.class, StonecutterBlock.class, BarrelBlock.class});
 

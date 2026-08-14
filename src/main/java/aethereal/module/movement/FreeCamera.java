@@ -13,7 +13,7 @@ import net.minecraft.network.packet.c2s.play.PlayerInputC2SPacket;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 
-@ModuleRegister(a = "Free Camera", b = "Позволяет свободно перемещать камеру, пока игрок остаётся на месте", c = Category.Movement)
+@ModuleRegister(name = "Free Camera", description = "Позволяет свободно перемещать камеру, пока игрок остаётся на месте", category = Category.Movement)
 public class FreeCamera extends Module implements Interface {
     private final SliderSetting b = new SliderSetting("Скорость движения XZ", 1.0f, 0.1f, 5.0f, 0.1f);
     private final SliderSetting c = new SliderSetting("Скорость движения Y", 1.0f, 0.1f, 5.0f, 0.1f);

@@ -40,7 +40,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-@ModuleRegister(a = "Aura", b = "Автоматически атакует цели рядом с вами", c = Category.Combat)
+@ModuleRegister(name = "Aura", description = "Автоматически атакует цели рядом с вами", category = Category.Combat)
 public class Aura extends Module {
 
     @Generated

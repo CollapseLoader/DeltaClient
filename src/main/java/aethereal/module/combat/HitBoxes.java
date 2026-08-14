@@ -7,7 +7,7 @@ import aethereal.setting.SliderSetting;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
 
-@ModuleRegister(a = "Hit Boxes", b = "Увеличивает хитбокс игроков, упрощая попадания по ним", c = Category.Combat)
+@ModuleRegister(name = "Hit Boxes", description = "Увеличивает хитбокс игроков, упрощая попадания по ним", category = Category.Combat)
 public class HitBoxes extends Module {
     private final SliderSetting b = new SliderSetting("Расширение X и Z", 0.0f, 0.0f, 1.0f, 0.1f);
     private final SliderSetting c = new SliderSetting("Расширение Y", 0.0f, 0.0f, 1.0f, 0.1f);

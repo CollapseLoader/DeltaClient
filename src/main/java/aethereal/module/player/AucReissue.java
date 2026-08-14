@@ -14,7 +14,7 @@ import net.minecraft.network.packet.c2s.play.ClickSlotC2SPacket;
 import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
 import net.minecraft.screen.slot.SlotActionType;
 
-@ModuleRegister(a = "Auc Reissue", b = "Автоматически перевыставляет предметы на аукционе", c = Category.Player)
+@ModuleRegister(name = "Auc Reissue", description = "Автоматически перевыставляет предметы на аукционе", category = Category.Player)
 public class AucReissue extends Module implements Interface {
     private boolean b;
 

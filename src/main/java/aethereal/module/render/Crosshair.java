@@ -14,7 +14,7 @@ import aethereal.setting.SliderSetting;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.hit.EntityHitResult;
 
-@ModuleRegister(a = "Crosshair", b = "Отображает настраиваемый прицел на экране", c = Category.Render)
+@ModuleRegister(name = "Crosshair", description = "Отображает настраиваемый прицел на экране", category = Category.Render)
 public class Crosshair extends Module {
     private final SliderSetting b = new SliderSetting("Расстояние от центра", 0.0f, 0.0f, 6.0f, 0.5f);
     private final SliderSetting c = new SliderSetting("Длина сегментов", 2.5f, 2.0f, 5.0f, 0.5f);

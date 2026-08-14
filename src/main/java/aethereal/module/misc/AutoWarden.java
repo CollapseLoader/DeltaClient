@@ -75,7 +75,7 @@ import net.minecraft.item.SmithingTemplateItem;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.component.DataComponentTypes;
 
-@ModuleRegister(a = "Auto Warden", b = "Автоматизирует фарм варденов на анархии", c = Category.Misc)
+@ModuleRegister(name = "Auto Warden", description = "Автоматизирует фарм варденов на анархии", category = Category.Misc)
 public class AutoWarden extends Module {
     private int roarTimer;
     private boolean died;

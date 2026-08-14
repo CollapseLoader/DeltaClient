@@ -11,7 +11,7 @@ import aethereal.setting.SliderSetting;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 
-@ModuleRegister(a = "Full Bright", b = "Полностью освещает мир через гамму или ночное зрение", c = Category.Render)
+@ModuleRegister(name = "Full Bright", description = "Полностью освещает мир через гамму или ночное зрение", category = Category.Render)
 public class FullBright extends Module {
     private final ModeSetting b = new ModeSetting("Режим видения", "Гамма", "Гамма", "Ночное зрение");
     private final SliderSetting c = new SliderSetting("Уровень гаммы", 4.0f, 1.0f, 8.0f, 0.5f).a(() -> {

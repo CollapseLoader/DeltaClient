@@ -41,7 +41,7 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
-@ModuleRegister(a = "Ancient Farmer", b = "Автоматически фармит древние обломки в режиме полета", c = Category.Misc)
+@ModuleRegister(name = "Ancient Farmer", description = "Автоматически фармит древние обломки в режиме полета", category = Category.Misc)
 public class AncientFarmer extends Module {
     private final ModeSetting b = new ModeSetting("Режим поиска территории", "Поиск сверху", "Поиск сверху", "Поиск снизу");
     private final ExecutorService c = Executors.newSingleThreadExecutor();

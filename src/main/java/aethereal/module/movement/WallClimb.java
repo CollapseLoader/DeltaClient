@@ -9,7 +9,7 @@ import aethereal.setting.ModeSetting;
 import aethereal.setting.SliderSetting;
 import aethereal.util.CounterUtil;
 
-@ModuleRegister(a = "Wall Climb", b = "Позволяет взбираться по стенам", c = Category.Movement)
+@ModuleRegister(name = "Wall Climb", description = "Позволяет взбираться по стенам", category = Category.Movement)
 public class WallClimb extends Module {
     private final ModeSetting b = new ModeSetting("Выберите тип обхода", "Матрикс", "Матрикс");
     private final SliderSetting c = new SliderSetting("Скорость режима", 20.0f, 1.0f, 100.0f, 1.0f);

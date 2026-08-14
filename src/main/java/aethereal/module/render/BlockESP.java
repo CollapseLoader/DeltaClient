@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
-@ModuleRegister(a = "Block ESP", b = "Подсвечивает добавленные вами блоки через .blockesp", c = Category.Render)
+@ModuleRegister(name = "Block ESP", description = "Подсвечивает добавленные вами блоки через .blockesp", category = Category.Render)
 public class BlockESP extends Module {
     private final List<BlockPos> b = new CopyOnWriteArrayList();
     private ExecutorService c;
@@ -74,7 +74,8 @@ public class BlockESP extends Module {
                 }, (first, second) -> {
                     return second;
                 }));
-                for (BlockEntityTickInvoker ticker : ((platform.inject.accessors.WorldAccessor) mc.world).getBlockEntityTickers()) {
+                for (BlockEntityTickInvoker ticker : ((platform.inject.accessors.WorldAccessor) mc.world)
+                        .getBlockEntityTickers()) {
                     if (!ticker.isRemoved()) {
                         a(event, ticker.getPos(), colors);
                     }
@@ -89,7 +90,8 @@ public class BlockESP extends Module {
     private void a(DrawEvent event, BlockPos pos, Map<Block, Integer> colors) {
         Integer color = colors.get(mc.world.getBlockState(pos).getBlock());
         if (color != null) {
-            event.e().a(event.h(), new Box(pos), color.intValue() != -1 ? color.intValue() : ColorUtil.a(Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), InterfaceC0020Opcode.al), 1.5f);
+            event.e().a(event.h(), new Box(pos), color.intValue() != -1 ? color.intValue()
+                    : ColorUtil.a(Delta.h().d().o().a(ThemeInfo.PRIMARY).a(), InterfaceC0020Opcode.al), 1.5f);
         }
     }
 
