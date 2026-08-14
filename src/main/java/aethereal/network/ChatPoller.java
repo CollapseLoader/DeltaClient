@@ -38,7 +38,6 @@ public class ChatPoller {
             if (!current.isEmpty()) {
                 List<ChatModel> previous = this.c;
                 this.c = current;
-                JsonParser jsonParser = new JsonParser();
                 if (previous != null) {
                     for (ChatModel model : current) {
                         ChatModel old = previous.stream().filter(previousModel -> {
@@ -51,7 +50,7 @@ public class ChatPoller {
                             model.a(old.a());
                         }
                         if (model.c() > previousRoomMessageId) {
-                            for (JsonElement historyElement : jsonParser.parse(this.b.c(model.b()).k()).getAsJsonObject().getAsJsonArray("objects")) {
+                            for (JsonElement historyElement : JsonParser.parseString(this.b.c(model.b()).k()).getAsJsonObject().getAsJsonArray("objects")) {
                                 JsonObject historyObject = historyElement.getAsJsonObject();
                                 if ("chat_node".equalsIgnoreCase(historyObject.get("type").getAsString())) {
                                     for (JsonElement chatMessageElement : historyObject.getAsJsonObject("data").getAsJsonArray("messages")) {
@@ -100,7 +99,7 @@ public class ChatPoller {
         JsonArray objects = new JsonArray();
         objects.add(chatBookmarks);
         List<ChatModel> result = new ArrayList<>();
-        for (JsonElement element : new JsonParser().parse(this.b.a(objects.toString(), String.valueOf(false)).k()).getAsJsonObject().getAsJsonArray("objects")) {
+        for (JsonElement element : JsonParser.parseString(this.b.a(objects.toString(), String.valueOf(false)).k()).getAsJsonObject().getAsJsonArray("objects")) {
             JsonObject object = element.getAsJsonObject();
             if ("chat_bookmarks".equalsIgnoreCase(object.get("type").getAsString())) {
                 this.a = object.get("tag").getAsString();

@@ -75,7 +75,7 @@ public class StationScreen extends Screen {
         ThemeProcessor themeProcessorO = Delta.getInstance().getModuleProcessor().o();
         int iA = themeProcessorO.a(ThemeInfo.BACKGROUND_GUI).toIntColor();
         ThemeInfo themeInfo = ThemeInfo.PRIMARY;
-        int iA2 = ColorUtil.combineColorWithAlpha(ColorUtil.lerpColor(iA, themeProcessorO.a(themeInfo).toIntColor(), themeProcessorO.a(themeInfo).b() * 0.25f), 220);
+        int iA2 = ColorUtil.combineColorWithAlpha(ColorUtil.lerpColor(iA, themeProcessorO.a(themeInfo).toIntColor(), themeProcessorO.a(themeInfo).getAlphaFloat() * 0.25f), 220);
         draw2DProcessorI.a(context.getMatrices(), vector4f2.x, vector4f2.y, vector4f2.z, vector4f2.w, 8.0f, iA2, 1.0f, iA2, 16.0f);
         draw2DProcessorI.a(context.getMatrices(), vector4f2.x, vector4f2.y, vector4f2.z, vector4f2.w, 8.0f, 0.5f, themeProcessorO.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor());
         a(context, delta, iA2);

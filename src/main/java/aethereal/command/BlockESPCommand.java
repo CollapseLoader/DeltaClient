@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 
 @Command(name = "blockesp")
 public class BlockESPCommand extends BaseCommand {
-    private final List<a> c = new CopyOnWriteArrayList();
+    private final List<a> c = new CopyOnWriteArrayList<>();
 
     public List<a> c() {
         return this.c;
@@ -30,7 +30,7 @@ public class BlockESPCommand extends BaseCommand {
             ChatUtil.sendMessage("Использование: .blockesp add <блок> [цвет]");
             return 1;
         }).then(d("блок").suggests((context2, suggestions) -> {
-            Stream streamLimit = Registries.BLOCK.stream().filter(block -> {
+            Stream<String> streamLimit = Registries.BLOCK.stream().filter(block -> {
                 return block != Blocks.AIR;
             }).map(block2 -> {
                 return Registries.BLOCK.getId(block2).getPath();
@@ -43,7 +43,7 @@ public class BlockESPCommand extends BaseCommand {
         }).executes(context3 -> {
             return a(a(context3, "блок"), null);
         }).then(d("цвет").suggests((context4, suggestions2) -> {
-            Stream streamFilter = Arrays.stream(EspColor.values()).map(color -> {
+            Stream<String> streamFilter = Arrays.stream(EspColor.values()).map(color -> {
                 return color.name().toLowerCase();
             }).filter(name -> {
                 return name.startsWith(suggestions2.getRemainingLowerCase());
@@ -156,16 +156,6 @@ public class BlockESPCommand extends BaseCommand {
 
     public record a(Block a, int b) {
         public a {
-        }
-
-        @Override
-        public Block a() {
-            return this.a;
-        }
-
-        @Override
-        public int b() {
-            return this.b;
         }
     }
 }

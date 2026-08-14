@@ -5,7 +5,6 @@ import aethereal.autobuy.BatchProcessor;
 import aethereal.config.BaseProcessor;
 import aethereal.core.Delta;
 import aethereal.core.EventTarget;
-import aethereal.core.Interface;
 import aethereal.event.DrawEvent;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawContext;
@@ -17,7 +16,7 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Matrix4f;
 
-public class Draw3DProcessor extends BaseProcessor implements Interface {
+public class Draw3DProcessor extends BaseProcessor {
     @Override
 
     public void setup() {

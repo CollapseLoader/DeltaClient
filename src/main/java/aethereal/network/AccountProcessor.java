@@ -13,7 +13,7 @@ public class AccountProcessor extends ConfigProcessor<AccountConstructor> {
 
     protected List<AccountConstructor> loadConfig(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
-        ArrayList arrayList = new ArrayList<>();
+        ArrayList<AccountConstructor> arrayList = new ArrayList<>();
         for (int i = 0; i < jSONArray.a(); i++) {
             JSONObject jSONObjectJ = jSONArray.j(i);
             AccountConstructor accountConstructor = new AccountConstructor(jSONObjectJ.l("name"));

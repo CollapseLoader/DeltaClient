@@ -124,24 +124,24 @@ public class DiscordIPCConfig {
         a() {
         }
 
-        public a a(long clientId) {
+        public a clientId(long clientId) {
             this.a = clientId;
             return this;
         }
 
-        public a a(List<DiscordBuild> preferredBuilds) {
+        public a preferredBuilds(List<DiscordBuild> preferredBuilds) {
             this.c = preferredBuilds;
             this.b = true;
             return this;
         }
 
-        public a a(boolean reconnect) {
+        public a reconnect(boolean reconnect) {
             this.e = reconnect;
             this.d = true;
             return this;
         }
 
-        public a a(int maxReconnectAttempts) {
+        public a maxReconnectAttempts(int maxReconnectAttempts) {
             this.g = maxReconnectAttempts;
             this.f = true;
             return this;
@@ -171,7 +171,7 @@ public class DiscordIPCConfig {
             return this;
         }
 
-        public DiscordIPCConfig a() {
+        public DiscordIPCConfig build() {
             List<DiscordBuild> preferredBuilds$value = this.c;
             if (!this.b) {
                 preferredBuilds$value = DiscordIPCConfig.j();

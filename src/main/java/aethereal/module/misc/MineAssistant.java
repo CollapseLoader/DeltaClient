@@ -33,7 +33,7 @@ public class MineAssistant extends Module {
 
     @EventTarget
     public void onTick(TickEvent event) {
-        if (ServerUtil.a.a() || ServerUtil.d.a()) {
+        if (ServerUtil.a.a$() || ServerUtil.d.a()) {
             detectMineArea();
         }
     }

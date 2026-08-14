@@ -97,7 +97,7 @@ public class ColorElement extends Element<ColorSetting> {
         }
         drawLabel(matrices, Fonts.c, this.b.i(), this.a.x, this.a.y, this.a.w, 6.5f, theme.a(ThemeInfo.TEXT).toIntColor(), (boxX - this.a.x) - 4.0f, hovered, extend, delta);
         draw.a(matrices, boxX, boxY, 11.0f, 11.0f, 2.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.039215688f * extend));
-        draw.a(matrices, boxX, boxY, 11.0f, 11.0f, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * extend));
+        draw.a(matrices, boxX, boxY, 11.0f, 11.0f, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).getAlphaFloat() * extend));
         Fonts.a.a(matrices, "J", boxX + ((11.0f - Fonts.a.b("J", 6.5f)) / 2.0f), Fonts.a.a("J", 6.5f, centerY), 6.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), extend));
         draw.a(matrices, ((boxX + 11.0f) - 3.0f) - 1.25f, ((boxY + 11.0f) - 3.0f) - 1.25f, 3.0f, 3.0f, 0.5f, ColorUtil.applyAlphaToColor(this.b.c().intValue(), extend));
     }
@@ -124,9 +124,9 @@ public class ColorElement extends Element<ColorSetting> {
             matrices.scale(scale, scale, 1.0f);
             matrices.translate(-centerX, -centerY, 0.0f);
             draw.b(matrices, this.pickerBackground.x, this.pickerBackground.y, this.pickerBackground.z, this.pickerBackground.w, 4.0f, background, anim);
-            draw.a(matrices, this.pickerBackground.x, this.pickerBackground.y, this.pickerBackground.z, this.pickerBackground.w, 4.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * anim));
+            draw.a(matrices, this.pickerBackground.x, this.pickerBackground.y, this.pickerBackground.z, this.pickerBackground.w, 4.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).getAlphaFloat() * anim));
             draw.a(matrices, this.satArea.x, this.satArea.y, this.satArea.z, this.satArea.w, 2.0f, ColorUtil.applyAlphaToColor(16777215, anim), ColorUtil.applyAlphaToColor(hueColor, anim), ColorUtil.applyAlphaToColor(0, anim), ColorUtil.applyAlphaToColor(0, anim));
-            draw.a(matrices, this.satArea.x, this.satArea.y, this.satArea.z, this.satArea.w, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * anim));
+            draw.a(matrices, this.satArea.x, this.satArea.y, this.satArea.z, this.satArea.w, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).getAlphaFloat() * anim));
             float cursorX = MathUtil.b(this.satArea.x + (this.i * this.satArea.z), this.satArea.x + 2.0f, (this.satArea.x + this.satArea.z) - 2.0f);
             float cursorY = MathUtil.b(this.satArea.y + ((1.0f - this.j) * this.satArea.w), this.satArea.y + 2.0f, (this.satArea.y + this.satArea.w) - 2.0f);
             draw.a(matrices, cursorX - 2.0f, cursorY - 2.0f, 4.0f, 4.0f, 1.0f, 0.5f, handle);

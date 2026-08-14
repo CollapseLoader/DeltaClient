@@ -139,7 +139,7 @@ public class AmbienceEvent {
             this.value = floatValue;
         }
 
-        public Biome.Precipitation d() {
+        public Biome.Precipitation precipitation() {
             return this.precipitation;
         }
 

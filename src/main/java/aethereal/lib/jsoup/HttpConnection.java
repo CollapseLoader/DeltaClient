@@ -29,7 +29,7 @@ public final class HttpConnection {
     public static class d {
         private final Map<String, String> cookies = new HashMap<>();
 
-        public void d(String name, String value) {
+        public void add(String name, String value) {
             cookies.put(name, value);
         }
 

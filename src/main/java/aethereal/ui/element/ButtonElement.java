@@ -48,7 +48,7 @@ public class ButtonElement extends Element<ButtonSetting> {
         float hover = getActivationAnimation().c();
         int text = ColorUtil.convertToARGB(255, 255, 255, 255);
         draw.a(matrices, this.a.x, this.a.y, this.a.z, this.a.w, 4.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), ((10.0f + (20.0f * hover)) / 255.0f) * extend));
-        draw.a(matrices, this.a.x, this.a.y, this.a.z, this.a.w, 4.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * extend));
+        draw.a(matrices, this.a.x, this.a.y, this.a.z, this.a.w, 4.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).getAlphaFloat() * extend));
         Fonts.c.b(matrices, this.b.i(), this.a.x + (this.a.z / 2.0f), (this.a.y + ((this.a.w - Fonts.c.a(7.0f)) / 2.0f)) - 0.5f, 7.0f, ColorUtil.applyAlphaToColor(text, extend));
     }
 }

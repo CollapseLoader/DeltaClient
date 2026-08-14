@@ -12,7 +12,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class EventDispatcher {
 
     private static final Logger a = LogManager.b(EventDispatcher.class);
-    private final List<DiscordEventListener> b = new CopyOnWriteArrayList();
+    private final List<DiscordEventListener> b = new CopyOnWriteArrayList<DiscordEventListener>();
 
     public void a(DiscordEventListener listener) {
         this.b.add(listener);
@@ -65,7 +65,7 @@ public class EventDispatcher {
             case "ACTIVITY_JOIN_REQUEST":
                 JsonUtils.b(data, "user").ifPresent(userJson -> {
                     try {
-                        DiscordUser user = DiscordUser.a(userJson);
+                        DiscordUser user = DiscordUser.fromJson(userJson);
                         a(eventName, listener -> {
                             listener.b(user);
                         });

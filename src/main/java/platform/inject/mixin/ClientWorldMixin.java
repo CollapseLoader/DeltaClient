@@ -24,8 +24,7 @@ public class ClientWorldMixin {
 
     @Inject(method = {"handleBlockUpdate"}, at = {@At("HEAD")})
     private void onHandleBlockUpdate(BlockPos pos, BlockState state, int flags, CallbackInfo ci) {
-        ClientWorld world = (ClientWorld) (Object) this;
-        BlockState oldState = world.getBlockState(pos);
+        BlockState oldState = ((ClientWorld) (Object) this).getBlockState(pos);
         if (oldState != state) {
             EventManager.a(new BlockChangeEvent(pos.toImmutable(), oldState, state));
         }

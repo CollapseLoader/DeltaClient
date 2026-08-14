@@ -15,7 +15,7 @@ public class FriendCommand extends BaseCommand {
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
         FriendProcessor processor = Delta.getInstance().getModuleProcessor().e();
-        LiteralArgumentBuilder literalArgumentBuilderThen = builder.then(a("add").executes(context -> {
+        LiteralArgumentBuilder<CommandSource> literalArgumentBuilderThen = builder.then(a("add").executes(context -> {
             ChatUtil.sendMessage("Использование: .friend add <ник>");
             return 1;
         }).then(b("ник").suggests(a()).executes(context2 -> {
@@ -29,7 +29,7 @@ public class FriendCommand extends BaseCommand {
             ChatUtil.sendMessage("Друг " + name + " был успешно добавлен в список друзей.");
             return 1;
         })));
-        LiteralArgumentBuilder literalArgumentBuilderExecutes = a("remove").executes(context3 -> {
+        LiteralArgumentBuilder<CommandSource> literalArgumentBuilderExecutes = a("remove").executes(context3 -> {
             ChatUtil.sendMessage("Использование: .friend remove <ник>");
             return 1;
         });

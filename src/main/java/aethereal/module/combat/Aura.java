@@ -428,7 +428,7 @@ public class Aura extends Module {
                         .toDegrees(Math.atan2(targetPosition.y, Math.hypot(targetPosition.x, targetPosition.z))));
         System.arraycopy(this.pitchHistory, 0, this.pitchHistory, 1, 29);
         this.pitchHistory[0] = pitchToTarget;
-        if (this.target != null && this.attackCooldown >= 2 && ((ServerUtil.a.a(this.target) > 6.0f
+        if (this.target != null && this.attackCooldown >= 2 && ((ServerUtil.a.a$(this.target) > 6.0f
                 || this.timers[2] > 43.0f) && this.timers[2] >= 33.0f
                 && ((this.attackCooldown == 4 || Math.random() > 0.5d)
                         && (!this.randomDirection

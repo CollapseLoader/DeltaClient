@@ -68,7 +68,7 @@ public class AncientFarmer extends Module {
     @EventTarget
     public void onTick(TickEvent event) {
         a missing = Arrays.stream(a.values()).filter(requirement -> {
-            return !requirement.a();
+            return !requirement.isActive();
         }).findFirst().orElse(null);
         XRay xray = Delta.getInstance().getModuleProcessor().t().E();
         boolean work = missing == AncientFarmer.a.TNT && this.e != Phase.SEARCH;
@@ -397,7 +397,7 @@ public class AncientFarmer extends Module {
             return this.i;
         }
 
-        public boolean a() {
+        public boolean isActive() {
             return this.h.getAsBoolean();
         }
     }

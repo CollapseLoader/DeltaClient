@@ -79,7 +79,7 @@ public class TargetWidget extends Widget {
                 }
             }
             int primary = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor();
-            String hpValue = String.valueOf((int) ServerUtil.a.a(this.j));
+            String hpValue = String.valueOf((int) ServerUtil.a.a$(this.j));
             if (this.k.isEmpty()) {
                 this.k = hpValue;
             }
@@ -89,9 +89,9 @@ public class TargetWidget extends Widget {
                 this.k = hpValue;
                 this.i.c(0.0f);
             }
-            float targetHP = MathUtil.b(MathUtil.b(ServerUtil.a.a(this.j), 0.0f, this.j.getMaxHealth()) / this.j.getMaxHealth(), 0.0f, 1.0f);
+            float targetHP = MathUtil.b(MathUtil.b(ServerUtil.a.a$(this.j), 0.0f, this.j.getMaxHealth()) / this.j.getMaxHealth(), 0.0f, 1.0f);
             float lineHP = this.h.a(targetHP, targetHP, 0.5f);
-            float alpha = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).b() * a();
+            float alpha = Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).getAlphaFloat() * a();
             event.getDraw2DProcessor().a(event.h(), textX, headY + 12.5f, 54.0f, 3.0f, 0.5f, ColorUtil.applyAlphaToColor(ColorUtil.b(primary, 0.3f), a()));
             event.getDraw2DProcessor().a(event.h(), textX, headY + 12.5f, 54.0f * lineHP, 3.0f, 0.5f, ColorUtil.applyAlphaToColor(primary, alpha));
         }

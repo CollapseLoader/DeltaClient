@@ -71,7 +71,7 @@ public class CollectorSection extends Section {
                 item.h().a(0.0f, 1.0f, 0.4f, EasingList.i, delta);
                 float on = item.h().c();
                 draw.a(matrices, slotX, slotY, slot, slot, 4.0f, ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(255, 255, 255, 255), 0.023529412f * (item == this.c ? 1.0f : this.d == item ? 0.5f : 0.0f)));
-                draw.a(matrices, slotX, slotY, slot, slot, 4.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b()));
+                draw.a(matrices, slotX, slotY, slot, slot, 4.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).getAlphaFloat()));
                 draw3d.a(context, item.c(), slotX + offset, slotY + offset, 0, 0.5f + (0.5f * on), scale, false);
                 if (item.m() > 1) {
                     String count = String.valueOf(item.m());
@@ -127,12 +127,12 @@ public class CollectorSection extends Section {
                 float levelX = (switchX - 6.0f) - 28.0f;
                 Fonts.c.a(matrices, condition.e(), rowX, (centerY - (Fonts.c.a(6.75f) / 2.0f)) - 0.75f, 6.75f, ColorUtil.lerpColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), theme.a(ThemeInfo.TEXT).toIntColor(), value));
                 if (condition.c()) {
-                    draw.a(context, levelX + 13.625f, centerY - 2.5f, 0.75f, 5.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * fade));
+                    draw.a(context, levelX + 13.625f, centerY - 2.5f, 0.75f, 5.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).getAlphaFloat() * fade));
                     Fonts.c.b(matrices, Marker.b, levelX + 7.0f, (centerY - (Fonts.c.a(11.0f) / 2.0f)) - 1.25f, 11.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), fade));
                     Fonts.c.b(matrices, ProcessIdUtil.a, levelX + 21.0f, (centerY - (Fonts.c.a(11.0f) / 2.0f)) - 2.0f, 11.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), fade));
                 }
                 draw.a(matrices, switchX, switchY, 13.0f, 7.695f, 3.078f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), value));
-                draw.a(matrices, switchX, switchY, 13.0f, 7.695f, 3.078f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * fade));
+                draw.a(matrices, switchX, switchY, 13.0f, 7.695f, 3.078f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).getAlphaFloat() * fade));
                 draw.a(matrices, switchX + 1.496f + (5.216f * value), switchY + 1.496f, 4.703f, 4.703f, 1.539f, ColorUtil.lerpColor(ColorUtil.convertToARGB(InterfaceC0020Opcode.ap, InterfaceC0020Opcode.ap, InterfaceC0020Opcode.bk, 255), ColorUtil.convertToARGB(255, 255, 255, 255), value));
                 if (MathUtil.a(mouseX, mouseY, switchX, switchY, 13.0f, 7.695f)) {
                     this.e = condition;

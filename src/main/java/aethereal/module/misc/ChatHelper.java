@@ -26,7 +26,7 @@ public class ChatHelper extends Module {
     public void a(TickEvent event) {
         int iB;
         if (this.c.c().booleanValue()) {
-            if (ServerUtil.a.a()) {
+            if (ServerUtil.a.a$()) {
                 iB = ServerUtil.a.d();
             } else {
                 iB = ServerUtil.d.a() ? ServerUtil.d.b() : -1;

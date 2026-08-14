@@ -62,7 +62,7 @@ public class DistributionHandler extends BaseHandler implements Interface {
                 }).filter(item -> {
                     return item != Items.AIR;
                 }).toList());
-                DefaultedRegistry class_7922Var = Registries.ITEM;
+                DefaultedRegistry<Item> class_7922Var = Registries.ITEM;
                 Objects.requireNonNull(class_7922Var);
                 order.sort(Comparator.comparingInt((v1) -> {
                     return class_7922Var.getRawId(v1);

@@ -17,7 +17,7 @@ public class MacrosCommand extends BaseCommand {
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
         MacrosProcessor processor = Delta.getInstance().getModuleProcessor().d();
-        LiteralArgumentBuilder literalArgumentBuilderThen = builder.then(a("add").executes(context -> {
+        LiteralArgumentBuilder<CommandSource> literalArgumentBuilderThen = builder.then(a("add").executes(context -> {
             ChatUtil.sendMessage("Использование: .macros add <клавиша> <команда>");
             return 1;
         }).then(d("клавиша").suggests(b()).then(c("команда").executes(context2 -> {
@@ -33,7 +33,7 @@ public class MacrosCommand extends BaseCommand {
             ChatUtil.sendMessage("Макрос " + command + " был успешно добавлен на клавишу " + keyUtil.b() + ".");
             return 1;
         }))));
-        LiteralArgumentBuilder literalArgumentBuilderExecutes = a("remove").executes(context3 -> {
+        LiteralArgumentBuilder<CommandSource> literalArgumentBuilderExecutes = a("remove").executes(context3 -> {
             List<MacrosConstructor> macros = processor.a();
             if (macros.isEmpty()) {
                 ChatUtil.sendMessage("Список макросов пуст.");

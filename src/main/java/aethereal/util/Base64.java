@@ -338,7 +338,7 @@ public class Base64 {
             }
         }
 
-        public void a() throws IOException {
+        public void flush() throws IOException {
             if (this.b > 0) {
                 if (this.a) {
                     this.out.write(Base64.b(this.g, this.c, this.b, this.i));
@@ -351,7 +351,7 @@ public class Base64 {
 
         @Override
         public void close() throws IOException {
-            a();
+            flush();
             super.close();
             this.c = null;
             this.out = null;

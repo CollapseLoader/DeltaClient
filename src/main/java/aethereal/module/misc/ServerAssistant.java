@@ -92,7 +92,7 @@ public class ServerAssistant extends Module {
     @EventTarget
     public void onTick(TickEvent event) {
         if (this.autoGodAura.c().booleanValue()) {
-            if (ServerUtil.a.a() || ServerUtil.d.a()) {
+            if (ServerUtil.a.a$() || ServerUtil.d.a()) {
                 boolean hasBadEffect = mc.player.getStatusEffects().stream().anyMatch(effect -> {
                     return effect.getEffectType() == StatusEffects.WEAKNESS && effect.getAmplifier() >= 1 && ((double) effect.getDuration()) / 20.0d >= 15.0d;
                 });
@@ -107,7 +107,7 @@ public class ServerAssistant extends Module {
     @EventTarget
     public void a(TooltipEvent event) {
         ItemStack stack = event.b();
-        int price = ServerUtil.a.a(stack);
+        int price = ServerUtil.a.a$(stack);
         if (price > 0 && stack.getCount() > 1) {
             List<Text> lines = event.c();
             for (int i = 0; i < lines.size(); i++) {
@@ -124,7 +124,7 @@ public class ServerAssistant extends Module {
         HandledScreenAccessor handledScreenAccessorB = (HandledScreenAccessor) event.getScreen();
         if (handledScreenAccessorB instanceof GenericContainerScreen) {
             HandledScreenAccessor handledScreenAccessor = handledScreenAccessorB;
-            ToIntFunction<ItemStack> price = ServerUtil.a.a() ? ServerUtil.a::a : ServerUtil.d::a;
+            ToIntFunction<ItemStack> price = ServerUtil.a.a$() ? ServerUtil.a::a$ : ServerUtil.d::a;
             if (event.h() == ContainerEvent.Phase.TITLE) {
                 if (event.i().getString().contains("Хранилище")) {
                     long storage = handledScreenAccessor.getScreenHandler().slots.stream().mapToLong(slot -> {
@@ -153,7 +153,7 @@ public class ServerAssistant extends Module {
             if (handledScreenAccessor.getScreenHandler().slots.size() >= 90) {
                 List<Slot> containerSlots = new ArrayList<>(event.e().subList(0, event.e().size() - 36));
                 boolean useFilter = containerSlots.stream().anyMatch(slot2 -> {
-                    return price.applyAsInt(slot2.getStack()) >= 0 && this.itemFilter.a(slot2.getStack());
+                    return price.applyAsInt(slot2.getStack()) >= 0 && this.itemFilter.shouldUse(slot2.getStack());
                 });
                 if (event.h() == ContainerEvent.Phase.POST && this.helpElements.a("Аукционный ассистент").c().booleanValue()) {
                     if (this.cheapestSlot == null) {
@@ -162,7 +162,7 @@ public class ServerAssistant extends Module {
                         for (Slot slot3 : containerSlots) {
                             ItemStack stack = slot3.getStack();
                             int value = price.applyAsInt(stack);
-                            if (!useFilter || this.itemFilter.a(stack)) {
+                            if (!useFilter || this.itemFilter.shouldUse(stack)) {
                                 if (value >= 0 && value < minPrice) {
                                     minPrice = value;
                                     cheapest = slot3;
@@ -185,25 +185,24 @@ public class ServerAssistant extends Module {
         if (event.isReceive()) {
             GameMessageS2CPacket message = (GameMessageS2CPacket) event.getPacket();
             if (message instanceof GameMessageS2CPacket) {
-                if (ServerUtil.a.a() && message.content().getString().equals("На этой анархии этот предмет не работает")) {
-                    int z = ServerUtil.a.d();
+                if (ServerUtil.a.a$() && message.content().getString().equals("На этой анархии этот предмет не работает")) {
                 }
             }
             InventoryS2CPacket packet = (InventoryS2CPacket) event.getPacket();
             if (packet instanceof InventoryS2CPacket) {
-                if (this.helpElements.a("Сортировать по цене").c().booleanValue() && (ServerUtil.a.a() || ServerUtil.d.a())) {
+                if (this.helpElements.a("Сортировать по цене").c().booleanValue() && (ServerUtil.a.a$() || ServerUtil.d.a())) {
                     List<ItemStack> contents = packet.getContents();
                     int chestSlots = contents.size() > 36 ? contents.size() - 36 : contents.size();
                     this.sortOrder = null;
                     if (chestSlots >= 44 && packet.getSyncId() != 0) {
-                        ToIntFunction<ItemStack> price = ServerUtil.a.a() ? ServerUtil.a::a : ServerUtil.d::a;
+                        ToIntFunction<ItemStack> price = ServerUtil.a.a$() ? ServerUtil.a::a$ : ServerUtil.d::a;
                         boolean useFilter = contents.subList(0, chestSlots).stream().anyMatch(stack -> {
-                            return price.applyAsInt(stack) >= 0 && this.itemFilter.a(stack);
+                            return price.applyAsInt(stack) >= 0 && this.itemFilter.shouldUse(stack);
                         });
                         int[] prices = new int[chestSlots];
                         for (int i = 0; i < chestSlots; i++) {
                             ItemStack stack2 = contents.get(i);
-                            int value = (stack2.isEmpty() || (useFilter && !this.itemFilter.a(stack2))) ? -1 : price.applyAsInt(stack2);
+                            int value = (stack2.isEmpty() || (useFilter && !this.itemFilter.shouldUse(stack2))) ? -1 : price.applyAsInt(stack2);
                             prices[i] = value < 0 ? Integer.MAX_VALUE : value;
                         }
                         Integer[] order = IntStream.range(0, chestSlots).boxed().sorted(Comparator.comparingInt(i2 -> {
@@ -263,7 +262,6 @@ public class ServerAssistant extends Module {
                 Delta.getInstance().getModuleProcessor().v().getUseableHandler().a(item.getDefaultStack());
             }
         }).a(() -> {
-            Stream stream = Arrays.stream(servers);
             ModeSetting modeSetting = this.targetServer;
             Objects.requireNonNull(modeSetting);
             return Boolean.valueOf(Arrays.stream(servers).anyMatch(server -> modeSetting.l(server)));
@@ -282,7 +280,7 @@ public class ServerAssistant extends Module {
         public a() {
         }
 
-        public boolean a(ItemStack stack) {
+        public boolean shouldUse(ItemStack stack) {
             Item item = stack.getItem();
             if (item instanceof ArmorItem) {
                 return b(stack);

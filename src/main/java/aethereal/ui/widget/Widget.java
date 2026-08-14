@@ -183,10 +183,10 @@ public class Widget {
     protected void a(DrawEvent event, float x, float y, float width, float height, boolean glow, float animation) {
         if (animation > 0.0f) {
             ThemeProcessor themeProcessor = Delta.getInstance().getModuleProcessor().o();
-            float alpha = themeProcessor.a(ThemeInfo.BACKGROUND_HUD).b() * animation;
+            float alpha = themeProcessor.a(ThemeInfo.BACKGROUND_HUD).getAlphaFloat() * animation;
             int background = ColorUtil.lerpColor(themeProcessor.a(ThemeInfo.BACKGROUND_HUD).toIntColor(),
-                    themeProcessor.a(ThemeInfo.PRIMARY).toIntColor(), themeProcessor.a(ThemeInfo.PRIMARY).b() / 6.0f);
-            themeProcessor.a(ThemeInfo.BACKGROUND_HUD).e(InterfaceC0020Opcode.cY);
+                    themeProcessor.a(ThemeInfo.PRIMARY).toIntColor(), themeProcessor.a(ThemeInfo.PRIMARY).getAlphaFloat() / 6.0f);
+            themeProcessor.a(ThemeInfo.BACKGROUND_HUD).setAlpha(InterfaceC0020Opcode.cY);
             if (glow) {
                 event.getDraw2DProcessor().a(event.h(), x, y, width, height, 5.0f + (this.b.c()), ColorUtil.applyAlphaToColor(background, alpha),
                         animation, ColorUtil.applyAlphaToColor(background, alpha), 8.0f + (2.0f * this.b.c()));

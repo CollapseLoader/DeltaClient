@@ -55,7 +55,7 @@ public class Interface extends Module {
     @EventTarget
     public void onDraw(DrawEvent event) {
         if (event.b()) {
-            Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).a(this.globalColor.c().intValue());
+            Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).fromIntColor(this.globalColor.c().intValue());
             for (Widget widget : this.widgets) {
                 if (this.widgetToggles.a(widget.j().getName()).c().booleanValue()) {
                     widget.a(event);

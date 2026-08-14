@@ -70,10 +70,10 @@ public class GUIScreen extends Screen {
         double dA = MathUtil.scale(mouseX, 2);
         double dA2 = MathUtil.scale(mouseY, 2);
         ScaleUtil.a(context, 2);
-        double dSum = this.c.stream().mapToDouble(new ToDoubleFunction() {
+        double dSum = this.c.stream().mapToDouble(new ToDoubleFunction<GUIPanel>() {
             @Override
-            public double applyAsDouble(Object obj) {
-                return ((GUIPanel) obj).f().z;
+            public double applyAsDouble(GUIPanel obj) {
+                return obj.f().z;
             }
         }).sum();
         float size = (this.c.size() - 1) * 8.0f;
@@ -85,10 +85,10 @@ public class GUIScreen extends Screen {
         float f4 = 0.0f;
         for (final GUIPanel gUIPanel : this.c) {
             Vector4f vector4fF = gUIPanel.f();
-            gUIPanel.a(Delta.getInstance().getModuleProcessor().t().e().stream().filter(obj -> this.a(gUIPanel, obj)).sorted(Comparator.comparing(new Function() {
+            gUIPanel.a(Delta.getInstance().getModuleProcessor().t().e().stream().filter(obj -> this.a(gUIPanel, obj)).sorted(Comparator.comparing(new Function<Module, String>() {
                 @Override
-                public Object apply(Object obj) {
-                    return ((Module) obj).j();
+                public String apply(Module obj) {
+                    return obj.j();
                 }
             }, String.CASE_INSENSITIVE_ORDER)).toList());
             vector4fF.x = f3;

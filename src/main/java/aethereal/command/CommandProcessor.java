@@ -21,6 +21,7 @@ import java.util.List;
 
 public class CommandProcessor extends BaseProcessor {
 
+    @SuppressWarnings("unused")
     private static final Logger logger;
 
     static {
@@ -33,6 +34,7 @@ public class CommandProcessor extends BaseProcessor {
     private final LayoutCommand layoutCommand = new LayoutCommand();
     private final RCTCommand rctCommand = new RCTCommand();
     private final BlockESPCommand blockESPCommand = new BlockESPCommand();
+    @SuppressWarnings("unused")
     private final String prefix = ".";
     private final CommandDispatcher<CommandSource> dispatcher = new CommandDispatcher<>(new CaseInsensitiveLiteral.a());
     private final ClientCommandSource commandSource = new ClientCommandSource(null, MinecraftClient.getInstance());

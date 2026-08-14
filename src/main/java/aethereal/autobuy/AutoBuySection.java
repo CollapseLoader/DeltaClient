@@ -87,7 +87,7 @@ public class AutoBuySection extends Section implements Interface {
                 item.getAnimation().a(item.l());
                 item.getAnimation().a(0.0f, 1.0f, 0.4f, EasingList.i, delta);
                 draw.a(matrices, slotX, slotY, slot, slot, 4.0f, ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(255, 255, 255, 255), 0.023529412f * (item == this.h ? 1.0f : this.i == item ? 0.5f : 0.0f)));
-                draw.a(matrices, slotX, slotY, slot, slot, 4.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b()));
+                draw.a(matrices, slotX, slotY, slot, slot, 4.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).getAlphaFloat()));
                 float on = item.getAnimation().c();
                 draw3d.a(context, item.a(), slotX + offset, slotY + offset, 0, 0.5f + (0.5f * on), scale, false);
             }

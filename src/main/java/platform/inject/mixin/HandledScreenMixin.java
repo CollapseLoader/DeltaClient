@@ -75,7 +75,7 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> {
 
     @ModifyArg(method = {"drawForeground"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawText(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/text/Text;IIIZ)I", ordinal = 0), index = 1)
     private Text modifyTitle(Text title) {
-        ContainerEvent event = new ContainerEvent((HandledScreen) (Object) this, title);
+        ContainerEvent event = new ContainerEvent((HandledScreen<?>) (Object) this, title);
         EventManager.a(event);
         return event.i();
     }
@@ -107,8 +107,6 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> {
             }).dimensions(((screenBase.getWidth() + screen.getBackgroundWidth()) / 2) + 5, ((screenBase.getHeight() - screen.getBackgroundHeight()) / 2) + 48, 100, 20).build());
             if (autoBuy.m()) {
                 if (screenBase.getTitle().getString().toLowerCase().contains("аукцион") || screenBase.getTitle().getString().toLowerCase().contains("категория: настоящие вещи")) {
-                    int width = ((((screenBase.getWidth() - screen.getBackgroundWidth()) / 2) - 5) - 100) - 24;
-                    int height = (screenBase.getHeight() - screen.getBackgroundHeight()) / 2;
                     screenBase.invokeAddDrawableChild(ButtonWidget.builder(statusMessage("AutoBuy", autoBuy.isScreenReady()), widget -> {
                         autoBuy.d(!autoBuy.isScreenReady());
                         widget.setMessage(statusMessage("AutoBuy", autoBuy.isScreenReady()));
@@ -213,7 +211,7 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> {
             this.buttonTake.active = this.handler.slots.subList(0, this.chestSize).stream().anyMatch(this::hasStack);
             this.buttonDrop.active = this.handler.slots.subList(0, this.chestSize).stream().anyMatch(this::hasStack);
         }
-        EventManager.a(new ContainerEvent((HandledScreen) (Object) this, context, mouseX, mouseY, ContainerEvent.Phase.PRE));
+        EventManager.a(new ContainerEvent((HandledScreen<?>) (Object) this, context, mouseX, mouseY, ContainerEvent.Phase.PRE));
         ItemScroller itemScroller = Delta.getInstance().getModuleProcessor().t().w();
         if (itemScroller.m() && ((HandledScreenAccessor) this).getFocusedSlot() != null && ((HandledScreenAccessor) this).getFocusedSlot().hasStack() && GLFW.glfwGetMouseButton(Interface.mc.getWindow().getHandle(), 0) == 1 && GLFW.glfwGetKey(Interface.mc.getWindow().getHandle(), TokenId.O_) == 1 && itemScroller.r().a(itemScroller.q().c().intValue())) {
             Interface.mc.interactionManager.clickSlot(this.handler.syncId, ((HandledScreenAccessor) this).getFocusedSlot().id, 0, SlotActionType.QUICK_MOVE, Interface.mc.player);
@@ -223,6 +221,6 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> {
 
     @Inject(method = {"render"}, at = {@At("TAIL")})
     private void onRenderTail(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        EventManager.a(new ContainerEvent((HandledScreen) (Object) this, context, mouseX, mouseY, ContainerEvent.Phase.POST));
+        EventManager.a(new ContainerEvent((HandledScreen<?>) (Object) this, context, mouseX, mouseY, ContainerEvent.Phase.POST));
     }
 }

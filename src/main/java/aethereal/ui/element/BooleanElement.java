@@ -67,7 +67,7 @@ public class BooleanElement extends Element<BooleanSetting> {
         float boxX = (this.a.x + this.a.z) - 11.0f;
         float boxY = centerY - 5.5f;
         draw.a(matrices, boxX, boxY, 11.0f, 11.0f, 3.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.039215688f * extend));
-        draw.a(matrices, boxX, boxY, 11.0f, 11.0f, 3.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * extend));
+        draw.a(matrices, boxX, boxY, 11.0f, 11.0f, 3.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).getAlphaFloat() * extend));
         if (disabled > 0.0f) {
             Fonts.a.a(matrices, "u", boxX + ((11.0f - Fonts.a.b("u", 6.0f)) / 2.0f) + 0.25f, Fonts.a.a("u", 6.0f, centerY), 6.0f, ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(InterfaceC0020Opcode.aN, 25, 25, 255), extend * disabled));
         }
@@ -90,7 +90,7 @@ public class BooleanElement extends Element<BooleanSetting> {
         Fonts.e.a(event.h(), this.b.i(), textX, (y + ((12.0f - Fonts.e.a(6.5f)) / 2.0f)) - 0.5f, 6.5f, ColorUtil.applyAlphaToColor(-1, animation));
         float value = getActivationAnimation().c();
         event.getDraw2DProcessor().a(event.h(), toggleX, toggleY, 11.0f, 7.5f, 2.5f, ColorUtil.applyAlphaToColor(primary, value * animation));
-        event.getDraw2DProcessor().a(event.h(), toggleX, toggleY, 11.0f, 7.5f, 2.5f, 0.3f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * animation));
+        event.getDraw2DProcessor().a(event.h(), toggleX, toggleY, 11.0f, 7.5f, 2.5f, 0.3f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).getAlphaFloat() * animation));
         event.getDraw2DProcessor().a(event.h(), toggleX + 1.5f + (3.5f * value), toggleY + 1.5f, 4.5f, 4.5f, 1.25f, ColorUtil.applyAlphaToColor(ColorUtil.lerpColor(ColorUtil.convertToARGB(InterfaceC0020Opcode.ap, InterfaceC0020Opcode.ap, InterfaceC0020Opcode.bk, 255), ColorUtil.convertToARGB(255, 255, 255, 255), value), animation));
     }
 }

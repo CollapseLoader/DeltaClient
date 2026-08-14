@@ -85,7 +85,7 @@ public final class JsoupConnection {
             this.response = response;
         }
 
-        public Map<String, String> e() {
+        public Map<String, String> cookies() {
             return response.cookies();
         }
 

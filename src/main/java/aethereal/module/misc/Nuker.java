@@ -51,7 +51,7 @@ public class Nuker extends Module {
             a();
             return;
         }
-        if (this.b.l("Шахта ФанТайм") && ServerUtil.a.a()) {
+        if (this.b.l("Шахта ФанТайм") && ServerUtil.a.a$()) {
             assistant.detectMineArea();
         }
         boolean pickaxe = tool.getItem() instanceof PickaxeItem;

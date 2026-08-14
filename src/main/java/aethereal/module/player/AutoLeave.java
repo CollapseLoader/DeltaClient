@@ -29,7 +29,7 @@ public class AutoLeave extends Module {
         if (mc.world.getRegistryKey().getValue().toString().equals("minecraft:lobby")) {
             return;
         }
-        if (ServerUtil.a.a() && ServerUtil.a.d() == -1) {
+        if (ServerUtil.a.a$() && ServerUtil.a.d() == -1) {
             return;
         }
         PlayerEntity near = mc.world.getPlayers().stream().filter(player -> {

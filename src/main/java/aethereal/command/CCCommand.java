@@ -16,7 +16,7 @@ public class CCCommand extends BaseCommand {
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
         builder.executes(context -> {
-            if (ServerUtil.a.a() || ServerUtil.d.a()) {
+            if (ServerUtil.a.a$() || ServerUtil.d.a()) {
                 StringBuilder name = new StringBuilder();
                 for (int i = 0; i < 3 + ((int) (Math.random() * 3.0d)); i++) {
                     name.append("абвгдежзийклмнопрстуфхцчшщъыьэюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".charAt((int) (Math.random() * ((double) "абвгдежзийклмнопрстуфхцчшщъыьэюяАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".length()))));

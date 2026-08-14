@@ -333,7 +333,7 @@ public class TextField {
                 ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
                 int background = ColorUtil.applyAlphaToColor(ColorUtil.lerpColor(theme.a(ThemeInfo.BACKGROUND_GUI).toIntColor(), theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.05f), 0.78431374f * alpha);
                 draw.a(matrices, x, y, width, height, 6.0f, background, alpha, background, 2.0f);
-                draw.a(matrices, x, y, width, height, 6.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * alpha));
+                draw.a(matrices, x, y, width, height, 6.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).getAlphaFloat() * alpha));
             }
         },
         GUI_SETTING(Fonts.c, 6.5f, 4.0f, 0.0f, true) {
@@ -341,7 +341,7 @@ public class TextField {
             public void a(Draw2DProcessor draw, MatrixStack matrices, float x, float y, float width, float height, float alpha) {
                 ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
                 draw.a(matrices, x, y, width, height, 2.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.011764706f * alpha));
-                draw.a(matrices, x, y, width, height, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * alpha));
+                draw.a(matrices, x, y, width, height, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).getAlphaFloat() * alpha));
             }
         };
 

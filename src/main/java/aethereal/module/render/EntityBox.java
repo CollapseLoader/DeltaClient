@@ -54,7 +54,7 @@ public class EntityBox extends Module {
                     if (bounds != null) {
                         LivingEntity living = entity instanceof LivingEntity ? (LivingEntity) entity : null;
                         boolean healthBar = !this.healthBarMode.l("Отключен") && living != null;
-                        float percent = healthBar ? Math.min(Math.max(0.0f, ServerUtil.a.a(living)) / Math.max(1.0f, living.getMaxHealth()), 1.0f) : 0.0f;
+                        float percent = healthBar ? Math.min(Math.max(0.0f, ServerUtil.a.a$(living)) / Math.max(1.0f, living.getMaxHealth()), 1.0f) : 0.0f;
                         int healthColor = ColorUtil.lerpColorValue(ColorUtil.convertToARGB(255, 0, 0, 255), ColorUtil.convertToARGB(0, 255, 0, 255), percent);
                         int color = this.colorSource.l("Статичный") ? this.colorSetting.c().intValue() : ColorUtil.combineColorWithAlpha(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), 255);
                         drawBox(draw, event, bounds[0], bounds[1], bounds[2], bounds[3], color, this.visualMode.l("Углы"), healthBar, percent, healthColor);

@@ -131,7 +131,6 @@ public class LayoutCommand extends BaseCommand {
                 Slot target = class_2371Var.get(info.c());
                 Item item = info.b().getItem();
                 if (target.getStack().getItem() != item) {
-                    @SuppressWarnings("unchecked")
                     List<Slot> slotList = class_2371Var;
                     Slot source = slotList.stream()
                             .filter(slot -> ((platform.inject.accessors.SlotAccessor) slot).getInventory() == mc.player.getInventory())
@@ -173,21 +172,6 @@ public class LayoutCommand extends BaseCommand {
 
     public record a(String a, ItemStack b, int c) {
         public a {
-        }
-
-        @Override
-        public String a() {
-            return this.a;
-        }
-
-        @Override
-        public ItemStack b() {
-            return this.b;
-        }
-
-        @Override
-        public int c() {
-            return this.c;
         }
     }
 }

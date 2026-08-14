@@ -1,7 +1,6 @@
 package aethereal.handler;
 
 import aethereal.config.BaseProcessor;
-import aethereal.lib.jsoup.ParserHandler;
 import aethereal.lib.log4j.LoggerFactory;
 import aethereal.module.combat.AimHandler;
 import aethereal.module.combat.AuraHandler;
@@ -25,7 +24,6 @@ public class HandlerProcessor extends BaseProcessor {
     private final PvEHandler k = new PvEHandler();
     private final TPSHandler l = new TPSHandler();
     private final InteractHandler m = new InteractHandler();
-    private final ParserHandler n = new ParserHandler();
     private final DistributionHandler o = new DistributionHandler();
 
     @Override

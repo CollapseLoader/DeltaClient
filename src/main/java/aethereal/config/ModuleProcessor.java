@@ -239,7 +239,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
                 if (jSONObjectJ2 == null) {
                     throw new NullPointerException();
                 }
-                DefaultedRegistry class_7922Var = Registries.ITEM;
+                DefaultedRegistry<Item> class_7922Var = Registries.ITEM;
                 Identifier class_2960VarMethod_60654 = Identifier.of(jSONObjectJ2.l("item"));
                 if (class_7922Var == null) {
                     throw new NullPointerException();
@@ -268,19 +268,19 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
             }
             assistantScreenQ.a(iA);
             for (int i3 = 0; i3 < jSONArrayY2.a(); i3++) {
-                Stream stream2 = Arrays.stream(AutoBuyEntry.values());
+                Stream<AutoBuyEntry> stream2 = Arrays.stream(AutoBuyEntry.values());
                 final int i4 = i3;
-                Predicate predicate2 = obj -> ((AutoBuyEntry) obj).name().equals(jSONArrayY2.l(i4));
+                Predicate<AutoBuyEntry> predicate2 = obj -> obj.name().equals(jSONArrayY2.l(i4));
                 if (stream2 == null) {
                     throw new NullPointerException();
                 }
-                Stream streamFilter2 = stream2.filter(predicate2);
+                Stream<AutoBuyEntry> streamFilter2 = stream2.filter(predicate2);
                 if (streamFilter2 == null) {
                     throw new NullPointerException();
                 }
-                Optional optionalFindFirst2 = streamFilter2.findFirst();
+                Optional<AutoBuyEntry> optionalFindFirst2 = streamFilter2.findFirst();
                 final int i5 = i3;
-                Consumer consumer2 = obj -> assistantScreenQ.a(i5, (AutoBuyEntry) obj);
+                Consumer<AutoBuyEntry> consumer2 = obj -> assistantScreenQ.a(i5, obj);
                 if (optionalFindFirst2 == null) {
                     throw new NullPointerException();
                 }
@@ -376,7 +376,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
                 throw new NullPointerException();
             }
             jSONObject3.c("name", aVar.a());
-            DefaultedRegistry class_7922Var = Registries.ITEM;
+            DefaultedRegistry<Item> class_7922Var = Registries.ITEM;
             ItemStack class_1799VarB = aVar.b();
             if (class_1799VarB == null) {
                 throw new NullPointerException();
@@ -406,27 +406,27 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
             throw new NullPointerException();
         }
         for (int i = 0; i < radialScreenA.a(); i++) {
-            Stream stream = Arrays.stream(AutoBuyEntry.values());
+            Stream<AutoBuyEntry> stream = Arrays.stream(AutoBuyEntry.values());
             final int i2 = i;
-            Predicate predicate = obj -> ((AutoBuyEntry) obj).a(radialScreenA.c(i2));
+            Predicate<AutoBuyEntry> predicate = obj -> obj.a(radialScreenA.c(i2));
             if (stream == null) {
                 throw new NullPointerException();
             }
-            Stream streamFilter = stream.filter(predicate);
+            Stream<AutoBuyEntry> streamFilter = stream.filter(predicate);
             if (streamFilter == null) {
                 throw new NullPointerException();
             }
-            Optional optionalFindFirst = streamFilter.findFirst();
-            Function function = new Function() {
+            Optional<AutoBuyEntry> optionalFindFirst = streamFilter.findFirst();
+            Function<AutoBuyEntry, String> function = new Function<AutoBuyEntry, String>() {
                 @Override
-                public Object apply(Object obj) {
-                    return ((Enum) obj).name();
+                public String apply(AutoBuyEntry obj) {
+                    return obj.name();
                 }
             };
             if (optionalFindFirst == null) {
                 throw new NullPointerException();
             }
-            Optional map = optionalFindFirst.map(function);
+            Optional<String> map = optionalFindFirst.map(function);
             if (map == null) {
                 throw new NullPointerException();
             }

@@ -137,10 +137,10 @@ public class AltScreen extends Screen {
             return true;
         }
         if (MathUtil.a(dA, dA2, fMethod_32118 + 7.0f, fMethod_32119 + 33.0f, 160.0f, 20.0f)) {
-            this.d.forEach(new Consumer() {
+            this.d.forEach(new Consumer<AltScreen.a>() {
                 @Override
-                public void accept(Object obj) {
-                    ((AltScreen.a) obj).g = true;
+                public void accept(AltScreen.a obj) {
+                    obj.g = true;
                 }
             });
             a().clear();
@@ -293,7 +293,7 @@ public class AltScreen extends Screen {
         for (a account : visual) {
             float targetSlot = account.g ? account.d : index * 29.0f;
             if (account != this.f || !drag) {
-                account.a(matrices, draw, accent, px + 1.0f, baseY, targetSlot, listTop, listBottom, mx, my, open);
+                account.render(matrices, draw, accent, px + 1.0f, baseY, targetSlot, listTop, listBottom, mx, my, open);
             }
             if (account.b == selected) {
                 selectedSlot = targetSlot;
@@ -304,11 +304,11 @@ public class AltScreen extends Screen {
         }
         if (drag) {
             this.f.d = dragSlot;
-            this.f.a(matrices, draw, accent, px + 1.0f, baseY, dragSlot, listTop, listBottom, mx, my, open);
+            this.f.render(matrices, draw, accent, px + 1.0f, baseY, dragSlot, listTop, listBottom, mx, my, open);
         }
         ScissorUtil.a(matrices);
         this.d.removeIf((v0) -> {
-            return v0.a();
+            return v0.isExpired();
         });
         if (selected != this.g) {
             this.g = selected;
@@ -487,11 +487,11 @@ public class AltScreen extends Screen {
             this.b = data;
         }
 
-        private boolean a() {
+        private boolean isExpired() {
             return this.g && this.c[3] < 0.01f;
         }
 
-        void a(MatrixStack matrices, Draw2DProcessor draw, int accent, float px, float baseY, float targetSlot, float listTop, float listBottom, int mx, int my, float open) {
+        void render(MatrixStack matrices, Draw2DProcessor draw, int accent, float px, float baseY, float targetSlot, float listTop, float listBottom, int mx, int my, float open) {
             this.d = Float.isNaN(this.d) ? targetSlot : MathUtil.c(this.d, targetSlot, 1.4f);
             this.e = baseY + this.d;
             boolean over = !this.g && ((float) my) > listTop && ((float) my) < listBottom && MathUtil.a(mx, my, px + 7.0f, this.e, 168.0f, 25.0f);

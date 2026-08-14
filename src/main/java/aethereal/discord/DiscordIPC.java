@@ -37,7 +37,7 @@ public class DiscordIPC implements Closeable {
     }
 
     public static DiscordIPC a(long clientId) {
-        return new DiscordIPC(DiscordIPCConfig.a().a(clientId).a());
+        return new DiscordIPC(DiscordIPCConfig.a().clientId(clientId).build());
     }
 
     public static DiscordIPC a(DiscordIPCConfig config) {

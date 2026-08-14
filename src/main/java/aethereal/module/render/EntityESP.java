@@ -16,7 +16,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ShulkerEntity;
@@ -32,7 +31,6 @@ import net.minecraft.util.math.Vec3d;
 import org.joml.Vector2f;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @ModuleRegister(name = "Entity ESP", description = "Отображает информацию о сущностях над их головой", category = Category.Render)
@@ -93,7 +91,7 @@ public class EntityESP extends Module {
         display.getSiblings().replaceAll(sibling -> {
             return sibling.copy().setStyle(sibling.getStyle().withColor(16777215));
         });
-        Text text = (entity.getScoreboardTeam() != null ? entity.getScoreboardTeam().getPrefix().copy().append(display) : display).copy().append(Text.literal(" " + ((int) ServerUtil.a.a((LivingEntity) entity))).setStyle(Style.EMPTY.withColor(16711680)));
+        Text text = (entity.getScoreboardTeam() != null ? entity.getScoreboardTeam().getPrefix().copy().append(display) : display).copy().append(Text.literal(" " + ((int) ServerUtil.a.a$((LivingEntity) entity))).setStyle(Style.EMPTY.withColor(16711680)));
         float textWidth = Fonts.e.a(text, fontSize);
         float textHeight = Fonts.e.d().lineHeight() * fontSize;
         float textX = screenPos.x() - (textWidth / 2.0f);

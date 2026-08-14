@@ -25,6 +25,6 @@ public class WeatherRenderingMixin {
     private Biome.Precipitation onGetPrecipitationAt(Biome.Precipitation original, World world, BlockPos pos) {
         AmbienceEvent.d event = new AmbienceEvent.d(AmbienceEvent.d.type.PRECIPITATION, original);
         EventManager.a(event);
-        return event.d();
+        return event.precipitation();
     }
 }

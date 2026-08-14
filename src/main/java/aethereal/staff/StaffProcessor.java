@@ -13,7 +13,7 @@ public class StaffProcessor extends ConfigProcessor<StaffConstructor> {
 
     protected List<StaffConstructor> loadConfig(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
-        ArrayList arrayList = new ArrayList<>();
+        ArrayList<StaffConstructor> arrayList = new ArrayList<>();
         for (int i = 0; i < jSONArray.a(); i++) {
             arrayList.add(new StaffConstructor(jSONArray.j(i).l("name")));
         }

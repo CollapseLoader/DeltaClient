@@ -159,7 +159,7 @@ public class EnvironmentWidget extends Widget implements Interface {
             a entry = history.get(i2);
             float itemX = x + (i2 * 15.0f);
             float itemY = y + 12.0f + 2.0f;
-            int left = entry.a(now);
+            int left = entry.getCooldown(now);
             a(event, itemX, itemY, 13.0f, 13.0f, 2.0f, animation, entry.c != 0);
             event.getDraw3DProcessor().a(event.i(), entry.a, itemX + 2.1f, itemY + 2.1f, 0, animation, 0.55f, entry.c == 0);
             if (left > 0) {
@@ -183,10 +183,10 @@ public class EnvironmentWidget extends Widget implements Interface {
                    boolean empty) {
         ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
         int background = ColorUtil.lerpColor(theme.a(ThemeInfo.BACKGROUND_HUD).toIntColor(),
-                theme.a(ThemeInfo.PRIMARY).toIntColor(), theme.a(ThemeInfo.PRIMARY).b() / 6.0f);
+                theme.a(ThemeInfo.PRIMARY).toIntColor(), theme.a(ThemeInfo.PRIMARY).getAlphaFloat() / 6.0f);
         event.getDraw2DProcessor().b(event.h(), x, y, width, height, radius, ColorUtil.applyAlphaToColor(
                 empty ? ColorUtil.lerpColor(background, ColorUtil.convertToARGB(255, 60, 60, 255), 0.35f) : background,
-                theme.a(ThemeInfo.BACKGROUND_HUD).b() * animation), animation);
+                theme.a(ThemeInfo.BACKGROUND_HUD).getAlphaFloat() * animation), animation);
     }
 
     @Override
@@ -254,7 +254,7 @@ public class EnvironmentWidget extends Widget implements Interface {
             this.d = hand;
         }
 
-        int a(long now) {
+        int getCooldown(long now) {
             int total = EnvironmentWidget.b(this.a);
             if (total == 0 || this.b == 0) {
                 return 0;
@@ -288,7 +288,7 @@ public class EnvironmentWidget extends Widget implements Interface {
                 class_2960VarComp_1626 = DefaultSkinHelper.getSkinTextures(this.a).texture();
             }
             this.e = class_2960VarComp_1626;
-            this.f = ServerUtil.a.a(player);
+            this.f = ServerUtil.a.a$(player);
             this.g = now;
             for (int i = 0; i < 4; i++) {
                 this.c[i] = player.getEquippedStack(EquipmentSlot.values()[5 - i]);

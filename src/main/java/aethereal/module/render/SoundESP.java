@@ -52,7 +52,7 @@ public class SoundESP extends Module {
         if (event.b()) {
             int color = ColorUtil.convertToARGB(0, 0, 0, 100);
             for (a soundInfo : this.c) {
-                if (soundInfo.a().a(5500L)) {
+                if (soundInfo.getCounter().a(5500L)) {
                     this.c.remove(soundInfo);
                 } else {
                     Vector2f screenPos = ProjectUtil.project(soundInfo.b().getX(), soundInfo.b().getY(), soundInfo.b().getZ());
@@ -67,7 +67,7 @@ public class SoundESP extends Module {
                         }
                         String soundName = str;
                         int distance = (int) mc.player.getPos().distanceTo(new Vec3d(soundInfo.b().getX(), soundInfo.b().getY(), soundInfo.b().getZ()));
-                        int timeAlive = (int) (soundInfo.a().c() / 1000);
+                        int timeAlive = (int) (soundInfo.getCounter().c() / 1000);
                         Text text = Text.literal(soundName + " [" + distance + "м/" + timeAlive + " сек]");
                         float textWidth = Fonts.e.a(text, 7.5f);
                         float textHeight = Fonts.e.d().lineHeight() * 7.5f;
@@ -90,7 +90,7 @@ public class SoundESP extends Module {
             this.a.b();
         }
 
-        public CounterUtil a() {
+        public CounterUtil getCounter() {
             return this.a;
         }
 

@@ -94,12 +94,12 @@ public class AutoBuy extends Module {
                         AutoBuyEntry find = Delta.getInstance().getModuleProcessor().q().e().stream().filter(item -> {
                             if (item.l()) {
                                 if (item.a(stack)) {
-                                    return ServerUtil.a.a(stack) > item.k() && ((long) ServerUtil.a.a(stack)) * ((long) Math.max(stack.getCount(), 1)) <= ServerUtil.a.e();
+                                    return ServerUtil.a.a$(stack) > item.k() && ((long) ServerUtil.a.a$(stack)) * ((long) Math.max(stack.getCount(), 1)) <= ServerUtil.a.e();
                                 } else if (shulker != null) {
                                     Stream<ItemStack> stream = shulker.stream();
                                     Objects.requireNonNull(item);
                                     if (stream.anyMatch(innerStack -> item.a(innerStack))) {
-                                        ServerUtil.a.a(stack);
+                                        ServerUtil.a.a$(stack);
                                     }
                                 }
                             }
@@ -167,11 +167,11 @@ public class AutoBuy extends Module {
                             objArr[0] = "message";
                             Object[] objArr2 = new Object[3];
                             objArr2[0] = this.pendingItem.getName().getString() + (this.pendingItem.getCount() > 1 ? " ×" + this.pendingItem.getCount() : "");
-                            objArr2[1] = String.format(Locale.US, "%,d", Integer.valueOf(ServerUtil.a.a(this.pendingItem)));
+                            objArr2[1] = String.format(Locale.US, "%,d", Integer.valueOf(ServerUtil.a.a$(this.pendingItem)));
                             objArr2[2] = String.format(Locale.US, "%,d", Long.valueOf(ServerUtil.a.e()));
                             objArr[1] = "🛒 AutoBuy — Успешная покупка!\n\n📦 Предмет: %s\n💰 Цена: %s $\n💳 Баланс: %s $\n".formatted(objArr2);
                             clientF.a(false, "telegram", objArr);
-                            ChatUtil.sendMessage("Успешно куплен предмет &c" + this.pendingItem.getName().getString() + " &7за &c" + ServerUtil.a.a(this.pendingItem));
+                            ChatUtil.sendMessage("Успешно куплен предмет &c" + this.pendingItem.getName().getString() + " &7за &c" + ServerUtil.a.a$(this.pendingItem));
                             this.d.addFirst(this.pendingItem);
                         }
                         this.pendingItem = null;

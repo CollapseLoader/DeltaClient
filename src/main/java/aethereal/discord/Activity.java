@@ -175,12 +175,12 @@ public final class Activity {
         private Boolean j;
         private ActivityType a = ActivityType.PLAYING;
 
-        public a a(ActivityType type) {
+        public a type(ActivityType type) {
             this.a = type;
             return this;
         }
 
-        public a a(String state) {
+        public a state(String state) {
             this.b = state;
             return this;
         }
@@ -195,7 +195,7 @@ public final class Activity {
             return this;
         }
 
-        public a a(long epochSeconds) {
+        public a startAt(long epochSeconds) {
             this.e = new ActivityTimestamps(Long.valueOf(epochSeconds), this.e != null ? this.e.c() : null);
             return this;
         }
@@ -205,7 +205,7 @@ public final class Activity {
             return this;
         }
 
-        public a a(ActivityTimestamps timestamps) {
+        public a timestamps(ActivityTimestamps timestamps) {
             this.e = timestamps;
             return this;
         }
@@ -215,7 +215,7 @@ public final class Activity {
             return this;
         }
 
-        public a a(String key, String text) {
+        public a largeImage(String key, String text) {
             this.f = new ActivityAssets(key, text, this.f != null ? this.f.d() : null, this.f != null ? this.f.e() : null);
             return this;
         }
@@ -225,22 +225,22 @@ public final class Activity {
             return this;
         }
 
-        public a a(ActivityAssets assets) {
+        public a assets(ActivityAssets assets) {
             this.f = assets;
             return this;
         }
 
-        public a a(String id, int currentSize, int maxSize) {
+        public a party(String id, int currentSize, int maxSize) {
             this.g = ActivityParty.a(id, currentSize, maxSize);
             return this;
         }
 
-        public a a(String id, int currentSize, int maxSize, int privacy) {
+        public a party(String id, int currentSize, int maxSize, int privacy) {
             this.g = ActivityParty.a(id, currentSize, maxSize, Integer.valueOf(privacy));
             return this;
         }
 
-        public a a(ActivitySecrets secrets) {
+        public a secrets(ActivitySecrets secrets) {
             this.h = secrets;
             return this;
         }
@@ -250,12 +250,12 @@ public final class Activity {
             return this;
         }
 
-        public a a(boolean instance) {
+        public a instance(boolean instance) {
             this.j = Boolean.valueOf(instance);
             return this;
         }
 
-        public Activity a() {
+        public Activity build() {
             return new Activity(this.a, this.b, this.c, this.d, this.e, this.f, this.g, this.h, this.i.isEmpty() ? null : this.i, this.j);
         }
     }

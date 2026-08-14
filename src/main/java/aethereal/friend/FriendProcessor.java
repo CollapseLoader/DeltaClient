@@ -15,7 +15,7 @@ public class FriendProcessor extends ConfigProcessor<FriendConstructor> {
 
     protected List<FriendConstructor> loadConfig(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
-        ArrayList arrayList = new ArrayList<>();
+        ArrayList<FriendConstructor> arrayList = new ArrayList<>();
         for (int i = 0; i < jSONArray.a(); i++) {
             arrayList.add(new FriendConstructor(jSONArray.j(i).l("name")));
         }

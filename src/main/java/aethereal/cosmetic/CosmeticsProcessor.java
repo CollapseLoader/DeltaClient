@@ -14,6 +14,7 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import org.joml.Vector3f;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.loading.json.raw.Model;
@@ -36,7 +37,7 @@ public class CosmeticsProcessor extends BaseProcessor {
     private final ScheduledExecutorService bootstrapper = Executors.newSingleThreadScheduledExecutor();
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static void lambda$setup$0(EntityType type, LivingEntityRenderer renderer, LivingEntityFeatureRendererRegistrationCallback.RegistrationHelper helper, EntityRendererFactory.Context context) {
+    public static void lambda$setup$0(EntityType<? extends LivingEntity> type, LivingEntityRenderer<?, ?, ?> renderer, LivingEntityFeatureRendererRegistrationCallback.RegistrationHelper helper, EntityRendererFactory.Context context) {
         if (type == EntityType.PLAYER) {
             FeatureRendererContext<PlayerEntityRenderState, PlayerEntityModel> playerRenderer = (FeatureRendererContext) renderer;
             helper.register(new CosmeticsRenderer(playerRenderer));
@@ -47,7 +48,7 @@ public class CosmeticsProcessor extends BaseProcessor {
 
     public void setup() {
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register(new LivingEntityFeatureRendererRegistrationCallback() {
-            public void registerRenderers(EntityType class_1299Var, LivingEntityRenderer class_922Var, LivingEntityFeatureRendererRegistrationCallback.RegistrationHelper registrationHelper, EntityRendererFactory.Context class_5618Var) {
+            public void registerRenderers(EntityType<? extends LivingEntity> class_1299Var, LivingEntityRenderer<?, ?, ?> class_922Var, LivingEntityFeatureRendererRegistrationCallback.RegistrationHelper registrationHelper, EntityRendererFactory.Context class_5618Var) {
                 CosmeticsProcessor.lambda$setup$0(class_1299Var, class_922Var, registrationHelper, class_5618Var);
             }
         });

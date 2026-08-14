@@ -50,7 +50,7 @@ public class AutoAuth extends Module {
     @EventTarget
     public void a(TickEvent tickEvent) {
         if (this.password != null) {
-            if (ServerUtil.a.a() && ServerUtil.a.c()) {
+            if (ServerUtil.a.a$() && ServerUtil.a.c()) {
                 return;
             }
             mc.player.networkHandler.sendChatMessage(this.password);

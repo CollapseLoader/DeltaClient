@@ -32,7 +32,7 @@ import java.util.Map;
 
 @ModuleRegister(name = "Auto Dodge", description = "Автоматически уклоняется от выбранных целей", category = Category.Movement)
 public class AutoDodge extends Module {
-    private final Map<Integer, b> c = new HashMap();
+    private final Map<Integer, b> c = new HashMap<>();
     int b = 0;
 
     private static boolean a(PotionEntity potionEntity, Box expandedPlayer) {
@@ -134,7 +134,7 @@ public class AutoDodge extends Module {
 
     private void a(Packet<?> packet) {
         if (packet instanceof BundlePacket) {
-            BundlePacket<?> bundlePacket = (BundlePacket) packet;
+            BundlePacket<?> bundlePacket = (BundlePacket<?>) packet;
             for (Packet<?> innerPacket : bundlePacket.getPackets()) {
                 a(innerPacket);
             }

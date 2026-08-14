@@ -90,7 +90,7 @@ public class SliderElement extends Element<SliderSetting> {
         float boxX = (this.a.x + this.a.z) - boxWidth;
         drawLabel(matrices, Fonts.c, this.b.i(), this.a.x, this.a.y + 0.5f, Fonts.c.a(6.5f), 6.5f, theme.a(ThemeInfo.TEXT).toIntColor(), (boxX - this.a.x) - 4.0f, hovered, extend, delta);
         draw.a(matrices, boxX, this.a.y, boxWidth, boxHeight, 2.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.03137255f * extend));
-        draw.a(matrices, boxX, this.a.y, boxWidth, boxHeight, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * extend));
+        draw.a(matrices, boxX, this.a.y, boxWidth, boxHeight, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).getAlphaFloat() * extend));
         Fonts.c.b(matrices, value, boxX + (boxWidth / 2.0f), (this.a.y + ((boxHeight - Fonts.c.a(6.25f)) / 2.0f)) - 0.5f, 6.25f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT).toIntColor(), extend));
         float trackY = this.a.y + Fonts.c.a(6.5f) + 6.5f;
         draw.a(matrices, this.a.x, trackY, this.a.z, 3.0f, 0.75f, ColorUtil.applyAlphaToColor(ColorUtil.convertToARGB(50, 52, 60, 255), extend * 0.35f));

@@ -15,7 +15,7 @@ public class StaffCommand extends BaseCommand {
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
         StaffProcessor processor = Delta.getInstance().getModuleProcessor().f();
-        LiteralArgumentBuilder literalArgumentBuilderThen = builder.then(a("add").executes(context -> {
+        LiteralArgumentBuilder<CommandSource> literalArgumentBuilderThen = builder.then(a("add").executes(context -> {
             ChatUtil.sendMessage("Использование: .staff add <ник>");
             return 1;
         }).then(b("ник").suggests(a()).executes(context2 -> {
@@ -29,7 +29,7 @@ public class StaffCommand extends BaseCommand {
             ChatUtil.sendMessage("Стафф " + name + " был успешно добавлен в список стаффа.");
             return 1;
         })));
-        LiteralArgumentBuilder literalArgumentBuilderExecutes = a("remove").executes(context3 -> {
+        LiteralArgumentBuilder<CommandSource> literalArgumentBuilderExecutes = a("remove").executes(context3 -> {
             ChatUtil.sendMessage("Использование: .staff remove <ник>");
             return 1;
         });

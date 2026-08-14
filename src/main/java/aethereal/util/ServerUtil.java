@@ -122,16 +122,16 @@ public class ServerUtil implements Interface {
             throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
         }
 
-        public static boolean a() {
+        public static boolean a$() {
             return ServerUtil.a().toLowerCase().contains("funtime") || ServerUtil.b().toLowerCase().contains("funtime");
         }
 
         public static boolean b() {
-            return a() && Interface.mc.world != null && Interface.mc.world.getRegistryKey().getValue().toString().equals("minecraft:duels");
+            return a$() && Interface.mc.world != null && Interface.mc.world.getRegistryKey().getValue().toString().equals("minecraft:duels");
         }
 
         public static boolean c() {
-            return a() && Interface.mc.player.networkHandler.getBrand() != null && Interface.mc.world.getBiome(Interface.mc.player.getBlockPos()).matchesKey(BiomeKeys.SWAMP) && Interface.mc.player.networkHandler.getBrand().contains("BotFilter (https://vk.cc/8hr1pU)");
+            return a$() && Interface.mc.player.networkHandler.getBrand() != null && Interface.mc.world.getBiome(Interface.mc.player.getBlockPos()).matchesKey(BiomeKeys.SWAMP) && Interface.mc.player.networkHandler.getBrand().contains("BotFilter (https://vk.cc/8hr1pU)");
         }
 
         public static int d() {
@@ -141,7 +141,7 @@ public class ServerUtil implements Interface {
             return Integer.parseInt(ServerUtil.a().split("Анархия-")[1].trim());
         }
 
-        public static int a(ItemStack itemStack) {
+        public static int a$(ItemStack itemStack) {
             if (!itemStack.isEmpty()) {
                 List<String> tooltipLines = itemStack.getTooltip(Item.TooltipContext.DEFAULT, Interface.mc.player, TooltipType.BASIC).stream().skip(1L).map((v0) -> {
                     return v0.getString();
@@ -166,7 +166,7 @@ public class ServerUtil implements Interface {
             return -1;
         }
 
-        public static float a(LivingEntity entity) {
+        public static float a$(LivingEntity entity) {
             if (Interface.mc.world != null) {
                 Scoreboard scoreboard = Interface.mc.world.getScoreboard();
                 for (ScoreboardObjective objective : scoreboard.getObjectives()) {
@@ -240,7 +240,7 @@ public class ServerUtil implements Interface {
             return ServerUtil.a().toLowerCase().contains("holyworld") || ServerUtil.b().toLowerCase().contains("holyworld");
         }
 
-        public static int b() {
+        public static int b$() {
             String last = ServerUtil.a().trim().replaceAll("(?s).*\\n", "");
             if (last.contains("Лайт") && last.contains("#")) {
                 return Integer.parseInt(last.replaceAll(".*#(\\d+).*", "$1"));

@@ -23,7 +23,6 @@ import net.minecraft.component.type.NbtComponent;
 import net.minecraft.component.type.PotionContentsComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.WardenEntity;
@@ -56,8 +55,8 @@ import java.util.stream.Stream;
 @ModuleRegister(name = "Auto Warden", description = "Автоматизирует фарм варденов на анархии", category = Category.Misc)
 public class AutoWarden extends Module {
     private final List<Integer> anarchyList = new ArrayList<>();
-    private final Map<BlockPos, Integer> chestOpenCounts = new HashMap();
-    private final Map<BlockPos, Integer> wardenPositions = new HashMap();
+    private final Map<BlockPos, Integer> chestOpenCounts = new HashMap<>();
+    private final Map<BlockPos, Integer> wardenPositions = new HashMap<>();
     private final BooleanSetting useSpeed = new BooleanSetting("Использовать скорость", false);
     private final BooleanSetting reportKillers = new BooleanSetting("Репортить обидчиков", false);
     private final ModeSetting lootPriority = new ModeSetting("Приоритеты лута", "Средний", "Низкий", "Средний", "Высокий");

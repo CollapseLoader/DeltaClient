@@ -49,14 +49,14 @@ public class RCTCommand extends BaseCommand {
     public void a(TickEvent eventTick) {
         int iB;
         if (e()) {
-            if (ServerUtil.a.a()) {
+            if (ServerUtil.a.a$()) {
                 iB = ServerUtil.a.d();
             } else {
                 iB = ServerUtil.d.a() ? ServerUtil.d.b() : -1;
             }
             int anarchy = iB;
             if (anarchy == -1 && this.c > 0) {
-                if ((ServerUtil.a.a() || ServerUtil.d.a()) && mc.player.age % 20 == 0) {
+                if ((ServerUtil.a.a$() || ServerUtil.d.a()) && mc.player.age % 20 == 0) {
                     mc.player.networkHandler.sendChatCommand("an" + this.c);
                     d();
                     return;

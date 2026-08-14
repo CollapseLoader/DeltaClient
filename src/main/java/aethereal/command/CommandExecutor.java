@@ -139,7 +139,7 @@ public class CommandExecutor {
             return;
         }
         try {
-            this.rateLimiter.a();
+            this.rateLimiter.acquire();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new InterruptedIOException("Interrupted while waiting for command rate limiter");
@@ -156,7 +156,7 @@ public class CommandExecutor {
             this.availableTokens = capacity;
         }
 
-        synchronized void a() throws InterruptedException {
+        synchronized void acquire() throws InterruptedException {
             while (true) {
                 b();
                 if (this.availableTokens >= 1.0d) {

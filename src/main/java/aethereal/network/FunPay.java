@@ -44,7 +44,7 @@ public class FunPay {
         }
         try {
             JsoupConnection.e response = Jsoup.b("https://funpay.com/").c("golden_key", this.d.q().c()).a(5000).e();
-            Map<String, String> cookies = response.e();
+            Map<String, String> cookies = response.cookies();
             Document document = response.j();
             Element usernameElement = document.k(".user-link-name");
             if (usernameElement == null) {

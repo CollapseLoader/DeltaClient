@@ -112,15 +112,15 @@ public class RadialScreen implements Interface {
             boolean isSelected = slot == this.e && !(mc.currentScreen instanceof AssistantScreen);
             a segment = this.b[slot];
             if (segment != null) {
-                segment.a().a(0.0f, 1.0f, 0.3f, EasingList.g, mc.getRenderTickCounter().getTickDelta(false));
-                segment.a().a(slot == a(mouseX, mouseY, center));
+                segment.getAnimationUtil().a(0.0f, 1.0f, 0.3f, EasingList.g, mc.getRenderTickCounter().getTickDelta(false));
+                segment.getAnimationUtil().a(slot == a(mouseX, mouseY, center));
                 int primary = ColorUtil.combineColorWithAlpha(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), 80);
-                int hoverColor = ColorUtil.lerpColor(ColorUtil.convertToARGB(255, 255, 255, 80), primary, segment.a().c());
+                int hoverColor = ColorUtil.lerpColor(ColorUtil.convertToARGB(255, 255, 255, 80), primary, segment.getAnimationUtil().c());
                 boolean assistant = mc.currentScreen instanceof AssistantScreen;
                 int amount = (!assistant || segment.b.isEmpty()) ? -1 : InventoryUtil.c(segment.b, false);
                 int fillColor = ((isSelected || amount == 0) && !segment.b.isEmpty()) ? ColorUtil.convertToARGB(255, 128, 128, 80) : hoverColor;
                 double midAngle = (startAngle + endAngle) / 2.0d;
-                float lift = segment.a().c() * 4.0f;
+                float lift = segment.getAnimationUtil().c() * 4.0f;
                 float offsetX = ((float) Math.cos(midAngle)) * lift;
                 float offsetY = ((float) Math.sin(midAngle)) * lift;
                 a(context.getMatrices().peek().getPositionMatrix(), cx + offsetX, cy + offsetY, this.c, this.d, drawStart, drawEnd, fillColor);
@@ -269,7 +269,7 @@ public class RadialScreen implements Interface {
             this.d = editable;
         }
 
-        public AnimationUtil a() {
+        public AnimationUtil getAnimationUtil() {
             return this.a;
         }
     }

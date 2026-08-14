@@ -28,7 +28,7 @@ public class ItemHelper extends Module {
             this.b = new BindSetting(name, -1, 1).a(this::e);
         }
 
-        public Item a() {
+        public Item getItem() {
             return this.a;
         }
 

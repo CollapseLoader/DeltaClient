@@ -52,7 +52,7 @@ public class BatchProcessor extends BaseProcessor {
         RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
         BufferBuilder class_4588VarMethod_60827 = Tessellator.getInstance().begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
         for (a task : this.c) {
-            task.a(class_4588VarMethod_60827);
+            task.render(class_4588VarMethod_60827);
         }
         BufferRenderer.drawWithGlobalProgram(class_4588VarMethod_60827.end());
         RenderSystem.enableCull();
@@ -238,7 +238,7 @@ public class BatchProcessor extends BaseProcessor {
             this.j = healthColor;
         }
 
-        void a(VertexConsumer buffer) {
+        void render(VertexConsumer buffer) {
             float fMin;
             if (this.g) {
                 fMin = Math.min(this.d - this.b, this.e - this.c) * 0.25f;
@@ -253,32 +253,32 @@ public class BatchProcessor extends BaseProcessor {
                     float cornerY = (corner & 2) == 0 ? this.c : this.e;
                     float directionX = (corner & 1) == 0 ? 1.0f : -1.0f;
                     float directionY = (corner & 2) == 0 ? 1.0f : -1.0f;
-                    a(buffer, cornerX, cornerY, directionX * length, 0.0f, pass == 0);
-                    a(buffer, cornerX, cornerY, 0.0f, directionY * length, pass == 0);
+                    renderCorner(buffer, cornerX, cornerY, directionX * length, 0.0f, pass == 0);
+                    renderCorner(buffer, cornerX, cornerY, 0.0f, directionY * length, pass == 0);
                 }
                 pass++;
             }
             if (this.h) {
                 float height = this.e - this.c;
                 float x = (this.b - 2.0f) - l;
-                a(buffer, x - l, this.c - l, 1.5f, height + 1.5f, k);
-                a(buffer, x, this.c + (height * (1.0f - this.i)), l, (height * this.i) + l, this.j);
+                renderRect(buffer, x - l, this.c - l, 1.5f, height + 1.5f, k);
+                renderRect(buffer, x, this.c + (height * (1.0f - this.i)), l, (height * this.i) + l, this.j);
             }
         }
 
-        private void a(VertexConsumer buffer, float x, float y, float lengthX, float lengthY, boolean outline) {
+        private void renderCorner(VertexConsumer buffer, float x, float y, float lengthX, float lengthY, boolean outline) {
             float left = Math.min(x, x + lengthX) - (lengthX == 0.0f ? 0.25f : 0.0f);
             float top = Math.min(y, y + lengthY) - (lengthY == 0.0f ? 0.25f : 0.0f);
             float width = lengthX == 0.0f ? l : Math.abs(lengthX);
             float height = lengthY == 0.0f ? l : Math.abs(lengthY);
             if (outline) {
-                a(buffer, left - l, top - l, width + 1.0f, height + 1.0f, k);
+                renderRect(buffer, left - l, top - l, width + 1.0f, height + 1.0f, k);
             } else {
-                a(buffer, left, top, width, height, this.f);
+                renderRect(buffer, left, top, width, height, this.f);
             }
         }
 
-        private void a(VertexConsumer buffer, float x, float y, float width, float height, int color) {
+        private void renderRect(VertexConsumer buffer, float x, float y, float width, float height, int color) {
             buffer.vertex(this.a, x, y, 0.0f).color(color);
             buffer.vertex(this.a, x, y + height, 0.0f).color(color);
             buffer.vertex(this.a, x + width, y + height, 0.0f).color(color);

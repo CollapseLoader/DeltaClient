@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class DragProcessor extends ConfigProcessor<DragInfo> implements Interface {
+public class DragProcessor extends ConfigProcessor<DragInfo> {
     private final b e = new b();
     private final b f = new b();
     private DragInfo g = null;
@@ -228,11 +228,11 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
     private List<Float> getGuidePoints(a axis, DragInfo currentElement) {
         List<Float> guides = new ArrayList<>();
         guides.add(Float.valueOf(0.0f));
-        guides.add(Float.valueOf(axis.a() / 2.0f));
-        guides.add(Float.valueOf(axis.a()));
+        guides.add(Float.valueOf(axis.screenSize() / 2.0f));
+        guides.add(Float.valueOf(axis.screenSize()));
         for (DragInfo other : e()) {
             if (other != currentElement && (other.getWidth() != 0.0f || other.getHeight() != 0.0f)) {
-                float pos = axis.a(other);
+                float pos = axis.getPosition(other);
                 float size = axis.b(other);
                 guides.add(Float.valueOf(pos));
                 guides.add(Float.valueOf(pos + (size / 2.0f)));
@@ -244,10 +244,10 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
 
     private void b(DrawEvent event) {
         if (this.e.a()) {
-            event.getDraw2DProcessor().a(event.i(), this.e.c().floatValue() - 0.5f, 0.0f, 0.5f, mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont()), ColorUtil.convertToARGB(255, 255, 255, (int) (this.e.b().c() * 200.0f)));
+            event.getDraw2DProcessor().a(event.i(), this.e.c().floatValue() - 0.5f, 0.0f, 0.5f, mc.getWindow().getFramebufferHeight() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont()), ColorUtil.convertToARGB(255, 255, 255, (int) (this.e.getAnimationUtil().c() * 200.0f)));
         }
         if (this.f.a()) {
-            event.getDraw2DProcessor().a(event.i(), 0.0f, this.f.c().floatValue() - 0.5f, mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont()), 0.5f, ColorUtil.convertToARGB(255, 255, 255, (int) (this.f.b().c() * 200.0f)));
+            event.getDraw2DProcessor().a(event.i(), 0.0f, this.f.c().floatValue() - 0.5f, mc.getWindow().getFramebufferWidth() / mc.getWindow().calculateScaleFactor(2, mc.forcesUnicodeFont()), 0.5f, ColorUtil.convertToARGB(255, 255, 255, (int) (this.f.getAnimationUtil().c() * 200.0f)));
         }
     }
 
@@ -262,11 +262,11 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
         X,
         Y;
 
-        float a() {
+        float screenSize() {
             return this == X ? Interface.mc.getWindow().getFramebufferWidth() / Interface.mc.getWindow().calculateScaleFactor(2, Interface.mc.forcesUnicodeFont()) : Interface.mc.getWindow().getFramebufferHeight() / Interface.mc.getWindow().calculateScaleFactor(2, Interface.mc.forcesUnicodeFont());
         }
 
-        float a(DragInfo info) {
+        float getPosition(DragInfo info) {
             return this == X ? info.getClampedX() : info.getClampedY();
         }
 
@@ -283,7 +283,7 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
         b() {
         }
 
-        public AnimationUtil b() {
+        public AnimationUtil getAnimationUtil() {
             return this.a;
         }
 

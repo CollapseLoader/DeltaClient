@@ -53,12 +53,11 @@ public class EventManager {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private static void a(Method method, Object obj) {
         Class<?> cls = method.getParameterTypes()[0];
         final a aVar = new a(obj, method, method.getAnnotation(EventTarget.class).a());
-        if (!aVar.b().isAccessible()) {
-            aVar.b().setAccessible(true);
-        }
+        aVar.b().setAccessible(true);
         if (a.containsKey(cls)) {
             boolean z = false;
             for (a aVar2 : a.get(cls)) {

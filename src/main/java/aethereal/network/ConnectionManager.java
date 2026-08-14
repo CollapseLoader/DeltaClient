@@ -493,14 +493,14 @@ public class ConnectionManager {
 
     private DiscordUser b(JsonObject userJson) {
         try {
-            DiscordUser user = DiscordUser.a(userJson);
-            if (user.k() == null || user.k().isBlank()) {
+            DiscordUser user = DiscordUser.fromJson(userJson);
+            if (user.id() == null || user.id().isBlank()) {
                 throw new ConnectionException("Handshake user is missing id");
             }
-            if (user.l() == null || user.l().isBlank()) {
+            if (user.username() == null || user.username().isBlank()) {
                 throw new ConnectionException("Handshake user is missing username");
             }
-            user.c();
+            user.getSnowflakeId();
             return user;
         } catch (ConnectionException e) {
             throw e;

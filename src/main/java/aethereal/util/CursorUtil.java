@@ -10,7 +10,7 @@ public class CursorUtil implements Interface {
 
     public static void a(a type) {
         if (mc.getWindow() != null) {
-            long cursor = GLFW.glfwCreateStandardCursor(type.a());
+            long cursor = GLFW.glfwCreateStandardCursor(type.getGlfwType());
             if (cursor != 0) {
                 GLFW.glfwSetCursor(mc.getWindow().getHandle(), cursor);
             }
@@ -33,7 +33,7 @@ public class CursorUtil implements Interface {
             this.glfwType = glfwType;
         }
 
-        public int a() {
+        public int getGlfwType() {
             return this.glfwType;
         }
     }

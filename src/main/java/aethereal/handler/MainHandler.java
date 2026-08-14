@@ -181,7 +181,7 @@ public class MainHandler extends BaseHandler implements Interface {
     public void a(ConsumeEvent event) {
         PotionContentsComponent contents;
         if (ServerUtil.e()) {
-            if ((ServerUtil.a.a() || ServerUtil.d.a()) && event.b().getItem() == Items.POTION && (contents = event.b().get(DataComponentTypes.POTION_CONTENTS)) != null) {
+            if ((ServerUtil.a.a$() || ServerUtil.d.a()) && event.b().getItem() == Items.POTION && (contents = event.b().get(DataComponentTypes.POTION_CONTENTS)) != null) {
                 boolean heal = StreamSupport.stream(contents.getEffects().spliterator(), false).anyMatch(effect -> {
                     return effect.getEffectType() == StatusEffects.INSTANT_HEALTH;
                 });
@@ -203,7 +203,7 @@ public class MainHandler extends BaseHandler implements Interface {
             objArr[2] = "minecraft";
             objArr[3] = mc.getSession().getUsername();
             objArr[4] = "server";
-            if (ServerUtil.a.a()) {
+            if (ServerUtil.a.a$()) {
                 str = "funtime";
             } else if (ServerUtil.b.a()) {
                 str = "holyworld";

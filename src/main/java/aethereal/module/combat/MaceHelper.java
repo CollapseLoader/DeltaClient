@@ -71,7 +71,7 @@ public class MaceHelper extends Module {
         if (!this.c.c().booleanValue() || slotMace == -1) {
             return;
         }
-        if (!ServerUtil.a.a() || ServerUtil.e()) {
+        if (!ServerUtil.a.a$() || ServerUtil.e()) {
             ItemCooldownManagerAccessor cooldowns = (ItemCooldownManagerAccessor) mc.player.getItemCooldownManager();
             Object entry = cooldowns.getEntries().get(mc.player.getItemCooldownManager().getGroup(Items.MACE.getDefaultStack()));
             if (entry == null || ((platform.inject.accessors.ItemCooldownEntryAccessor) entry).getEndTick() - cooldowns.getTick() <= 10) {

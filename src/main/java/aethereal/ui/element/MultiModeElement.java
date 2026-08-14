@@ -7,7 +7,6 @@ import aethereal.core.Delta;
 import aethereal.render.*;
 import aethereal.setting.BooleanSetting;
 import aethereal.setting.MultiModeSetting;
-import aethereal.setting.Setting;
 import aethereal.util.MathUtil;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
@@ -43,10 +42,10 @@ public class MultiModeElement extends Element<MultiModeSetting> {
             if (!(listC instanceof List)) {
                 throw new ClassCastException();
             }
-            listC.forEach(new Consumer() {
+            listC.forEach(new Consumer<BooleanSetting>() {
                 @Override
-                public void accept(Object obj) {
-                    ((Setting) obj).b();
+                public void accept(BooleanSetting obj) {
+                    obj.b();
                 }
             });
             return true;
@@ -110,7 +109,7 @@ public class MultiModeElement extends Element<MultiModeSetting> {
             this.modeAnimations[i].a(0.0f, 1.0f, 0.3f, EasingList.i, delta);
             float value = this.modeAnimations[i].c();
             draw.a(matrices, x, y, width, 9.0f, 2.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), ((5.0f + (65.0f * value)) / 255.0f) * extend));
-            draw.a(matrices, x, y, width, 9.0f, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).b() * extend));
+            draw.a(matrices, x, y, width, 9.0f, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_SMALL).toIntColor(), theme.a(ThemeInfo.OUTLINE_SMALL).getAlphaFloat() * extend));
             int color = ColorUtil.lerpColor(theme.a(ThemeInfo.TEXT_DISABLED).toIntColor(), theme.a(ThemeInfo.TEXT).toIntColor(), value);
             Fonts.c.b(matrices, mode.i(), x + (width / 2.0f), (y + ((9.0f - Fonts.c.a(6.25f)) / 2.0f)) - 0.75f, 6.25f, ColorUtil.applyAlphaToColor(color, extend));
             x += width + 3.0f;

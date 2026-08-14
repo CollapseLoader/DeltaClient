@@ -135,7 +135,7 @@ public class Collector extends Module {
                                         event.e().stream().filter(slot -> {
                                             return a(slot.getStack());
                                         }).forEach(slot2 -> {
-                                            this.e.add(new a(currentPage, slot2.id, ServerUtil.a.a(slot2.getStack())));
+                                            this.e.add(new a(currentPage, slot2.id, ServerUtil.a.a$(slot2.getStack())));
                                         });
                                     }
                                     if (currentPage < lastScanPage) {
@@ -150,13 +150,13 @@ public class Collector extends Module {
                                     }
                                 } else if (currentPage == this.i.a()) {
                                     Slot offer2 = event.e().stream().filter(slot3 -> {
-                                        return a(slot3.getStack()) && ServerUtil.a.a(slot3.getStack()) == this.i.c();
+                                        return a(slot3.getStack()) && ServerUtil.a.a$(slot3.getStack()) == this.i.c();
                                     }).findFirst().orElse(null);
                                     if (offer2 == null) {
                                         offer2 = event.e().stream().filter(slot4 -> {
                                             return a(slot4.getStack());
                                         }).min(Comparator.comparingInt(slot5 -> {
-                                            return ServerUtil.a.a(slot5.getStack());
+                                            return ServerUtil.a.a$(slot5.getStack());
                                         })).orElse(null);
                                     }
                                     if (offer2 != null) {
@@ -177,21 +177,21 @@ public class Collector extends Module {
                                 return a(slot6.getStack());
                             }).toList();
                             int minPrice = buyable.stream().mapToInt(slot7 -> {
-                                return ServerUtil.a.a(slot7.getStack());
+                                return ServerUtil.a.a$(slot7.getStack());
                             }).min().orElse(0);
                             List<Slot> affordable = buyable.stream().filter(slot8 -> {
-                                return ServerUtil.a.a(slot8.getStack()) <= Math.round((float) (minPrice * 2));
+                                return ServerUtil.a.a$(slot8.getStack()) <= Math.round((float) (minPrice * 2));
                             }).filter(slot9 -> {
                                 return slot9.getStack().getCount() <= a(this.h, true) - a(this.h);
                             }).toList();
                             Slot cheapest = affordable.stream().filter(slot10 -> {
                                 return slot10.getStack().getCount() >= a(this.h, false) - a(this.h);
                             }).min(Comparator.comparingInt(slot11 -> {
-                                return ServerUtil.a.a(slot11.getStack());
+                                return ServerUtil.a.a$(slot11.getStack());
                             })).orElse(null);
                             if (cheapest == null) {
                                 cheapest = affordable.stream().min(Comparator.comparingInt(slot12 -> {
-                                    return ServerUtil.a.a(slot12.getStack());
+                                    return ServerUtil.a.a$(slot12.getStack());
                                 })).orElse(null);
                             }
                             if (cheapest != null) {
@@ -306,7 +306,7 @@ public class Collector extends Module {
         }).findFirst().orElse(ItemStack.EMPTY);
         if ((!inventory.isEmpty() && (((this.h.i() instanceof PotionItem) && !Objects.equals(stack.get(DataComponentTypes.POTION_CONTENTS), inventory.get(DataComponentTypes.POTION_CONTENTS))) || !stack.getName().getString().trim().equalsIgnoreCase(inventory.getName().getString().trim()))) || stack.getTooltip(Item.TooltipContext.DEFAULT, mc.player, TooltipType.BASIC).stream().anyMatch(line -> {
             return line.getString().contains("➥ Нажмите, чтобы забрать");
-        }) || ServerUtil.a.a(stack) <= 0) {
+        }) || ServerUtil.a.a$(stack) <= 0) {
             return false;
         }
         if (this.h.i() == Items.TOTEM_OF_UNDYING && stack.hasGlint()) {

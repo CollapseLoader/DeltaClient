@@ -85,7 +85,7 @@ public class BindElement extends Element<BindSetting> {
         float textY = (boxY + ((boxHeight - Fonts.c.a(6.5f)) / 2.0f)) - 0.75f;
         drawLabel(matrices, Fonts.c, this.b.i(), this.a.x, this.a.y, this.a.w, 6.5f, theme.a(ThemeInfo.TEXT).toIntColor(), (boxX - this.a.x) - 4.0f, hovered, extend, delta);
         draw.a(matrices, boxX, boxY, boxWidth, boxHeight, 2.0f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.PRIMARY).toIntColor(), 0.039215688f * extend));
-        draw.a(matrices, boxX, boxY, boxWidth, boxHeight, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).b() * extend));
+        draw.a(matrices, boxX, boxY, boxWidth, boxHeight, 2.0f, 0.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.OUTLINE_MEDIUM).toIntColor(), theme.a(ThemeInfo.OUTLINE_MEDIUM).getAlphaFloat() * extend));
         ScissorUtil.a(matrices, boxX, boxY, boxWidth, boxHeight);
         if (reverse > 0.0f) {
             Fonts.c.a(matrices, value, boxX + 4.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.TEXT).toIntColor(), extend * reverse));

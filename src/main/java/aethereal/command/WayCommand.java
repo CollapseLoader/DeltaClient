@@ -196,7 +196,7 @@ public class WayCommand extends BaseCommand {
             float width = 14.0f + Fonts.e.a(text, 6.25f);
             float x = screen.x() - (width / 2.0f);
             float y = screen.y() - 5.75f;
-            event.getDraw2DProcessor().a(event.h(), x, y, width, 11.5f, 3.5f, ColorUtil.applyAlphaToColor(background, Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).b()), 1.0f, ColorUtil.applyAlphaToColor(background, Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).b()), 6.0f);
+            event.getDraw2DProcessor().a(event.h(), x, y, width, 11.5f, 3.5f, ColorUtil.applyAlphaToColor(background, Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).getAlphaFloat()), 1.0f, ColorUtil.applyAlphaToColor(background, Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.BACKGROUND_HUD).getAlphaFloat()), 6.0f);
             Fonts.a.a(event.h(), "F", x + 3.0f, y + 3.0f, 5.5f, primary);
             Fonts.e.a(event.h(), text, x + 3.0f + 5.5f + 2.5f, (y + ((11.5f - Fonts.e.a(6.25f)) / 2.0f)) - 0.25f, 6.25f);
         }
@@ -228,16 +228,6 @@ public class WayCommand extends BaseCommand {
 
     public record b(String a, Vec3d b) {
         public b {
-        }
-
-        @Override
-        public String a() {
-            return this.a;
-        }
-
-        @Override
-        public Vec3d b() {
-            return this.b;
         }
     }
 }

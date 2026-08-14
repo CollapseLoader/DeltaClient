@@ -88,7 +88,7 @@ public class Communication extends Module {
         if (ProjectUtil.isOnScreen(screen)) {
             ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
             int primary = theme.a(ThemeInfo.PRIMARY).toIntColor();
-            int background = ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.BACKGROUND_HUD).toIntColor(), theme.a(ThemeInfo.BACKGROUND_HUD).b());
+            int background = ColorUtil.applyAlphaToColor(theme.a(ThemeInfo.BACKGROUND_HUD).toIntColor(), theme.a(ThemeInfo.BACKGROUND_HUD).getAlphaFloat());
             Text text = Text.literal(mark.b().toUpperCase(Locale.ROOT)).append(Text.literal(" /  ").setStyle(Style.EMPTY.withColor(primary))).append(Text.literal(String.format(Locale.US, "%.1fм", Double.valueOf(eyes.distanceTo(position)))));
             float width = (3.0f * 2.0f) + 8.0f + 2.5f + Fonts.e.a(text, 6.25f);
             float height = (8.0f + (3.0f * 2.0f)) - 2.0f;

@@ -19,7 +19,6 @@ import java.util.List;
 public class RotationProcessor extends BaseProcessor {
     private static rotationState state;
     private static float resetSpeed;
-    private static int priority;
     private static int lookMode;
     private static int maxTicks;
     private static int currentTick;
@@ -46,7 +45,6 @@ public class RotationProcessor extends BaseProcessor {
     public void reset() {
         this.currentLook.a(false);
         state = rotationState.IDLE;
-        priority = 0;
         currentTick = 0;
     }
 
@@ -160,7 +158,6 @@ public class RotationProcessor extends BaseProcessor {
         if (state == rotationState.RESET && applyRotationStep(Rotation.a(), resetSpeed, true)) {
             this.currentLook.a(false);
             state = rotationState.IDLE;
-            priority = 0;
         }
     }
 
@@ -173,9 +170,6 @@ public class RotationProcessor extends BaseProcessor {
     }
 
     public void startAimingWithSpeeds(Rotation rotation, float aimSpeed, float resetSpeed, int lookMode, int priority) {
-        if (priority > RotationProcessor.priority) {
-            return;
-        }
         if (state != rotationState.IDLE && isUsingUseableItem()) {
             rotation = getDefaultWobbleRotation();
         }
@@ -185,7 +179,6 @@ public class RotationProcessor extends BaseProcessor {
         RotationProcessor.resetSpeed = resetSpeed;
         RotationProcessor.lookMode = lookMode;
         maxTicks = getMaxTicksForMode(lookMode);
-        RotationProcessor.priority = priority;
         state = rotationState.AIM;
         currentTick = 0;
         applyRotationStep(rotation, aimSpeed, true);

@@ -2,7 +2,6 @@ package aethereal.render;
 
 
 import aethereal.config.BaseProcessor;
-import aethereal.core.Interface;
 import aethereal.ui.shader.*;
 import aethereal.util.MathUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -15,7 +14,7 @@ import net.minecraft.util.Identifier;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
 
-public class Draw2DProcessor extends BaseProcessor implements Interface {
+public class Draw2DProcessor extends BaseProcessor {
     private final RectangleShader rectangleShader = new RectangleShader();
     private final TextureShader textureShader = new TextureShader();
     private final GradientShader gradientShader = new GradientShader();

@@ -19,7 +19,7 @@ public class BindCommand extends BaseCommand {
     @Override
     public void a(LiteralArgumentBuilder<CommandSource> builder) {
         ModuleProcessor processor = Delta.getInstance().getModuleProcessor().t();
-        LiteralArgumentBuilder literalArgumentBuilderExecutes = a("add").executes(context -> {
+        LiteralArgumentBuilder<CommandSource> literalArgumentBuilderExecutes = a("add").executes(context -> {
             ChatUtil.sendMessage("Использование: .bind add <название модуля> <клавиша>");
             return 1;
         });

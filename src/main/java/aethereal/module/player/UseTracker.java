@@ -91,15 +91,15 @@ public class UseTracker extends Module {
                             if (factor > 0.0d) {
                                 List<StatusEffectInstance> effects = new ArrayList<>();
                                 if (player != mc.player) {
-                                    ChatUtil.sendMessage((Object) ("[" + j() + "]"), ChatUtil.b(player.getName().getString() + " получил эффекты от \"").append(type.a()).append(ChatUtil.b("\"")));
+                                    ChatUtil.sendMessage((Object) ("[" + j() + "]"), ChatUtil.b(player.getName().getString() + " получил эффекты от \"").append(type.getDisplayText()).append(ChatUtil.b("\"")));
                                     ChatUtil.sendMessage("[" + j() + "]", "- Успешность: &a" + ((int) (factor * 100.0d)) + "%");
                                 }
                                 if (player == mc.player) {
                                     notificationText = Text.literal("Вы получили эффекты от ").styled(style -> {
                                         return style.withColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor());
-                                    }).append(type.a()).append(ChatUtil.b(" &7(" + ((int) (factor * 100.0d)) + "%)"));
+                                    }).append(type.getDisplayText()).append(ChatUtil.b(" &7(" + ((int) (factor * 100.0d)) + "%)"));
                                 } else {
-                                    notificationText = ChatUtil.b(player.getName().getString() + " получил эффекты от ").append(type.a()).append(ChatUtil.b(" &7(" + ((int) (factor * 100.0d)) + "%)"));
+                                    notificationText = ChatUtil.b(player.getName().getString() + " получил эффекты от ").append(type.getDisplayText()).append(ChatUtil.b(" &7(" + ((int) (factor * 100.0d)) + "%)"));
                                 }
                                 Delta.getInstance().getModuleProcessor().m().a(new Notification("o", notificationText, 2000));
                                 for (Map.Entry<RegistryEntry<StatusEffect>, int[]> entry : type.b()) {
@@ -153,7 +153,7 @@ public class UseTracker extends Module {
                         if (this.b.a("Тотема").c().booleanValue()) {
                             ItemStack totem = entity.getMainHandStack().getItem() == Items.TOTEM_OF_UNDYING ? entity.getMainHandStack() : entity.getOffHandStack().getItem() == Items.TOTEM_OF_UNDYING ? entity.getOffHandStack() : null;
                             if (totem != null) {
-                                String name = ServerUtil.a.a() ? ServerUtil.a.b(totem) : totem.getName().getString();
+                                String name = ServerUtil.a.a$() ? ServerUtil.a.b(totem) : totem.getName().getString();
                                 ChatUtil.sendMessage("[" + j() + "]", (entity == mc.player ? "Вы потеряли " : entity.getName().getString() + " потерял ") + name + ", зачарован: " + ((name.startsWith("Талисман") || totem.hasGlint()) ? "&a●&7" : "&c●&7"));
                             }
                         }
@@ -177,7 +177,7 @@ public class UseTracker extends Module {
         private final int[] j;
         private final int[] k;
 
-        a(final List effects, final String displayName, final int[] throwColor, final int[] nameColors) {
+        a(final List<Map.Entry<RegistryEntry<StatusEffect>, int[]>> effects, final String displayName, final int[] throwColor, final int[] nameColors) {
             this.h = effects;
             this.i = displayName;
             this.j = throwColor;
@@ -200,7 +200,7 @@ public class UseTracker extends Module {
             return this.k;
         }
 
-        public MutableText a() {
+        public MutableText getDisplayText() {
             int start = this.i.indexOf(32) + 1;
             MutableText text = Text.literal("");
             int i = 0;

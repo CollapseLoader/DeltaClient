@@ -276,7 +276,7 @@ public class PvEHandler extends BaseHandler implements Interface {
                         Slot offer = null;
                         for (int i5 = 0; i5 < screen2.getScreenHandler().slots.size() - 36; i5++) {
                             Slot slot = screen2.getScreenHandler().slots.get(i5);
-                            if (!slot.getStack().isEmpty() && slot.getStack().getItem() == this.b && ServerUtil.a.a(slot.getStack()) > 0 && ServerUtil.a.a(slot.getStack()) <= this.d && (offer == null || ServerUtil.a.a(slot.getStack()) < ServerUtil.a.a(offer.getStack()))) {
+                            if (!slot.getStack().isEmpty() && slot.getStack().getItem() == this.b && ServerUtil.a.a$(slot.getStack()) > 0 && ServerUtil.a.a$(slot.getStack()) <= this.d && (offer == null || ServerUtil.a.a$(slot.getStack()) < ServerUtil.a.a$(offer.getStack()))) {
                                 offer = slot;
                             }
                         }

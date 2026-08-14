@@ -7,12 +7,8 @@ import aethereal.lib.websocket.WebSocketClient;
 import aethereal.network.PacketSecurity;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class Client extends WebSocketClient {
 
@@ -27,8 +23,6 @@ public class Client extends WebSocketClient {
     public Client(boolean dev) {
         super(URI.create(dev ? "ws://localhost:2002/" : "wss://deltaclient.xyz/ws/"),
                 Map.of("Sec-WebSocket-Protocol", Delta.getInstance().g().token() + "-minecraft"));
-        ScheduledExecutorService c = Executors.newSingleThreadScheduledExecutor();
-        List<Packet> d = new ArrayList<>();
         this.packetSecurity = new PacketSecurity();
     }
 

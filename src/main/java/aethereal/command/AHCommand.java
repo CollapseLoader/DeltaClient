@@ -57,7 +57,7 @@ public class AHCommand extends BaseCommand {
                         return this.searchRequest.a().a(stack) && stack.getTooltip(Item.TooltipContext.DEFAULT, mc.player, TooltipType.BASIC).stream().noneMatch(line -> {
                             return line.getString().contains("Нажмите, чтобы забрать");
                         });
-                    }).mapToInt(ServerUtil.a::a).filter(price -> {
+                    }).mapToInt(ServerUtil.a::a$).filter(price -> {
                         return price > 0;
                     }).sorted().boxed().toList();
                     if (!prices.isEmpty()) {

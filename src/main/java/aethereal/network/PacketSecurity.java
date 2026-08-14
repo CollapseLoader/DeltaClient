@@ -143,7 +143,6 @@ public class PacketSecurity {
     }
 
     private void initSecurity() {
-        byte[] aesKey = null;
         this.gson = new Gson();
     }
 
