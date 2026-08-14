@@ -9,7 +9,8 @@ import com.google.gson.JsonObject;
 import java.util.Objects;
 import java.util.Optional;
 
-public record DiscordUser(String id, String username, String discriminator, String globalName, String avatar, boolean bot) {
+public record DiscordUser(String id, String username, String discriminator, String globalName, String avatar,
+                          boolean bot) {
     public DiscordUser(String id, String username, String discriminator, String globalName, String avatar, boolean bot) {
         this.id = id;
         this.username = username;

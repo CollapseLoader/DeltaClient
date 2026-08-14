@@ -81,8 +81,7 @@ public class ANFindHandler extends BaseHandler implements Interface {
     public void onTickEvent(TickEvent event) {
         if (this.isActive) {
             Screen class_437Var = mc.currentScreen;
-            if (class_437Var instanceof GenericContainerScreen) {
-                GenericContainerScreen screen = (GenericContainerScreen) class_437Var;
+            if (class_437Var instanceof GenericContainerScreen screen) {
                 a mode = this.b.get(this.currentModeIndex);
                 switch (this.phase) {
                     case SELECT_MODE:

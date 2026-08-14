@@ -18,11 +18,11 @@ public class SoundEvent extends Event {
         return this.sound;
     }
 
-    public void setVolume(float volume) {
-        this.volume = volume;
-    }
-
     public float getVolume() {
         return this.volume;
+    }
+
+    public void setVolume(float volume) {
+        this.volume = volume;
     }
 }

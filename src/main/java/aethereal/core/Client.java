@@ -1,7 +1,7 @@
 package aethereal.core;
 
-import aethereal.lib.log4j.LoggerFactory;
 import aethereal.lib.log4j.Logger;
+import aethereal.lib.log4j.LoggerFactory;
 import aethereal.lib.websocket.ServerHandshake;
 import aethereal.lib.websocket.WebSocketClient;
 import aethereal.network.PacketSecurity;

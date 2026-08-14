@@ -13,7 +13,7 @@ public class MotionEvent extends Event {
     private boolean isSprinting;
 
     public MotionEvent(double x, double y, double z, float yaw, float pitch, boolean onGround, boolean isCrouching,
-            boolean isSprinting) {
+                       boolean isSprinting) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -54,38 +54,6 @@ public class MotionEvent extends Event {
                 * 59) + (isSprinting() ? 79 : 97);
     }
 
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public void setZ(double z) {
-        this.z = z;
-    }
-
-    public void setYaw(float yaw) {
-        this.yaw = yaw;
-    }
-
-    public void setPitch(float pitch) {
-        this.pitch = pitch;
-    }
-
-    public void setOnGround(boolean onGround) {
-        this.onGround = onGround;
-    }
-
-    public void setCrouching(boolean isCrouching) {
-        this.isCrouching = isCrouching;
-    }
-
-    public void setSprinting(boolean isSprinting) {
-        this.isSprinting = isSprinting;
-    }
-
     public String toString() {
         double dB = getX();
         double dC = getY();
@@ -103,31 +71,63 @@ public class MotionEvent extends Event {
         return this.x;
     }
 
+    public void setX(double x) {
+        this.x = x;
+    }
+
     public double getY() {
         return this.y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 
     public double getZ() {
         return this.z;
     }
 
+    public void setZ(double z) {
+        this.z = z;
+    }
+
     public float getYaw() {
         return this.yaw;
+    }
+
+    public void setYaw(float yaw) {
+        this.yaw = yaw;
     }
 
     public float getPitch() {
         return this.pitch;
     }
 
+    public void setPitch(float pitch) {
+        this.pitch = pitch;
+    }
+
     public boolean isOnGround() {
         return this.onGround;
+    }
+
+    public void setOnGround(boolean onGround) {
+        this.onGround = onGround;
     }
 
     public boolean isCrouching() {
         return this.isCrouching;
     }
 
+    public void setCrouching(boolean isCrouching) {
+        this.isCrouching = isCrouching;
+    }
+
     public boolean isSprinting() {
         return this.isSprinting;
+    }
+
+    public void setSprinting(boolean isSprinting) {
+        this.isSprinting = isSprinting;
     }
 }

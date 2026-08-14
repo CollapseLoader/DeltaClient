@@ -81,22 +81,6 @@ public class HeadFeatureEvent extends Event {
         return (result4 * 59) + ($model == null ? 43 : $model.hashCode());
     }
 
-    public void setMatrixStack(MatrixStack matrix) {
-        this.matrixStack = matrix;
-    }
-
-    public void setVertexConsumerProvider(VertexConsumerProvider vertexConsumerProvider) {
-        this.vertexConsumerProvider = vertexConsumerProvider;
-    }
-
-    public void setPlayer(PlayerEntity player) {
-        this.player = player;
-    }
-
-    public void setModel(ModelWithHead model) {
-        this.model = model;
-    }
-
     public String toString() {
         return "HeadFeatureEvent(matrix=" + getMatrixStack() + ", vertexConsumerProvider=" + getVertexConsumerProvider() + ", player=" + getPlayer() + ", model=" + getModel() + ")";
     }
@@ -105,15 +89,31 @@ public class HeadFeatureEvent extends Event {
         return this.matrixStack;
     }
 
+    public void setMatrixStack(MatrixStack matrix) {
+        this.matrixStack = matrix;
+    }
+
     public VertexConsumerProvider getVertexConsumerProvider() {
         return this.vertexConsumerProvider;
+    }
+
+    public void setVertexConsumerProvider(VertexConsumerProvider vertexConsumerProvider) {
+        this.vertexConsumerProvider = vertexConsumerProvider;
     }
 
     public PlayerEntity getPlayer() {
         return this.player;
     }
 
+    public void setPlayer(PlayerEntity player) {
+        this.player = player;
+    }
+
     public ModelWithHead getModel() {
         return this.model;
+    }
+
+    public void setModel(ModelWithHead model) {
+        this.model = model;
     }
 }

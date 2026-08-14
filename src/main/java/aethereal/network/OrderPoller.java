@@ -1,7 +1,7 @@
 package aethereal.network;
 
-import aethereal.lib.jsoup.JsoupConnection;
 import aethereal.lib.jsoup.Element;
+import aethereal.lib.jsoup.JsoupConnection;
 
 import java.util.ArrayList;
 import java.util.List;

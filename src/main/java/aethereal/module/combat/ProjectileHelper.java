@@ -107,7 +107,7 @@ public class ProjectileHelper extends Module {
     private LivingEntity findBestTarget() {
         Vec3d eye = mc.player.getEyePos();
         Vec3d look = Vec3d.fromPolar(Look.c(), Look.b());
-        return (LivingEntity) StreamSupport.stream(mc.world.getEntities().spliterator(), false)
+        return StreamSupport.stream(mc.world.getEntities().spliterator(), false)
                 .filter(PlayerEntity.class::isInstance)
                 .map(e -> (PlayerEntity) e)
                 .filter(e -> e != mc.player && e.isAlive() && !Delta.getInstance().getModuleProcessor().e().d(e.getName().getString()) && eye.squaredDistanceTo(e.getBoundingBox().getCenter()) <= 14400.0d)

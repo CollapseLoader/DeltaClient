@@ -31,6 +31,7 @@ import java.util.stream.StreamSupport;
 
 @ModuleRegister(name = "Trigger Bot", description = "Автоматически наносит удар при наведении прицела на цель", category = Category.Combat)
 public class TriggerBot extends Module {
+    final BooleanSetting b = new BooleanSetting("Преследование цели", false);
     private final MultiModeSetting f = new MultiModeSetting("Цели для атаки", new BooleanSetting("Игроки", true), new BooleanSetting("Животные", false), new BooleanSetting("Мобы", false), new BooleanSetting("Друзья", true));
     private final MultiModeSetting g = new MultiModeSetting("Дополнительно", new BooleanSetting("Только критические удары", true), new BooleanSetting("Адаптивные удары", true), new BooleanSetting("Случайные промахи", true));
     private final MultiModeSetting h = new MultiModeSetting("Не бить когда", new BooleanSetting("Используется предмет", true), new BooleanSetting("Открыт контейнер", true), new BooleanSetting("Враг за стеной", false));
@@ -39,7 +40,6 @@ public class TriggerBot extends Module {
     private final CounterUtil k = new CounterUtil();
     public int d;
     boolean c;
-    final BooleanSetting b = new BooleanSetting("Преследование цели", false);
     boolean e = false;
     private int stallTicks;
     private int m;

@@ -41,6 +41,10 @@ public class RotationProcessor extends BaseProcessor implements Interface {
         return minResetTicks;
     }
 
+    public void setMinResetTicks(int ticks) {
+        minResetTicks = Math.max(ticks, 0);
+    }
+
     private static boolean isUsingUseableItem() {
         List<UseableHandler.UseableTask> tasks = Delta.getInstance().getModuleProcessor().v().getUseableHandler().a();
         if (tasks.isEmpty() || tasks.getFirst().d() >= 1) {
@@ -147,10 +151,6 @@ public class RotationProcessor extends BaseProcessor implements Interface {
 
     private boolean isRotating() {
         return currentTick >= 2 && currentTick <= maxTicks && state != a.IDLE;
-    }
-
-    public void setMinResetTicks(int ticks) {
-        minResetTicks = Math.max(ticks, 0);
     }
 
     public void startAiming(Rotation rotation, float turnSpeed, int lookMode, int priority) {

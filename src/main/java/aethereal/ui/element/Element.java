@@ -51,10 +51,6 @@ public class Element<SettingType extends Setting<?>> {
         return false;
     }
 
-    public void setScroll(float scroll) {
-        this.c = scroll;
-    }
-
     public AnimationUtil getActivationAnimation() {
         return this.d;
     }
@@ -73,6 +69,10 @@ public class Element<SettingType extends Setting<?>> {
 
     public float getScroll() {
         return this.c;
+    }
+
+    public void setScroll(float scroll) {
+        this.c = scroll;
     }
 
     public boolean isEnabled() {

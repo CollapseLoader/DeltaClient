@@ -21,10 +21,10 @@ import net.minecraft.util.math.Box;
 public class EntityBox extends Module {
     private final ModeSetting visualMode = new ModeSetting("Тип визуализации", "Квадрат", "Квадрат", "Углы", "Заливка", "Отключен");
     private final ModeSetting colorSource = new ModeSetting("Источник цвета", "Клиентский", "Клиентский", "Статичный");
-    private final ModeSetting healthBarMode = (ModeSetting) new ModeSetting("Бар здоровья", "Отключен", "Отключен", "Стандартный").a(() -> {
+    private final ModeSetting healthBarMode = new ModeSetting("Бар здоровья", "Отключен", "Отключен", "Стандартный").a(() -> {
         return Boolean.valueOf(this.visualMode.l("Квадрат") || this.visualMode.l("Углы"));
     });
-    private final ColorSetting colorSetting = (ColorSetting) new ColorSetting("Цвет визуализации", Integer.valueOf(ColorUtil.convertToARGB(255, 255, 255, 255))).a(() -> {
+    private final ColorSetting colorSetting = new ColorSetting("Цвет визуализации", Integer.valueOf(ColorUtil.convertToARGB(255, 255, 255, 255))).a(() -> {
         return Boolean.valueOf(this.colorSource.l("Статичный"));
     });
 
@@ -114,7 +114,7 @@ public class EntityBox extends Module {
 
     private boolean shouldRender(Entity entity) {
         if ((entity instanceof PlayerEntity) || (entity instanceof ItemEntity)) {
-            return (entity == mc.player && mc.options.getPerspective().isFirstPerson()) ? false : true;
+            return entity != mc.player || !mc.options.getPerspective().isFirstPerson();
         }
         return false;
     }

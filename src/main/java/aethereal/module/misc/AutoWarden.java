@@ -55,11 +55,6 @@ import java.util.stream.Stream;
 
 @ModuleRegister(name = "Auto Warden", description = "Автоматизирует фарм варденов на анархии", category = Category.Misc)
 public class AutoWarden extends Module {
-    private int roarTimer;
-    private boolean died;
-    private Box farmArea;
-    private BlockPos targetChest;
-    private String killerName;
     private final List<Integer> anarchyList = new ArrayList<>();
     private final Map<BlockPos, Integer> chestOpenCounts = new HashMap();
     private final Map<BlockPos, Integer> wardenPositions = new HashMap();
@@ -67,23 +62,21 @@ public class AutoWarden extends Module {
     private final BooleanSetting reportKillers = new BooleanSetting("Репортить обидчиков", false);
     private final ModeSetting lootPriority = new ModeSetting("Приоритеты лута", "Средний", "Низкий", "Средний", "Высокий");
     private final BooleanSetting debug = new BooleanSetting("Отладка", false);
-    private int anarchyIndex = 1;
     private final CounterUtil counter = new CounterUtil();
+    private int roarTimer;
+    private boolean died;
+    private Box farmArea;
+    private BlockPos targetChest;
+    private String killerName;
+    private int anarchyIndex = 1;
     private State state = State.SAVE;
 
-    enum State {
-        SAVE,
-        TAKE,
-        COLLECTING,
-        ESCAPE
+    public AutoWarden() {
+        a(this.useSpeed, this.reportKillers, this.lootPriority, this.debug);
     }
 
     public List<Integer> getAnarchyList() {
         return this.anarchyList;
-    }
-
-    public AutoWarden() {
-        a(this.useSpeed, this.reportKillers, this.lootPriority, this.debug);
     }
 
     @Override
@@ -100,7 +93,7 @@ public class AutoWarden extends Module {
         if (!Delta.getInstance().getModuleProcessor().t().i().m()) {
             Delta.getInstance().getModuleProcessor().t().i().a();
         }
-        ChatUtil.sendMessage((Object) "Shift + Пробел — быстрое выключение функции");
+        ChatUtil.sendMessage("Shift + Пробел — быстрое выключение функции");
         BaritoneAPI.getSettings().avoidance.value = true;
         BaritoneAPI.getSettings().maxFallHeightNoWater.value = 256;
         BaritoneAPI.getSettings().blockFreeLook.value = true;
@@ -120,7 +113,7 @@ public class AutoWarden extends Module {
     }
 
     private void updateCandleAvoidance(boolean add) {
-        List<Block> list = (List) BaritoneAPI.getSettings().blocksToAvoid.value;
+        List<Block> list = BaritoneAPI.getSettings().blocksToAvoid.value;
         try {
             for (Block block : Registries.BLOCK) {
                 if (block.getDefaultState().isIn(BlockTags.CANDLES)) {
@@ -219,9 +212,9 @@ public class AutoWarden extends Module {
                 if (this.reportKillers.c().booleanValue() && mc.player != null && text.contains("Вас убил")) {
                     StringBuilder effects = new StringBuilder();
                     for (StatusEffectInstance effect : mc.player.getStatusEffects()) {
-                        effects.append(((StatusEffect) effect.getEffectType().value()).getName().getString()).append(StringUtils.a);
+                        effects.append(effect.getEffectType().value().getName().getString()).append(StringUtils.a);
                     }
-                    ChatUtil.sendMessage((Object) ("Эффекты при смерти: " + (effects.isEmpty() ? "нет" : effects.toString().trim())));
+                    ChatUtil.sendMessage("Эффекты при смерти: " + (effects.isEmpty() ? "нет" : effects.toString().trim()));
                     if (!mc.player.hasStatusEffect(StatusEffects.GLOWING) && !isNearChest(2.0d)) {
                         this.killerName = text.split("Вас убил ")[1].split(",")[0].trim();
                     }
@@ -285,7 +278,7 @@ public class AutoWarden extends Module {
         if (this.anarchyList.isEmpty()) {
             return -1;
         }
-        return ((Integer) this.anarchyList.getFirst()).intValue();
+        return this.anarchyList.getFirst().intValue();
     }
 
     private boolean isOnTargetAnarchy() {
@@ -347,7 +340,7 @@ public class AutoWarden extends Module {
         }
         if (this.anarchyList.size() <= 1) {
             if (mc.player.age % 20 == 0) {
-                ChatUtil.sendMessage((Object) "ОШИБКА -> .warden list пустой");
+                ChatUtil.sendMessage("ОШИБКА -> .warden list пустой");
                 return;
             }
             return;
@@ -429,8 +422,7 @@ public class AutoWarden extends Module {
     private boolean isWardenAggro() {
         if (mc.player.age < this.roarTimer) {
             for (Entity entity : mc.world.getEntities()) {
-                if (entity instanceof WardenEntity) {
-                    WardenEntity warden = (WardenEntity) entity;
+                if (entity instanceof WardenEntity warden) {
                     double distSq = mc.player.squaredDistanceTo(warden);
                     if (distSq < 900.0d && isWardenFacing(warden) && (distSq < 16.0d || isWardenApproaching(warden))) {
                         return true;
@@ -509,11 +501,11 @@ public class AutoWarden extends Module {
 
     private void debugOutput() {
         baritone.api.IBaritone.PathingBehavior pathing = BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior();
-        ChatUtil.sendMessage((Object) ("&7[AW] состояние &f" + this.state + " &7| анархия &f" + ServerUtil.a.d() + "&7, нужна &f" + currentAnarchy() + " &7(список: &f" + this.anarchyList.size() + "&7) | в зоне фермы &f" + isInFarmArea() + " &7| сундуков у ESP &f" + Delta.getInstance().getModuleProcessor().t().i().scanChests().size() + " &7| варден &f" + isWardenAggro() + " &7| пвп &f" + ServerUtil.e() + " &7| baritone: &f" + (pathing.hasPath() ? "идёт" : "стоит")));
-        ChatUtil.sendMessage((Object) ("&7[AW] застрял(r) &c" + isStuck() + " &7| двигаюсь(L) &f" + isMoving() + " &7| в блоке(s) &f" + isInsideBlock() + " &7| свечи &f" + (mc.world.getBlockState(mc.player.getBlockPos()).isIn(BlockTags.CANDLES) || mc.world.getBlockState(mc.player.getBlockPos().down()).isIn(BlockTags.CANDLES))));
+        ChatUtil.sendMessage("&7[AW] состояние &f" + this.state + " &7| анархия &f" + ServerUtil.a.d() + "&7, нужна &f" + currentAnarchy() + " &7(список: &f" + this.anarchyList.size() + "&7) | в зоне фермы &f" + isInFarmArea() + " &7| сундуков у ESP &f" + Delta.getInstance().getModuleProcessor().t().i().scanChests().size() + " &7| варден &f" + isWardenAggro() + " &7| пвп &f" + ServerUtil.e() + " &7| baritone: &f" + (pathing.hasPath() ? "идёт" : "стоит"));
+        ChatUtil.sendMessage("&7[AW] застрял(r) &c" + isStuck() + " &7| двигаюсь(L) &f" + isMoving() + " &7| в блоке(s) &f" + isInsideBlock() + " &7| свечи &f" + (mc.world.getBlockState(mc.player.getBlockPos()).isIn(BlockTags.CANDLES) || mc.world.getBlockState(mc.player.getBlockPos().down()).isIn(BlockTags.CANDLES)));
         BlockPos reach = findChestInHand(true);
         BlockPos far = findNearestReceiver();
-        ChatUtil.sendMessage((Object) ("&7[AW] лут в инвентаре(R) &f" + hasLoot() + " &7| приёмник в руке &f" + (reach == null ? "нет" : String.valueOf(reach)) + " &7| ближайший приёмник &f" + (far == null ? "не найден в радиусе 16" : far + " (" + ((int) Math.sqrt(mc.player.squaredDistanceTo(Vec3d.ofCenter(far)))) + " бл.)") + " &7| экран &f" + (mc.currentScreen == null ? "нет" : mc.currentScreen.getClass().getSimpleName())));
+        ChatUtil.sendMessage("&7[AW] лут в инвентаре(R) &f" + hasLoot() + " &7| приёмник в руке &f" + (reach == null ? "нет" : String.valueOf(reach)) + " &7| ближайший приёмник &f" + (far == null ? "не найден в радиусе 16" : far + " (" + ((int) Math.sqrt(mc.player.squaredDistanceTo(Vec3d.ofCenter(far)))) + " бл.)") + " &7| экран &f" + (mc.currentScreen == null ? "нет" : mc.currentScreen.getClass().getSimpleName()));
     }
 
     private BlockPos findNearestReceiver() {
@@ -525,7 +517,7 @@ public class AutoWarden extends Module {
             for (int dy = -6; dy <= 6; dy++) {
                 for (int dz = -16; dz <= 16; dz++) {
                     pos.set(origin.getX() + dx, origin.getY() + dy, origin.getZ() + dz);
-                    if (mc.world.getBlockState(pos).isOf(Blocks.CHEST) && isHopperChest((BlockPos) pos) && mc.world.getBlockState(pos.up()).isAir()) {
+                    if (mc.world.getBlockState(pos).isOf(Blocks.CHEST) && isHopperChest(pos) && mc.world.getBlockState(pos.up()).isAir()) {
                         double dist = mc.player.squaredDistanceTo(Vec3d.ofCenter(pos));
                         if (dist < bestDist) {
                             bestDist = dist;
@@ -587,7 +579,7 @@ public class AutoWarden extends Module {
         if (pick == null) {
             pick = findBestChest();
         }
-        boolean stay = (pick == null || this.targetChest == null || pick.equals(this.targetChest) || Delta.getInstance().getModuleProcessor().t().i().getRemainingTime(this.targetChest) <= 25000) ? false : true;
+        boolean stay = pick != null && this.targetChest != null && !pick.equals(this.targetChest) && Delta.getInstance().getModuleProcessor().t().i().getRemainingTime(this.targetChest) > 25000;
         if (!stay) {
             this.counter.b();
         }
@@ -716,7 +708,7 @@ public class AutoWarden extends Module {
             return;
         }
         Slot slot = findScreenSlot(screen, false, stack -> {
-            return (stack.isEmpty() || isJunk(stack)) ? false : true;
+            return !stack.isEmpty() && !isJunk(stack);
         });
         if (slot == null) {
             closeScreen();
@@ -957,9 +949,7 @@ public class AutoWarden extends Module {
     private boolean hasCursorItem() {
         GenericContainerScreen screen = (GenericContainerScreen) mc.currentScreen;
         if (screen instanceof GenericContainerScreen) {
-            if (!screen.getScreenHandler().getCursorStack().isEmpty()) {
-                return true;
-            }
+            return !screen.getScreenHandler().getCursorStack().isEmpty();
         }
         return false;
     }
@@ -1000,18 +990,18 @@ public class AutoWarden extends Module {
     }
 
     private boolean hasCustomTag(ItemStack stack, String id) {
-        NbtComponent data = (NbtComponent) stack.get(DataComponentTypes.CUSTOM_DATA);
+        NbtComponent data = stack.get(DataComponentTypes.CUSTOM_DATA);
         return data != null && id.equals(data.copyNbt().getCompound("PublicBukkitValues").getString("minecraft:ftid"));
     }
 
     private boolean isInvisibilityPotion(ItemStack stack) {
-        RegistryEntry<Potion> potion = (RegistryEntry) ((PotionContentsComponent) stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT)).potion().orElse(null);
+        RegistryEntry<Potion> potion = stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).potion().orElse(null);
         return potion != null && (potion.equals(Potions.INVISIBILITY) || potion.equals(Potions.LONG_INVISIBILITY));
     }
 
     private boolean isSpeedPotion(ItemStack stack) {
         if (stack.isOf(Items.POTION)) {
-            for (StatusEffectInstance effect : ((PotionContentsComponent) stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT)).getEffects()) {
+            for (StatusEffectInstance effect : stack.getOrDefault(DataComponentTypes.POTION_CONTENTS, PotionContentsComponent.DEFAULT).getEffects()) {
                 if (effect.getEffectType().equals(StatusEffects.SPEED)) {
                     return true;
                 }
@@ -1028,7 +1018,7 @@ public class AutoWarden extends Module {
             for (int dy = -4; dy <= 4; dy++) {
                 for (int dz = -4; dz <= 4; dz++) {
                     pos.set(origin.getX() + dx, origin.getY() + dy, origin.getZ() + dz);
-                    if (mc.world.getBlockState(pos).isOf(Blocks.CHEST) && isHopperChest((BlockPos) pos) == hopper && mc.world.getBlockState(pos.up()).isAir() && mc.world.raycast(new RaycastContext(mc.player.getEyePos(), Vec3d.ofCenter(pos), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player)).getBlockPos().equals(pos)) {
+                    if (mc.world.getBlockState(pos).isOf(Blocks.CHEST) && isHopperChest(pos) == hopper && mc.world.getBlockState(pos.up()).isAir() && mc.world.raycast(new RaycastContext(mc.player.getEyePos(), Vec3d.ofCenter(pos), RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, mc.player)).getBlockPos().equals(pos)) {
                         return pos.toImmutable();
                     }
                 }
@@ -1071,5 +1061,12 @@ public class AutoWarden extends Module {
             }
         }
         return false;
+    }
+
+    enum State {
+        SAVE,
+        TAKE,
+        COLLECTING,
+        ESCAPE
     }
 }

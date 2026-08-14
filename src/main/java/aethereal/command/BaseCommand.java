@@ -106,7 +106,7 @@ public abstract class BaseCommand implements Interface {
     protected <T> SuggestionProvider<CommandSource> a(java.util.function.Supplier<Collection<T>> itemsSupplier, Function<T, String> mapper) {
         return (context, builder) -> {
             String remaining = builder.getRemainingLowerCase() == null ? "" : builder.getRemainingLowerCase();
-            Iterator<T> it = ((Collection<T>) itemsSupplier.get()).iterator();
+            Iterator<T> it = itemsSupplier.get().iterator();
             while (it.hasNext()) {
                 String name = mapper.apply(it.next());
                 if (name != null && name.toLowerCase().startsWith(remaining)) {

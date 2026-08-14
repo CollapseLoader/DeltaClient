@@ -3,7 +3,6 @@ package aethereal.command;
 import aethereal.autobuy.AutoBuyEntry;
 import aethereal.core.Delta;
 import aethereal.core.EventTarget;
-import aethereal.core.Interface;
 import aethereal.event.PacketEvent;
 import aethereal.event.TickEvent;
 import aethereal.util.ChatUtil;

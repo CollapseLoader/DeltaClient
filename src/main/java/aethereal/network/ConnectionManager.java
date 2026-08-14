@@ -1,8 +1,8 @@
 package aethereal.network;
 
 import aethereal.command.CommandExecutor;
-import aethereal.core.InterfaceC0020Opcode;
 import aethereal.core.DiscordUser;
+import aethereal.core.InterfaceC0020Opcode;
 import aethereal.discord.*;
 import aethereal.lib.javassist.CloseFrame;
 import aethereal.lib.javassist.Frame;

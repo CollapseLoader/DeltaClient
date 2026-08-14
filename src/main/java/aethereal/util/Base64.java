@@ -258,15 +258,15 @@ public class Base64 {
 
     public static class a extends FilterOutputStream {
         private final boolean a;
-        private int b;
-        private byte[] c;
         private final int d;
-        private int e;
         private final boolean f;
         private final byte[] g;
         private final boolean h;
         private final int i;
         private final byte[] j;
+        private int b;
+        private byte[] c;
+        private int e;
 
         public a(OutputStream out) {
             this(out, 1);

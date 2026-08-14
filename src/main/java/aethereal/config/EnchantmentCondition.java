@@ -134,7 +134,7 @@ public class EnchantmentCondition implements Condition {
         } else {
             iMethod_8183 = (this.enchantmentKey.equals(Enchantments.PROTECTION) || this.enchantmentKey.equals(Enchantments.UNBREAKING)) ? 5
                     : Interface.mc.world.getRegistryManager().getOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(this.enchantmentKey)
-                            .value().getMaxLevel();
+                    .value().getMaxLevel();
         }
         return Math.max(1, Math.min(iMethod_8183, level));
     }

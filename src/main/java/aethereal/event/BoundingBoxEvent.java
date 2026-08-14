@@ -15,19 +15,19 @@ public class BoundingBoxEvent extends Event {
         this.entity = entity;
     }
 
-    public void setBox(Box box) {
-        this.box = box;
-    }
-
-    public void setEntity(Entity entity) {
-        this.entity = entity;
-    }
-
     public Box getBox() {
         return this.box;
     }
 
+    public void setBox(Box box) {
+        this.box = box;
+    }
+
     public Entity getEntity() {
         return this.entity;
+    }
+
+    public void setEntity(Entity entity) {
+        this.entity = entity;
     }
 }

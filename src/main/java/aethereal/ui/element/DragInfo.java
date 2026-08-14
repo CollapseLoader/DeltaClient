@@ -25,56 +25,44 @@ public class DragInfo implements Interface {
         Delta.getInstance().getModuleProcessor().s().e().add(this);
     }
 
-    public void setWidget(Widget widget) {
-        this.widget = widget;
-    }
-
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public void setY(float y) {
-        this.y = y;
-    }
-
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
-    public void setOffsetX(double offsetX) {
-        this.offsetX = offsetX;
-    }
-
-    public void setOffsetY(double offsetY) {
-        this.offsetY = offsetY;
-    }
-
-    public void setDragStatus(int status) {
-        this.dragStatus = status;
-    }
-
     public Widget getWidget() {
         return this.widget;
+    }
+
+    public void setWidget(Widget widget) {
+        this.widget = widget;
     }
 
     public float getWidth() {
         return this.width;
     }
 
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
     public float getHeight() {
         return this.height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
     }
 
     public double getOffsetX() {
         return this.offsetX;
     }
 
+    public void setOffsetX(double offsetX) {
+        this.offsetX = offsetX;
+    }
+
     public double getOffsetY() {
         return this.offsetY;
+    }
+
+    public void setOffsetY(double offsetY) {
+        this.offsetY = offsetY;
     }
 
     public String getName() {
@@ -83,6 +71,10 @@ public class DragInfo implements Interface {
 
     public int getDragStatus() {
         return this.dragStatus;
+    }
+
+    public void setDragStatus(int status) {
+        this.dragStatus = status;
     }
 
     public float getClampedX() {
@@ -97,7 +89,15 @@ public class DragInfo implements Interface {
         return this.x;
     }
 
+    public void setX(float x) {
+        this.x = x;
+    }
+
     public float getY() {
         return this.y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
     }
 }

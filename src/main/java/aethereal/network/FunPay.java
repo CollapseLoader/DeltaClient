@@ -1,10 +1,10 @@
 package aethereal.network;
 
 import aethereal.discord.Session;
-import aethereal.lib.jsoup.JsoupConnection;
 import aethereal.lib.jsoup.Document;
 import aethereal.lib.jsoup.Element;
 import aethereal.lib.jsoup.Jsoup;
+import aethereal.lib.jsoup.JsoupConnection;
 import aethereal.module.misc.FunDeliver;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

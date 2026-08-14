@@ -27,11 +27,11 @@ public class Widget {
     protected final AnimationUtil a = new AnimationUtil();
     protected final AnimationUtil b = new AnimationUtil();
     protected final AnimationUtil c = new AnimationUtil();
+    protected final float d = 12.5f;
+    protected final float e = 7.0f;
     private final List<Setting<?>> f = new ObjectArrayList<>();
     private final List<Element<?>> g = new ObjectArrayList<>();
     private final DragInfo i;
-    protected final float d = 12.5f;
-    protected final float e = 7.0f;
     private boolean h = false;
 
     public Widget(DragInfo dragInfo) {

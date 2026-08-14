@@ -61,7 +61,7 @@ public class UseTracker extends Module {
                             String color = active.getItem() instanceof PotionItem ? "&a" : "&c";
                             if (active.isOf(Items.MILK_BUCKET)) {
                                 Delta.getInstance().getModuleProcessor().t().aa().getTrackers().removeIf(info -> {
-                                    return info.getEntityId() == player.getId();
+                                    return info.entityId() == player.getId();
                                 });
                             }
                             ChatUtil.sendMessage("[" + j() + "]", player.getName().getString() + " использовал \"" + color + active.getItem().getName().getString() + "&7\"");
@@ -136,7 +136,7 @@ public class UseTracker extends Module {
                         for (EntityAttributeModifier modifier : entry.modifiers()) {
                             if ((mc.world.getEntityById(packet.getEntityId()) instanceof PlayerEntity) && modifier.id().toString().equals("minecraft:effect.speed") && modifier.value() <= 0.40000001199465773d && modifier.operation() == EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL) {
                                 Delta.getInstance().getModuleProcessor().t().aa().getTrackers().removeIf(info -> {
-                                    return info.getEntityId() == packet.getEntityId();
+                                    return info.entityId() == packet.getEntityId();
                                 });
                             }
                         }
@@ -148,7 +148,7 @@ public class UseTracker extends Module {
                 if (entity instanceof LivingEntity) {
                     if (statusPacket.getStatus() == 35) {
                         Delta.getInstance().getModuleProcessor().t().aa().getTrackers().removeIf(info2 -> {
-                            return info2.getEntityId() == entity.getId();
+                            return info2.entityId() == entity.getId();
                         });
                         if (this.b.a("Тотема").c().booleanValue()) {
                             ItemStack totem = entity.getMainHandStack().getItem() == Items.TOTEM_OF_UNDYING ? entity.getMainHandStack() : entity.getOffHandStack().getItem() == Items.TOTEM_OF_UNDYING ? entity.getOffHandStack() : null;

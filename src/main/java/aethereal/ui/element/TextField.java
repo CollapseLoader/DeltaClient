@@ -51,28 +51,28 @@ public class TextField {
         return this.numbersOnly;
     }
 
-    public void setPosition(Vector2f position) {
-        this.position = position;
-    }
-
     public Vector2f getPosition() {
         return this.position;
     }
 
-    public void setSize(Vector2f size) {
-        this.size = size;
+    public void setPosition(Vector2f position) {
+        this.position = position;
     }
 
     public Vector2f getSize() {
         return this.size;
     }
 
-    public void setPlaceholder(String placeholder) {
-        this.placeholder = placeholder;
+    public void setSize(Vector2f size) {
+        this.size = size;
     }
 
     public String getPlaceholder() {
         return this.placeholder;
+    }
+
+    public void setPlaceholder(String placeholder) {
+        this.placeholder = placeholder;
     }
 
     public StringBuilder getTextBuffer() {

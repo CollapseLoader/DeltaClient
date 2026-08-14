@@ -40,6 +40,8 @@ import java.util.stream.StreamSupport;
 @ModuleRegister(name = "Aura", description = "Автоматически атакует цели рядом с вами", category = Category.Combat)
 public class Aura extends Module {
 
+    final float[] c = {-1.0f, -1.0f, -1.0f, -1.0f, 0.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f};
+    final int[] e = {-1, -1};
     private final ModeSetting h = new ModeSetting("Выберите тип наведения", "ФанТайм", "ФанТайм", "ФанТайм ФОВ",
             "Легит");
     private final MultiModeSetting i = new MultiModeSetting("Цели для атаки", new BooleanSetting("Без брони", true),
@@ -62,8 +64,6 @@ public class Aura extends Module {
     private final float[] u = new float[30];
     public int b = 0;
     boolean d;
-    final float[] c = {-1.0f, -1.0f, -1.0f, -1.0f, 0.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f};
-    final int[] e = {-1, -1};
     boolean f = false;
     private LivingEntity target;
 

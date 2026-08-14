@@ -128,11 +128,11 @@ public class LayoutCommand extends BaseCommand {
             DefaultedList<Slot> class_2371Var = mc.player.playerScreenHandler.slots;
             List<String> missing = new ArrayList<>();
             for (a info : this.pendingLayout) {
-                Slot target = (Slot) class_2371Var.get(info.c());
+                Slot target = class_2371Var.get(info.c());
                 Item item = info.b().getItem();
                 if (target.getStack().getItem() != item) {
                     @SuppressWarnings("unchecked")
-                    List<Slot> slotList = (List<Slot>) (List<?>) class_2371Var;
+                    List<Slot> slotList = class_2371Var;
                     Slot source = slotList.stream()
                             .filter(slot -> ((platform.inject.accessors.SlotAccessor) slot).getInventory() == mc.player.getInventory())
                             .filter(slot2 -> slot2.getStack().getItem() == item)
@@ -144,7 +144,7 @@ public class LayoutCommand extends BaseCommand {
                         mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, target.id, hotbar, SlotActionType.SWAP, mc.player);
                         mc.interactionManager.clickSlot(mc.player.playerScreenHandler.syncId, source.id, hotbar, SlotActionType.SWAP, mc.player);
                         if (this.pendingLayout.stream().noneMatch(other -> {
-                            return ((Slot) class_2371Var.get(other.c())).getStack().getItem() != other.b().getItem();
+                            return class_2371Var.get(other.c()).getStack().getItem() != other.b().getItem();
                         })) {
                             mc.player.networkHandler.sendPacket(new CloseHandledScreenC2SPacket(mc.player.playerScreenHandler.syncId));
                             this.pendingLayout.clear();

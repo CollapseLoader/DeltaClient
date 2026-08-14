@@ -2,8 +2,8 @@ package aethereal.command;
 
 
 import aethereal.config.BaseProcessor;
-import aethereal.lib.log4j.LoggerFactory;
 import aethereal.lib.log4j.Logger;
+import aethereal.lib.log4j.LoggerFactory;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -103,8 +103,7 @@ public class CommandProcessor extends BaseProcessor {
             try {
                 ParseResults<CommandSource> results = this.dispatcher.parse(command, this.commandSource);
                 for (ParsedCommandNode<CommandSource> parsed : results.getContext().getNodes()) {
-                    if (parsed.getNode() instanceof LiteralCommandNode) {
-                        LiteralCommandNode<CommandSource> literal = (LiteralCommandNode<CommandSource>) parsed.getNode();
+                    if (parsed.getNode() instanceof LiteralCommandNode<CommandSource> literal) {
                         int typedLength = parsed.getRange().getLength();
                         if (typedLength != literal.getLiteral().length()) {
                             return;

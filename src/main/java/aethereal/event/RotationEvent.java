@@ -12,19 +12,19 @@ public class RotationEvent extends Event {
         this.pitch = pitch;
     }
 
-    public void setYaw(float yaw) {
-        this.yaw = yaw;
-    }
-
-    public void setPitch(float pitch) {
-        this.pitch = pitch;
-    }
-
     public float getYaw() {
         return this.yaw;
     }
 
+    public void setYaw(float yaw) {
+        this.yaw = yaw;
+    }
+
     public float getPitch() {
         return this.pitch;
+    }
+
+    public void setPitch(float pitch) {
+        this.pitch = pitch;
     }
 }

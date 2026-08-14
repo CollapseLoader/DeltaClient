@@ -16,10 +16,10 @@ import java.util.List;
 
 @ModuleRegister(name = "Mace Helper", description = "Автоматизирует действия при использовании булавы", category = Category.Combat)
 public class MaceHelper extends Module {
-    public int d;
-    public boolean e;
     public final BooleanSetting b = new BooleanSetting("Усиление урона", true);
     public final BooleanSetting c = new BooleanSetting("Авто-переключение булавы", false);
+    public int d;
+    public boolean e;
     int[] f = {-1, -1};
 
     public MaceHelper() {

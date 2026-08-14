@@ -40,12 +40,12 @@ public class EntityESP extends Module {
     private final MultiModeSetting trackedEntities = new MultiModeSetting("Отслеживаемые сущности", new BooleanSetting("Игроки", true), new BooleanSetting("Животные", false), new BooleanSetting("Мобы", false), new BooleanSetting("Предметы", false));
     private final List<Tracker> trackers = new ArrayList<>();
 
-    public List<Tracker> getTrackers() {
-        return this.trackers;
-    }
-
     public EntityESP() {
         a(this.trackedEntities);
+    }
+
+    public List<Tracker> getTrackers() {
+        return this.trackers;
     }
 
     @EventTarget
@@ -66,7 +66,7 @@ public class EntityESP extends Module {
                     String key = str;
                     if (key != null && this.trackedEntities.a(key).c().booleanValue()) {
                         int color = ((entity instanceof PlayerEntity) && Delta.getInstance().getModuleProcessor().e().d(entity.getName().getString())) ? ColorUtil.convertToARGB(0, 100, 0, InterfaceC0020Opcode.bN) : ColorUtil.convertToARGB(0, 0, 0, 80);
-                        Vec3d interpolated = MathUtil.a((Entity) entity, event.g());
+                        Vec3d interpolated = MathUtil.a(entity, event.g());
                         Vec3d entityPos = interpolated.add(0.0d, entity.getHeight() + 0.25f, 0.0d);
                         Vector2f screenPos = ProjectUtil.project(entityPos.getX(), entityPos.getY(), entityPos.getZ());
                         if (ProjectUtil.isOnScreen(screenPos)) {
@@ -106,8 +106,7 @@ public class EntityESP extends Module {
     }
 
     private void drawArmor(Entity entity, DrawEvent event, float nameTagWidth, float nameTagX, float nameTagY, int color, float textHeight) {
-        if (entity instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) entity;
+        if (entity instanceof PlayerEntity player) {
             float spacing = textHeight * 0.3f;
             ItemStack[] stacks = {player.getMainHandStack(), player.getEquippedStack(EquipmentSlot.HEAD), player.getEquippedStack(EquipmentSlot.CHEST), player.getEquippedStack(EquipmentSlot.LEGS), player.getEquippedStack(EquipmentSlot.FEET), player.getOffHandStack()};
             int count = 0;
@@ -132,13 +131,12 @@ public class EntityESP extends Module {
 
     private void drawEffects(Entity entity, DrawEvent event, Vector2f screenPos, float fontSize, float padding, int color) {
         List<StatusEffectInstance> effects;
-        if (entity instanceof LivingEntity) {
-            LivingEntity living = (LivingEntity) entity;
+        if (entity instanceof LivingEntity living) {
             List<Tracker> matchingTrackers = new ArrayList<>();
             for (int i = this.trackers.size() - 1; i >= 0; i--) {
                 Tracker entry = this.trackers.get(i);
-                if (entry.getEntityId() == living.getId()) {
-                    if (living.age < entry.getAge()) {
+                if (entry.entityId() == living.getId()) {
+                    if (living.age < entry.age()) {
                         this.trackers.remove(i);
                     } else {
                         matchingTrackers.add(entry);
@@ -148,8 +146,8 @@ public class EntityESP extends Module {
             if (!matchingTrackers.isEmpty()) {
                 effects = new ArrayList<>();
                 for (Tracker tracker : matchingTrackers) {
-                    for (StatusEffectInstance effectInstance : tracker.getEffects()) {
-                        int remaining = effectInstance.getDuration() - Math.max(0, living.age - tracker.getAge());
+                    for (StatusEffectInstance effectInstance : tracker.effects()) {
+                        int remaining = effectInstance.getDuration() - Math.max(0, living.age - tracker.age());
                         if (remaining > 0) {
                             StatusEffectInstance remainingEffect = effectInstance.getDuration() > 1000000 ? effectInstance : new StatusEffectInstance(effectInstance.getEffectType(), remaining, effectInstance.getAmplifier());
                             StatusEffectInstance existing = null;
@@ -169,16 +167,16 @@ public class EntityESP extends Module {
                     }
                 }
                 if (effects.isEmpty()) {
-                    effects = new ArrayList<>((Collection<? extends StatusEffectInstance>) living.getStatusEffects());
+                    effects = new ArrayList<>(living.getStatusEffects());
                 }
             } else {
-                effects = new ArrayList<>((Collection<? extends StatusEffectInstance>) living.getStatusEffects());
+                effects = new ArrayList<>(living.getStatusEffects());
             }
             float lineHeight = Fonts.e.d().lineHeight() * fontSize;
             float maxWidth = 0.0f;
             for (StatusEffectInstance effect : effects) {
                 int seconds = effect.getDuration() / 20;
-                maxWidth = Math.max(maxWidth, Fonts.e.a(Text.translatable(((StatusEffect) effect.getEffectType().value()).getTranslationKey()).getString() + " " + MathUtil.a(effect.getAmplifier()) + (effect.getDuration() > 1000000 ? " ∞" : " - " + (seconds / 60) + ":" + String.format("%02d", Integer.valueOf(seconds % 60))), fontSize));
+                maxWidth = Math.max(maxWidth, Fonts.e.a(Text.translatable(effect.getEffectType().value().getTranslationKey()).getString() + " " + MathUtil.a(effect.getAmplifier()) + (effect.getDuration() > 1000000 ? " ∞" : " - " + (seconds / 60) + ":" + String.format("%02d", Integer.valueOf(seconds % 60))), fontSize));
             }
             float textX = screenPos.x() - (maxWidth / 2.0f);
             float textY = screenPos.y() + padding;
@@ -186,8 +184,8 @@ public class EntityESP extends Module {
             float lineY = textY;
             for (StatusEffectInstance effect2 : effects) {
                 String duration = effect2.getDuration() > 1000000 ? " ∞" : " - " + ((effect2.getDuration() / 20) / 60) + ":" + String.format("%02d", Integer.valueOf((effect2.getDuration() / 20) % 60));
-                String line = Text.translatable(((StatusEffect) effect2.getEffectType().value()).getTranslationKey()).getString() + " " + MathUtil.a(effect2.getAmplifier()) + duration;
-                Fonts.e.a(event.i().getMatrices(), line, screenPos.x() - (Fonts.e.a(line, fontSize) / 2.0f), lineY, fontSize, ColorUtil.applyAlphaToColor(((StatusEffect) effect2.getEffectType().value()).getColor(), 1.0f), 0.0f);
+                String line = Text.translatable(effect2.getEffectType().value().getTranslationKey()).getString() + " " + MathUtil.a(effect2.getAmplifier()) + duration;
+                Fonts.e.a(event.i().getMatrices(), line, screenPos.x() - (Fonts.e.a(line, fontSize) / 2.0f), lineY, fontSize, ColorUtil.applyAlphaToColor(effect2.getEffectType().value().getColor(), 1.0f), 0.0f);
                 lineY += lineHeight;
             }
         }
@@ -195,13 +193,12 @@ public class EntityESP extends Module {
 
     private void drawItem(Entity entity, DrawEvent event, Vector2f screenPos, float fontSize, float padding, int color) {
         MutableText text = entity instanceof ItemEntity ? ((ItemEntity) entity).getStack().getName().copy() : entity.getName().copy();
-        if (entity instanceof ItemEntity) {
-            ItemEntity item = (ItemEntity) entity;
+        if (entity instanceof ItemEntity item) {
             if (item.getStack().getCount() > 1) {
                 text.append(Text.literal(" x" + item.getStack().getCount()));
             }
         }
-        float textWidth = Fonts.e.a((Text) text, fontSize);
+        float textWidth = Fonts.e.a(text, fontSize);
         float textHeight = Fonts.e.d().lineHeight() * fontSize;
         float textX = screenPos.x() - (textWidth / 2.0f);
         float textY = screenPos.y();
@@ -209,27 +206,6 @@ public class EntityESP extends Module {
         Fonts.e.a(event.i().getMatrices(), text, textX, textY, fontSize);
     }
 
-    public static final class Tracker {
-        private final List<StatusEffectInstance> effects;
-        private final int entityId;
-        private final int age;
-
-        public Tracker(List<StatusEffectInstance> effects, int id, int age) {
-            this.effects = effects;
-            this.entityId = id;
-            this.age = age;
-        }
-
-        public List<StatusEffectInstance> getEffects() {
-            return this.effects;
-        }
-
-        public int getEntityId() {
-            return this.entityId;
-        }
-
-        public int getAge() {
-            return this.age;
-        }
+    public record Tracker(List<StatusEffectInstance> effects, int entityId, int age) {
     }
 }

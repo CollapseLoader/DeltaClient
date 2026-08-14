@@ -18,7 +18,7 @@ public class ProjectUtil implements Interface {
         Vector3f result3f = new Vector3f((float) (x - camera.getPos().x), (float) (y - camera.getPos().y), (float) (z - camera.getPos().z));
         Quaternionf invCamRot = new Quaternionf(camera.getRotation()).conjugate();
         result3f.rotate(invCamRot);
-        return project(result3f, ((GameRendererInvoker) (Object) mc.gameRenderer).invokeGetFov(camera, mc.getRenderTickCounter().getTickDelta(false), true));
+        return project(result3f, ((GameRendererInvoker) mc.gameRenderer).invokeGetFov(camera, mc.getRenderTickCounter().getTickDelta(false), true));
     }
 
     private static Vector2f project(Vector3f result3f, double fov) {

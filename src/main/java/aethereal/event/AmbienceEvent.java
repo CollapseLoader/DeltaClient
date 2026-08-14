@@ -17,12 +17,12 @@ public class AmbienceEvent {
             this.time = time;
         }
 
-        public void setTime(long time) {
-            this.time = time;
-        }
-
         public long getTime() {
             return this.time;
+        }
+
+        public void setTime(long time) {
+            this.time = time;
         }
     }
 
@@ -39,36 +39,36 @@ public class AmbienceEvent {
             this.alpha = alpha;
         }
 
-        public void setRed(float red) {
-            this.red = red;
-        }
-
-        public void setGreen(float green) {
-            this.green = green;
-        }
-
-        public void setBlue(float blue) {
-            this.blue = blue;
-        }
-
-        public void setAlpha(float alpha) {
-            this.alpha = alpha;
-        }
-
         public float getRed() {
             return this.red;
+        }
+
+        public void setRed(float red) {
+            this.red = red;
         }
 
         public float getGreen() {
             return this.green;
         }
 
+        public void setGreen(float green) {
+            this.green = green;
+        }
+
         public float getBlue() {
             return this.blue;
         }
 
+        public void setBlue(float blue) {
+            this.blue = blue;
+        }
+
         public float getAlpha() {
             return this.alpha;
+        }
+
+        public void setAlpha(float alpha) {
+            this.alpha = alpha;
         }
     }
 
@@ -83,10 +83,6 @@ public class AmbienceEvent {
             this.fog = fog;
         }
 
-        public void setCamera(Camera camera) {
-            this.camera = camera;
-        }
-
         public void setViewDistance(float viewDistance) {
             this.viewDistance = viewDistance;
         }
@@ -97,6 +93,10 @@ public class AmbienceEvent {
 
         public Camera getCamera() {
             return this.camera;
+        }
+
+        public void setCamera(Camera camera) {
+            this.camera = camera;
         }
 
         public float c() {

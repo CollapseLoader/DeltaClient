@@ -14,15 +14,15 @@ public class SyncEvent extends Event {
         this.stack = stack;
     }
 
-    public void setStack(ItemStack stack) {
-        this.stack = stack;
-    }
-
     public int getSlot() {
         return this.slot;
     }
 
     public ItemStack getStack() {
         return this.stack;
+    }
+
+    public void setStack(ItemStack stack) {
+        this.stack = stack;
     }
 }
