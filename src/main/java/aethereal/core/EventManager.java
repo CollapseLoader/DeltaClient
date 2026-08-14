@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class EventManager {
-    private static final Map<Class<? extends IEvent>, List<a>> a = new HashMap();
+    private static final Map<Class<? extends IEvent>, List<a>> a = new HashMap<>();
 
     private EventManager() {
     }

@@ -1,7 +1,9 @@
 package aethereal.module.player;
 
-import aethereal.core.*;
+import aethereal.core.Category;
+import aethereal.core.EventTarget;
 import aethereal.core.Module;
+import aethereal.core.ModuleRegister;
 import aethereal.event.ContainerEvent;
 import aethereal.event.RayTraceEvent;
 import aethereal.setting.BooleanSetting;

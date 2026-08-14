@@ -68,7 +68,7 @@ public class FontBuilder implements Interface {
         Map<Integer, Map<Integer, Float>> kernings = new HashMap<>();
         data.kernings().forEach(kerning -> {
             Map<Integer, Float> kerningMap = kernings.computeIfAbsent(Integer.valueOf(kerning.leftChar()), k -> {
-                return new HashMap();
+                return new HashMap<>();
             });
             kerningMap.put(Integer.valueOf(kerning.rightChar()), Float.valueOf(kerning.advance()));
         });

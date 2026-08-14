@@ -4,7 +4,7 @@ import aethereal.core.EventTarget;
 import aethereal.event.PacketEvent;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 
-@Handler_2
+
 public class TPSHandler extends BaseHandler {
     private long a = -1;
     private long b = -1;

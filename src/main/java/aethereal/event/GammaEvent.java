@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 
 
-
 public class GammaEvent extends Event {
     private double a;
 

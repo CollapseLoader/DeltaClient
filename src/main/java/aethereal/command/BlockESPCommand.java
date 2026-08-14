@@ -158,14 +158,14 @@ public class BlockESPCommand extends BaseCommand {
         public a {
         }
 
-            @Override
-            public Block a() {
-                return this.a;
-            }
-
-            @Override
-            public int b() {
-                return this.b;
-            }
+        @Override
+        public Block a() {
+            return this.a;
         }
+
+        @Override
+        public int b() {
+            return this.b;
+        }
+    }
 }

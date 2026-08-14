@@ -15,7 +15,7 @@ public class AutoBuyProcessor extends ConfigProcessor<AutoBuyEntry> {
     }
 
     @Override
-    
+
     protected List<AutoBuyEntry> a(String str) {
         if (this.d.isEmpty()) {
             this.d.addAll(Arrays.asList(AutoBuyEntry.values()));
@@ -42,7 +42,7 @@ public class AutoBuyProcessor extends ConfigProcessor<AutoBuyEntry> {
     }
 
     @Override
-    
+
     protected String a(List<AutoBuyEntry> data) {
         JSONArray jSONArray = new JSONArray();
         for (AutoBuyEntry aVar : data) {

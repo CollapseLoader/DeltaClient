@@ -1,7 +1,6 @@
 package aethereal.discord;
 
 
-
 public enum ActivityType {
     PLAYING(0),
     STREAMING(1),

@@ -27,7 +27,7 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
     private DragInfo g = null;
 
     @Override
-    
+
     protected List<DragInfo> a(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
         for (int i = 0; i < jSONArray.a(); i++) {
@@ -64,7 +64,7 @@ public class DragProcessor extends ConfigProcessor<DragInfo> implements Interfac
     }
 
     @Override
-    
+
     protected String a(List<DragInfo> data) throws Exception {
         JSONArray jSONArray = new JSONArray();
         for (DragInfo dragInfo : data) {

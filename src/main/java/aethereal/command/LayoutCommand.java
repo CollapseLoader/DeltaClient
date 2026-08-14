@@ -175,19 +175,19 @@ public class LayoutCommand extends BaseCommand {
         public a {
         }
 
-            @Override
-            public String a() {
-                return this.a;
-            }
-
-            @Override
-            public ItemStack b() {
-                return this.b;
-            }
-
-            @Override
-            public int c() {
-                return this.c;
-            }
+        @Override
+        public String a() {
+            return this.a;
         }
+
+        @Override
+        public ItemStack b() {
+            return this.b;
+        }
+
+        @Override
+        public int c() {
+            return this.c;
+        }
+    }
 }

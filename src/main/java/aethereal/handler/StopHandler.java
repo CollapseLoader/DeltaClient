@@ -5,7 +5,7 @@ import aethereal.core.Interface;
 import aethereal.event.InputEvent;
 import aethereal.event.TickEvent;
 
-@Handler_2
+
 public class StopHandler extends BaseHandler implements Interface {
     private int b = -1;
 

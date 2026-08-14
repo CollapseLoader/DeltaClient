@@ -1,44 +1,39 @@
 package aethereal.module.render;
 
-import aethereal.core.Delta;
-import aethereal.core.InterfaceC0020Opcode;
+import aethereal.core.*;
 import aethereal.core.Module;
-import aethereal.render.Fonts;
+import aethereal.event.DrawEvent;
+import aethereal.module.misc.StreamerMode;
 import aethereal.render.ColorUtil;
+import aethereal.render.Fonts;
+import aethereal.setting.BooleanSetting;
+import aethereal.setting.MultiModeSetting;
 import aethereal.util.InventoryUtil;
 import aethereal.util.MathUtil;
 import aethereal.util.ProjectUtil;
 import aethereal.util.ServerUtil;
-
-import aethereal.core.Category;
-import aethereal.core.EventTarget;
-import aethereal.core.ModuleRegister;
-import aethereal.event.DrawEvent;
-import aethereal.module.misc.StreamerMode;
-import aethereal.setting.BooleanSetting;
-
-import aethereal.setting.MultiModeSetting;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.ShulkerEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.text.Text;
-import net.minecraft.text.Style;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.util.math.Vec3d;
 import org.joml.Vector2f;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @ModuleRegister(name = "Entity ESP", description = "Отображает информацию о сущностях над их головой", category = Category.Render)
 public class EntityESP extends Module {

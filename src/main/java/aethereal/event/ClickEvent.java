@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 
 
-
 public class ClickEvent extends Event {
     private final a type;
     private final double b;

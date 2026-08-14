@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 
 
-
 public class HandEvent extends Event {
     private final a type;
 

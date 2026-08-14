@@ -44,9 +44,9 @@ public class ScissorUtil implements Interface {
     record a(int a, int b, int c, int d) {
 
         a a(a p) {
-                int nx = Math.max(this.a, p.a);
-                int ny = Math.max(this.b, p.b);
-                return new a(nx, ny, Math.max(0, Math.min(this.a + this.c, p.a + p.c) - nx), Math.max(0, Math.min(this.b + this.d, p.b + p.d) - ny));
-            }
+            int nx = Math.max(this.a, p.a);
+            int ny = Math.max(this.b, p.b);
+            return new a(nx, ny, Math.max(0, Math.min(this.a + this.c, p.a + p.c) - nx), Math.max(0, Math.min(this.b + this.d, p.b + p.d) - ny));
         }
+    }
 }

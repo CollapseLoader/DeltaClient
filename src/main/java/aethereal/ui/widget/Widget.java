@@ -148,17 +148,17 @@ public class Widget {
     }
 
     protected void a(DrawEvent event, float x, float y, String icon, Object title, float width, float animation,
-            int iconColor) {
+                     int iconColor) {
         a(event, x, y, icon, null, title, width, animation, iconColor);
     }
 
     protected void a(DrawEvent event, float x, float y, ItemStack icon, Object title, float width, float animation,
-            int iconColor) {
+                     int iconColor) {
         a(event, x, y, null, icon, title, width, animation, iconColor);
     }
 
     private void a(DrawEvent event, float x, float y, String icon, ItemStack stack, Object title, float width,
-            float animation, int iconColor) {
+                   float animation, int iconColor) {
         if (animation > 0.0f) {
             float iconSize = this.e + 1.0f;
             a(event, x, y, width, this.d, true, animation);

@@ -1,7 +1,6 @@
 package aethereal.macro;
 
 
-
 public class MacrosConstructor {
     private String key;
     private String command;

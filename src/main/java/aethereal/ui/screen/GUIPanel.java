@@ -30,7 +30,7 @@ public class GUIPanel {
         this.d = category;
     }
 
-    
+
     public boolean a(final double mouseX, final double mouseY, final int button) {
         for (Module module : this.e) {
             if (module.n()) {
@@ -56,17 +56,17 @@ public class GUIPanel {
         return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.a(mouseX, mouseY, button));
     }
 
-    
+
     public boolean b(final double mouseX, final double mouseY, final int button) {
         return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.b(mouseX, mouseY, button));
     }
 
-    
+
     public boolean a(final double mouseX, final double mouseY, final int button, final double deltaX, final double deltaY) {
         return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.a(mouseX, mouseY, button, deltaX, deltaY));
     }
 
-    
+
     public boolean a(final int keyCode, final int scanCode, final int modifiers) {
         for (Module module : this.e) {
             if (module.n()) {
@@ -78,12 +78,12 @@ public class GUIPanel {
         return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.a(keyCode, scanCode, modifiers));
     }
 
-    
+
     public boolean a(final char chr, final int modifiers) {
         return this.e.stream().filter(Module::o).flatMap(module -> module.d().stream()).filter(Element_2::a).anyMatch(element -> element.a(chr, modifiers));
     }
 
-    
+
     public boolean a(final double mouseX, final double mouseY, final double amount) {
         if (!MathUtil.a(mouseX, mouseY, this.a.x, this.a.y, this.a.z, this.a.w)) {
             return false;

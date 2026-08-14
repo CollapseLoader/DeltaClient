@@ -22,7 +22,7 @@ public class SliderElement extends Element_2<SliderSetting> {
     }
 
     @Override
-    
+
     public boolean a(double mouseX, double mouseY, int button) {
         Vector4f vector4f = this.a;
         var setting = this.b;
@@ -45,14 +45,14 @@ public class SliderElement extends Element_2<SliderSetting> {
     }
 
     @Override
-    
+
     public boolean b(double mouseX, double mouseY, int button) {
         this.d = false;
         return false;
     }
 
     @Override
-    
+
     public boolean a(double mouseX, double mouseY, double amount) {
         var setting = this.b;
         Vector4f vector4f = this.a;

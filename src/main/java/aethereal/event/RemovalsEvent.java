@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 
 
-
 public class RemovalsEvent extends Event {
     private final a a;
 

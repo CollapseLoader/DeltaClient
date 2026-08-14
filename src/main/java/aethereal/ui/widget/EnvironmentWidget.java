@@ -41,7 +41,7 @@ public class EnvironmentWidget extends Widget implements Interface {
     public EnvironmentWidget() {
         super(new DragInfo("Окружение", 0.0f, 0.0f, 0.0f, 0.0f));
         this.f = new BooleanSetting("Показывать броню", true);
-        this.g = new HashMap();
+        this.g = new HashMap<>();
         this.h = new ArrayList<>();
         this.i = new UUID[2];
         j().a(this);
@@ -52,7 +52,8 @@ public class EnvironmentWidget extends Widget implements Interface {
         int i;
         int score = 0;
         for (int i2 = 0; i2 < 4; i2++) {
-            String name = Registries.ITEM.getId(player.getEquippedStack(EquipmentSlot.values()[5 - i2]).getItem()).getPath();
+            String name = Registries.ITEM.getId(player.getEquippedStack(EquipmentSlot.values()[5 - i2]).getItem())
+                    .getPath();
             int i3 = score;
             if (name.startsWith("netherite_")) {
                 i = 4;
@@ -69,7 +70,9 @@ public class EnvironmentWidget extends Widget implements Interface {
     }
 
     static int a(ItemStack stack) {
-        if (stack.isOf(Items.DRIED_KELP) || stack.isOf(Items.NETHERITE_SCRAP) || stack.isOf(Items.SNOWBALL) || stack.isOf(Items.SUGAR) || stack.isOf(Items.PHANTOM_MEMBRANE) || stack.isOf(Items.WIND_CHARGE) || stack.isOf(Items.ENDER_EYE)) {
+        if (stack.isOf(Items.DRIED_KELP) || stack.isOf(Items.NETHERITE_SCRAP) || stack.isOf(Items.SNOWBALL)
+                || stack.isOf(Items.SUGAR) || stack.isOf(Items.PHANTOM_MEMBRANE) || stack.isOf(Items.WIND_CHARGE)
+                || stack.isOf(Items.ENDER_EYE)) {
             return 3;
         }
         if (stack.contains(DataComponentTypes.FOOD)) {
@@ -110,7 +113,8 @@ public class EnvironmentWidget extends Widget implements Interface {
         }).toList();
         float width = 14.5f + Fonts.e.a("Окружение", this.e) + 5.0f;
         for (b data : shown) {
-            width = Math.max(width, Math.max(20.0f + Fonts.e.a(data.d + ((int) data.f) + "HP", 6.5f) + 34.0f, (data.b.size() * 15.0f) - 2.0f));
+            width = Math.max(width, Math.max(20.0f + Fonts.e.a(data.d + ((int) data.f) + "HP", 6.5f) + 34.0f,
+                    (data.b.size() * 15.0f) - 2.0f));
         }
         j().c(width);
         if (animation > 0.0f) {
@@ -129,18 +133,22 @@ public class EnvironmentWidget extends Widget implements Interface {
         float textY = (y + ((12.0f - Fonts.e.a(6.5f)) / 2.0f)) - 0.5f;
         String health = ((int) data.f) + "HP";
         a(event, x, y, width, 12.0f, 3.0f, animation, false);
-        event.d().a(event.h(), x + 2.0f, y + 2.0f, 8.0f, 8.0f, 1.5f, ColorUtil.applyAlphaToColor(-1, animation), 0.125f, 0.125f, 0.125f, 0.125f, mc.getTextureManager().getTexture(data.e).getGlId());
-        Fonts.e.a(event.h(), health, ((x + width) - 3.0f) - Fonts.e.a(health, 6.5f), textY, 6.5f, ColorUtil.applyAlphaToColor(-1, animation));
+        event.d().a(event.h(), x + 2.0f, y + 2.0f, 8.0f, 8.0f, 1.5f, ColorUtil.applyAlphaToColor(-1, animation), 0.125f,
+                0.125f, 0.125f, 0.125f, mc.getTextureManager().getTexture(data.e).getGlId());
+        Fonts.e.a(event.h(), health, ((x + width) - 3.0f) - Fonts.e.a(health, 6.5f), textY, 6.5f,
+                ColorUtil.applyAlphaToColor(-1, animation));
         float right = ((x + width) - 4.0f) - Fonts.e.a(health, 6.5f);
         if (this.f.c().booleanValue()) {
             for (int i = 3; i >= 0; i--) {
                 if (!data.c[i].isEmpty()) {
                     right -= 7.0f;
-                    event.e().a(event.i(), InventoryUtil.a(data.c[i]), right - 2.0f, y + 2.0f, 0, animation, 0.5f, false);
+                    event.e().a(event.i(), InventoryUtil.a(data.c[i]), right - 2.0f, y + 2.0f, 0, animation, 0.5f,
+                            false);
                 }
             }
         }
-        Fonts.e.c(event.h(), data.d, x + 12.5f, textY, 6.5f, ColorUtil.applyAlphaToColor(-1, animation), (right - 16.5f) - x);
+        Fonts.e.c(event.h(), data.d, x + 12.5f, textY, 6.5f, ColorUtil.applyAlphaToColor(-1, animation),
+                (right - 16.5f) - x);
         if (data.b.isEmpty()) {
             return 14.0f;
         }
@@ -171,10 +179,14 @@ public class EnvironmentWidget extends Widget implements Interface {
         return 29.0f;
     }
 
-    private void a(DrawEvent event, float x, float y, float width, float height, float radius, float animation, boolean empty) {
+    private void a(DrawEvent event, float x, float y, float width, float height, float radius, float animation,
+                   boolean empty) {
         ThemeProcessor theme = Delta.getInstance().getModuleProcessor().o();
-        int background = ColorUtil.lerpColor(theme.a(ThemeInfo.BACKGROUND_HUD).toIntColor(), theme.a(ThemeInfo.PRIMARY).toIntColor(), theme.a(ThemeInfo.PRIMARY).b() / 6.0f);
-        event.d().b(event.h(), x, y, width, height, radius, ColorUtil.applyAlphaToColor(empty ? ColorUtil.lerpColor(background, ColorUtil.convertToARGB(255, 60, 60, 255), 0.35f) : background, theme.a(ThemeInfo.BACKGROUND_HUD).b() * animation), animation);
+        int background = ColorUtil.lerpColor(theme.a(ThemeInfo.BACKGROUND_HUD).toIntColor(),
+                theme.a(ThemeInfo.PRIMARY).toIntColor(), theme.a(ThemeInfo.PRIMARY).b() / 6.0f);
+        event.d().b(event.h(), x, y, width, height, radius, ColorUtil.applyAlphaToColor(
+                empty ? ColorUtil.lerpColor(background, ColorUtil.convertToARGB(255, 60, 60, 255), 0.35f) : background,
+                theme.a(ThemeInfo.BACKGROUND_HUD).b() * animation), animation);
     }
 
     @Override
@@ -201,7 +213,8 @@ public class EnvironmentWidget extends Widget implements Interface {
             }
             long now = System.currentTimeMillis();
             List<? extends PlayerEntity> nearby = mc.world.getPlayers().stream().filter(player -> {
-                return player != mc.player && player.isAlive() && !Delta.getInstance().getModuleProcessor().e().d(player.getName().getString());
+                return player != mc.player && player.isAlive()
+                        && !Delta.getInstance().getModuleProcessor().e().d(player.getName().getString());
             }).sorted(Comparator.comparingInt((PlayerEntity player2) -> {
                 if (player2.getUuid().equals(this.i[0])) {
                     return 0;
@@ -236,7 +249,8 @@ public class EnvironmentWidget extends Widget implements Interface {
         a(ItemStack stack, int hand) {
             this.a = stack.copy();
             this.a.setDamage(0);
-            this.a.set(DataComponentTypes.USE_COOLDOWN, new UseCooldownComponent(0.0f, Optional.of(Identifier.of("delta", "widget"))));
+            this.a.set(DataComponentTypes.USE_COOLDOWN,
+                    new UseCooldownComponent(0.0f, Optional.of(Identifier.of("delta", "widget"))));
             this.d = hand;
         }
 
@@ -266,7 +280,8 @@ public class EnvironmentWidget extends Widget implements Interface {
         void a(PlayerEntity player, long now) {
             Identifier class_2960VarComp_1626;
             StreamerMode streamer = Delta.getInstance().getModuleProcessor().t().aE();
-            this.d = (streamer.m() && streamer.r().c().booleanValue()) ? streamer.a(player.getName().getString()) : player.getName().getString();
+            this.d = (streamer.m() && streamer.r().c().booleanValue()) ? streamer.a(player.getName().getString())
+                    : player.getName().getString();
             if (player instanceof AbstractClientPlayerEntity client) {
                 class_2960VarComp_1626 = client.getSkinTextures().texture();
             } else {
@@ -302,9 +317,10 @@ public class EnvironmentWidget extends Widget implements Interface {
         private void a(PlayerEntity player, ItemStack stack, int hand, long now) {
             a entry = this.b.remove(stack.getItem());
             if (entry != null) {
-                if (stack.getCount() < entry.a.getCount() && EnvironmentWidget.b(stack) > 0 && Interface.mc.world.getEntitiesByClass(ItemEntity.class, player.getBoundingBox().expand(2.0d), item -> {
-                    return item.getStack().isOf(stack.getItem());
-                }).isEmpty()) {
+                if (stack.getCount() < entry.a.getCount() && EnvironmentWidget.b(stack) > 0 && Interface.mc.world
+                        .getEntitiesByClass(ItemEntity.class, player.getBoundingBox().expand(2.0d), item -> {
+                            return item.getStack().isOf(stack.getItem());
+                        }).isEmpty()) {
                     entry.b = now;
                 }
                 entry.a.setCount(stack.getCount());

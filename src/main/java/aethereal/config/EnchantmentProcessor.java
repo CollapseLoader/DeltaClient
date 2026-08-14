@@ -39,7 +39,8 @@ public class EnchantmentProcessor implements ItemFilter {
     }
 
     public EnchantmentProcessor a() {
-        return b(Enchantments.THORNS).b(Enchantments.KNOCKBACK).b(Enchantments.BINDING_CURSE).b(Enchantments.VANISHING_CURSE);
+        return b(Enchantments.THORNS).b(Enchantments.KNOCKBACK).b(Enchantments.BINDING_CURSE)
+                .b(Enchantments.VANISHING_CURSE);
     }
 
     @Override

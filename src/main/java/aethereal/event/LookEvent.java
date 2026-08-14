@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 
 
-
 public class LookEvent extends Event {
     public final double a;
     public final double b;

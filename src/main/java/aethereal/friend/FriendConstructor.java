@@ -1,7 +1,6 @@
 package aethereal.friend;
 
 
-
 public class FriendConstructor {
     private String a;
 

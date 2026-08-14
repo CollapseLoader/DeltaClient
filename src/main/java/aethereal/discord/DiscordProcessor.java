@@ -10,7 +10,7 @@ public class DiscordProcessor extends BaseProcessor {
     private DiscordIPC b;
 
     @Override
-    
+
     public void setup() {
     }
 

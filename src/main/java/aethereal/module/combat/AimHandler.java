@@ -6,7 +6,7 @@ import aethereal.core.Interface;
 import aethereal.event.DrawEvent;
 import aethereal.event.TickEvent;
 import aethereal.handler.BaseHandler;
-import aethereal.handler.Handler_2;
+
 import aethereal.render.AnimationUtil;
 import aethereal.render.ColorUtil;
 import aethereal.render.EasingList;
@@ -18,7 +18,6 @@ import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 import org.joml.Vector2f;
 
-@Handler_2
 public class AimHandler extends BaseHandler implements Interface {
     private final AnimationUtil b = new AnimationUtil();
     private LivingEntity c;
@@ -38,11 +37,14 @@ public class AimHandler extends BaseHandler implements Interface {
                 return;
             }
             float distance = (float) mc.player.getEyePos().distanceTo(real);
-            float size = ((float) Math.max(28.0d, 40.0d - (((double) distance) * 0.7000002488091963d))) * (1.2f - (0.2f * alpha));
+            float size = ((float) Math.max(28.0d, 40.0d - (((double) distance) * 0.7000002488091963d)))
+                    * (1.2f - (0.2f * alpha));
             event.h().push();
             event.h().translate(screen.x(), screen.y(), 0.0f);
-            event.h().multiply(RotationAxis.POSITIVE_Z.rotationDegrees(((float) Math.sin(System.currentTimeMillis() / 820.0d)) * 350.0f));
-            event.d().a(event.h(), Identifier.of("delta", "pictures/marker.png"), (-size) / 2.0f, (-size) / 2.0f, size, size, 0.0f, ColorUtil.applyAlphaToColor(-1, alpha * 0.8f));
+            event.h().multiply(RotationAxis.POSITIVE_Z
+                    .rotationDegrees(((float) Math.sin(System.currentTimeMillis() / 820.0d)) * 350.0f));
+            event.d().a(event.h(), Identifier.of("delta", "pictures/marker.png"), (-size) / 2.0f, (-size) / 2.0f, size,
+                    size, 0.0f, ColorUtil.applyAlphaToColor(-1, alpha * 0.8f));
             event.h().pop();
         }
     }
@@ -65,6 +67,8 @@ public class AimHandler extends BaseHandler implements Interface {
     }
 
     private Vec3d a(LivingEntity entity, float delta) {
-        return new Vec3d(MathHelper.lerp(delta, entity.prevX, entity.getX()), MathHelper.lerp(delta, entity.prevY, entity.getY()) + (((double) entity.getHeight()) / 2.0d), MathHelper.lerp(delta, entity.prevZ, entity.getZ()));
+        return new Vec3d(MathHelper.lerp(delta, entity.prevX, entity.getX()),
+                MathHelper.lerp(delta, entity.prevY, entity.getY()) + (((double) entity.getHeight()) / 2.0d),
+                MathHelper.lerp(delta, entity.prevZ, entity.getZ()));
     }
 }

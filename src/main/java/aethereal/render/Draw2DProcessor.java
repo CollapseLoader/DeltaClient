@@ -24,7 +24,7 @@ public class Draw2DProcessor extends BaseProcessor implements Interface {
     private float b = 1.0f;
 
     @Override
-    
+
     public void setup() {
     }
 

@@ -21,7 +21,7 @@ public class ButtonElement extends Element_2<ButtonSetting> {
     }
 
     @Override
-    
+
     public boolean a(double mouseX, double mouseY, int button) {
         if (button != 0) {
             return false;

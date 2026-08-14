@@ -44,7 +44,7 @@ import java.util.List;
 public class Predictions extends Module {
     private final MultiModeSetting b = new MultiModeSetting("Отслеживаемые предметы", new BooleanSetting("Стрелы", true), new BooleanSetting("Трезубцы", true), new BooleanSetting("Эндер жемчуг", true), new BooleanSetting("Зелья", true));
     private final BooleanSetting c = new BooleanSetting("Радужный цвет", false);
-    private final Map<Integer, b> d = new HashMap();
+    private final Map<Integer, b> d = new HashMap<>();
 
     public Predictions() {
         a(this.b, this.c);

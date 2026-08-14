@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 
 
-
 public class ScrollEvent extends Event {
     private final double a;
     private final double b;

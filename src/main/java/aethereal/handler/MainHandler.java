@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.StreamSupport;
 
-@Handler_2
+
 public class MainHandler extends BaseHandler implements Interface {
     private ServerInfo b;
     private String c;

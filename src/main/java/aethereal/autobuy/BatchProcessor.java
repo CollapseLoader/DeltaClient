@@ -22,7 +22,7 @@ public class BatchProcessor extends BaseProcessor {
     private final List<a> c = new ArrayList<>();
 
     @Override
-    
+
     public void setup() {
         this.b.clear();
         this.c.clear();

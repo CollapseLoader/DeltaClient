@@ -1,11 +1,8 @@
 package aethereal.module.render;
 
 import aethereal.config.ThemeInfo;
-import aethereal.core.Category;
-import aethereal.core.Delta;
-import aethereal.core.EventTarget;
+import aethereal.core.*;
 import aethereal.core.Module;
-import aethereal.core.ModuleRegister;
 import aethereal.event.DrawEvent;
 import aethereal.render.ColorUtil;
 import aethereal.render.Draw2DProcessor;

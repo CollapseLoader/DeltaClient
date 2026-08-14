@@ -7,6 +7,7 @@ import java.util.Map;
 public final class Connection_2 {
     private final org.jsoup.Connection delegate;
     private final Map<String, String> formData = new HashMap<>();
+
     private Connection_2(String url) {
         this.delegate = org.jsoup.Jsoup.connect(url);
     }

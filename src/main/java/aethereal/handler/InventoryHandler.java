@@ -14,7 +14,7 @@ import net.minecraft.screen.slot.SlotActionType;
 import java.util.ArrayList;
 import java.util.List;
 
-@Handler_2
+
 public class InventoryHandler extends BaseHandler implements Interface {
     private final List<a> b = new ArrayList<>();
 

@@ -1,8 +1,6 @@
 package aethereal.config;
 
 
-
-
 import java.io.File;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -16,7 +14,7 @@ public abstract class ConfigProcessor<T> extends BaseProcessor {
     protected abstract String b();
 
     @Override
-    
+
     public void setup() {
         try {
             List<T> list = this.d;
@@ -42,10 +40,10 @@ public abstract class ConfigProcessor<T> extends BaseProcessor {
         }
     }
 
-    
+
     protected abstract List<T> a(String str) throws Exception;
 
-    
+
     protected abstract String a(List<T> list) throws Exception;
 
     public File c() {

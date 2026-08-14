@@ -230,14 +230,14 @@ public class WayCommand extends BaseCommand {
         public b {
         }
 
-            @Override
-            public String a() {
-                return this.a;
-            }
-
-            @Override
-            public Vec3d b() {
-                return this.b;
-            }
+        @Override
+        public String a() {
+            return this.a;
         }
+
+        @Override
+        public Vec3d b() {
+            return this.b;
+        }
+    }
 }

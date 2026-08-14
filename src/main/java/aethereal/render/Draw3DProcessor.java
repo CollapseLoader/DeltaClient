@@ -19,7 +19,7 @@ import org.joml.Matrix4f;
 
 public class Draw3DProcessor extends BaseProcessor implements Interface {
     @Override
-    
+
     public void setup() {
     }
 

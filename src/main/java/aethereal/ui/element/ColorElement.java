@@ -41,7 +41,7 @@ public class ColorElement extends Element_2<ColorSetting> {
     }
 
     @Override
-    
+
     public boolean a(double mouseX, double mouseY, int button) {
         Vector4f vector4f = this.a;
         Vector4f vector4f2 = this.e;
@@ -73,7 +73,7 @@ public class ColorElement extends Element_2<ColorSetting> {
     }
 
     @Override
-    
+
     public boolean b(double mouseX, double mouseY, int button) {
         this.l = DragMode.NONE;
         return false;

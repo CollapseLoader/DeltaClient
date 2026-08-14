@@ -19,6 +19,7 @@ public class ContainerEvent extends Event {
     private final int mouseY;
     private final Phase phase;
     private Text title;
+
     public ContainerEvent(HandledScreen<?> screen, DrawContext context, int mouseX, int mouseY, Phase type) {
         this.screen = screen;
         this.handler = screen.getScreenHandler();

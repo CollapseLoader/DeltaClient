@@ -8,7 +8,7 @@ import aethereal.core.Interface;
 import aethereal.event.DrawEvent;
 import aethereal.event.TickEvent;
 import aethereal.handler.BaseHandler;
-import aethereal.handler.Handler_2;
+
 import aethereal.render.AnimationUtil;
 import aethereal.render.ColorUtil;
 import aethereal.render.EasingList;
@@ -26,7 +26,7 @@ import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-@Handler_2
+
 public class AuraHandler extends BaseHandler implements Interface {
     private final Vector3f[] b = {new Vector3f(0.0f, 1.5f, 0.0f), new Vector3f(0.0f, -1.5f, 0.0f), new Vector3f(1.0f, 0.0f, 0.0f), new Vector3f(-1.0f, 0.0f, 0.0f), new Vector3f(0.0f, 0.0f, 1.0f), new Vector3f(0.0f, 0.0f, -1.0f)};
     private final int[][] c = {new int[]{0, 4, 2}, new int[]{0, 3, 4}, new int[]{0, 5, 3}, new int[]{0, 2, 5}, new int[]{1, 2, 4}, new int[]{1, 4, 3}, new int[]{1, 3, 5}, new int[]{1, 5, 2}};

@@ -53,7 +53,7 @@ public class AltScreen extends Screen {
         });
     }
 
-    
+
     public void render(DrawContext context, int mx, int my, float delta) {
         Window class_1041VarMethod_22683;
         Window class_1041VarMethod_22684;
@@ -119,7 +119,7 @@ public class AltScreen extends Screen {
         throw new NullPointerException();
     }
 
-    
+
     public boolean mouseClicked(double rawX, double rawY, int button) {
         double dA = MathUtil.scale(rawX, 2);
         double dA2 = MathUtil.scale(rawY, 2);
@@ -165,7 +165,7 @@ public class AltScreen extends Screen {
         return true;
     }
 
-    
+
     public boolean mouseDragged(double mx, double my, int button, double dx, double dy) {
         this.c.b(MathUtil.scale(mx, 2), MathUtil.scale(my, 2), button);
         if (this.f == null) {
@@ -183,7 +183,7 @@ public class AltScreen extends Screen {
         return true;
     }
 
-    
+
     public boolean mouseReleased(double rawX, double rawY, int button) {
         AccountConstructor accountConstructor;
         if (this.f == null) {
@@ -218,13 +218,13 @@ public class AltScreen extends Screen {
         return true;
     }
 
-    
+
     public boolean mouseScrolled(double mx, double my, double dx, double dy) {
         this.b.a(((float) dy) * 29.0f);
         return true;
     }
 
-    
+
     public boolean charTyped(char chr, int modifiers) {
         if (!this.c.j()) {
             return super.charTyped(chr, modifiers);
@@ -233,7 +233,7 @@ public class AltScreen extends Screen {
         return true;
     }
 
-    
+
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         TextField textField = this.c;
         if ((modifiers & 2) != 0 && keyCode == 86) {

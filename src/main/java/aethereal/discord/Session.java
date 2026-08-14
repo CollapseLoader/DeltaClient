@@ -1,7 +1,6 @@
 package aethereal.discord;
 
 
-
 public class Session {
     private String a;
     private String b;

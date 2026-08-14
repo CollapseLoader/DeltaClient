@@ -6,13 +6,13 @@ import aethereal.core.Interface;
 import aethereal.event.InputEvent;
 import aethereal.event.TickEvent;
 import aethereal.handler.BaseHandler;
-import aethereal.handler.Handler_2;
+
 import aethereal.util.MathUtil;
 import aethereal.util.Rotation;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-@Handler_2
+
 public class AFKHandler extends BaseHandler implements Interface {
     private int b = -1;
 

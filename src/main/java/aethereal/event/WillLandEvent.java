@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 
 
-
 public class WillLandEvent extends Event {
     private final boolean a;
 

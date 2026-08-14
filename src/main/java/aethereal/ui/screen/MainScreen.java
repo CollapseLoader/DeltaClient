@@ -85,7 +85,7 @@ public class MainScreen extends Screen {
         matrices.pop();
     }
 
-    
+
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
         this.b.a(Interface.mc.currentScreen instanceof MainScreen);
@@ -109,7 +109,7 @@ public class MainScreen extends Screen {
         ScaleUtil.a(context);
     }
 
-    
+
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         List<EffectMarker.a> list = this.h;
         List<Button> list2 = this.g;
@@ -130,7 +130,7 @@ public class MainScreen extends Screen {
         return super.mouseClicked(dA, dA2, button);
     }
 
-    
+
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         if (this.j >= 0.0f) {
             return true;
@@ -138,7 +138,7 @@ public class MainScreen extends Screen {
         return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
     }
 
-    
+
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         if (this.j < 0.0f) {
             return super.mouseReleased(mouseX, mouseY, button);

@@ -43,7 +43,7 @@ public class CosmeticsProcessor extends BaseProcessor {
     }
 
     @Override
-    
+
     public void setup() {
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register(new LivingEntityFeatureRendererRegistrationCallback() {
             public void registerRenderers(EntityType class_1299Var, LivingEntityRenderer class_922Var, LivingEntityFeatureRendererRegistrationCallback.RegistrationHelper registrationHelper, EntityRendererFactory.Context class_5618Var) {

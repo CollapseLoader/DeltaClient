@@ -91,7 +91,7 @@ public class BlockESP extends Module {
         Integer color = colors.get(mc.world.getBlockState(pos).getBlock());
         if (color != null) {
             event.e().a(event.h(), new Box(pos), color.intValue() != -1 ? color.intValue()
-                    : ColorUtil.combineColorWithAlpha(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(),
+                            : ColorUtil.combineColorWithAlpha(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(),
                             InterfaceC0020Opcode.al),
                     1.5f);
         }

@@ -21,7 +21,10 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.text.Text;
 import org.joml.Vector4f;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
 public class PotionWidget extends Widget implements Interface {
     private final BooleanSetting f;

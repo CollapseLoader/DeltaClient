@@ -28,7 +28,7 @@ public class MultiModeElement extends Element_2<MultiModeSetting> {
     }
 
     @Override
-    
+
     public boolean a(double mouseX, double mouseY, int button) {
         Vector4f vector4f = this.a;
         var setting = this.b;

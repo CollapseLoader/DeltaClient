@@ -1,7 +1,9 @@
 package aethereal.module.player;
 
-import aethereal.core.*;
+import aethereal.core.Category;
+import aethereal.core.Delta;
 import aethereal.core.Module;
+import aethereal.core.ModuleRegister;
 import aethereal.setting.BindSetting;
 import aethereal.util.ChatUtil;
 import net.minecraft.client.network.AbstractClientPlayerEntity;

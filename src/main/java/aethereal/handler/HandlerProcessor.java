@@ -1,10 +1,8 @@
 package aethereal.handler;
 
-
 import aethereal.config.BaseProcessor;
 import aethereal.lib.jsoup.ParserHandler;
 import aethereal.lib.log4j.LoggerFactory;
-import aethereal.lib.log4j.Logger_2;
 import aethereal.module.combat.AimHandler;
 import aethereal.module.combat.AuraHandler;
 import aethereal.module.misc.AFKHandler;
@@ -12,10 +10,8 @@ import aethereal.network.DistributionHandler;
 
 public class HandlerProcessor extends BaseProcessor {
 
-    private static final Logger_2 b;
-
     static {
-        b = LoggerFactory.a(HandlerProcessor.class);
+        LoggerFactory.a(HandlerProcessor.class);
     }
 
     private final InventoryHandler c = new InventoryHandler();
@@ -33,7 +29,7 @@ public class HandlerProcessor extends BaseProcessor {
     private final DistributionHandler o = new DistributionHandler();
 
     @Override
-    
+
     public void setup() {
     }
 

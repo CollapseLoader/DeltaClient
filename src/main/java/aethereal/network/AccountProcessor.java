@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AccountProcessor extends ConfigProcessor<AccountConstructor> {
     @Override
-    
+
     protected List<AccountConstructor> a(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
         ArrayList arrayList = new ArrayList<>();
@@ -25,7 +25,7 @@ public class AccountProcessor extends ConfigProcessor<AccountConstructor> {
     }
 
     @Override
-    
+
     protected String a(List<AccountConstructor> data) throws Exception {
         JSONArray jSONArray = new JSONArray();
         for (AccountConstructor accountConstructor : data) {

@@ -1,7 +1,6 @@
 package aethereal.util;
 
 
-
 public class CounterUtil {
     private long a;
     private long b;

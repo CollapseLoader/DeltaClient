@@ -1,7 +1,6 @@
 package aethereal.ui.element;
 
 
-
 import aethereal.event.DrawEvent;
 import aethereal.render.AnimationUtil;
 import aethereal.render.ColorUtil;
@@ -22,32 +21,32 @@ public class Element_2<SettingType extends Setting<?>> {
         this.b = setting;
     }
 
-    
+
     public boolean a(double mouseX, double mouseY, int button) {
         return false;
     }
 
-    
+
     public boolean b(double mouseX, double mouseY, int button) {
         return false;
     }
 
-    
+
     public boolean a(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         return false;
     }
 
-    
+
     public boolean a(double mouseX, double mouseY, double amount) {
         return false;
     }
 
-    
+
     public boolean a(char chr, int modifiers) {
         return false;
     }
 
-    
+
     public boolean a(int keyCode, int scanCode, int modifiers) {
         return false;
     }

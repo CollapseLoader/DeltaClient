@@ -12,7 +12,7 @@ import java.nio.file.Files;
 
 public class ResourcePacksProcessor extends BaseProcessor {
     @Override
-    
+
     public void setup() {
     }
 

@@ -8,18 +8,18 @@ public class ColorUtil {
     }
 
     public static float[] a(Color color) {
-        return new float[] { color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f,
-                color.getAlpha() / 255.0f };
+        return new float[]{color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f,
+                color.getAlpha() / 255.0f};
     }
 
     public static float[] a(int color) {
         int[] components = b(color);
-        return new float[] { components[0] / 255.0f, components[1] / 255.0f, components[2] / 255.0f,
-                components[3] / 255.0f };
+        return new float[]{components[0] / 255.0f, components[1] / 255.0f, components[2] / 255.0f,
+                components[3] / 255.0f};
     }
 
     public static int[] b(int color) {
-        return new int[] { (color >> 16) & 255, (color >> 8) & 255, color & 255, (color >> 24) & 255 };
+        return new int[]{(color >> 16) & 255, (color >> 8) & 255, color & 255, (color >> 24) & 255};
     }
 
     public static int makeGradient(int color1, int color2, float position, float totalWidth, float time, float offset) {

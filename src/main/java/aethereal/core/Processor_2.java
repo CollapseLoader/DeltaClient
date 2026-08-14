@@ -14,7 +14,6 @@ import aethereal.friend.FriendProcessor;
 import aethereal.handler.HandlerProcessor;
 import aethereal.handler.RotationProcessor;
 import aethereal.lib.log4j.LoggerFactory;
-import aethereal.lib.log4j.Logger_2;
 import aethereal.macro.MacrosProcessor;
 import aethereal.network.AccountProcessor;
 import aethereal.notification.NotificationProcessor;

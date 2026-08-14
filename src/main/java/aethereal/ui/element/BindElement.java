@@ -21,7 +21,7 @@ public class BindElement extends Element_2<BindSetting> {
     }
 
     @Override
-    
+
     public boolean a(double mouseX, double mouseY, int button) {
         Vector4f vector4f = this.a;
         var setting = this.b;
@@ -51,7 +51,7 @@ public class BindElement extends Element_2<BindSetting> {
     }
 
     @Override
-    
+
     public boolean a(int keyCode, int scanCode, int modifiers) {
         if (!this.d) {
             return false;

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MacrosProcessor extends ConfigProcessor<MacrosConstructor> {
     @Override
-    
+
     protected List<MacrosConstructor> a(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
         ArrayList arrayList = new ArrayList<>();
@@ -26,7 +26,7 @@ public class MacrosProcessor extends ConfigProcessor<MacrosConstructor> {
     }
 
     @Override
-    
+
     protected String a(List<MacrosConstructor> data) throws Exception {
         JSONArray jSONArray = new JSONArray();
         for (MacrosConstructor macrosConstructor : data) {

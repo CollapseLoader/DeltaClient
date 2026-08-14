@@ -6,7 +6,7 @@ import aethereal.core.Interface;
 import aethereal.event.ClickEvent;
 import aethereal.event.ContainerEvent;
 import aethereal.handler.BaseHandler;
-import aethereal.handler.Handler_2;
+
 import aethereal.util.MathUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -25,7 +25,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-@Handler_2
+
 public class DistributionHandler extends BaseHandler implements Interface {
     private boolean b;
 

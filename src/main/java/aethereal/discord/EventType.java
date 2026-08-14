@@ -1,7 +1,6 @@
 package aethereal.discord;
 
 
-
 import java.util.Optional;
 
 public enum EventType {

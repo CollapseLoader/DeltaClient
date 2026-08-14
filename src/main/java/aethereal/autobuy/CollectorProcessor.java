@@ -20,7 +20,7 @@ public class CollectorProcessor extends ConfigProcessor<Collector_2.b> {
     }
 
     @Override
-    
+
     protected List<Collector_2.b> a(String str) {
         if (this.d.isEmpty()) {
             this.d.addAll(a());
@@ -34,7 +34,7 @@ public class CollectorProcessor extends ConfigProcessor<Collector_2.b> {
     }
 
     @Override
-    
+
     protected String a(List<Collector_2.b> data) {
         JSONArray jSONArray = new JSONArray();
         for (Collector_2.b bVar : data) {
@@ -59,7 +59,7 @@ public class CollectorProcessor extends ConfigProcessor<Collector_2.b> {
         return jSONArray.E(2);
     }
 
-    
+
     public void b(JSONObject obj, Collector_2.b info) {
         if (obj.m("active")) {
             info.a(obj.b("active"));
@@ -77,7 +77,7 @@ public class CollectorProcessor extends ConfigProcessor<Collector_2.b> {
         }
     }
 
-    
+
     private void a(JSONObject obj, String key, List<? extends Condition> conditions) {
         if (conditions.isEmpty()) {
             return;
@@ -98,7 +98,7 @@ public class CollectorProcessor extends ConfigProcessor<Collector_2.b> {
         obj.c(key, jSONObject);
     }
 
-    
+
     private void b(JSONObject obj, String key, List<? extends Condition> conditions) {
         if (obj.m(key)) {
             JSONObject jSONObjectJ = obj.j(key);

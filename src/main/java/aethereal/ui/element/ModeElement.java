@@ -23,7 +23,7 @@ public class ModeElement extends Element_2<ModeSetting> {
     }
 
     @Override
-    
+
     public boolean a(double mouseX, double mouseY, int button) {
         Vector4f vector4f = this.a;
         var setting = this.b;

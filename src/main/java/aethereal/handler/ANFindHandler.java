@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Handler_2
+
 public class ANFindHandler extends BaseHandler implements Interface {
     private final List<a> b = List.of(new a("Команды х1"), new a("Команды х2"), new a("Команды х3"), new a("Команды х5"), new a("Команды х10"));
     private boolean c;

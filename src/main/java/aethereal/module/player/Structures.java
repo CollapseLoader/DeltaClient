@@ -125,16 +125,16 @@ public class Structures extends Module {
     }
 
     public enum b {
-        DRAGON_TRAPKA("Драконья трапка", new int[][] { new int[] { 7, 7, 7 }, new int[] { 7, 7, 6 } }, true, 30000,
+        DRAGON_TRAPKA("Драконья трапка", new int[][]{new int[]{7, 7, 7}, new int[]{7, 7, 6}}, true, 30000,
                 Items.NETHERITE_SCRAP),
         TRAPKA("Трапка",
-                new int[][] { new int[] { 5, 5, 5 }, new int[] { 5, 5, 4 }, new int[] { 5, 6, 5 },
-                        new int[] { 5, 6, 4 } },
+                new int[][]{new int[]{5, 5, 5}, new int[]{5, 5, 4}, new int[]{5, 6, 5},
+                        new int[]{5, 6, 4}},
                 true, 15000, Items.NETHERITE_SCRAP),
-        DRAGON_PLAST("Драконий пласт", new int[][] { new int[] { 7, 7, 2 }, new int[] { 7, 7, 1 } }, true, 20000,
+        DRAGON_PLAST("Драконий пласт", new int[][]{new int[]{7, 7, 2}, new int[]{7, 7, 1}}, true, 20000,
                 Items.DRIED_KELP),
-        PLAST("Пласт", new int[][] { new int[] { 5, 5, 2 }, new int[] { 5, 5, 1 } }, true, 20000, Items.DRIED_KELP),
-        GARMOSHKA("Пласт", new int[][] { new int[] { 5, 5, 5 }, new int[] { 5, 6, 5 } }, false, 20000,
+        PLAST("Пласт", new int[][]{new int[]{5, 5, 2}, new int[]{5, 5, 1}}, true, 20000, Items.DRIED_KELP),
+        GARMOSHKA("Пласт", new int[][]{new int[]{5, 5, 5}, new int[]{5, 6, 5}}, false, 20000,
                 Items.DRIED_KELP);
 
         private final String f;
@@ -144,7 +144,7 @@ public class Structures extends Module {
         private final Item j;
 
         b(final String displayName, final int[][] dimensions, final boolean hollow, final long cooldown,
-                final Item item) {
+          final Item item) {
             this.f = displayName;
             this.g = dimensions;
             this.h = hollow;
@@ -173,7 +173,7 @@ public class Structures extends Module {
         }
 
         public boolean a(BlockBox box, Set<BlockPos> positions) {
-            int[] size = { box.getBlockCountX(), box.getBlockCountY(), box.getBlockCountZ() };
+            int[] size = {box.getBlockCountX(), box.getBlockCountY(), box.getBlockCountZ()};
             Arrays.sort(size);
             for (int[] dimension : this.g) {
                 int[] sorted = dimension.clone();

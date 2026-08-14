@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 
 
-
 public class RotationEvent extends Event {
     public float a;
     public float b;

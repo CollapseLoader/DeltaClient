@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 
 
-
 public class HotbarEvent extends Event {
     private final int a;
 

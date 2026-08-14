@@ -1,7 +1,10 @@
 package platform.inject.mixin;
 
 
-import aethereal.core.*;
+import aethereal.core.Delta;
+import aethereal.core.EventManager;
+import aethereal.core.Interface;
+import aethereal.core.InterfaceC0020Opcode;
 import aethereal.event.CrosshairEvent;
 import aethereal.event.DrawEvent;
 import aethereal.event.RemovalsEvent;

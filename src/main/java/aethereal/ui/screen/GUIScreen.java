@@ -64,7 +64,7 @@ public class GUIScreen extends Screen {
         return panel.d() != null;
     }
 
-    
+
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
         double dA = MathUtil.scale(mouseX, 2);
@@ -121,7 +121,7 @@ public class GUIScreen extends Screen {
         ScaleUtil.a(context);
     }
 
-    
+
     public boolean mouseClicked(final double mouseX, final double mouseY, final int button) {
         TextField textField = this.a;
         List<GUIPanel> list = this.c;
@@ -132,7 +132,7 @@ public class GUIScreen extends Screen {
         return super.mouseClicked(mouseX, mouseY, button);
     }
 
-    
+
     public boolean mouseReleased(final double mouseX, final double mouseY, final int button) {
         if (this.c.stream().filter(obj -> GUIScreen.e(obj)).anyMatch(obj -> obj.b(MathUtil.scale(mouseX, 2), MathUtil.scale(mouseY, 2), button))) {
             return true;
@@ -140,7 +140,7 @@ public class GUIScreen extends Screen {
         return super.mouseReleased(mouseX, mouseY, button);
     }
 
-    
+
     public boolean mouseDragged(final double mouseX, final double mouseY, final int button, final double deltaX, final double deltaY) {
         TextField textField = this.a;
         List<GUIPanel> list = this.c;
@@ -151,7 +151,7 @@ public class GUIScreen extends Screen {
         return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
     }
 
-    
+
     public boolean mouseScrolled(final double mouseX, final double mouseY, double horizontalAmount, final double verticalAmount) {
         double scaledX = MathUtil.scale(mouseX, 2);
         double scaledY = MathUtil.scale(mouseY, 2);
@@ -167,7 +167,7 @@ public class GUIScreen extends Screen {
         return super.mouseScrolled(mouseX, mouseY, horizontalAmount, verticalAmount);
     }
 
-    
+
     public boolean keyPressed(final int keyCode, final int scanCode, final int modifiers) {
         TextField textField = this.a;
         List<GUIPanel> list = this.c;
@@ -185,7 +185,7 @@ public class GUIScreen extends Screen {
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
-    
+
     public boolean charTyped(final char character, final int modifiers) {
         TextField textField = this.a;
         List<GUIPanel> list = this.c;

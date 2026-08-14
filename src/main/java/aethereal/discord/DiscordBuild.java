@@ -1,7 +1,6 @@
 package aethereal.discord;
 
 
-
 public enum DiscordBuild {
     STABLE("//discord.com/api"),
     PTB("//ptb.discord.com/api"),

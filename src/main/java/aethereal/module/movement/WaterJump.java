@@ -1,7 +1,6 @@
 package aethereal.module.movement;
 
 import aethereal.core.Category;
-import aethereal.core.Interface;
 import aethereal.core.Module;
 import aethereal.core.ModuleRegister;
 

@@ -1,7 +1,6 @@
 package aethereal.core;
 
 
-
 public enum Category {
     Combat("V"),
     Movement("I"),

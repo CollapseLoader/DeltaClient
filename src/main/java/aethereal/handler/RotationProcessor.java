@@ -106,7 +106,7 @@ public class RotationProcessor extends BaseProcessor implements Interface {
     }
 
     @Override
-    
+
     public void setup() {
     }
 

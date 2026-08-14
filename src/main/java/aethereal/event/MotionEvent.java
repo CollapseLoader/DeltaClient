@@ -3,7 +3,6 @@ package aethereal.event;
 import aethereal.core.Event;
 
 
-
 public class MotionEvent extends Event {
     private double a;
     private double b;

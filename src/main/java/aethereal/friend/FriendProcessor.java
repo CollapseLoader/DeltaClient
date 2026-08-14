@@ -12,7 +12,7 @@ import java.util.List;
 
 public class FriendProcessor extends ConfigProcessor<FriendConstructor> {
     @Override
-    
+
     protected List<FriendConstructor> a(String json) throws Exception {
         JSONArray jSONArray = new JSONArray(json);
         ArrayList arrayList = new ArrayList<>();
@@ -23,7 +23,7 @@ public class FriendProcessor extends ConfigProcessor<FriendConstructor> {
     }
 
     @Override
-    
+
     protected String a(List<FriendConstructor> data) throws Exception {
         JSONArray jSONArray = new JSONArray();
         for (FriendConstructor friendConstructor : data) {

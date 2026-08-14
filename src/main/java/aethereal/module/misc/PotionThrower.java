@@ -1,8 +1,10 @@
 package aethereal.module.misc;
 
 import aethereal.autobuy.AutoBuyEntry;
-import aethereal.core.*;
+import aethereal.core.Category;
+import aethereal.core.Delta;
 import aethereal.core.Module;
+import aethereal.core.ModuleRegister;
 import aethereal.setting.BindSetting;
 import aethereal.setting.ModeSetting;
 import aethereal.ui.screen.AssistantScreen;

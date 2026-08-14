@@ -49,7 +49,7 @@ public class StationScreen extends Screen {
         this.g = selected;
     }
 
-    
+
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
         Vector4f vector4f = this.b;
@@ -88,7 +88,7 @@ public class StationScreen extends Screen {
         this.e.a(Math.min(0.0f, this.d.w - b().a(this.d)), 0.0f, 1.0f);
     }
 
-    
+
     public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
         if (b().a(mouseX, mouseY, verticalAmount)) {
             return true;
@@ -97,7 +97,7 @@ public class StationScreen extends Screen {
         return true;
     }
 
-    
+
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         Vector4f vector4f = this.c;
         List<Section> list = this.a;
@@ -119,7 +119,7 @@ public class StationScreen extends Screen {
         return true;
     }
 
-    
+
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
         if (b().b(mouseX, mouseY, button)) {
             return true;
@@ -127,7 +127,7 @@ public class StationScreen extends Screen {
         return super.mouseReleased(mouseX, mouseY, button);
     }
 
-    
+
     public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
         if (b().a(mouseX, mouseY, button, deltaX, deltaY)) {
             return true;
@@ -135,7 +135,7 @@ public class StationScreen extends Screen {
         return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
     }
 
-    
+
     public boolean charTyped(char character, int modifiers) {
         if (b().a(character, modifiers)) {
             return true;
@@ -143,7 +143,7 @@ public class StationScreen extends Screen {
         return super.charTyped(character, modifiers);
     }
 
-    
+
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         Section sectionB = b();
         if (sectionB == null) {

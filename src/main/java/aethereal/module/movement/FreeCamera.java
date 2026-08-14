@@ -1,7 +1,9 @@
 package aethereal.module.movement;
 
-import aethereal.core.*;
+import aethereal.core.Category;
+import aethereal.core.EventTarget;
 import aethereal.core.Module;
+import aethereal.core.ModuleRegister;
 import aethereal.event.*;
 import aethereal.setting.BooleanSetting;
 import aethereal.setting.SliderSetting;

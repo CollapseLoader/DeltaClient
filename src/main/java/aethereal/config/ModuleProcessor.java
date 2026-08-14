@@ -158,7 +158,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
     }
 
     @Override
-    
+
     public void setup() {
         this.bd = new Interface();
         a(this.f, this.aA, this.az, this.bc, this.aY, this.aL, this.aD, this.Z, this.J, this.aK, this.U, this.S,
@@ -174,7 +174,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
     }
 
     @Override
-    
+
     protected List<Module> a(String json) {
         PotionThrower potionThrower = this.aZ;
         if (json == null || json.isBlank() || json.trim().startsWith("[")) {
@@ -291,7 +291,7 @@ public class ModuleProcessor extends ConfigProcessor<Module> {
     }
 
     @Override
-    
+
     protected String a(List<Module> data) {
         PotionThrower potionThrower = this.aZ;
         JSONArray jSONArray = new JSONArray();

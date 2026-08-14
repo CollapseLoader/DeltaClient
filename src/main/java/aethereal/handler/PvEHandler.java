@@ -20,7 +20,7 @@ import net.minecraft.util.Hand;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-@Handler_2
+
 public class PvEHandler extends BaseHandler implements Interface {
     private final Deque<b> b = new ArrayDeque();
 

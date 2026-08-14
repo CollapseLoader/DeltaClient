@@ -1,6 +1,5 @@
 package aethereal.config;
 
-
 import aethereal.autobuy.ItemType;
 import aethereal.render.AnimationUtil;
 

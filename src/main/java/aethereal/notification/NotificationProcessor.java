@@ -17,7 +17,7 @@ public class NotificationProcessor extends BaseProcessor implements Interface {
     private final List<Notification> c = new ArrayList<>();
 
     @Override
-    
+
     public void setup() {
     }
 
