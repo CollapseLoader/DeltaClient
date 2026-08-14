@@ -37,9 +37,7 @@ public class AutoAuth extends Module implements Interface {
     @EventTarget
     public void a(PacketEvent eventPacket) {
         if (eventPacket.c()) {
-            GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) eventPacket.d();
-            if (class_7439VarD instanceof GameMessageS2CPacket) {
-                GameMessageS2CPacket packet = class_7439VarD;
+            if (eventPacket.d() instanceof GameMessageS2CPacket packet) {
                 String message = packet.content().getString();
                 if ((message.contains("Зарегистрируйтесь") || message.contains("/reg") || message.contains("/register")) && !this.c.c().isEmpty()) {
                     this.d = "/reg " + this.c.c();

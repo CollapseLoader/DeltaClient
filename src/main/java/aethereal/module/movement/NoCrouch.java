@@ -13,14 +13,13 @@ public class NoCrouch extends Module {
 
     @EventTarget
     public void a(InputEvent e) {
-        ClientCommandC2SPacket.Mode class_2849Var;
+        ClientCommandC2SPacket.Mode mode;
         boolean sneaking = e.e();
         if (sneaking) {
-            class_2849Var = ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY;
+            mode = ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY;
         } else {
-            class_2849Var = this.b ? ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY : null;
+            mode = this.b ? ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY : null;
         }
-        ClientCommandC2SPacket.Mode mode = class_2849Var;
         if (mode != null) {
             aM_.player.networkHandler.sendPacket(new ClientCommandC2SPacket(aM_.player, mode));
         }

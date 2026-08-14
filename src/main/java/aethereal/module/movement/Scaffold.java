@@ -145,14 +145,11 @@ public class Scaffold extends Module {
             for (double v : offsets) {
                 Vec3d point = a(pos, face, u, v);
                 if (eye.distanceTo(point) <= reach && eye.subtract(point).normalize().dotProduct(normal) > 0.1000000076546522d) {
-                    BlockHitResult class_3965VarMethod_17742 = aM_.world.raycast(new RaycastContext(eye, point, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, aM_.player));
-                    if (class_3965VarMethod_17742.getType() == HitResult.Type.MISS) {
+                    BlockHitResult hit = aM_.world.raycast(new RaycastContext(eye, point, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, aM_.player));
+                    if (hit.getType() == HitResult.Type.MISS) {
                         points.add(point);
-                    } else if (class_3965VarMethod_17742 instanceof BlockHitResult) {
-                        BlockHitResult block = class_3965VarMethod_17742;
-                        if (block.getBlockPos().equals(pos)) {
-                            points.add(point);
-                        }
+                    } else if (hit.getBlockPos().equals(pos)) {
+                        points.add(point);
                     }
                 }
             }
@@ -219,9 +216,7 @@ public class Scaffold extends Module {
 
     private boolean a(ItemStack stack) {
         if (!stack.isEmpty()) {
-            BlockItem class_1747VarMethod_7909 = (BlockItem) stack.getItem();
-            if (class_1747VarMethod_7909 instanceof BlockItem) {
-                BlockItem item = class_1747VarMethod_7909;
+            if (stack.getItem() instanceof BlockItem item) {
                 return item.getBlock().getDefaultState().isOpaqueFullCube();
             }
         }
@@ -339,11 +334,9 @@ public class Scaffold extends Module {
     }
 
     private boolean u() {
-        BlockHitResult class_3965Var = (aM_.crosshairTarget) instanceof BlockHitResult ? (BlockHitResult) aM_.crosshairTarget : null;
-        if (!(class_3965Var instanceof BlockHitResult)) {
+        if (!(aM_.crosshairTarget instanceof BlockHitResult hit)) {
             return false;
         }
-        BlockHitResult hit = class_3965Var;
         if (hit.getType() != HitResult.Type.BLOCK) {
             return false;
         }

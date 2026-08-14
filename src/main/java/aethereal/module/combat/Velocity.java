@@ -44,9 +44,8 @@ public class Velocity extends Module {
         if (!event.c() || aM_.player == null) {
             return;
         }
-        EntityDamageS2CPacket class_8143VarD = (EntityDamageS2CPacket) event.d();
-        if (class_8143VarD instanceof EntityDamageS2CPacket) {
-            EntityDamageS2CPacket damage = class_8143VarD;
+        EntityDamageS2CPacket damage = (EntityDamageS2CPacket) event.d();
+        if (damage instanceof EntityDamageS2CPacket) {
             if (damage.entityId() == aM_.player.getId()) {
                 DamageSource source = damage.createDamageSource(aM_.world);
                 boolean player = source.getAttacker() instanceof PlayerEntity;
@@ -56,9 +55,8 @@ public class Velocity extends Module {
                 }
             }
         }
-        EntityVelocityUpdateS2CPacket class_2743VarD = (EntityVelocityUpdateS2CPacket) event.d();
-        if (class_2743VarD instanceof EntityVelocityUpdateS2CPacket) {
-            EntityVelocityUpdateS2CPacket packet = class_2743VarD;
+        EntityVelocityUpdateS2CPacket packet = (EntityVelocityUpdateS2CPacket) event.d();
+        if (packet instanceof EntityVelocityUpdateS2CPacket) {
             if (packet.getEntityId() == aM_.player.getId()) {
                 if (!this.b.l("Обычный")) {
                     this.e = new Vec3d(packet.getVelocityX(), 0.0d, packet.getVelocityZ());
@@ -71,8 +69,8 @@ public class Velocity extends Module {
 
     @EventTarget
     public void a(InputEvent event) {
-        float f;
-        float f2;
+        float forward;
+        float strafe;
         if (aM_.player.hurtTime <= 0) {
             this.e = Vec3d.ZERO;
             return;
@@ -85,17 +83,17 @@ public class Velocity extends Module {
             return;
         }
         if (angle <= -45.0d || angle >= 45.0d) {
-            f = (angle > 135.0d || angle < -135.0d) ? -1.0f : 0.0f;
+            forward = (angle > 135.0d || angle < -135.0d) ? -1.0f : 0.0f;
         } else {
-            f = 1.0f;
+            forward = 1.0f;
         }
-        event.a(f);
+        event.a(forward);
         if (angle < 45.0d || angle > 135.0d) {
-            f2 = (angle > -45.0d || angle < -135.0d) ? 0.0f : 1.0f;
+            strafe = (angle > -45.0d || angle < -135.0d) ? 0.0f : 1.0f;
         } else {
-            f2 = -1.0f;
+            strafe = -1.0f;
         }
-        event.b(f2);
+        event.b(strafe);
         event.b(this.c.c().booleanValue() && aM_.player.isOnGround());
     }
 }

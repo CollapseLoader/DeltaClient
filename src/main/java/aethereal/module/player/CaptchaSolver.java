@@ -32,8 +32,7 @@ public class CaptchaSolver extends Module {
     @EventTarget
     public void a(TickEvent event) {
         if (ServerUtil.a.c() && Delta.h().f().g()) {
-            if (aM_.crosshairTarget instanceof BlockHitResult class_3965Var) {
-                BlockHitResult hit = class_3965Var;
+            if (aM_.crosshairTarget instanceof BlockHitResult hit) {
                 aM_.world.getEntitiesByClass(ItemFrameEntity.class, new Box(hit.getBlockPos()).expand(0.5d), frame -> {
                     return frame.getHeldItemStack().getItem() instanceof FilledMapItem;
                 }).stream().findFirst().ifPresent(this::a);

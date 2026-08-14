@@ -30,9 +30,8 @@ public class AutoExplosion extends Module {
     @EventTarget
     public void a(PacketEvent event) {
         if (event.b()) {
-            PlayerInteractBlockC2SPacket class_2885VarD = (PlayerInteractBlockC2SPacket) event.d();
-            if (class_2885VarD instanceof PlayerInteractBlockC2SPacket) {
-                PlayerInteractBlockC2SPacket packet = class_2885VarD;
+            PlayerInteractBlockC2SPacket packet = (PlayerInteractBlockC2SPacket) event.d();
+            if (packet instanceof PlayerInteractBlockC2SPacket) {
                 if (aM_.player.getMainHandStack().getItem() == Items.OBSIDIAN) {
                     BlockHitResult hit = packet.getBlockHitResult();
                     this.c = hit.getBlockPos().offset(hit.getSide());
@@ -89,9 +88,9 @@ public class AutoExplosion extends Module {
         aM_.player.swingHand(Hand.MAIN_HAND);
     }
 
-    private Vec3d a(Box b) {
-        Vec3d e = aM_.player.getEyePos();
-        return new Vec3d(MathHelper.clamp(e.getX(), b.minX, b.maxX) + ((double) MathUtil.a(-0.1f, 0.1f)), MathHelper.clamp(e.getY(), b.minY, b.maxY) + ((double) MathUtil.a(-0.1f, 0.1f)), MathHelper.clamp(e.z, b.minZ, b.maxZ) + ((double) MathUtil.a(-0.1f, 0.1f)));
+    private Vec3d a(Box box) {
+        Vec3d eye = aM_.player.getEyePos();
+        return new Vec3d(MathHelper.clamp(eye.getX(), box.minX, box.maxX) + ((double) MathUtil.a(-0.1f, 0.1f)), MathHelper.clamp(eye.getY(), box.minY, box.maxY) + ((double) MathUtil.a(-0.1f, 0.1f)), MathHelper.clamp(eye.z, box.minZ, box.maxZ) + ((double) MathUtil.a(-0.1f, 0.1f)));
     }
 
     private void a(Vec3d point) {

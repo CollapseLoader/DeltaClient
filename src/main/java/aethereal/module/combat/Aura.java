@@ -363,11 +363,11 @@ public class Aura extends Module {
     }
 
     private void w() {
-        Vec3d class_243VarMethod_33571 = aM_.player.getEyePos();
-        LivingEntity class_1309Var = this.t;
-        double dFloatValue = this.j.c().floatValue();
-        boolean z = this.h.c().contains("ФанТайм") || !this.n.a("Враг за стеной").c().booleanValue();
-        Vec3d targetPosition = AuraUtil.a(class_243VarMethod_33571, class_1309Var, dFloatValue, z);
+        Vec3d eye = aM_.player.getEyePos();
+        LivingEntity target = this.t;
+        double reach = this.j.c().floatValue();
+        boolean throughWalls = this.h.c().contains("ФанТайм") || !this.n.a("Враг за стеной").c().booleanValue();
+        Vec3d targetPosition = AuraUtil.a(eye, target, reach, throughWalls);
         float yawToTarget = targetPosition == Vec3d.ZERO ? Look.b() : (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(targetPosition.z, targetPosition.x)) - 90.0d);
         float pitchToTarget = targetPosition == Vec3d.ZERO ? Look.c() : (float) (-Math.toDegrees(Math.atan2(targetPosition.y, Math.hypot(targetPosition.x, targetPosition.z))));
         System.arraycopy(this.u, 0, this.u, 1, 29);
@@ -392,8 +392,8 @@ public class Aura extends Module {
         if (!this.h.c().contains("ФанТайм") && (InventoryUtil.b(Items.MACE) != -1 || (Delta.h().d().t().H().e && aM_.player.fallDistance > 3.0f && MaceUtil.a(aM_.player, aM_.world).map(pos -> {
             return Double.valueOf(pos.distanceTo(aM_.player.getPos()));
         }).orElse(Double.valueOf(0.0d)).doubleValue() > 2.0d && AuraUtil.a(this.t, 4.0d + (aM_.player.getVelocity().length() * 3.0d))))) {
-            float t = aM_.player.age + aM_.getRenderTickCounter().getTickDelta(false);
-            float smoothW = ((float) ((((Math.sin(t * 0.31f) * 0.5d) + (Math.sin((t * 0.73f) + 1.1f) * 0.3000000314327426d)) + (Math.sin((t * 1.7f) + 2.6f) * 0.2000000098386085d)) * 8.0d)) / 8.0f;
+            float time = aM_.player.age + aM_.getRenderTickCounter().getTickDelta(false);
+            float smoothW = ((float) ((((Math.sin(time * 0.31f) * 0.5d) + (Math.sin((time * 0.73f) + 1.1f) * 0.3000000314327426d)) + (Math.sin((time * 1.7f) + 2.6f) * 0.2000000098386085d)) * 8.0d)) / 8.0f;
             float finalYaw = AuraUtil.a(aM_.player.getYaw(), yawToTarget, 0.8f);
             float finalPitch = AuraUtil.a(aM_.player.getPitch(), pitchToTarget, 0.8f);
             Delta.h().d().k().a(new Rotation(finalYaw + smoothW, finalPitch + smoothW), 180.0f, 1, 2);
@@ -417,9 +417,9 @@ public class Aura extends Module {
     }
 
     private void a(float yawToTarget, float pitchToTarget, Vec3d vec3d) {
-        float t = aM_.player.age + aM_.getRenderTickCounter().getTickDelta(false);
-        float smoothW = (float) ((Math.sin(((double) t) * 0.4000000008323731d) * 3.0d) + (Math.sin((((double) t) * 0.9500002390239708d) + 1.4000004888461306d) * 2.0d));
-        float smoothH = (float) ((Math.cos((((double) t) * 0.5d) + 0.7000001555309916d) * 0.5d) + (Math.cos((((double) t) * 0.7800000620494261d) + 3.10000031689524d) * 1.5d));
+        float time = aM_.player.age + aM_.getRenderTickCounter().getTickDelta(false);
+        float smoothW = (float) ((Math.sin(((double) time) * 0.4000000008323731d) * 3.0d) + (Math.sin((((double) time) * 0.9500002390239708d) + 1.4000004888461306d) * 2.0d));
+        float smoothH = (float) ((Math.cos((((double) time) * 0.5d) + 0.7000001555309916d) * 0.5d) + (Math.cos((((double) time) * 0.7800000620494261d) + 3.10000031689524d) * 1.5d));
         float finalPitch = AuraUtil.a(aM_.player.getPitch(), this.u[MathHelper.clamp(10 - this.b, 0, 29)] + (smoothH * 1.5f), MathUtil.a(0.1f, 0.5f));
         float finalYaw = AuraUtil.a(aM_.player.getYaw(), yawToTarget + smoothW, MathUtil.a(0.1f, 0.4f));
         if (this.c[3] >= 0.0f) {

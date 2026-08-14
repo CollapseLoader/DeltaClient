@@ -49,10 +49,9 @@ public class AntiAFK extends Module {
     @EventTarget
     public void a(PacketEvent event) {
         if (this.b.l("FunTime") && this.d.c().booleanValue() && event.c()) {
-            GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.d();
-            if (class_7439VarD instanceof GameMessageS2CPacket) {
-                GameMessageS2CPacket messageS2CPacket = class_7439VarD;
-                if (messageS2CPacket.content().getString().equals("Данная команда недоступна в режиме AFK")) {
+            GameMessageS2CPacket message = (GameMessageS2CPacket) event.d();
+            if (message instanceof GameMessageS2CPacket) {
+                if (message.content().getString().equals("Данная команда недоступна в режиме AFK")) {
                     Delta.h().d().v().g().a(7);
                 }
             }

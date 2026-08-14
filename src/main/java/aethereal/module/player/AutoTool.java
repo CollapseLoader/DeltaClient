@@ -23,8 +23,7 @@ public class AutoTool extends Module implements Interface {
         int bestSlot;
         InventoryHandler handler = Delta.h().d().v().a();
         if (handler.a().isEmpty()) {
-            if (aM_.crosshairTarget instanceof BlockHitResult class_3965Var) {
-                BlockHitResult hit = class_3965Var;
+            if (aM_.crosshairTarget instanceof BlockHitResult hit) {
                 if (aM_.options.attackKey.isPressed()) {
                     if (this.b[0] != -1 || (bestSlot = a(aM_.world.getBlockState(hit.getBlockPos()))) == -1) {
                         return;

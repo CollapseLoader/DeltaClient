@@ -92,9 +92,8 @@ public class ServerJoiner extends Module implements Interface {
                             return new PlayerInteractItemC2SPacket(aM_.player.getActiveHand(), sequence2, aM_.player.getYaw(), aM_.player.getPitch());
                         });
                     }
-                    GenericContainerScreen class_476Var = (GenericContainerScreen) aM_.currentScreen;
-                    if (class_476Var instanceof GenericContainerScreen) {
-                        GenericContainerScreen screen = class_476Var;
+                    GenericContainerScreen screen = (GenericContainerScreen) aM_.currentScreen;
+                    if (screen instanceof GenericContainerScreen) {
                         GenericContainerScreenHandler handler = screen.getScreenHandler();
                         if (screen.getTitle().getString().contains("» Выбор сервера")) {
                             aM_.player.networkHandler.sendPacket(new ClickSlotC2SPacket(handler.syncId, handler.getRevision(), 21, 0, SlotActionType.PICKUP, handler.getCursorStack().copy(), Int2ObjectMaps.emptyMap()));
@@ -123,9 +122,8 @@ public class ServerJoiner extends Module implements Interface {
     @EventTarget
     public void a(PacketEvent event) {
         if (this.b.l("SpookyTime") && event.c()) {
-            OpenScreenS2CPacket class_3944VarD = (OpenScreenS2CPacket) event.d();
-            if (class_3944VarD instanceof OpenScreenS2CPacket) {
-                OpenScreenS2CPacket openScreenPacket = class_3944VarD;
+            OpenScreenS2CPacket openScreenPacket = (OpenScreenS2CPacket) event.d();
+            if (openScreenPacket instanceof OpenScreenS2CPacket) {
                 if (openScreenPacket.getName().getString().contains("☫ Выберите режим:")) {
                     this.e = openScreenPacket.getSyncId();
                 }

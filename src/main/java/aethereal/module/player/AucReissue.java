@@ -33,9 +33,7 @@ public class AucReissue extends Module implements Interface {
     @EventTarget
     public void a(TickEvent event) {
         if (!ServerUtil.e() && ((ServerUtil.a.d() != -1 || ServerUtil.d.b() != -1) && aM_.player.age >= 220 && !Delta.h().d().v().g().a() && !aM_.player.getItemCooldownManager().isCoolingDown(Items.CLOCK.getDefaultStack()))) {
-            HandledScreen<?> class_465Var = (HandledScreen<?>) aM_.currentScreen;
-            if (class_465Var instanceof HandledScreen) {
-                HandledScreen<?> handledScreen = class_465Var;
+            if (aM_.currentScreen instanceof HandledScreen<?> handledScreen) {
                 if (handledScreen instanceof GenericContainerScreen) {
                     String title = handledScreen.getTitle().getString();
                     if (aM_.player.age % 5 == 0) {
@@ -62,9 +60,7 @@ public class AucReissue extends Module implements Interface {
     public void a(PacketEvent eventPacket) {
         if (!ServerUtil.e()) {
             if ((ServerUtil.a.d() != -1 || ServerUtil.d.b() != -1) && aM_.player.age >= 220 && eventPacket.c()) {
-                GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) eventPacket.d();
-                if (class_7439VarD instanceof GameMessageS2CPacket) {
-                    GameMessageS2CPacket packet = class_7439VarD;
+                if (eventPacket.d() instanceof GameMessageS2CPacket packet) {
                     String msg = packet.content().getString();
                     if (msg.equals("Данная команда недоступна в режиме AFK")) {
                         Delta.h().d().v().g().a(10);

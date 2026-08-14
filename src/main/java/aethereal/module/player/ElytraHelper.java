@@ -157,9 +157,7 @@ public class ElytraHelper extends Module implements Interface {
     @EventTarget
     public void a(PacketEvent event) {
         if (event.c()) {
-            GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.d();
-            if (class_7439VarD instanceof GameMessageS2CPacket) {
-                GameMessageS2CPacket chat = class_7439VarD;
+            if (event.d() instanceof GameMessageS2CPacket chat) {
                 if (this.g && chat.content().getString().contains("Эту команду могут писать только донатеры выше рангом")) {
                     this.h = true;
                 }

@@ -38,26 +38,23 @@ public class ScreenWalk extends Module {
 
     @EventTarget(a = 0)
     public void a(PacketEvent event) {
-        boolean z;
+        boolean isShulker;
         StopHandler stopHandler = Delta.h().d().v().c();
         if (event.b()) {
             if (aM_.currentScreen instanceof InventoryScreen) {
-                ClickSlotC2SPacket class_2813VarD = (ClickSlotC2SPacket) event.d();
-                if (class_2813VarD instanceof ClickSlotC2SPacket) {
-                    ClickSlotC2SPacket click = class_2813VarD;
+                ClickSlotC2SPacket click = (ClickSlotC2SPacket) event.d();
+                if (click instanceof ClickSlotC2SPacket) {
                     if (MoveUtil.a()) {
                         if (click.getButton() == 1) {
-                            BlockItem class_1747VarMethod_7909 = (BlockItem) aM_.player.currentScreenHandler.getCursorStack().getItem();
-                            if (class_1747VarMethod_7909 instanceof BlockItem) {
-                                BlockItem blockItem = class_1747VarMethod_7909;
-                                z = blockItem.getBlock() instanceof ShulkerBoxBlock;
+                            if (aM_.player.currentScreenHandler.getCursorStack().getItem() instanceof BlockItem blockItem) {
+                                isShulker = blockItem.getBlock() instanceof ShulkerBoxBlock;
                             } else {
-                                z = false;
+                                isShulker = false;
                             }
                         } else {
-                            z = false;
+                            isShulker = false;
                         }
-                        boolean shulker = z;
+                        boolean shulker = isShulker;
                         if (shulker) {
                             stopHandler.a(2);
                         }

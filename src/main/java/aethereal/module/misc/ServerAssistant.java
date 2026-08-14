@@ -185,16 +185,14 @@ public class ServerAssistant extends Module implements Interface {
     @EventTarget
     public void a(PacketEvent event) {
         if (event.c()) {
-            GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.d();
-            if (class_7439VarD instanceof GameMessageS2CPacket) {
-                GameMessageS2CPacket message = class_7439VarD;
+            GameMessageS2CPacket message = (GameMessageS2CPacket) event.d();
+            if (message instanceof GameMessageS2CPacket) {
                 if (ServerUtil.a.a() && message.content().getString().equals("На этой анархии этот предмет не работает")) {
                     int z = ServerUtil.a.d();
                 }
             }
-            InventoryS2CPacket class_2649VarD = (InventoryS2CPacket) event.d();
-            if (class_2649VarD instanceof InventoryS2CPacket) {
-                InventoryS2CPacket packet = class_2649VarD;
+            InventoryS2CPacket packet = (InventoryS2CPacket) event.d();
+            if (packet instanceof InventoryS2CPacket) {
                 if (this.c.a("Сортировать по цене").c().booleanValue() && (ServerUtil.a.a() || ServerUtil.d.a())) {
                     List<ItemStack> contents = packet.getContents();
                     int chestSlots = contents.size() > 36 ? contents.size() - 36 : contents.size();

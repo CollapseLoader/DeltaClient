@@ -35,22 +35,19 @@ public class WardenESP extends Module {
         if (aM_.world.getRegistryKey().getValue().toString().equals("minecraft:overworld")) {
             List<BlockPos> chests = q();
             if (event.b()) {
-                for (ArmorStandEntity class_1531Var : aM_.world.getEntitiesByClass(ArmorStandEntity.class, aM_.player.getBoundingBox().expand(256.0), e -> true)) {
-                    if (class_1531Var instanceof ArmorStandEntity) {
-                        ArmorStandEntity stand = class_1531Var;
-                        Matcher matcher = b.matcher(stand.getName().getString());
-                        if (matcher.find()) {
-                            int minutes = Integer.parseInt(matcher.group(1));
-                            int seconds = Integer.parseInt(matcher.group(2));
-                            long ms = ((((long) minutes) * 60) + ((long) seconds)) * 1000;
-                            BlockPos nearest = a(chests, stand.getBlockPos());
-                            if (nearest != null) {
-                                a existing = b(nearest);
-                                if (existing != null) {
-                                    existing.a(ms);
-                                } else {
-                                    this.c.add(new a(nearest, ms));
-                                }
+                for (ArmorStandEntity stand : aM_.world.getEntitiesByClass(ArmorStandEntity.class, aM_.player.getBoundingBox().expand(256.0), e -> true)) {
+                    Matcher matcher = b.matcher(stand.getName().getString());
+                    if (matcher.find()) {
+                        int minutes = Integer.parseInt(matcher.group(1));
+                        int seconds = Integer.parseInt(matcher.group(2));
+                        long ms = ((((long) minutes) * 60) + ((long) seconds)) * 1000;
+                        BlockPos nearest = a(chests, stand.getBlockPos());
+                        if (nearest != null) {
+                            a existing = b(nearest);
+                            if (existing != null) {
+                                existing.a(ms);
+                            } else {
+                                this.c.add(new a(nearest, ms));
                             }
                         }
                     }
@@ -114,14 +111,11 @@ public class WardenESP extends Module {
     }
 
     public long a(BlockPos pos) {
-        for (ArmorStandEntity class_1531Var : aM_.world.getEntitiesByClass(ArmorStandEntity.class, aM_.player.getBoundingBox().expand(256.0), e -> true)) {
-            if (class_1531Var instanceof ArmorStandEntity) {
-                ArmorStandEntity stand = class_1531Var;
-                if (stand.getBlockPos().getX() == pos.getX() && stand.getBlockPos().getZ() == pos.getZ()) {
-                    Matcher matcher = b.matcher(stand.getName().getString());
-                    if (matcher.find()) {
-                        return ((((long) Integer.parseInt(matcher.group(1))) * 60) + ((long) Integer.parseInt(matcher.group(2)))) * 1000;
-                    }
+        for (ArmorStandEntity stand : aM_.world.getEntitiesByClass(ArmorStandEntity.class, aM_.player.getBoundingBox().expand(256.0), e -> true)) {
+            if (stand.getBlockPos().getX() == pos.getX() && stand.getBlockPos().getZ() == pos.getZ()) {
+                Matcher matcher = b.matcher(stand.getName().getString());
+                if (matcher.find()) {
+                    return ((((long) Integer.parseInt(matcher.group(1))) * 60) + ((long) Integer.parseInt(matcher.group(2)))) * 1000;
                 }
             }
         }

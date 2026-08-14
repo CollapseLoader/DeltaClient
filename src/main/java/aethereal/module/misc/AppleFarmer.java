@@ -109,10 +109,8 @@ public class AppleFarmer extends Module {
         Predicate<ItemStack> want = grown ? s -> {
             return s.isOf(Items.BONE_MEAL);
         } : s2 -> {
-            BlockItem class_1747VarMethod_7909 = (BlockItem) s2.getItem();
-            if (class_1747VarMethod_7909 instanceof BlockItem) {
-                BlockItem b = class_1747VarMethod_7909;
-                return b.getBlock() instanceof SaplingBlock;
+            if (s2.getItem() instanceof BlockItem blockItem) {
+                return blockItem.getBlock() instanceof SaplingBlock;
             }
             return false;
         };
@@ -128,16 +126,13 @@ public class AppleFarmer extends Module {
     }
 
     private void q() {
-        boolean z;
-        int iA;
-        GenericContainerScreen class_476Var = (GenericContainerScreen) aM_.currentScreen;
-        if (!(class_476Var instanceof GenericContainerScreen)) {
+        GenericContainerScreen screen = (GenericContainerScreen) aM_.currentScreen;
+        if (!(screen instanceof GenericContainerScreen)) {
             b(a(5.0d, s -> {
                 return s.isOf(u() ? Blocks.CHEST : Blocks.BARREL);
             }, this::c));
             return;
         }
-        GenericContainerScreen screen = class_476Var;
         if (aM_.player.age % 50 == 0) {
             aM_.player.closeHandledScreen();
             return;
@@ -146,23 +141,22 @@ public class AppleFarmer extends Module {
             return;
         }
         ScreenHandler handler = screen.getScreenHandler();
-        TranslatableTextContent class_2588VarMethod_10851 = (TranslatableTextContent) screen.getTitle().getContent();
-        if (class_2588VarMethod_10851 instanceof TranslatableTextContent) {
-            TranslatableTextContent title = class_2588VarMethod_10851;
-            z = title.getKey().contains("chest");
+        TranslatableTextContent title = (TranslatableTextContent) screen.getTitle().getContent();
+        boolean chest;
+        if (title instanceof TranslatableTextContent) {
+            chest = title.getKey().contains("chest");
         } else {
-            z = false;
+            chest = false;
         }
-        boolean chest = z;
+        int movedCount;
         if (chest) {
-            iA = a(handler, false, 5, s2 -> {
+            movedCount = a(handler, false, 5, s2 -> {
                 return s2.isOf(Items.APPLE) || s2.isOf(Items.OAK_LOG);
             });
         } else {
-            iA = v() ? a(handler, true, 3, this::a) : 0;
+            movedCount = v() ? a(handler, true, 3, this::a) : 0;
         }
-        int moved = iA;
-        if (moved == 0) {
+        if (movedCount == 0) {
             aM_.player.closeHandledScreen();
         }
     }
@@ -171,9 +165,9 @@ public class AppleFarmer extends Module {
         if (aM_.player.age % 2 != 0) {
             return;
         }
-        PlayerScreenHandler class_1723Var = aM_.player.playerScreenHandler;
-        if (class_1723Var.getSlot(0).getStack().isOf(Items.BONE_MEAL)) {
-            a(class_1723Var, 0, 0, SlotActionType.QUICK_MOVE);
+        PlayerScreenHandler handler = aM_.player.playerScreenHandler;
+        if (handler.getSlot(0).getStack().isOf(Items.BONE_MEAL)) {
+            a(handler, 0, 0, SlotActionType.QUICK_MOVE);
             aM_.player.closeHandledScreen();
             return;
         }
@@ -181,8 +175,8 @@ public class AppleFarmer extends Module {
         if (bone < 0) {
             return;
         }
-        a(class_1723Var, bone, 0, SlotActionType.PICKUP);
-        a(class_1723Var, 1, 0, SlotActionType.PICKUP);
+        a(handler, bone, 0, SlotActionType.PICKUP);
+        a(handler, 1, 0, SlotActionType.PICKUP);
     }
 
     private void s() {
@@ -191,18 +185,18 @@ public class AppleFarmer extends Module {
         if (aM_.player.age % 5 != 0) {
             return;
         }
-        PlayerScreenHandler class_1723Var = aM_.player.playerScreenHandler;
+        PlayerScreenHandler handler = aM_.player.playerScreenHandler;
         int keep = -1;
         int max = -1;
-        for (Slot slot : class_1723Var.slots) {
+        for (Slot slot : handler.slots) {
             if (a(slot) && slot.getStack().isOf(Items.OAK_SAPLING) && slot.getStack().getCount() > max) {
                 max = slot.getStack().getCount();
                 keep = slot.id;
             }
         }
-        for (Slot slot2 : class_1723Var.slots) {
+        for (Slot slot2 : handler.slots) {
             if (a(slot2) && (slot2.getStack().isOf(Items.STICK) || (slot2.getStack().isOf(Items.OAK_SAPLING) && slot2.id != keep))) {
-                a(class_1723Var, slot2.id, 1, SlotActionType.THROW);
+                a(handler, slot2.id, 1, SlotActionType.THROW);
             }
         }
     }
@@ -248,8 +242,8 @@ public class AppleFarmer extends Module {
     }
 
     private float t() {
-        float t = aM_.player.age + aM_.getRenderTickCounter().getTickDelta(false);
-        return (float) (((Math.sin(t * 0.31f) * 0.5d) + (Math.sin((t * 0.73f) + 1.1f) * 0.30000003042305273d) + (Math.sin((t * 1.7f) + 2.6f) * 0.2000000149681302d)) * 8.0d);
+        float time = aM_.player.age + aM_.getRenderTickCounter().getTickDelta(false);
+        return (float) (((Math.sin(time * 0.31f) * 0.5d) + (Math.sin((time * 0.73f) + 1.1f) * 0.30000003042305273d) + (Math.sin((time * 1.7f) + 2.6f) * 0.2000000149681302d)) * 8.0d);
     }
 
     private int a(ScreenHandler handler, boolean fromContainer, int limit, Predicate<ItemStack> match) {
@@ -284,10 +278,8 @@ public class AppleFarmer extends Module {
     }
 
     private boolean a(ItemStack stack) {
-        BlockItem class_1747VarMethod_7909 = (BlockItem) stack.getItem();
-        if (class_1747VarMethod_7909 instanceof BlockItem) {
-            BlockItem b = class_1747VarMethod_7909;
-            if (!(b.getBlock() instanceof SaplingBlock)) {
+        if (stack.getItem() instanceof BlockItem blockItem) {
+            if (!(blockItem.getBlock() instanceof SaplingBlock)) {
                 return !stack.isOf(Items.BONE_MEAL) || (stack.isOf(Items.BONE) && InventoryUtil.a(Items.BONE_MEAL) == 0);
             }
         }

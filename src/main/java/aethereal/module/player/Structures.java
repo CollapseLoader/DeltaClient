@@ -216,12 +216,12 @@ public class Structures extends Module {
         }
 
         public void a(float progress, float remaining) {
-            MutableText class_5250VarMethod_43470 = Text.literal(String.format(Locale.US, "%s — %.1f сек", this.d.a(), Float.valueOf(remaining)));
+            MutableText barText = Text.literal(String.format(Locale.US, "%s — %.1f сек", this.d.a(), Float.valueOf(remaining)));
             if (this.f == null) {
-                this.f = new ClientBossBar(UUID.randomUUID(), class_5250VarMethod_43470, progress, BossBar.Color.WHITE, BossBar.Style.PROGRESS, false, false, false);
+                this.f = new ClientBossBar(UUID.randomUUID(), barText, progress, BossBar.Color.WHITE, BossBar.Style.PROGRESS, false, false, false);
                 ((platform.inject.accessors.BossBarHudAccessor) aM_.inGameHud.getBossBarHud()).getBossBars().put(this.f.getUuid(), this.f);
             } else {
-                this.f.setName(class_5250VarMethod_43470);
+                this.f.setName(barText);
                 this.f.setPercent(progress);
             }
         }

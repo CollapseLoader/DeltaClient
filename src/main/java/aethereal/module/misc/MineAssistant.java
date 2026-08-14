@@ -41,35 +41,32 @@ public class MineAssistant extends Module implements Interface {
     }
 
     public void q() {
-        for (ArmorStandEntity class_1531Var : aM_.world.getEntitiesByClass(ArmorStandEntity.class, aM_.player.getBoundingBox().expand(256.0), e -> true)) {
-            if (class_1531Var instanceof ArmorStandEntity) {
-                ArmorStandEntity stand = class_1531Var;
-                if (stand.getName().getString().contains("Авто-Шахта")) {
-                    if (this.d == null || this.d.getAverageSideLength() <= 15.0d) {
-                        int scanY = ((int) Math.floor(stand.getY())) - 2;
-                        int startX = (int) Math.floor(stand.getX());
-                        int startZ = (int) Math.floor(stand.getZ());
-                        int minX = startX;
-                        int maxX = startX;
-                        int minZ = startZ;
-                        int maxZ = startZ;
-                        while (a(aM_.world.getBlockState(new BlockPos(minX - 2, scanY, startZ)).getBlock()) != null) {
-                            minX--;
-                        }
-                        while (a(aM_.world.getBlockState(new BlockPos(maxX + 2, scanY, startZ)).getBlock()) != null) {
-                            maxX++;
-                        }
-                        while (a(aM_.world.getBlockState(new BlockPos(startX, scanY, minZ - 1)).getBlock()) != null) {
-                            minZ--;
-                        }
-                        while (a(aM_.world.getBlockState(new BlockPos(startX, scanY, maxZ + 1)).getBlock()) != null) {
-                            maxZ++;
-                        }
-                        this.d = new Box(minX, scanY + 1, minZ, maxX + 1, scanY - 8, maxZ + 1);
-                        return;
+        for (ArmorStandEntity stand : aM_.world.getEntitiesByClass(ArmorStandEntity.class, aM_.player.getBoundingBox().expand(256.0), e -> true)) {
+            if (stand.getName().getString().contains("Авто-Шахта")) {
+                if (this.d == null || this.d.getAverageSideLength() <= 15.0d) {
+                    int scanY = ((int) Math.floor(stand.getY())) - 2;
+                    int startX = (int) Math.floor(stand.getX());
+                    int startZ = (int) Math.floor(stand.getZ());
+                    int minX = startX;
+                    int maxX = startX;
+                    int minZ = startZ;
+                    int maxZ = startZ;
+                    while (a(aM_.world.getBlockState(new BlockPos(minX - 2, scanY, startZ)).getBlock()) != null) {
+                        minX--;
                     }
+                    while (a(aM_.world.getBlockState(new BlockPos(maxX + 2, scanY, startZ)).getBlock()) != null) {
+                        maxX++;
+                    }
+                    while (a(aM_.world.getBlockState(new BlockPos(startX, scanY, minZ - 1)).getBlock()) != null) {
+                        minZ--;
+                    }
+                    while (a(aM_.world.getBlockState(new BlockPos(startX, scanY, maxZ + 1)).getBlock()) != null) {
+                        maxZ++;
+                    }
+                    this.d = new Box(minX, scanY + 1, minZ, maxX + 1, scanY - 8, maxZ + 1);
                     return;
                 }
+                return;
             }
         }
         this.d = null;

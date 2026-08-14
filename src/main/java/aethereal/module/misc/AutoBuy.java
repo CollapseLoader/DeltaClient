@@ -84,9 +84,8 @@ public class AutoBuy extends Module implements Interface {
         }
         this.f++;
         this.g++;
-        GenericContainerScreen class_476Var = (GenericContainerScreen) aM_.currentScreen;
-        if (class_476Var instanceof GenericContainerScreen) {
-            GenericContainerScreen screen = class_476Var;
+        GenericContainerScreen screen = (GenericContainerScreen) aM_.currentScreen;
+        if (screen instanceof GenericContainerScreen) {
             if (this.j) {
                 ScreenHandler handler = screen.getScreenHandler();
                 String title = screen.getTitle().getString().replaceAll("§.", "").toLowerCase().trim();
@@ -102,9 +101,9 @@ public class AutoBuy extends Module implements Interface {
                                 if (item.a(stack)) {
                                     return ServerUtil.a.a(stack) > item.k() && ((long) ServerUtil.a.a(stack)) * ((long) Math.max(stack.getCount(), 1)) <= ServerUtil.a.e();
                                 } else if (shulker != null) {
-                                    Stream<ItemStack> streamMethod_57489 = shulker.stream();
+                                    Stream<ItemStack> stream = shulker.stream();
                                     Objects.requireNonNull(item);
-                                    if (streamMethod_57489.anyMatch(innerStack -> item.a(innerStack))) {
+                                    if (stream.anyMatch(innerStack -> item.a(innerStack))) {
                                         ServerUtil.a.a(stack);
                                     }
                                 }
@@ -126,9 +125,8 @@ public class AutoBuy extends Module implements Interface {
                     a(handler, 1, SlotActionType.QUICK_MOVE);
                 }
                 if (this.b.c().booleanValue() && reissue) {
-                    HandledScreen<?> class_465Var = (HandledScreen<?>) aM_.currentScreen;
-                    if (class_465Var instanceof HandledScreen) {
-                        HandledScreen<?> handledScreen = class_465Var;
+                    HandledScreen<?> handledScreen = (HandledScreen<?>) aM_.currentScreen;
+                    if (handledScreen instanceof HandledScreen) {
                         if ((handledScreen instanceof GenericContainerScreen) && !MoveUtil.a()) {
                             if (title.matches(".*а.*у.*к.*ц.*и.*о.*н.*")) {
                                 if (aM_.player.age % 10 == 0) {
@@ -155,10 +153,9 @@ public class AutoBuy extends Module implements Interface {
     public void a(PacketEvent event) {
         if (event.c()) {
             if (this.j) {
-                InventoryS2CPacket class_2649VarD = (InventoryS2CPacket) event.d();
-                if (class_2649VarD instanceof InventoryS2CPacket) {
-                    InventoryS2CPacket s2CPacket = class_2649VarD;
-                    if (s2CPacket.getContents().size() == 90 && this.f >= 7) {
+                InventoryS2CPacket inventoryPacket = (InventoryS2CPacket) event.d();
+                if (inventoryPacket instanceof InventoryS2CPacket) {
+                    if (inventoryPacket.getContents().size() == 90 && this.f >= 7) {
                         int anarchy = (int) (MathUtil.a(0.0f, 100.0f) <= 50.0f ? MathUtil.a(205.0f, 231.0f) : MathUtil.a(305.0f, 325.0f));
                         aM_.player.networkHandler.sendChatCommand("an" + anarchy);
                         ChatUtil.sendMessage("Обнаружили замедление аукциона, переходим на " + anarchy + " анархию");
@@ -166,10 +163,9 @@ public class AutoBuy extends Module implements Interface {
                         this.k = true;
                     }
                 }
-                GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.d();
-                if (class_7439VarD instanceof GameMessageS2CPacket) {
-                    GameMessageS2CPacket s2CPacket2 = class_7439VarD;
-                    if (this.i != null && s2CPacket2.content().getString().contains("Вы успешно купили")) {
+                GameMessageS2CPacket messagePacket = (GameMessageS2CPacket) event.d();
+                if (messagePacket instanceof GameMessageS2CPacket) {
+                    if (this.i != null && messagePacket.content().getString().contains("Вы успешно купили")) {
                         if (this.d.isEmpty() || !ItemStack.areEqual(this.d.getFirst(), this.i)) {
                             Client clientF = Delta.h().f();
                             Object[] objArr = new Object[2];
@@ -187,18 +183,16 @@ public class AutoBuy extends Module implements Interface {
                     }
                 }
             }
-            OpenScreenS2CPacket class_3944VarD = (OpenScreenS2CPacket) event.d();
-            if (class_3944VarD instanceof OpenScreenS2CPacket) {
-                OpenScreenS2CPacket openScreenS2CPacket = class_3944VarD;
+            OpenScreenS2CPacket openScreenPacket = (OpenScreenS2CPacket) event.d();
+            if (openScreenPacket instanceof OpenScreenS2CPacket) {
                 if (!(aM_.currentScreen instanceof GenericContainerScreen)) {
                     this.f = 0;
                 }
-                this.h = openScreenS2CPacket.getSyncId();
+                this.h = openScreenPacket.getSyncId();
             }
-            PlaySoundS2CPacket class_2767VarD = (PlaySoundS2CPacket) event.d();
-            if (class_2767VarD instanceof PlaySoundS2CPacket) {
-                PlaySoundS2CPacket s2CPacket3 = class_2767VarD;
-                if (s2CPacket3.getSound().value().id().getPath().equals("block.note_block.basedrum")) {
+            PlaySoundS2CPacket soundPacket = (PlaySoundS2CPacket) event.d();
+            if (soundPacket instanceof PlaySoundS2CPacket) {
+                if (soundPacket.getSound().value().id().getPath().equals("block.note_block.basedrum")) {
                     this.h = aM_.player.currentScreenHandler.syncId;
                     event.a(true);
                 }

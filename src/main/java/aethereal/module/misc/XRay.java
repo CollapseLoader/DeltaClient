@@ -68,9 +68,8 @@ public class XRay extends Module implements Interface {
 
     @EventTarget
     public void a(PacketEvent packet) {
-        ChunkDeltaUpdateS2CPacket class_2637VarD = (ChunkDeltaUpdateS2CPacket) packet.d();
-        if (class_2637VarD instanceof ChunkDeltaUpdateS2CPacket) {
-            ChunkDeltaUpdateS2CPacket chunkDeltaPacket = class_2637VarD;
+        ChunkDeltaUpdateS2CPacket chunkDeltaPacket = (ChunkDeltaUpdateS2CPacket) packet.d();
+        if (chunkDeltaPacket instanceof ChunkDeltaUpdateS2CPacket) {
             chunkDeltaPacket.visitUpdates((blockPos, blockState) -> {
                 if (blockState.getBlock().equals(Blocks.ANCIENT_DEBRIS)) {
                     BlockPos add = blockPos.toImmutable();

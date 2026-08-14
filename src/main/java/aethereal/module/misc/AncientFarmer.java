@@ -160,8 +160,7 @@ public class AncientFarmer extends Module {
                             Delta.h().d().k().a(Rotation.a(eye, aim), 180.0f, 0, 1);
                             if (new Rotation(aM_.player).a(Rotation.b()) < 1.0d && aM_.player.age % 5 == 0) {
                                 aM_.player.getInventory().selectedSlot = flint;
-                                if (aM_.crosshairTarget instanceof BlockHitResult class_3965Var) {
-                                    BlockHitResult hit = class_3965Var;
+                                if (aM_.crosshairTarget instanceof BlockHitResult hit) {
                                     if (hit.getType() == HitResult.Type.BLOCK && hit.getBlockPos().equals(tnt)) {
                                         ((platform.inject.invokers.MinecraftClientInvoker) aM_).invokeDoItemUse();
                                         break;
@@ -200,8 +199,7 @@ public class AncientFarmer extends Module {
                                 if (aM_.player.getInventory().selectedSlot != slot3) {
                                     aM_.player.getInventory().selectedSlot = slot3;
                                 }
-                                if (aM_.crosshairTarget instanceof BlockHitResult class_3965Var2) {
-                                    BlockHitResult hit2 = class_3965Var2;
+                                if (aM_.crosshairTarget instanceof BlockHitResult hit2) {
                                     if (hit2.getType() == HitResult.Type.BLOCK && hit2.getBlockPos().equals(support) && hit2.getSide() == Direction.UP) {
                                         ((platform.inject.invokers.MinecraftClientInvoker) aM_).invokeDoItemUse();
                                         break;

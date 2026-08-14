@@ -58,9 +58,8 @@ public class Communication extends Module implements Interface {
     @EventTarget
     public void a(PacketEvent event) {
         if (this.c.c().booleanValue() && event.b()) {
-            ChatMessageC2SPacket class_2797VarD = (ChatMessageC2SPacket) event.d();
-            if (class_2797VarD instanceof ChatMessageC2SPacket) {
-                ChatMessageC2SPacket packet = class_2797VarD;
+            ChatMessageC2SPacket packet = (ChatMessageC2SPacket) event.d();
+            if (packet instanceof ChatMessageC2SPacket) {
                 String content = packet.chatMessage();
                 if (content.startsWith("@")) {
                     Delta.h().f().a(false, "irc", "message", content.substring(1));

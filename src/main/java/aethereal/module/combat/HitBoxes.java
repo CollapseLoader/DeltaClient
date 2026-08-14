@@ -18,9 +18,8 @@ public class HitBoxes extends Module {
 
     @EventTarget
     public void a(BoundingBoxEvent event) {
-        PlayerEntity class_1657VarC = (PlayerEntity) event.c();
-        if (class_1657VarC instanceof PlayerEntity) {
-            PlayerEntity player = class_1657VarC;
+        PlayerEntity player = (PlayerEntity) event.c();
+        if (player instanceof PlayerEntity) {
             Box box = event.b();
             Box changedBox = new Box(box.minX - ((double) (this.b.h().floatValue() / 2.0f)), box.minY, box.minZ - ((double) (this.b.h().floatValue() / 2.0f)), box.maxX + ((double) (this.b.h().floatValue() / 2.0f)), box.maxY + ((double) this.c.h().floatValue()), box.maxZ + ((double) (this.b.h().floatValue() / 2.0f)));
             if (player.getId() != aM_.player.getId() && !Delta.h().d().e().d(player.getName().getString())) {

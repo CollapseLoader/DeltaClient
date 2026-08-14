@@ -15,14 +15,11 @@ public class ClickAction extends Module implements Interface {
         Delta.h().d().v().b().a(Items.ENDER_PEARL.getDefaultStack());
     });
     private final BindSetting c = new BindSetting("Добавление друга", -1).a(() -> {
-        AbstractClientPlayerEntity class_746Var;
-        EntityHitResult class_3966Var = aM_.crosshairTarget instanceof EntityHitResult ? (EntityHitResult) aM_.crosshairTarget : null;
-        if (class_3966Var instanceof EntityHitResult) {
-            EntityHitResult hit = class_3966Var;
-            if (hit.getEntity() instanceof AbstractClientPlayerEntity class_746VarMethod_17782) {
-                class_746Var = class_746VarMethod_17782;
-                if (class_746Var != aM_.player) {
-                    String name = class_746Var.getName().getString();
+        EntityHitResult hit = aM_.crosshairTarget instanceof EntityHitResult ehr ? ehr : null;
+        if (hit != null) {
+            if (hit.getEntity() instanceof AbstractClientPlayerEntity targetPlayer) {
+                if (targetPlayer != aM_.player) {
+                    String name = targetPlayer.getName().getString();
                     if (Delta.h().d().e().d(name)) {
                         Delta.h().d().e().c(name);
                         Delta.h().d().e().unSetup();

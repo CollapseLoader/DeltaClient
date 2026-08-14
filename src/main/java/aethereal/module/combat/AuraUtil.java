@@ -55,9 +55,9 @@ public class AuraUtil implements Interface {
         double cx = MathHelper.clamp(eye.x, box.minX, box.maxX);
         double cy = MathHelper.clamp(eye.y, box.minY, box.maxY);
         double cz = MathHelper.clamp(eye.z, box.minZ, box.maxZ);
-        Vec3d d = new Vec3d(cx - eye.x, cy - eye.y, cz - eye.z);
-        float yaw = (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(d.z, d.x)) - 90.0d);
-        float pitch = (float) (-Math.toDegrees(Math.atan2(d.y, Math.hypot(d.x, d.z))));
+        Vec3d delta = new Vec3d(cx - eye.x, cy - eye.y, cz - eye.z);
+        float yaw = (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(delta.z, delta.x)) - 90.0d);
+        float pitch = (float) (-Math.toDegrees(Math.atan2(delta.y, Math.hypot(delta.x, delta.z))));
         return a(yaw, pitch, distance, entity, true);
     }
 
@@ -78,15 +78,15 @@ public class AuraUtil implements Interface {
     }
 
     public static boolean a(Vec3d from, LivingEntity entity, double reach) {
-        Box bb = entity.getBoundingBox();
-        double[] t = {0.0d, 0.125d, 0.25d, 0.375d, 0.5d, 0.625d, 0.75d, 0.875d, 1.0d};
-        int last = t.length - 1;
+        Box box = entity.getBoundingBox();
+        double[] steps = {0.0d, 0.125d, 0.25d, 0.375d, 0.5d, 0.625d, 0.75d, 0.875d, 1.0d};
+        int lastIndex = steps.length - 1;
         double reachSq = reach * reach;
-        for (int a = 0; a <= last; a++) {
-            for (int b = 0; b <= last; b++) {
-                for (int c = 0; c <= last; c++) {
-                    if (a <= 0 || a >= last || b <= 0 || b >= last || c <= 0 || c >= last) {
-                        Vec3d point = new Vec3d(MathHelper.lerp(t[a], bb.minX, bb.maxX), MathHelper.lerp(t[b], bb.minY, bb.maxY), MathHelper.lerp(t[c], bb.minZ, bb.maxZ));
+        for (int i = 0; i <= lastIndex; i++) {
+            for (int j = 0; j <= lastIndex; j++) {
+                for (int k = 0; k <= lastIndex; k++) {
+                    if (i <= 0 || i >= lastIndex || j <= 0 || j >= lastIndex || k <= 0 || k >= lastIndex) {
+                        Vec3d point = new Vec3d(MathHelper.lerp(steps[i], box.minX, box.maxX), MathHelper.lerp(steps[j], box.minY, box.maxY), MathHelper.lerp(steps[k], box.minZ, box.maxZ));
                         double distSq = from.squaredDistanceTo(point);
                         if (distSq > reachSq) {
                         } else {
@@ -157,12 +157,12 @@ public class AuraUtil implements Interface {
         for (double pad : new double[]{0.0d, 0.20000001551382535d}) {
             List<Vec3d> visible = new ArrayList<>();
             for (Vec3d p : pts) {
-                Vec3d d = p.subtract(aimOrigin);
-                double len = d.length();
+                Vec3d delta = p.subtract(aimOrigin);
+                double len = delta.length();
                 double limit = reach + pad;
                 if (mace || len <= limit) {
                     float traceDist = (float) (mace ? len + pad + 0.010000001417203743d : limit);
-                    if (a(aimOrigin, (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(d.z, d.x)) - 90.0d), (float) (-Math.toDegrees(Math.atan2(d.y, Math.hypot(d.x, d.z)))), traceDist, target, false)) {
+                    if (a(aimOrigin, (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(delta.z, delta.x)) - 90.0d), (float) (-Math.toDegrees(Math.atan2(delta.y, Math.hypot(delta.x, delta.z)))), traceDist, target, false)) {
                         visible.add(p);
                     }
                 }
@@ -178,12 +178,12 @@ public class AuraUtil implements Interface {
             if (throughWalls) {
                 List<Vec3d> through = new ArrayList<>();
                 for (Vec3d p2 : pts) {
-                    Vec3d d2 = p2.subtract(aimOrigin);
-                    double len2 = d2.length();
+                    Vec3d delta2 = p2.subtract(aimOrigin);
+                    double len2 = delta2.length();
                     double limit2 = reach + pad;
                     if (mace || len2 <= limit2) {
                         float traceDist2 = (float) (mace ? len2 + pad + 0.010000001417203743d : limit2);
-                        if (a(aimOrigin, (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(d2.z, d2.x)) - 90.0d), (float) (-Math.toDegrees(Math.atan2(d2.y, Math.hypot(d2.x, d2.z)))), traceDist2, target, true)) {
+                        if (a(aimOrigin, (float) MathHelper.wrapDegrees(Math.toDegrees(Math.atan2(delta2.z, delta2.x)) - 90.0d), (float) (-Math.toDegrees(Math.atan2(delta2.y, Math.hypot(delta2.x, delta2.z)))), traceDist2, target, true)) {
                             through.add(p2);
                         }
                     }
@@ -216,12 +216,12 @@ public class AuraUtil implements Interface {
     }
 
     public static float a(float start, float end, float amount) {
-        float a = MathHelper.clamp(amount, 0.0f, 1.0f);
-        float d = MathHelper.wrapDegrees(end - start);
-        if (Math.abs(d) < 0.5f) {
+        float amountClamped = MathHelper.clamp(amount, 0.0f, 1.0f);
+        float delta = MathHelper.wrapDegrees(end - start);
+        if (Math.abs(delta) < 0.5f) {
             return end;
         }
-        float stepped = MathHelper.wrapDegrees(start + (d * a));
+        float stepped = MathHelper.wrapDegrees(start + (delta * amountClamped));
         float patched = RotationProcessor.a(start, stepped);
         float remaining = MathHelper.wrapDegrees(end - patched);
         return Math.abs(remaining) < 0.5f ? end : patched;

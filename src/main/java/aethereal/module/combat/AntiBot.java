@@ -37,9 +37,8 @@ public class AntiBot extends Module {
     @EventTarget
     public void a(PacketEvent event) {
         if (event.c()) {
-            EntitySpawnS2CPacket class_2604VarD = (EntitySpawnS2CPacket) event.d();
-            if (class_2604VarD instanceof EntitySpawnS2CPacket) {
-                EntitySpawnS2CPacket spawn = class_2604VarD;
+            EntitySpawnS2CPacket spawn = (EntitySpawnS2CPacket) event.d();
+            if (spawn instanceof EntitySpawnS2CPacket) {
                 if (spawn.getEntityType() == EntityType.PLAYER) {
                     PlayerListEntry entry = aM_.getNetworkHandler().getPlayerListEntry(spawn.getUuid());
                     boolean skin = entry != null && entry.getSkinTextures() != null && entry.getSkinTextures().textureUrl() != null;

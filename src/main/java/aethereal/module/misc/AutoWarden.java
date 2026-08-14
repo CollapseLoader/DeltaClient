@@ -173,11 +173,8 @@ public class AutoWarden extends Module {
         if (aM_.options.sneakKey.isPressed() && aM_.options.jumpKey.isPressed()) {
             a();
         }
-        for (WardenEntity class_7260Var : aM_.world.getEntitiesByClass(WardenEntity.class, aM_.player.getBoundingBox().expand(256.0), e -> true)) {
-            if (class_7260Var instanceof WardenEntity) {
-                WardenEntity warden = class_7260Var;
-                this.wardenPositions.put(warden.getBlockPos(), Integer.valueOf(aM_.player.age + 100));
-            }
+        for (WardenEntity warden : aM_.world.getEntitiesByClass(WardenEntity.class, aM_.player.getBoundingBox().expand(256.0), e -> true)) {
+            this.wardenPositions.put(warden.getBlockPos(), Integer.valueOf(aM_.player.age + 100));
         }
         this.wardenPositions.values().removeIf(expire -> {
             return aM_.player.age > expire.intValue();
@@ -236,9 +233,8 @@ public class AutoWarden extends Module {
     @EventTarget
     public void onPacket(PacketEvent event) {
         if (event.c()) {
-            GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.d();
-            if (class_7439VarD instanceof GameMessageS2CPacket) {
-                GameMessageS2CPacket message = class_7439VarD;
+            GameMessageS2CPacket message = (GameMessageS2CPacket) event.d();
+            if (message instanceof GameMessageS2CPacket) {
                 if (!message.content().getString().contains("Помянем. Вы погибли")) {
                     return;
                 }
@@ -568,9 +564,9 @@ public class AutoWarden extends Module {
 
     private double escapeScore(int x, int z, boolean warden) {
         double min = 1.7976922776554316E308d;
-        for (Entity class_746Var : aM_.world.getEntities()) {
-            if (class_746Var != aM_.player && ((class_746Var instanceof PlayerEntity) || (warden && (class_746Var instanceof WardenEntity)))) {
-                min = Math.min(min, Math.hypot(class_746Var.getX() - ((double) x), class_746Var.getZ() - ((double) z)));
+        for (Entity entity : aM_.world.getEntities()) {
+            if (entity != aM_.player && ((entity instanceof PlayerEntity) || (warden && (entity instanceof WardenEntity)))) {
+                min = Math.min(min, Math.hypot(entity.getX() - ((double) x), entity.getZ() - ((double) z)));
             }
         }
         return min;
@@ -607,9 +603,7 @@ public class AutoWarden extends Module {
     }
 
     private void handleChest() {
-        Screen class_437Var = aM_.currentScreen;
-        if (class_437Var instanceof GenericContainerScreen) {
-            GenericContainerScreen screen = (GenericContainerScreen) class_437Var;
+        if (aM_.currentScreen instanceof GenericContainerScreen screen) {
             quickMoveLoot(screen);
             return;
         }
@@ -854,9 +848,7 @@ public class AutoWarden extends Module {
             }
             return;
         }
-        Screen class_437Var = aM_.currentScreen;
-        if (class_437Var instanceof GenericContainerScreen) {
-            GenericContainerScreen screen = (GenericContainerScreen) class_437Var;
+        if (aM_.currentScreen instanceof GenericContainerScreen screen) {
             if (!hopper) {
                 sortInventory(screen);
                 return;
@@ -987,9 +979,8 @@ public class AutoWarden extends Module {
     }
 
     private boolean hasCursorItem() {
-        GenericContainerScreen class_476Var = (GenericContainerScreen) aM_.currentScreen;
-        if (class_476Var instanceof GenericContainerScreen) {
-            GenericContainerScreen screen = class_476Var;
+        GenericContainerScreen screen = (GenericContainerScreen) aM_.currentScreen;
+        if (screen instanceof GenericContainerScreen) {
             if (!screen.getScreenHandler().getCursorStack().isEmpty()) {
                 return true;
             }

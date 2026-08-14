@@ -236,9 +236,8 @@ public class Collector_2 extends Module {
     @EventTarget
     public void a(PacketEvent event) {
         if (this.h != null && event.c()) {
-            GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.d();
-            if (class_7439VarD instanceof GameMessageS2CPacket) {
-                GameMessageS2CPacket packet = class_7439VarD;
+            GameMessageS2CPacket packet = (GameMessageS2CPacket) event.d();
+            if (packet instanceof GameMessageS2CPacket) {
                 String message = packet.content().getString();
                 if (message.toLowerCase().contains("[✘] Ошибка! Этот товар уже Купили!")) {
                     this.i = null;
@@ -301,10 +300,10 @@ public class Collector_2 extends Module {
         if (stack.isEmpty() || !this.h.a(stack)) {
             return false;
         }
-        IntStream intStreamRange = IntStream.range(0, 40);
-        PlayerInventory class_1661VarMethod_31548 = aM_.player.getInventory();
-        Objects.requireNonNull(class_1661VarMethod_31548);
-        ItemStack inventory = intStreamRange.mapToObj(class_1661VarMethod_31548::getStack).filter(s -> {
+        IntStream slotRange = IntStream.range(0, 40);
+        PlayerInventory playerInventory = aM_.player.getInventory();
+        Objects.requireNonNull(playerInventory);
+        ItemStack inventory = slotRange.mapToObj(playerInventory::getStack).filter(s -> {
             return !s.isEmpty() && this.h.a(s);
         }).findFirst().orElse(ItemStack.EMPTY);
         if ((!inventory.isEmpty() && (((this.h.i() instanceof PotionItem) && !Objects.equals(stack.get(DataComponentTypes.POTION_CONTENTS), inventory.get(DataComponentTypes.POTION_CONTENTS))) || !stack.getName().getString().trim().equalsIgnoreCase(inventory.getName().getString().trim()))) || stack.getTooltip(Item.TooltipContext.DEFAULT, aM_.player, TooltipType.BASIC).stream().anyMatch(line -> {
@@ -331,10 +330,10 @@ public class Collector_2 extends Module {
     }
 
     private int a(b slot) {
-        IntStream intStreamRange = IntStream.range(0, 40);
-        PlayerInventory class_1661VarMethod_31548 = aM_.player.getInventory();
-        Objects.requireNonNull(class_1661VarMethod_31548);
-        return intStreamRange.mapToObj(class_1661VarMethod_31548::getStack).filter(stack -> {
+        IntStream slotRange = IntStream.range(0, 40);
+        PlayerInventory playerInventory = aM_.player.getInventory();
+        Objects.requireNonNull(playerInventory);
+        return slotRange.mapToObj(playerInventory::getStack).filter(stack -> {
             return !stack.isEmpty() && slot.a(stack);
         }).mapToInt((v0) -> {
             return v0.getCount();

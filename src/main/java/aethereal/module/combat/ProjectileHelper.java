@@ -79,10 +79,10 @@ public class ProjectileHelper extends Module {
         this.h = aM_.player.input.playerInput.jump() && (aM_.player.isOnGround() || this.g);
         a(t());
         if (this.b[0] != null) {
-            Vec3d[] class_243VarArr = this.c;
+            Vec3d[] positions = this.c;
             int i = this.e;
             this.e = i + 1;
-            class_243VarArr[i % this.c.length] = new Vec3d(this.b[0].getX() - this.b[0].prevX, 0.0d, this.b[0].getZ() - this.b[0].prevZ);
+            positions[i % this.c.length] = new Vec3d(this.b[0].getX() - this.b[0].prevX, 0.0d, this.b[0].getZ() - this.b[0].prevZ);
         }
         if (r() && (aim = a(stack)) != null) {
             Delta.h().d().k().a(aim, 180.0f, 1, 1);
@@ -97,9 +97,9 @@ public class ProjectileHelper extends Module {
     }
 
     private void s() {
-        LivingEntity[] class_1309VarArr = this.b;
+        LivingEntity[] targets = this.b;
         this.b[1] = null;
-        class_1309VarArr[0] = null;
+        targets[0] = null;
         this.d = 0;
         Arrays.fill(this.c, null);
     }
@@ -164,9 +164,9 @@ public class ProjectileHelper extends Module {
             aim = moved;
         }
         Rotation rotation = new Rotation(MathHelper.wrapDegrees(yaw), pitch);
-        float t = aM_.player.age + aM_.getRenderTickCounter().getTickDelta(false);
-        float smoothW = ((float) ((((Math.sin(t * 0.8f) * 11.0d) + (Math.sin((((double) t) * 0.04000001688754603d) + 17.200001527756587d) * 1.5d)) + (Math.sin((((double) t) * 0.11000000003049541d) + 5.800002923050999d) * 3.0d)) + (Math.sin((((double) t) * 0.07000000374109333d) + 12.300000031704212d)))) / 4.0f;
-        float smoothH = ((float) (Math.sin(((double) t) * 0.1000000001867308d) + (Math.sin((((double) t) * 0.029999988014174556d) + 54.09998474500903d) * 0.5d))) / 2.0f;
+        float time = aM_.player.age + aM_.getRenderTickCounter().getTickDelta(false);
+        float smoothW = ((float) ((((Math.sin(time * 0.8f) * 11.0d) + (Math.sin((((double) time) * 0.04000001688754603d) + 17.200001527756587d) * 1.5d)) + (Math.sin((((double) time) * 0.11000000003049541d) + 5.800002923050999d) * 3.0d)) + (Math.sin((((double) time) * 0.07000000374109333d) + 12.300000031704212d)))) / 4.0f;
+        float smoothH = ((float) (Math.sin(((double) time) * 0.1000000001867308d) + (Math.sin((((double) time) * 0.029999988014174556d) + 54.09998474500903d) * 0.5d))) / 2.0f;
         boolean tridentEarly = (stack.getItem() instanceof TridentItem) && stack.getItem().getMaxUseTime(stack, aM_.player) - aM_.player.getItemUseTimeLeft() < 9;
         if (!tridentEarly) {
             smoothW = MathHelper.clamp(smoothW, -0.3f, 0.3f);
@@ -234,8 +234,8 @@ public class ProjectileHelper extends Module {
         float pull = 1.0f;
         ItemStack active = aM_.player.getActiveItem();
         if (aM_.player.isUsingItem() && (active.getItem() instanceof BowItem)) {
-            float f = ((active.getItem().getMaxUseTime(active, aM_.player) - aM_.player.getItemUseTimeLeft()) + 1.5f) / 20.0f;
-            pull = Math.min(((f * f) + (f * 2.0f)) / 3.0f, 1.0f);
+            float progress = ((active.getItem().getMaxUseTime(active, aM_.player) - aM_.player.getItemUseTimeLeft()) + 1.5f) / 20.0f;
+            pull = Math.min(((progress * progress) + (progress * 2.0f)) / 3.0f, 1.0f);
         }
         return ((double) pull) * 3.0d;
     }

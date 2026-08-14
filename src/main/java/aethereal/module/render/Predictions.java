@@ -231,8 +231,8 @@ public class Predictions extends Module {
     private void a(DrawEvent event, Vec3d center, double radius, int color, Direction face) {
         Direction.Axis axis = face.getAxis();
         Vec3d u = axis == Direction.Axis.Y ? new Vec3d(1.0d, 0.0d, 0.0d) : new Vec3d(0.0d, 1.0d, 0.0d);
-        Vec3d class_243Var = (axis == Direction.Axis.Z) ? new Vec3d(1.0d, 0.0d, 0.0d) : new Vec3d(0.0d, 0.0d, 1.0d);
-        Vec3d v = class_243Var;
+        Vec3d perpendicular = (axis == Direction.Axis.Z) ? new Vec3d(1.0d, 0.0d, 0.0d) : new Vec3d(0.0d, 0.0d, 1.0d);
+        Vec3d v = perpendicular;
         double step = 6.283186671116134d / ((double) 8);
         double controlRadius = radius / Math.cos(step / 2.0d);
         for (int i = 0; i < 8; i++) {

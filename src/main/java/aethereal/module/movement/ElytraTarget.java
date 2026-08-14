@@ -54,10 +54,10 @@ public class ElytraTarget extends Module {
     private double q() {
         Vec3d start = aM_.player.getPos();
         Vec3d end = start.subtract(0.0d, 2.0d, 0.0d);
-        BlockHitResult class_3965VarMethod_17742 = aM_.world.raycast(new RaycastContext(start, end, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, aM_.player));
-        if (class_3965VarMethod_17742.getType() == HitResult.Type.MISS) {
+        BlockHitResult hit = aM_.world.raycast(new RaycastContext(start, end, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, aM_.player));
+        if (hit.getType() == HitResult.Type.MISS) {
             return 2.0d;
         }
-        return start.getY() - class_3965VarMethod_17742.getPos().y;
+        return start.getY() - hit.getPos().y;
     }
 }

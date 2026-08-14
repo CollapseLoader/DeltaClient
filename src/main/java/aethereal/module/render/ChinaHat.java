@@ -26,9 +26,7 @@ public class ChinaHat extends Module {
 
     @EventTarget
     public void a(HeadFeatureEvent event) {
-        BipedEntityModel<?> class_572VarE = (BipedEntityModel<?>) event.e();
-        if (class_572VarE instanceof BipedEntityModel) {
-            BipedEntityModel<?> bipedModel = class_572VarE;
+        if (event.e() instanceof BipedEntityModel<?> bipedModel) {
             boolean friend = Delta.h().d().e().d(event.d().getName().getString());
             if (event.d() == aM_.player || friend) {
                 PlayerEntity player = event.d();

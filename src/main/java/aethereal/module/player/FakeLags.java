@@ -59,9 +59,7 @@ public class FakeLags extends Module implements Interface {
             return;
         }
         if (event.c()) {
-            EntityVelocityUpdateS2CPacket class_2743VarD = (EntityVelocityUpdateS2CPacket) event.d();
-            if (class_2743VarD instanceof EntityVelocityUpdateS2CPacket) {
-                EntityVelocityUpdateS2CPacket velocity = class_2743VarD;
+            if (event.d() instanceof EntityVelocityUpdateS2CPacket velocity) {
                 if (velocity.getEntityId() == aM_.player.getId()) {
                     q();
                     return;

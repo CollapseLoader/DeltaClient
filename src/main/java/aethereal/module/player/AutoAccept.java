@@ -26,10 +26,8 @@ public class AutoAccept extends Module {
     @EventTarget
     public void a(PacketEvent event) {
         if (event.c()) {
-            GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) event.d();
-            if (class_7439VarD instanceof GameMessageS2CPacket) {
-                GameMessageS2CPacket s2CPacket = class_7439VarD;
-                String chat = s2CPacket.content().getString().toLowerCase();
+            if (event.d() instanceof GameMessageS2CPacket packet) {
+                String chat = packet.content().getString().toLowerCase();
                 if (this.c.c().booleanValue() && Delta.h().d().e().a().stream().noneMatch(friend -> {
                     return chat.contains(friend.a().toLowerCase());
                 })) {

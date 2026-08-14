@@ -123,9 +123,8 @@ public class AutoDodge extends Module {
         }
         a(packetEvent.d());
         if (packetEvent.c()) {
-            GameMessageS2CPacket class_7439VarD = (GameMessageS2CPacket) packetEvent.d();
-            if (class_7439VarD instanceof GameMessageS2CPacket) {
-                GameMessageS2CPacket gameMsg = class_7439VarD;
+            GameMessageS2CPacket gameMsg = (GameMessageS2CPacket) packetEvent.d();
+            if (gameMsg instanceof GameMessageS2CPacket) {
                 if (gameMsg.content().getString().equals("На этой анархии этот предмет не работает")) {
                     this.b = -50;
                 }
@@ -181,12 +180,12 @@ public class AutoDodge extends Module {
 
     private Map<String, a> q() {
         HashMap<String, a> result = new HashMap<>();
-        for (AbstractClientPlayerEntity class_746Var : aM_.world.getPlayers()) {
-            ItemStack mainHand = class_746Var.getMainHandStack();
-            ItemStack offHand = class_746Var.getOffHandStack();
+        for (AbstractClientPlayerEntity player : aM_.world.getPlayers()) {
+            ItemStack mainHand = player.getMainHandStack();
+            ItemStack offHand = player.getOffHandStack();
             int splashColor = mainHand.getItem() == Items.SPLASH_POTION ? a(mainHand) : offHand.getItem() == Items.SPLASH_POTION ? a(offHand) : -1;
-            if (splashColor >= 0 && class_746Var != aM_.player && aM_.player.squaredDistanceTo(class_746Var) <= 400.0d) {
-                result.put(class_746Var.getName().getString(), new a(splashColor, class_746Var.getPos(), class_746Var.getRotationVec(1.0f)));
+            if (splashColor >= 0 && player != aM_.player && aM_.player.squaredDistanceTo(player) <= 400.0d) {
+                result.put(player.getName().getString(), new a(splashColor, player.getPos(), player.getRotationVec(1.0f)));
             }
         }
         return result;

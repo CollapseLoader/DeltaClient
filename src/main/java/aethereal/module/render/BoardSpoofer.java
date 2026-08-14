@@ -41,11 +41,11 @@ public class BoardSpoofer extends Module {
             title = a(title, "Ранг: ", this.c.c());
         }
         if (this.b.a("Монеты").c().booleanValue()) {
-            Text class_2561Var = title;
+            Text previousTitle = title;
             Locale locale = Locale.US;
             Object[] objArr = new Object[1];
             objArr[0] = Long.valueOf(Long.parseLong(this.d.c().isEmpty() ? "0" : this.d.c()));
-            title = a(class_2561Var, "Монет: ", String.format(locale, "%,d", objArr));
+            title = a(previousTitle, "Монет: ", String.format(locale, "%", objArr));
         }
         if (this.b.a("Токены").c().booleanValue()) {
             title = a(title, "Токенов: ", this.e.c().isEmpty() ? "0" : this.e.c());

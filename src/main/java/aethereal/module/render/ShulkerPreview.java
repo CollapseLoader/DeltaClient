@@ -31,9 +31,7 @@ public class ShulkerPreview extends Module {
         if (event.h() == ContainerEvent.Phase.POST && (hovered = ((platform.inject.accessors.HandledScreenAccessor) event.b()).getFocusedSlot()) != null && hovered.getStack() != null && hovered.hasStack()) {
             ItemStack hoveredStack = hovered.getStack();
             if (hoveredStack.get(DataComponentTypes.CONTAINER) != null) {
-                BlockItem class_1747VarMethod_7909 = (BlockItem) hoveredStack.getItem();
-                if (class_1747VarMethod_7909 instanceof BlockItem) {
-                    BlockItem blockItem = class_1747VarMethod_7909;
+                if (hoveredStack.getItem() instanceof BlockItem blockItem) {
                     if (blockItem.getBlock() instanceof ShulkerBoxBlock) {
                         a(event.d(), hoveredStack, hoveredStack.get(DataComponentTypes.CONTAINER).stream().toList(), event.f() + 8, (event.g() - this.b.y()) - 16.0f, 1.0f, true);
                     }
@@ -47,9 +45,7 @@ public class ShulkerPreview extends Module {
         ItemStack stack;
         if (event.b()) {
             for (ItemEntity itemEntity : aM_.world.getEntitiesByClass(ItemEntity.class, aM_.player.getBoundingBox().expand(64), entity -> true)) {
-                BlockItem class_1747VarMethod_7909 = (BlockItem) itemEntity.getStack().getItem();
-                if (class_1747VarMethod_7909 instanceof BlockItem) {
-                    BlockItem blockItem = class_1747VarMethod_7909;
+                if (itemEntity.getStack().getItem() instanceof BlockItem blockItem) {
                     if ((blockItem.getBlock() instanceof ShulkerBoxBlock) && (stack = itemEntity.getStack()) != null && !stack.isEmpty()) {
                         Vector2f projected = ProjectUtil.project(itemEntity.prevX + ((itemEntity.getX() - itemEntity.prevX) * ((double) aM_.getRenderTickCounter().getTickDelta(false))), itemEntity.prevY + ((itemEntity.getY() - itemEntity.prevY) * ((double) aM_.getRenderTickCounter().getTickDelta(false))) + 0.5d, itemEntity.prevZ + ((itemEntity.getZ() - itemEntity.prevZ) * ((double) aM_.getRenderTickCounter().getTickDelta(false))));
                         ContainerComponent container = stack.get(DataComponentTypes.CONTAINER);

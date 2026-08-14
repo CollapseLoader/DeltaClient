@@ -41,9 +41,7 @@ public class AutoFish extends Module implements Interface {
 
     @EventTarget
     public void a(PacketEvent event) {
-        PlaySoundS2CPacket class_2767VarD = (PlaySoundS2CPacket) event.d();
-        if (class_2767VarD instanceof PlaySoundS2CPacket) {
-            PlaySoundS2CPacket packet = class_2767VarD;
+        if (event.d() instanceof PlaySoundS2CPacket packet) {
             if (packet.getSound().value().id().equals(SoundEvents.ENTITY_FISHING_BOBBER_SPLASH.id()) && aM_.player.fishHook.squaredDistanceTo(packet.getX(), packet.getY(), packet.getZ()) <= 0.48999979194765847d && aM_.player.fishHook != null) {
                 d(true);
                 this.b.b();
