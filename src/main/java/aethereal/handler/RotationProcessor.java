@@ -170,16 +170,20 @@ public class RotationProcessor extends BaseProcessor {
     }
 
     public void startAimingWithSpeeds(Rotation rotation, float aimSpeed, float resetSpeed, int lookMode, int priority) {
-        if (state != rotationState.IDLE && isUsingUseableItem()) {
+        if (priority < RotationProcessor.priority) {
+            return;
+        }
+        if (state != a.IDLE && isUsingUseableItem()) {
             rotation = getDefaultWobbleRotation();
         }
-        if (state == rotationState.IDLE) {
+        if (state == a.IDLE) {
             this.currentLook.a(true);
         }
         RotationProcessor.resetSpeed = resetSpeed;
         RotationProcessor.lookMode = lookMode;
         maxTicks = getMaxTicksForMode(lookMode);
-        state = rotationState.AIM;
+        RotationProcessor.priority = priority;
+        state = a.AIM;
         currentTick = 0;
         applyRotationStep(rotation, aimSpeed, true);
     }
