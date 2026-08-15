@@ -59,7 +59,7 @@ public class StaffWidget extends Widget implements Interface {
                 } else {
                     Fonts.a.a(event.h(), "y", x + offsetX + 5.0f, drawY + ((11.5f - Fonts.a.a(8.0f)) / 2.0f), 8.0f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), animation));
                 }
-                Fonts.e.a(event.h(), staff2.a(), x + offsetX + 19.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(-1, animation));
+                Fonts.e.a(event.h(), staff2.a(), x + offsetX + 19.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), animation));
                 boolean near = a(staff2.a());
                 Fonts.e.a(event.h(), near ? "Near" : "Online", ((((x + offsetX) + width) - 5.0f) - Fonts.e.a(near ? "Near" : "Online", 6.5f)) - 1.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(near ? -1529792 : -9711765, animation));
                 contentY += 13.5f * animation;

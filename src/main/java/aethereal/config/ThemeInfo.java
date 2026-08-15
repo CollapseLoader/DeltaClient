@@ -4,7 +4,7 @@ import aethereal.core.InterfaceC0020Opcode;
 
 public enum ThemeInfo {
     PRIMARY(new ThemeConstructor("primary", InterfaceC0020Opcode.aS, InterfaceC0020Opcode.bh, 255, 75), new ThemeConstructor("primary", InterfaceC0020Opcode.aS, InterfaceC0020Opcode.bh, 255, 75)),
-    BACKGROUND_HUD(new ThemeConstructor("background_hud", 11, 11, 22, InterfaceC0020Opcode.cY), new ThemeConstructor("background_hud", 11, 11, 22, InterfaceC0020Opcode.cY)),
+    BACKGROUND_HUD(new ThemeConstructor("background_hud", 11, 11, 22, InterfaceC0020Opcode.cY), new ThemeConstructor("background_hud", 240, 242, 245, InterfaceC0020Opcode.cY)),
     BACKGROUND_GUI(new ThemeConstructor("background_gui", 8, 8, 8, 255), new ThemeConstructor("background_gui", 253, 254, 255, 255)),
     OUTLINE_SMALL(new ThemeConstructor("outline_small", 255, 255, 255, 5), new ThemeConstructor("outline_small", 17, 18, 22, 5)),
     OUTLINE_MEDIUM(new ThemeConstructor("outline_medium", 255, 255, 255, 10), new ThemeConstructor("outline_medium", 17, 18, 22, 5)),

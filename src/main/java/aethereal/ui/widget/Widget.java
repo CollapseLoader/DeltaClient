@@ -175,7 +175,7 @@ public class Widget {
                         animation);
             } else {
                 Fonts.e.a(event.h(), String.valueOf(title), x + 17.5f,
-                        (y + ((this.d - Fonts.e.a(this.e)) / 2.0f)) - 0.5f, this.e, ColorUtil.applyAlphaToColor(-1, animation));
+                        (y + ((this.d - Fonts.e.a(this.e)) / 2.0f)) - 0.5f, this.e, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), animation));
             }
         }
     }

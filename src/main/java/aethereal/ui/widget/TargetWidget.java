@@ -54,7 +54,7 @@ public class TargetWidget extends Widget {
             if (this.j instanceof AbstractClientPlayerEntity player) {
                 event.getDraw2DProcessor().a(event.h(), x + 5.0f, headY, headSize, headSize, 2.0f, ColorUtil.applyAlphaToColor(-1, a()), 0.125f, 0.125f, 0.125f, 0.125f, Interface.mc.getTextureManager().getTexture(player.getSkinTextures().texture()).getGlId());
             } else if (this.j != null) {
-                Fonts.a.a(event.h(), "B", x + 6.5f + ((headSize - 24.0f) / 2.0f), headY + ((headSize - 24.0f) / 2.0f), 24.0f, ColorUtil.applyAlphaToColor(-1, a()));
+                Fonts.a.a(event.h(), "B", x + 6.5f + ((headSize - 24.0f) / 2.0f), headY + ((headSize - 24.0f) / 2.0f), 24.0f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), a()));
             }
             float textX = x + 5.0f + headSize + 5.0f;
             StreamerMode streamerMode = Delta.getInstance().getModuleProcessor().t().aE();
@@ -65,9 +65,9 @@ public class TargetWidget extends Widget {
             }
             String name = string;
             if (name.length() > 12) {
-                Fonts.e.c(event.h(), name, textX, headY, 7.5f, ColorUtil.applyAlphaToColor(-1, a()), Fonts.e.a(name.substring(0, 12), 7.5f));
+                Fonts.e.c(event.h(), name, textX, headY, 7.5f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), a()), Fonts.e.a(name.substring(0, 12), 7.5f));
             } else {
-                Fonts.e.a(event.h(), name, textX, headY, 7.5f, ColorUtil.applyAlphaToColor(-1, a()));
+                Fonts.e.a(event.h(), name, textX, headY, 7.5f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), a()));
             }
             if (this.f.c().booleanValue()) {
                 int i = 0;

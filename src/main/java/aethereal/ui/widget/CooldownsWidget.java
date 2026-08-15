@@ -1,5 +1,7 @@
 package aethereal.ui.widget;
 
+import aethereal.config.ThemeInfo;
+import aethereal.core.Delta;
 import aethereal.core.GlobalEvent;
 import aethereal.core.Interface;
 import aethereal.event.DrawEvent;
@@ -69,8 +71,8 @@ public class CooldownsWidget extends Widget implements Interface {
                 a(event, x + offsetX, drawY, width, 11.5f, false, animation);
                 a(event, x + offsetX + 15.0f, drawY, 11.5f, animation);
                 event.getDraw3DProcessor().a(event.i(), item2.getDefaultStack(), x + offsetX + 5.0f, drawY + 2.0f, 0, animation, 0.45f, false);
-                Fonts.e.a(event.h(), item2.getName().getString(), x + offsetX + 19.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(-1, animation));
-                Fonts.e.a(event.h(), time, ((((x + offsetX) + width) - 5.0f) - timeWidth) - 1.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(-1, 0.55f * animation));
+                Fonts.e.a(event.h(), item2.getName().getString(), x + offsetX + 19.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), animation));
+                Fonts.e.a(event.h(), time, ((((x + offsetX) + width) - 5.0f) - timeWidth) - 1.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), 0.55f * animation));
                 contentY += 13.5f * animation;
             }
         }

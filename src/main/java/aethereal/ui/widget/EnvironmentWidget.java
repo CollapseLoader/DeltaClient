@@ -136,7 +136,7 @@ public class EnvironmentWidget extends Widget implements Interface {
         event.getDraw2DProcessor().a(event.h(), x + 2.0f, y + 2.0f, 8.0f, 8.0f, 1.5f, ColorUtil.applyAlphaToColor(-1, animation), 0.125f,
                 0.125f, 0.125f, 0.125f, mc.getTextureManager().getTexture(data.e).getGlId());
         Fonts.e.a(event.h(), health, ((x + width) - 3.0f) - Fonts.e.a(health, 6.5f), textY, 6.5f,
-                ColorUtil.applyAlphaToColor(-1, animation));
+                ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), animation));
         float right = ((x + width) - 4.0f) - Fonts.e.a(health, 6.5f);
         if (this.f.c().booleanValue()) {
             for (int i = 3; i >= 0; i--) {
@@ -147,7 +147,7 @@ public class EnvironmentWidget extends Widget implements Interface {
                 }
             }
         }
-        Fonts.e.c(event.h(), data.d, x + 12.5f, textY, 6.5f, ColorUtil.applyAlphaToColor(-1, animation),
+        Fonts.e.c(event.h(), data.d, x + 12.5f, textY, 6.5f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), animation),
                 (right - 16.5f) - x);
         if (data.b.isEmpty()) {
             return 14.0f;

@@ -102,7 +102,7 @@ public class WatermarkWidget extends Widget implements Interface {
             }
             Fonts.a.a(event.h(), sections[i][0], cursor, y + ((this.d - Fonts.a.a(iconSize)) / 2.0f), iconSize, primaryColor);
             float cursor3 = cursor + Fonts.a.a(sections[i][0], iconSize) + iconTextGap;
-            Fonts.e.a(event.h(), sections[i][1], cursor3, textY, this.e, -1);
+            Fonts.e.a(event.h(), sections[i][1], cursor3, textY, this.e, Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor());
             cursor = cursor3 + Fonts.e.a(sections[i][1], this.e) + sectionGap;
         }
     }
@@ -121,7 +121,7 @@ public class WatermarkWidget extends Widget implements Interface {
             a(event, cursor, y, sectionWidth, this.d, true, 1.0f);
             float inner = cursor + startPadding;
             Fonts.a.a(event.h(), section[0], inner, y + ((this.d - Fonts.a.a(iconSize)) / 2.0f), iconSize, primaryColor);
-            Fonts.e.a(event.h(), section[1], inner + Fonts.a.a(section[0], iconSize) + iconTextGap, textY, this.e, -1);
+            Fonts.e.a(event.h(), section[1], inner + Fonts.a.a(section[0], iconSize) + iconTextGap, textY, this.e, Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor());
             cursor += sectionWidth + sectionGap;
         }
     }

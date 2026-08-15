@@ -1,5 +1,6 @@
 package aethereal.ui.widget;
 
+import aethereal.config.ThemeInfo;
 import aethereal.core.Delta;
 import aethereal.core.GlobalEvent;
 import aethereal.core.Interface;
@@ -56,7 +57,7 @@ public class ItemsWidget extends Widget implements Interface {
                 a(event, contentX, y, width, this.d, true, animation);
                 Delta.getInstance().getModuleProcessor().j().a(event.i(), provider2.c().getDefaultStack(), contentX + 3.0f, y + ((this.d - 16.0f) / 2.0f) + 3.0f, InterfaceC0020Opcode.aN, animation, 0.6f, false);
                 a(event, contentX + 15.5f, y, this.d, animation);
-                Fonts.e.a(event.h(), label, contentX + 19.5f, textY, 6.5f, ColorUtil.applyAlphaToColor(-1, animation));
+                Fonts.e.a(event.h(), label, contentX + 19.5f, textY, 6.5f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), animation));
                 contentX += (width + 2.0f) * animation;
             }
             i++;

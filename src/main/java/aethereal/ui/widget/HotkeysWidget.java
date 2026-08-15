@@ -51,8 +51,8 @@ public class HotkeysWidget extends Widget implements Interface {
                 a(event, x + offsetX, drawY, width, 11.5f, false, animation);
                 a(event, x + offsetX + 15.0f, drawY, 11.5f, animation);
                 Fonts.a.a(event.h(), module2.l().a(), x + offsetX + 5.0f, (drawY + ((11.5f - Fonts.a.a(6.5f)) / 2.0f)) - 0.15f, 6.5f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), animation));
-                Fonts.e.a(event.h(), module2.j(), x + offsetX + 19.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(-1, animation));
-                Fonts.e.a(event.h(), KeyUtil.b(module2.p()), (rightIconX - 4.0f) - bindWidth, textY, 6.5f, ColorUtil.applyAlphaToColor(-1, 0.55f * animation));
+                Fonts.e.a(event.h(), module2.j(), x + offsetX + 19.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), animation));
+                Fonts.e.a(event.h(), KeyUtil.b(module2.p()), (rightIconX - 4.0f) - bindWidth, textY, 6.5f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), 0.55f * animation));
                 Fonts.a.a(event.h(), "C", rightIconX, drawY + ((11.5f - Fonts.a.a(6.5f)) / 2.0f) + 0.15f, 6.5f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.PRIMARY).toIntColor(), animation));
                 contentY += 13.5f * animation;
             }

@@ -89,8 +89,8 @@ public class PotionWidget extends Widget implements Interface {
                 a(event, x + offsetX, drawY, width, 11.5f, false, animation);
                 a(event, x + offsetX + 15.0f, drawY, 11.5f, animation);
                 event.getDraw3DProcessor().a(event.i(), mc.getStatusEffectSpriteManager().getSprite(iStatusEffectInstance2.getEffectType()), x + offsetX + 5.0f, drawY + 2.0f, 0.0f, 0.4f, animation);
-                Fonts.e.a(event.h(), name2, x + offsetX + 19.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(iStatusEffectInstance2.getEffectType().value().getCategory() == StatusEffectCategory.HARMFUL ? ColorUtil.convertToARGB(255, InterfaceC0020Opcode.cG, InterfaceC0020Opcode.cG, 255) : -1, animation));
-                Fonts.e.a(event.h(), duration, ((((x + offsetX) + width) - 5.0f) - durationWidth) - 1.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(-1, 0.55f * animation));
+                Fonts.e.a(event.h(), name2, x + offsetX + 19.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(iStatusEffectInstance2.getEffectType().value().getCategory() == StatusEffectCategory.HARMFUL ? ColorUtil.convertToARGB(255, InterfaceC0020Opcode.cG, InterfaceC0020Opcode.cG, 255) : Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), animation));
+                Fonts.e.a(event.h(), duration, ((((x + offsetX) + width) - 5.0f) - durationWidth) - 1.0f, textY, 6.5f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), 0.55f * animation));
                 contentY += 13.5f * animation;
             }
         }
@@ -125,8 +125,8 @@ public class PotionWidget extends Widget implements Interface {
                 float textX = drawX + 13.5f + 6.0f;
                 a(event, drawX, contentY, width, 24.0f, true, animation);
                 event.getDraw3DProcessor().a(event.i(), mc.getStatusEffectSpriteManager().getSprite(iStatusEffectInstance.getEffectType()), drawX + 3.5f, contentY + 5.75f, 0.0f, 0.6944444f, animation);
-                Fonts.e.a(event.h(), name, textX, contentY + 3.5f, 7.0f, ColorUtil.applyAlphaToColor(harmful ? ColorUtil.convertToARGB(215, 76, 76, 255) : -1, animation));
-                Fonts.e.a(event.h(), duration, textX, contentY + 13.0f, 6.0f, ColorUtil.applyAlphaToColor(-1, 0.55f * animation));
+                Fonts.e.a(event.h(), name, textX, contentY + 3.5f, 7.0f, ColorUtil.applyAlphaToColor(harmful ? ColorUtil.convertToARGB(215, 76, 76, 255) : Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), animation));
+                Fonts.e.a(event.h(), duration, textX, contentY + 13.0f, 6.0f, ColorUtil.applyAlphaToColor(Delta.getInstance().getModuleProcessor().o().a(ThemeInfo.TEXT).toIntColor(), 0.55f * animation));
                 int initialDuration = iStatusEffectInstance.getInitialDuration();
                 float progress = initialDuration <= 0 ? 1.0f : Math.min(1.0f, iStatusEffectInstance.getDuration() / initialDuration);
                 int accent = harmful ? ColorUtil.convertToARGB(215, 76, 76, 255) : primary;
