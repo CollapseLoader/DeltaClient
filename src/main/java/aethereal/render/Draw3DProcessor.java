@@ -49,6 +49,8 @@ public class Draw3DProcessor extends BaseProcessor {
 
     public void a(DrawContext context, ItemStack stack, float x, float y, int z, float alpha, float scale, boolean overlay) {
         if (!stack.isEmpty()) {
+            RenderSystem.enableBlend();
+            RenderSystem.defaultBlendFunc();
             context.getMatrices().push();
             context.getMatrices().translate(x, y, z);
             context.getMatrices().scale(scale, scale, 1.0f);
