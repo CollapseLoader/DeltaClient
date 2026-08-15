@@ -5,6 +5,8 @@ import aethereal.config.ConfigProcessor;
 import aethereal.lib.json.JSONArray;
 import aethereal.lib.json.JSONObject;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +48,16 @@ public class AccountProcessor extends ConfigProcessor<AccountConstructor> {
         return this.d.stream().filter((v0) -> {
             return v0.c();
         }).findFirst().orElse(null);
+    }
+
+    public void save() {
+        try {
+            File file = new File(d(), getConfigFileName());
+            file.getParentFile().mkdirs();
+            Files.writeString(file.toPath(), saveConfig(this.d));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

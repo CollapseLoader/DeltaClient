@@ -201,6 +201,7 @@ public class AltScreen extends Screen {
                             boolean z = !accountConstructor.d();
                             if (accountConstructor2 != null) {
                                 accountConstructor2.b(z);
+                                Delta.getInstance().getModuleProcessor().h().save();
                             }
                         }
                     }
@@ -374,6 +375,7 @@ public class AltScreen extends Screen {
         a().forEach(other -> {
             other.a(other == account);
         });
+        Delta.getInstance().getModuleProcessor().h().save();
     }
 
     private String b() {
@@ -421,6 +423,7 @@ public class AltScreen extends Screen {
         a().add(account);
         this.d.add(new a(account));
         this.c.a();
+        Delta.getInstance().getModuleProcessor().h().save();
     }
 
     private void a(a account) {
@@ -430,6 +433,7 @@ public class AltScreen extends Screen {
         if (wasSelected) {
             a(a().stream().findFirst().orElse(null));
         }
+        Delta.getInstance().getModuleProcessor().h().save();
     }
 
     private void a(List<a> visual, float draggedY) {
@@ -460,6 +464,7 @@ public class AltScreen extends Screen {
         }).toList();
         list.clear();
         list.addAll(ordered);
+        Delta.getInstance().getModuleProcessor().h().save();
     }
 
     private void d() {
